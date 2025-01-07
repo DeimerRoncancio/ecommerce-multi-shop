@@ -1,6 +1,12 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+
+type LoginAccessUserType = {
+  identifier: string;
+  password: string;
+};
 
 export default function Login() {
   const {
@@ -11,13 +17,17 @@ export default function Login() {
     resolver: zodResolver(LoginAccessUser),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  const onSubmit: SubmitHandler<LoginAccessUserType> = (data) => {
+    axios
+      .post("https://majestic-food-api-6771271eff0c.herokuapp.com/login", data)
+      .then((res) => {
+        console.log(res.data.token);
+      });
+  };
 
   return (
     <div
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="w-full h-screen flex flex-col justify-center items-center"
     >
       <h1 className="text-3xl">Login</h1>
