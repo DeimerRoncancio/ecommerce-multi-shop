@@ -1,7 +1,15 @@
 import { useForm } from "react-hook-form";
+import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Login() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginAccesUserFormData>({
+    resolver: zodResolver(LoginAccessUser),
+  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -34,6 +42,7 @@ export default function Login() {
             {...register("identifier")}
           />
         </label>
+        <span style={{ color: "red" }}>{errors["identifier"]?.message}</span>
         <label
           htmlFor="password"
           className="input input-bordered flex items-center gap-2"
@@ -57,6 +66,7 @@ export default function Login() {
             {...register("password")}
           />
         </label>
+        <span style={{ color: "red" }}>{errors["password"]?.message}</span>
         <button className="btn btn-active btn-primary">Primary</button>
       </form>
     </div>
