@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Login from "./pages/Login.tsx";
+import Login from "./routes/auth/Login.tsx";
 import App from "./App.tsx";
 import "./index.css";
 

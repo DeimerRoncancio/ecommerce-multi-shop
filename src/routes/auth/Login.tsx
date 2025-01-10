@@ -1,14 +1,14 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
+import { useNavigate } from "react-router";
+import { LoginAccessUser, LoginAccesUserFormData } from "../../zod/routesAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginAccessUserType } from "../helpers/login.helper";
+import Cookies from "js-cookie";
 import axios from "axios";
 
-type LoginAccessUserType = {
-  identifier: string;
-  password: string;
-};
-
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -21,7 +21,8 @@ export default function Login() {
     axios
       .post("https://majestic-food-api-6771271eff0c.herokuapp.com/login", data)
       .then((res) => {
-        console.log(res.data.token);
+        Cookies.set("accessHome", res.data.token);
+        navigate("/");
       });
   };
 
