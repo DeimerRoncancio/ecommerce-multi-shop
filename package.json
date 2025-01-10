@@ -1,5 +1,5 @@
 {
-  "name": "majestic-food",
+  "name": "ecommerce-multi-shop",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,8 +13,8 @@
     "@hookform/resolvers": "^3.9.1",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.9",
+    "ecommerce-multi-shop": "file:",
     "js-cookie": "^3.0.5",
-    "majestic-food": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
