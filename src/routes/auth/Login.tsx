@@ -19,7 +19,7 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginAccessUserType> = (data) => {
     axios
-      .post("https://majestic-food-api-6771271eff0c.herokuapp.com/login", data)
+      .post("https://multi-shop-api-76abbcfe5b70.herokuapp.com/login", data)
       .then((res) => {
         Cookies.set("accessHome", res.data.token);
         navigate("/");
