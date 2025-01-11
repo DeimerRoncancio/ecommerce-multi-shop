@@ -5,11 +5,14 @@ import App from "./App.tsx";
 import "./index.css";
 import Profile from "./routes/pages/Profile.tsx";
 import ProtectedAuth from "./routes/auth/ProtectedAuth.tsx";
+import NavBar from "./components/NavBar.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route element={<NavBar />}>
+        <Route path="/" element={<App />} />
+      </Route>
       <Route element={<ProtectedAuth />}>
         <Route path="profile" element={<Profile />} />
       </Route>
