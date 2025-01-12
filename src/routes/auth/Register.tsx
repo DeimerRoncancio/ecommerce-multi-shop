@@ -1,12 +1,14 @@
-import React from "react";
+import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputsFromRegister } from "../helpers/register.helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../../zod/routesAuth";
-import { userType } from "../types/auth";
+import { addUserType, userType } from "../types/auth";
 import ErrorMessage from "../../components/Errormessage";
 
 export const Register = () => {
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const file = useRef<File | null>(null);
   const {
     setValue,
     register,
@@ -16,6 +18,20 @@ export const Register = () => {
 
   const onSubmit: SubmitHandler<userType> = (data) => {
     console.log(data);
+
+    addUserType.map((key) => {
+      setValue(key, "");
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const arrFiles = Array.from(e.target.files);
+      file.current = arrFiles[0];
+
+      const urlImg = URL.createObjectURL(arrFiles[0]);
+      setPreviewImage(urlImg);
+    }
   };
 
   return (
@@ -67,10 +83,19 @@ export const Register = () => {
               <input
                 hidden
                 type="file"
-                // {...register("profile")}
-                // onChange={handleChange}
+                {...register("profileImage")}
+                onChange={handleChange}
               />
             </label>
+            {previewImage && (
+              <>
+                <img
+                  className="w-[100px] h-[100px] object-cover rounded-3xl"
+                  src={previewImage}
+                  alt=""
+                />
+              </>
+            )}
           </div>
           <button className="btn btn-primary w-[40%]">Guardar</button>
         </form>

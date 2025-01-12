@@ -29,6 +29,7 @@ export const RegisterForm = z.object({
     .min(1, { message: "La contraseña es requerida" })
     .min(8, { message: "Debe ser mínimo de 8 carácteres" })
     .max(255, { message: "" }),
+  profileImage: z.any().optional(),
 });
 
 export type RegisterFormData = z.infer<typeof RegisterForm>;

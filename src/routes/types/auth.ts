@@ -7,3 +7,23 @@ export type userType = {
   gender?: string;
   email: string;
 };
+
+type TypeUser = [
+  "name",
+  "secondName",
+  "lastNames",
+  "phoneNumber",
+  "gender",
+  "email",
+  "password",
+];
+
+export const addUserType: TypeUser = [
+  "name",
+  "secondName",
+  "lastNames",
+  "phoneNumber",
+  "gender",
+  "email",
+  "password",
+];
