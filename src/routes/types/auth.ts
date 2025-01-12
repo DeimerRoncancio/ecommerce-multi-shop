@@ -2,7 +2,7 @@ export type userType = {
   name: string;
   profileImage?: File;
   secondName: string;
-  lastNames: string;
+  lastnames: string;
   phoneNumber: string;
   gender?: string;
   email: string;
@@ -11,7 +11,7 @@ export type userType = {
 type TypeUser = [
   "name",
   "secondName",
-  "lastNames",
+  "lastnames",
   "phoneNumber",
   "gender",
   "email",
@@ -21,7 +21,7 @@ type TypeUser = [
 export const addUserType: TypeUser = [
   "name",
   "secondName",
-  "lastNames",
+  "lastnames",
   "phoneNumber",
   "gender",
   "email",

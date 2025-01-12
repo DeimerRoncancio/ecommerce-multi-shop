@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../../zod/routesAuth";
 import { addUserType, userType } from "../types/auth";
 import ErrorMessage from "../../components/Errormessage";
+import axios from "axios";
 
 export const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -18,6 +19,31 @@ export const Register = () => {
 
   const onSubmit: SubmitHandler<userType> = (data) => {
     console.log(data);
+    console.log(file.current);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { profileImage, ...rest } = data;
+
+    const formData = new FormData();
+    Object.entries(rest).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    if (file.current) {
+      formData.append("file", file.current);
+    }
+
+    axios
+      .post(
+        "https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Tipo de contenido
+          },
+        },
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
     addUserType.map((key) => {
       setValue(key, "");
@@ -73,8 +99,8 @@ export const Register = () => {
                 <option value="" disabled>
                   Seleccionar Genero
                 </option>
-                <option value="Hombre">Hombre</option>
-                <option value="Mujer">Mujer</option>
+                <option value="male">Hombre</option>
+                <option value="female">Mujer</option>
               </select>
               <span style={{ color: "red" }}>{errors.gender?.message}</span>
             </div>

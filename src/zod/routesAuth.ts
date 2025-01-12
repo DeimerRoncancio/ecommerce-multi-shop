@@ -16,7 +16,7 @@ export type LoginAccesUserFormData = z.infer<typeof LoginAccessUser>;
 export const RegisterForm = z.object({
   name: z.string().min(1, { message: "El nombre es requerido" }),
   secondName: z.string().min(1, { message: "El segundo nombre es requerido" }),
-  lastNames: z.string().min(1, { message: "El apellido es requerido" }),
+  lastnames: z.string().min(1, { message: "El apellido es requerido" }),
   phoneNumber: z
     .string()
     .min(1, { message: "El número de celular es requerido" }),

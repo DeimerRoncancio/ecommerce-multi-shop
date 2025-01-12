@@ -1,7 +1,7 @@
 type names =
   | "name"
   | "secondName"
-  | "lastNames"
+  | "lastnames"
   | "phoneNumber"
   | "email"
   | "password";
@@ -30,7 +30,7 @@ export const InputsFromRegister: formsTypes[] = [
     label: "Apellido",
     type: "text",
     placeholder: "Apellido",
-    name: "lastNames",
+    name: "lastnames",
   },
   {
     label: "Celular",
