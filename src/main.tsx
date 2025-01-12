@@ -6,6 +6,7 @@ import "./index.css";
 import Profile from "./routes/pages/Profile.tsx";
 import ProtectedAuth from "./routes/auth/ProtectedAuth.tsx";
 import NavBar from "./components/NavBar.tsx";
+import { Register } from "./routes/auth/Register.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="profile" element={<Profile />} />
       </Route>
       <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
     </Routes>
   </BrowserRouter>,
 );
