@@ -13,9 +13,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Route element={<NavBar />}>
         <Route path="/" element={<App />} />
       </Route>
+
       <Route element={<ProtectedAuth />}>
         <Route path="profile" element={<Profile />} />
       </Route>
+
       <Route path="login" element={<Login />} />
     </Routes>
   </BrowserRouter>,
