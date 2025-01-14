@@ -86,7 +86,7 @@ export const Register = () => {
       <div className="w-full flex flex-col justify-center items-center my-7">
         <ToastContainer />
         <form
-          className="w-[80%] h-[80%] flex flex-col gap-4 items-center"
+          className="w-full md:w-[80%] h-[80%] flex flex-col gap-4 items-center"
           onSubmit={handleSubmit(onSubmit)}
         >
           <h2 className="font-extrabold text-xl text-green-500">
@@ -95,7 +95,10 @@ export const Register = () => {
           <div className="w-full flex flex-col gap-4 items-center">
             {InputsFromRegister.map((input, index) => {
               return (
-                <div key={index} className="flex flex-col gap-2 w-[40%]">
+                <div
+                  key={index}
+                  className="w-[90%] flex flex-col gap-2 md:w-[40%]"
+                >
                   <label htmlFor="">{input.label}</label>
                   <input
                     type={input.type}
@@ -111,7 +114,7 @@ export const Register = () => {
                 </div>
               );
             })}
-            <div className="w-[40%]">
+            <div className="w-[90%] md:w-[40%]">
               <label htmlFor="">Genero</label>
               <select
                 className="select select-primary w-full"
@@ -126,7 +129,7 @@ export const Register = () => {
               </select>
               <span style={{ color: "red" }}>{errors.gender?.message}</span>
             </div>
-            <label className="btn btn-primary w-[40%]">
+            <label className="w-[90%] btn btn-primary md:w-[40%]">
               Agregar Imagenes
               <input
                 hidden
@@ -145,7 +148,9 @@ export const Register = () => {
               </>
             )}
           </div>
-          <button className="btn btn-primary w-[40%]">Guardar</button>
+          <button className="w-[90%] btn btn-primary md:w-[40%]">
+            Guardar
+          </button>
         </form>
       </div>
     </>
