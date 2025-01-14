@@ -30,7 +30,7 @@ export const Register = () => {
     });
 
     if (file.current) {
-      formData.append("file", file.current);
+      formData.append("profileImage", file.current);
     }
 
     axios
