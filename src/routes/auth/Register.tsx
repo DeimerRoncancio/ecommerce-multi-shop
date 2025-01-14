@@ -6,6 +6,7 @@ import { RegisterForm, RegisterFormData } from "../../zod/routesAuth";
 import { addUserType, userType } from "../types/auth";
 import ErrorMessage from "../../components/Errormessage";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -36,18 +37,38 @@ export const Register = () => {
       .post(
         "https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/register",
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // Tipo de contenido
-          },
-        },
       )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then(() => {
+        toast.success("Registro con exito", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((error) => {
+        toast.error("Error al registrarse", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.log(error);
+      });
 
     addUserType.map((key) => {
       setValue(key, "");
     });
+    setPreviewImage(null);
+    file.current = null;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +84,7 @@ export const Register = () => {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center my-7">
+        <ToastContainer />
         <form
           className="w-[80%] h-[80%] flex flex-col gap-4 items-center"
           onSubmit={handleSubmit(onSubmit)}
