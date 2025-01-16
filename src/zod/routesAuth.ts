@@ -15,15 +15,14 @@ export type LoginAccesUserFormData = z.infer<typeof LoginAccessUser>;
 
 export const RegisterForm = z.object({
   name: z.string().min(1, { message: "El nombre es requerido" }),
-  secondName: z.string().min(1, { message: "El segundo nombre es requerido" }),
-  lastnames: z.string().min(1, { message: "El apellido es requerido" }),
-  phoneNumber: z
-    .string()
-    .min(1, { message: "El número de celular es requerido" }),
+  secondName: z.string({ message: "Segundo nombre no valido" }).optional(),
+  lastnames: z.string({ message: "Apellido no valido" }).optional(),
+  phoneNumber: z.string({ message: "Numero telfonico no valido" }).optional(),
   email: z.string().email({ message: "El correo es requerido o no valido" }),
   gender: z
     .string({ message: "El genero es requerido" })
-    .min(1, { message: "El genero es requerido" }),
+    .min(1, { message: "El genero es requerido" })
+    .optional(),
   password: z
     .string()
     .min(1, { message: "La contraseña es requerida" })

@@ -26,11 +26,17 @@ export const Register = () => {
 
     const formData = new FormData();
     Object.entries(rest).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (value.length > 0) {
+        console.log(key, value);
+        formData.append(key, value);
+      }
     });
 
     if (file.current) {
       formData.append("profileImage", file.current);
+    } else {
+      const file = new File([""], "emptyFile", { type: "text/plain" });
+      formData.append("profileImage", file);
     }
 
     axios
@@ -121,9 +127,7 @@ export const Register = () => {
                 defaultValue=""
                 {...register("gender")}
               >
-                <option value="" disabled>
-                  Seleccionar Genero
-                </option>
+                <option value="notToSaid">Seleccionar Genero</option>
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
               </select>

@@ -1,9 +1,9 @@
 export type userType = {
   name: string;
   profileImage?: File;
-  secondName: string;
-  lastnames: string;
-  phoneNumber: string;
+  secondName?: string;
+  lastnames?: string;
+  phoneNumber?: string;
   gender?: string;
   email: string;
 };
