@@ -105,7 +105,14 @@ export const Register = () => {
                   key={index}
                   className="w-[90%] flex flex-col gap-2 md:w-[40%]"
                 >
-                  <label htmlFor="">{input.label}</label>
+                  <label htmlFor="">
+                    {input.label}{" "}
+                    {input.label === "Primer Nombre" ||
+                    input.label === "Correo" ||
+                    input.label === "Contraseña" ? (
+                      <span className="text-red-500">*</span>
+                    ) : null}
+                  </label>
                   <input
                     type={input.type}
                     placeholder={input.placeholder}
