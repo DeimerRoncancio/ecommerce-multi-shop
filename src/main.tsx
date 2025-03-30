@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Login from "./routes/auth/Login.tsx";
+import Login from "./auth/pages/Login.tsx";
 import App from "./App.tsx";
 import "./index.css";
-import Profile from "./routes/pages/Profile.tsx";
-import ProtectedAuth from "./routes/auth/ProtectedAuth.tsx";
-import NavBar from "./components/NavBar.tsx";
-import { Register } from "./routes/auth/Register.tsx";
+import Profile from "./profile/pages/Profile.tsx";
+import ProtectedAuth from "./auth/routes/ProtectedAuth.tsx";
+import NavBar from "./shared/components/NavBar.tsx";
+import { Register } from "./auth/pages/Register.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

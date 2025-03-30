@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputsFromRegister } from "../helpers/register.helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterForm, RegisterFormData } from "../../zod/routesAuth";
+import { RegisterForm, RegisterFormData } from "../zod/routesAuth";
 import { addUserType, userType } from "../types/auth";
-import ErrorMessage from "../../components/Errormessage";
+import ErrorMessage from "../components/MessageError";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 

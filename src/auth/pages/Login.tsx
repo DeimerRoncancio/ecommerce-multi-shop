@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { LoginAccessUser, LoginAccesUserFormData } from "../../zod/routesAuth";
+import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginAccessUserType } from "../helpers/login.helper";
 import Cookies from "js-cookie";
