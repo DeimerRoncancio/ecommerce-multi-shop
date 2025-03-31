@@ -23,23 +23,23 @@ export default function ProfileButton() {
             shadow-[0_0_20px_0px_rgba(0,0,0,0.15)]">
           <NavLink to="profile" onClick={() => setShowOptions(false)}>
             <li>
-              <a className="text-base active:!bg-[#1f2937] py-2 text-gray-500 font-medium">
+              <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500 font-medium">
                 Mi cuenta
-              </a>
+              </p>
             </li>
           </NavLink>
           <NavLink to="" onClick={() => setShowOptions(false)}>
             <li>
-              <a className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
+              <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
                 Mis compras
-              </a>
+              </p>
             </li>
           </NavLink>
           <NavLink to="" onClick={() => setShowOptions(false)}>
             <li>
-              <a className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
+              <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
                 Cerrar sesión
-              </a>
+              </p>
             </li>
           </NavLink>
         </ul>

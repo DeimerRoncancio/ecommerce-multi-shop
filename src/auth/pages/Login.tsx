@@ -22,7 +22,7 @@ export default function Login() {
       .post("https://multi-shop-api-76abbcfe5b70.herokuapp.com/login", data)
       .then((res) => {
         Cookies.set("accessHome", res.data.token);
-        navigate("/");
+        navigate("/profile");
       });
   };
 

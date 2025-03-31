@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import "./index.css";
 import Profile from "./profile/pages/Profile.tsx";
 import ProtectedAuth from "./auth/routes/ProtectedAuth.tsx";
-import NavBar from "./shared/components/NavBar.tsx";
+import NavBar from "./shared/components/navbar/NavBar.tsx";
 import { Register } from "./auth/pages/Register.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
