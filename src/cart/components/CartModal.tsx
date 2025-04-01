@@ -1,9 +1,13 @@
+import { useCartItems } from "../storage/cartItems"
+
 type CartModalProps = {
   viewCart: boolean,
   hiddeCart: () => void
 }
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
+  const { cartItems } = useCartItems();
+  
   return (
     <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex absolute 
       overflow-hidden top-0 left-0 h-full w-full shadow transition-all duration-300 ease`}>
@@ -16,6 +20,13 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
             <button className="btn btn-secondary rounded-full shadow-none" onClick={hiddeCart}>
               Close
             </button>
+          </div>
+          <div>
+            {
+              cartItems.map((item) => (
+                <div>{item.productName}</div>
+              ))
+            }
           </div>
         </div>
         <div className="card-actions p-2">
