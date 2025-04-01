@@ -13,7 +13,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
       overflow-hidden top-0 left-0 h-full w-full shadow transition-all duration-300 ease`}>
       <div className="bg-[#1c1c1c7c] h-full w-full absolute" onClick={hiddeCart} />
       <div className={`${viewCart ? '-translate-x-0' : 'translate-x-full'} flex flex-col card-body p-2 w-[27%] 
-        h-full right-0 absolute bg-white transition-all duration-300 ease justify-between`}>
+        h-full overflow-auto right-0 absolute bg-white transition-all duration-300 ease justify-between`}>
         <div>
           <div className="flex justify-between p-2">
             <span className="text-base ">8 Items agregados al carrito</span>
@@ -24,7 +24,14 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           <div>
             {
               cartItems.map((item) => (
-                <div>{item.productName}</div>
+                <div className="flex">
+                  <div className="flex items-center w-35 h-40 object-contain">
+                    <img src={`${item.productImage}`} />
+                  </div>
+                  <div>
+                    <h2>{item.productName}</h2>
+                  </div>
+                </div>
               ))
             }
           </div>

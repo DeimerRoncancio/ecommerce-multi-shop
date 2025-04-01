@@ -4,19 +4,20 @@ import axios from "axios";
 import { ProductTypes } from "./products/types/product";
 import { InitialValues } from "./products/helpers/InitialValues.helper";
 import { useCartItems } from "./cart/storage/cartItems";
-import { CartItem } from "./cart/types/cart";
 
 function App() {
   const [products, setProducts] = useState<ProductTypes[]>(InitialValues);
-  const { cartItems, addItem, removeItem } = useCartItems();
+  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartItems();
 
-  const handleAddItem = (item: CartItem) => {
+  const handleAddItem = (item: ProductTypes) => {
     addItem(item);
   }
 
   useEffect(() => {
     axios('https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/products')
       .then(res => setProducts(res.data));
+    
+    if (cartItems.length === 0) setItemsFromStorage();
   }, []);
 
   return (
@@ -24,14 +25,6 @@ function App() {
       {
         products.map(product => {
           const isProductInCart = cartItems.some(item => item.id === product.id);
-          
-          const productItem = {
-            id: product.id,
-            productName: product.productName,
-            productImage: product.productImages[0].imageUrl,
-            isExists: true,
-            productPrice: product.price
-          }
 
           return (
             <div key={product.id}>
@@ -40,8 +33,8 @@ function App() {
               <button className={`btn ${!isProductInCart ? 'btn-neutral' : 'btn-secondary'}`} 
               onClick={() => {
                 !isProductInCart
-                ? handleAddItem(productItem)
-                : removeItem(productItem.id);
+                ? handleAddItem(product)
+                : removeItem(product.id);
               }}>
                 {
                   !isProductInCart
