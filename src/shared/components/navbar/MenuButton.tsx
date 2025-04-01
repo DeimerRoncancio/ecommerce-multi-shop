@@ -1,8 +1,8 @@
 export default function MenuButton() {
   return (
     <div className="flex justify-center items-center">
-      <label className="btn btn-circle swap swap-rotate bg-transparent w-9 border-none shadow-none text-[#343e49] 
-            hover:bg-transparent hover:border-none">
+      <label className="btn btn-link decoration-transparent swap swap-rotate bg-transparent w-9 border-none shadow-none text-[#343e49] 
+        hover:bg-transparent hover:border-none">
         <input type="checkbox" />
         <svg
           className="swap-off fill-current"

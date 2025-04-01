@@ -5,7 +5,7 @@ export default function ProfileButton() {
   const [showOptions, setShowOptions] = useState(false);
   
   return (
-    <div className="dropdown dropdown-end px-4 h-5/6 border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
+    <div className="dropdown dropdown-end">
       <div className="w-full flex items-center">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar" 
           onClick={() => setShowOptions(!showOptions)}>
