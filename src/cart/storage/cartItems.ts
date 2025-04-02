@@ -5,10 +5,11 @@ interface State {
   cartItems: CartItemType[];
   setItemsFromStorage: () => void;
   addItem: (productItem: CartItemType) => void;
+  addItems: (productItem: CartItemType) => void;
   removeItem: (productItem: CartItemType) => void;
 }
 
-export const useCartItems = create<State>((set, get) => {
+export const useCart = create<State>((set, get) => {
   return {
     cartItems: [],
 
@@ -36,6 +37,18 @@ export const useCartItems = create<State>((set, get) => {
 
       localStorage.setItem("cartItems", JSON.stringify([ ...items, productItem ]));
       set({ cartItems: [ ...items, productItem ] });
+    },
+
+    addItems: (productItem: CartItemType) => {
+      const items = get().cartItems;
+
+      const newItems = items.map(item =>
+        item.id === productItem.id ? productItem : item
+      );
+
+      localStorage.setItem("cartItems", JSON.stringify(newItems));
+      set({ cartItems: newItems });
+      return;
     },
 
     removeItem: (productItem: CartItemType) => {

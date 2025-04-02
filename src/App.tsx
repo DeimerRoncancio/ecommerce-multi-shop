@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ProductTypes } from "./products/types/product";
 import { InitialValues } from "./products/helpers/InitialValues.helper";
-import { useCartItems } from "./cart/storage/cartItems";
+import { useCart } from "./cart/storage/cartItems";
 
 function App() {
   const [products, setProducts] = useState<ProductTypes[]>(InitialValues);
-  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartItems();
+  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCart();
 
   const handleAddItem = (product: ProductTypes) => {
     const productItem = {
