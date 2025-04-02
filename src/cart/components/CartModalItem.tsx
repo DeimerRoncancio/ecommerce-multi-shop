@@ -1,5 +1,7 @@
 import { useCartItems } from "../storage/cartItems";
-import { CartItemType } from "../types/cart"
+import { CartItemType } from "../types/cart";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaPlus, FaMinus  } from "react-icons/fa6";
 
 type CartModalItemProps = {
   item: CartItemType;
@@ -7,6 +9,11 @@ type CartModalItemProps = {
 
 export default function CartModalItem({ item }: CartModalItemProps) {
   const { addItem, removeItem } = useCartItems()
+
+  const handleRemoveItem = (item: CartItemType) => {
+    const itemToRemove = { ...item, quantity: 1 }
+    removeItem(itemToRemove);
+  }
 
   return (
     <li className="flex p-1">
@@ -23,13 +30,21 @@ export default function CartModalItem({ item }: CartModalItemProps) {
             <p>{`${item.productPrice}`}</p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="btn btn-neutral w-8 text-center h-8 p-2 rounded-full"
-              onClick={() => removeItem(item)}
-            >-</button>
+            <button className="btn w-8 text-center text-xl h-8 p-0 rounded-full"
+              onClick={() => handleRemoveItem(item)}>
+              <MdDeleteOutline />
+            </button>
+            <button className={`btn ${item.quantity === 1 ? 'btn-disabled' : 'btn'} w-8 text-center h-8 p-2 rounded-full`}
+              onClick={() => removeItem(item)}>
+              <FaMinus />
+            </button>
+
             <p>{`${item.quantity}`}</p>
-            <button className="btn btn-neutral w-8 text-center h-8 p-2 rounded-full"
-              onClick={() => addItem(item)}
-            >+</button>
+
+            <button className="btn w-8 text-center h-8 p-2 rounded-full"
+              onClick={() => addItem(item)}>
+              <FaPlus />
+            </button>
           </div>
         </div>
       </div>
