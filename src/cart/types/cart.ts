@@ -5,4 +5,5 @@ export interface CartItemType {
     productPrice: Number;
     isExists: Boolean;
     productImage: String;
+    quantity: Number;
 }
