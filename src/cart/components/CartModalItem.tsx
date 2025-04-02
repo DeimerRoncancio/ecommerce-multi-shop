@@ -24,7 +24,7 @@ export default function CartModalItem({ item }: CartModalItemProps) {
           </div>
           <div className="flex items-center gap-2">
             <button className="btn btn-neutral w-8 text-center h-8 p-2 rounded-full"
-              onClick={() => removeItem(item.id)}
+              onClick={() => removeItem(item)}
             >-</button>
             <p>{`${item.quantity}`}</p>
             <button className="btn btn-neutral w-8 text-center h-8 p-2 rounded-full"

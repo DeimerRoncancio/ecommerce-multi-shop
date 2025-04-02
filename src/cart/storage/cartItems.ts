@@ -5,7 +5,7 @@ interface State {
   cartItems: CartItemType[];
   setItemsFromStorage: () => void;
   addItem: (productItem: CartItemType) => void;
-  removeItem: (id: String) => void;
+  removeItem: (productItem: CartItemType) => void;
 }
 
 export const useCartItems = create<State>((set, get) => {
@@ -38,23 +38,23 @@ export const useCartItems = create<State>((set, get) => {
       set({ cartItems: [ ...items, productItem ] });
     },
 
-    removeItem: (id: String) => {
+    removeItem: (productItem: CartItemType) => {
       const items = get().cartItems;
-      const itemsUpdated = items.filter(item => item.id !== id);
-      const cartItemIndex = items.findIndex(item => item.id === id);
-      const cartItem = items[cartItemIndex];
+      const cartItemIndex = items.findIndex(item => item.id === productItem.id);
 
-      if (cartItem && Number(cartItem.quantity) > 1) {
+      if (productItem && Number(productItem.quantity) > 1) {
         const newItems = [
           ...items.slice(0, cartItemIndex),
-          { ...cartItem, quantity: Number(cartItem.quantity) - 1 },
+          { ...productItem, quantity: Number(productItem.quantity) - 1 },
           ...items.slice(cartItemIndex + 1)
         ]
-
+        
         localStorage.setItem("cartItems", JSON.stringify([ ...newItems ]))
         set({ cartItems: [ ...newItems ] });
         return;
       }
+
+      const itemsUpdated = items.filter(item => item.id !== productItem.id);
       
       localStorage.setItem("cartItems", JSON.stringify([ ...itemsUpdated ]));
       set({ cartItems: [ ...itemsUpdated ] })

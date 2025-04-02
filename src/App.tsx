@@ -4,14 +4,30 @@ import axios from "axios";
 import { ProductTypes } from "./products/types/product";
 import { InitialValues } from "./products/helpers/InitialValues.helper";
 import { useCartItems } from "./cart/storage/cartItems";
-import { CartItemType } from "./cart/types/cart";
 
 function App() {
   const [products, setProducts] = useState<ProductTypes[]>(InitialValues);
   const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartItems();
 
-  const handleAddItem = (item: CartItemType) => {
-    addItem(item);
+  const handleAddItem = (product: ProductTypes) => {
+    const productItem = {
+      id: product.id,
+      productName: product.productName,
+      productDescription: product.description,
+      productImage: product.productImages[0].imageUrl,
+      isExists: true,
+      productPrice: product.price,
+      quantity: 1
+    }
+
+    addItem(productItem);
+  }
+
+  const handleRemoveItem = (product: ProductTypes) => {
+    const productItem = cartItems.filter(item => item.id === product.id);
+    const itemToRemove = { ...productItem[0], quantity: 1 }
+
+    removeItem(itemToRemove);
   }
 
   useEffect(() => {
@@ -27,16 +43,6 @@ function App() {
         products.map(product => {
           const isProductInCart = cartItems.some(item => item.id === product.id);
 
-          const productItem = {
-            id: product.id,
-            productName: product.productName,
-            productDescription: product.description,
-            productImage: product.productImages[0].imageUrl,
-            isExists: true,
-            productPrice: product.price,
-            quantity: 1
-          }
-
           return (
             <div key={product.id}>
               <img src={`${product.productImages[0].imageUrl}`} />
@@ -44,8 +50,8 @@ function App() {
               <button className={`btn ${!isProductInCart ? 'btn-neutral' : 'btn-secondary'}`} 
               onClick={() => {
                 !isProductInCart
-                ? handleAddItem(productItem)
-                : removeItem(product.id);
+                ? handleAddItem(product)
+                : handleRemoveItem(product);
               }}>
                 {
                   !isProductInCart
