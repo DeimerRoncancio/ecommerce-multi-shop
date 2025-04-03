@@ -1,35 +1,27 @@
 import "./App.css";
 import { useEffect } from "react";
-import { ProductTypes } from "./products/types/product";
-import { useCartStore } from "./cart/storage/cart";
 import useGetProducts from "./shared/hooks/api/useGetProducts";
-import { productToCar } from "./cart/mappers/items-mapper";
+import useCart from "./cart/hooks/useCart";
 
 function App() {
-  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartStore();
   const{ products } = useGetProducts();
-
-  const handleAddItem = (product: ProductTypes) => {
-    const productItem = productToCar({ product, quantity: 1, isExists: true });
-    addItem(productItem);
-  }
-
-  const handleRemoveItem = (product: ProductTypes) => {
-    const productItem = cartItems.filter(item => item.id === product.id);
-    const itemToRemove = { ...productItem[0], quantity: 1 }
-
-    removeItem(itemToRemove);
-  }
+  
+  const { 
+    items,
+    handleAddItem,
+    handleRemoveItem,
+    loadItemsFromStorage
+  } = useCart();
 
   useEffect(() => {
-    if (cartItems.length === 0) setItemsFromStorage();
+    loadItemsFromStorage();
   }, []);
 
   return (
     <div className="flex gap-6 justify-center p-7 items-center w-full my-7">
       {
         products.map(product => {
-          const isProductInCart = cartItems.some(item => item.id === product.id);
+          const isProductInCart = items.some(item => item.id === product.id);
 
           return (
             <div key={product.id}>

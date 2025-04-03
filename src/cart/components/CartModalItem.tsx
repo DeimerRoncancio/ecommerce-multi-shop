@@ -1,36 +1,21 @@
-import { useCartStore } from "../storage/cart";
 import { CartItemType } from "../types/cart";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaPlus, FaMinus  } from "react-icons/fa6";
-import { useState } from "react";
+import useCartItems from "../hooks/useCartItems";
 
 type CartModalItemProps = {
   item: CartItemType;
 }
 
 export default function CartModalItem({ item }: CartModalItemProps) {
-  const { addItem, addItems, removeItem } = useCartStore()
-  const [ quantity, setQuantity ] = useState(item.quantity);
-
-  const handleRemoveItem = () => {
-    removeItem({ ...item, quantity: 1 });
-  }
-
-  const increaseQuantity = () => {
-    addItem(item)
-    setQuantity(prev => Number(prev) + 1)
-  }
-
-  const decreaseQuantity = () => {
-    removeItem(item)
-    setQuantity(prev => Number(prev) - 1)
-  }
-
-  const updateQuantity = () => {
-    if (quantity === item.quantity) return;
-    if (quantity === 0) removeItem(item);
-    addItems({ ...item, quantity: quantity });
-  }
+  const {
+    quantity,
+    handleRemoveItem,
+    increaseQuantity,
+    decreaseQuantity,
+    changeQuantity,
+    updateQuantity 
+  } = useCartItems(item.id);
 
   return (
     <li className="flex p-1 w-full">
@@ -60,7 +45,7 @@ export default function CartModalItem({ item }: CartModalItemProps) {
             <input 
               value={`${quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" 
               type="number"
-              onChange={(event) => setQuantity(Number(event.target.value))}
+              onChange={(event) => changeQuantity(Number(event.target.value))}
               onBlur={updateQuantity}
               onKeyDown={(ev) => {
                 if (ev.key === "Enter") {
