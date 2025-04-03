@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import CartModal from "../../../cart/components/CartModal";
-import { useCartStore } from "../../../cart/storage/cart";
+import useCart from "../../../cart/hooks/useCart";
 
 export default function CartButton() {
-  const { cartItems } = useCartStore();
-  const [showCart, setShowCart] = useState(false);
+  const [ showCart, setShowCart ] = useState(false);
+  const { itemsQuantity } = useCart();
 
   const handleHiddeCart = () => {
     setShowCart(false);
@@ -21,7 +21,7 @@ export default function CartButton() {
               stroke="currentColor">
                 <IoCartOutline />
               </svg>
-              <span className="badge badge-sm indicator-item">{cartItems.length}</span>
+              <span className="badge badge-sm indicator-item">{itemsQuantity}</span>
             </div>
           </div>
         </div>
