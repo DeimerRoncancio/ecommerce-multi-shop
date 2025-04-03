@@ -1,13 +1,12 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { ProductTypes } from "./products/types/product";
-import { InitialValues } from "./products/helpers/InitialValues.helper";
 import { useCart } from "./cart/storage/cartItems";
+import useGetProducts from "./shared/hooks/api/useGetProducts";
 
 function App() {
-  const [products, setProducts] = useState<ProductTypes[]>(InitialValues);
   const { cartItems, addItem, setItemsFromStorage, removeItem } = useCart();
+  const{ products } = useGetProducts();
 
   const handleAddItem = (product: ProductTypes) => {
     const productItem = {
@@ -32,9 +31,6 @@ function App() {
 
   useEffect(() => {
     if (cartItems.length === 0) setItemsFromStorage();
-
-    axios('https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/products')
-      .then(res => setProducts(res.data));
   }, []);
 
   return (

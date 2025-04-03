@@ -1,13 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginAccessUserType } from "../helpers/login.helper";
-import Cookies from "js-cookie";
-import axios from "axios";
+import useLogin from "../../shared/hooks/api/useLogin";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const { sendData } = useLogin();
 
   const {
     register,
@@ -17,13 +15,10 @@ export default function Login() {
     resolver: zodResolver(LoginAccessUser),
   });
 
-  const onSubmit: SubmitHandler<LoginAccessUserType> = (data) => {
-    axios
-      .post("https://multi-shop-api-76abbcfe5b70.herokuapp.com/login", data)
-      .then((res) => {
-        Cookies.set("accessHome", res.data.token);
-        navigate("/profile");
-      });
+  const onSubmit: SubmitHandler<LoginAccessUserType> = (
+    data: LoginAccesUserFormData
+  ) => {
+    sendData(data);
   };
 
   return (
