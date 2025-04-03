@@ -26,7 +26,7 @@ export const useCartStore = create<State>((set, get) => {
       if (cartItemIndex >= 0) {
         const newItems = [
           ...items.slice(0, cartItemIndex),
-          { ...items[cartItemIndex], quantity: Number(items[cartItemIndex].quantity) + 1 },
+          { ...items[cartItemIndex], quantity: items[cartItemIndex].quantity + 1 },
           ...items.slice(cartItemIndex + 1)
         ]
 
@@ -55,10 +55,10 @@ export const useCartStore = create<State>((set, get) => {
       const items = get().cartItems;
       const cartItemIndex = items.findIndex(item => item.id === productItem.id);
 
-      if (productItem && Number(productItem.quantity) > 1) {
+      if (productItem && productItem.quantity > 1) {
         const newItems = [
           ...items.slice(0, cartItemIndex),
-          { ...productItem, quantity: Number(productItem.quantity) - 1 },
+          { ...productItem, quantity: productItem.quantity - 1 },
           ...items.slice(cartItemIndex + 1)
         ]
         

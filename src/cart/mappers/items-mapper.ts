@@ -3,8 +3,8 @@ import { CartItemType } from "../types/cart";
 
 type productToCartProps = {
   product: ProductTypes,
-  quantity: Number,
-  isExists: Boolean
+  quantity: number,
+  isExists: boolean
 }
 
 export const productToCar = ({ product, quantity, isExists }: productToCartProps): CartItemType => {

@@ -14,16 +14,16 @@ export default function useCartItems(itemId: String) {
   const increaseQuantity = () => {
     if (!item) return;
     addItem(item);
-    setQuantity(prev => Number(prev) + 1);
+    setQuantity(prev => prev + 1);
   }
 
   const decreaseQuantity = () => {
     if (!item) return;
     removeItem(item);
-    setQuantity(prev => Number(prev) - 1)
+    setQuantity(prev => prev - 1)
   }
 
-  const changeQuantity = (val: Number) => {
+  const changeQuantity = (val: number) => {
     setQuantity(val);
   }
 

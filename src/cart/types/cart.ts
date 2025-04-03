@@ -1,9 +1,9 @@
 export interface CartItemType {
-    id: String;
-    productName: String;
-    productDescription: String;
-    productPrice: Number;
-    isExists: Boolean;
-    productImage: String;
-    quantity: Number;
+    id: string;
+    productName: string;
+    productDescription: string;
+    productPrice: number;
+    isExists: boolean;
+    productImage: string;
+    quantity: number;
 }
