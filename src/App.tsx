@@ -1,24 +1,16 @@
 import "./App.css";
 import { useEffect } from "react";
 import { ProductTypes } from "./products/types/product";
-import { useCart } from "./cart/storage/cartItems";
+import { useCartStore } from "./cart/storage/cart";
 import useGetProducts from "./shared/hooks/api/useGetProducts";
+import { productToCar } from "./cart/mappers/items-mapper";
 
 function App() {
-  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCart();
+  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartStore();
   const{ products } = useGetProducts();
 
   const handleAddItem = (product: ProductTypes) => {
-    const productItem = {
-      id: product.id,
-      productName: product.productName,
-      productDescription: product.description,
-      productImage: product.productImages[0].imageUrl,
-      isExists: true,
-      productPrice: product.price,
-      quantity: 1
-    }
-
+    const productItem = productToCar({ product, quantity: 1, isExists: true });
     addItem(productItem);
   }
 

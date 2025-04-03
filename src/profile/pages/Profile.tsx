@@ -1,41 +1,19 @@
-import axios from "axios";
+import { UserInitialValues } from "../helpers/users-initial-values.helper";
+import useGetUser from "../../shared/hooks/api/useGetUser";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { User } from "../types/user";
+import Cookies from "js-cookie";
 
 export default function Profile() {
-  const [user, setUser] = useState<User>({
-    name: "",
-    email: "",
-    profileImage: {
-      id: "",
-      imageId: "",
-      imageUrl: "",
-      name: "",
-    },
-    secondName: "",
-    lastnames: "",
-    phoneNumber: 0,
-    gender: "",
-    admin: false,
-    enabled: false,
-  });
+  const [user, setUser] = useState<User>(UserInitialValues);
+  const { getUser } = useGetUser();
 
   useEffect(() => {
     const token = Cookies.get("accessHome");
 
-    axios
-      .get(
-        `https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/get-user/${token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      .then((res) => {
-        setUser(res.data);
-      });
+    getUser(token).then(res => {
+      setUser(res.data);
+    });
   }, []);
 
   return (

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import CartModal from "../../../cart/components/CartModal";
-import { useCart } from "../../../cart/storage/cartItems";
+import { useCartStore } from "../../../cart/storage/cart";
 
 export default function CartButton() {
-  const { cartItems } = useCart();
+  const { cartItems } = useCartStore();
   const [showCart, setShowCart] = useState(false);
 
   const handleHiddeCart = () => {

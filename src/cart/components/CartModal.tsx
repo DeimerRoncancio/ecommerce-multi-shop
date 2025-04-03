@@ -1,4 +1,4 @@
-import { useCart } from "../storage/cartItems"
+import { useCartStore } from "../storage/cart"
 import CartModalItem from "./CartModalItem";
 
 type CartModalProps = {
@@ -7,7 +7,7 @@ type CartModalProps = {
 }
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
-  const { cartItems } = useCart();
+  const { cartItems } = useCartStore();
   
   return (
     <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex absolute 

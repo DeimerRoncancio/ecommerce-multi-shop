@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ProductTypes } from "../../../products/types/product";
-import { InitialValues } from "../../../products/helpers/InitialValues.helper";
+import { ProductsInitialValues } from "../../../products/helpers/products-initial-values.helper";
 import { envs } from "../../config/env.config";
 
 export default function useGetProducts() {
-  const [products, setProducts] = useState<ProductTypes[]>(InitialValues);
+  const [products, setProducts] = useState<ProductTypes[]>(ProductsInitialValues);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

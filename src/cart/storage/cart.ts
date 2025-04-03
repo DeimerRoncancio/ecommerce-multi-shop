@@ -9,7 +9,7 @@ interface State {
   removeItem: (productItem: CartItemType) => void;
 }
 
-export const useCart = create<State>((set, get) => {
+export const useCartStore = create<State>((set, get) => {
   return {
     cartItems: [],
 

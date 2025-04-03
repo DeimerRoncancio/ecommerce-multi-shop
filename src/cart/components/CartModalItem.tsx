@@ -1,4 +1,4 @@
-import { useCart } from "../storage/cartItems";
+import { useCartStore } from "../storage/cart";
 import { CartItemType } from "../types/cart";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaPlus, FaMinus  } from "react-icons/fa6";
@@ -9,7 +9,7 @@ type CartModalItemProps = {
 }
 
 export default function CartModalItem({ item }: CartModalItemProps) {
-  const { addItem, addItems, removeItem } = useCart()
+  const { addItem, addItems, removeItem } = useCartStore()
   const [ quantity, setQuantity ] = useState(item.quantity);
 
   const handleRemoveItem = () => {
