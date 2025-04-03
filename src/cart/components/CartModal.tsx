@@ -7,7 +7,7 @@ type CartModalProps = {
 }
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
-  const { items, itemsQuantity } = useCart();
+  const { items, totalPrice, itemsQuantity } = useCart();
   
   return (
     <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex absolute 
@@ -36,7 +36,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           }
         </ul>
         <div className="card-actions">
-          <span className="text-info">Subtotal: $999</span>
+          <span className="text-info">Subtotal: {`${totalPrice}`}</span>
           <button className="btn btn-primary btn-block">Ver carrito</button>
         </div>
       </div>

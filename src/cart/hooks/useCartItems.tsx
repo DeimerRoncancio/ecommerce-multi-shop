@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCartStore } from "../storage/cart";
 
 export default function useCartItems(itemId: String) {
-  const { cartItems, setItemsFromStorage, addItem, addItems, removeItem } = useCartStore();
+  const { cartItems, addItem, addItems, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id ===itemId);
 
   const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
@@ -36,10 +36,6 @@ export default function useCartItems(itemId: String) {
     : addItems({ ...item, quantity: quantity });
   }
 
-  const setCartOnStorage = () => {
-    if (cartItems.length === 0) setItemsFromStorage();
-  }
-
   return {
     quantity,
     handleRemoveItem,
@@ -47,6 +43,5 @@ export default function useCartItems(itemId: String) {
     decreaseQuantity,
     updateQuantity,
     changeQuantity,
-    setCartOnStorage,
   }
 }
