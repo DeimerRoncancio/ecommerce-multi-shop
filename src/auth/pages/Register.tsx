@@ -39,11 +39,7 @@ export const Register = () => {
       formData.append("profileImage", file);
     }
 
-    axios
-      .post(
-        "https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/register",
-        formData,
-      )
+    axios.post("https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/register", formData,)
       .then(() => {
         toast.success("Registro con exito", {
           position: "top-right",
@@ -55,8 +51,7 @@ export const Register = () => {
           progress: undefined,
           theme: "light",
         });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         toast.error("Error al registrarse", {
           position: "top-right",
           autoClose: 5000,
@@ -73,6 +68,7 @@ export const Register = () => {
     addUserType.map((key) => {
       setValue(key, "");
     });
+
     setPreviewImage(null);
     file.current = null;
   };
@@ -91,20 +87,15 @@ export const Register = () => {
     <>
       <div className="w-full flex flex-col justify-center items-center my-7">
         <ToastContainer />
-        <form
-          className="w-full md:w-[80%] h-[80%] flex flex-col gap-4 items-center"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="w-full md:w-[80%] h-[80%] flex flex-col gap-4 items-center" 
+          onSubmit={handleSubmit(onSubmit)}>
           <h2 className="font-extrabold text-xl text-green-500">
             Ecommerce Multi Shop
           </h2>
           <div className="w-full flex flex-col gap-4 items-center">
             {InputsFromRegister.map((input, index) => {
               return (
-                <div
-                  key={index}
-                  className="w-[90%] flex flex-col gap-2 md:w-[40%]"
-                >
+                <div key={index} className="w-[90%] flex flex-col gap-2 md:w-[40%]">
                   <label htmlFor="">
                     {input.label}{" "}
                     {input.label === "Primer Nombre" ||
@@ -129,11 +120,7 @@ export const Register = () => {
             })}
             <div className="w-[90%] md:w-[40%]">
               <label htmlFor="">Genero</label>
-              <select
-                className="select select-primary w-full"
-                defaultValue=""
-                {...register("gender")}
-              >
+              <select className="select select-primary w-full" defaultValue=""{...register("gender")}>
                 <option value="notToSaid">Seleccionar Genero</option>
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
@@ -151,11 +138,7 @@ export const Register = () => {
             </label>
             {previewImage && (
               <>
-                <img
-                  className="w-[100px] h-[100px] object-cover rounded-3xl"
-                  src={previewImage}
-                  alt=""
-                />
+                <img className="w-[100px] h-[100px] object-cover rounded-3xl" src={previewImage} alt="" />
               </>
             )}
           </div>

@@ -10,10 +10,7 @@ export default function ProtectedAuth() {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        `https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/token-validation/${cookie}`,
-      )
+    axios.get(`https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/token-validation/${cookie}`,)
       .then(() => {})
       .catch(() => {
         redirect("/login");

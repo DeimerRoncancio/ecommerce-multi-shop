@@ -58,7 +58,8 @@ export default function CartModalItem({ item }: CartModalItemProps) {
             </button>
 
             <input 
-              value={`${quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" type="number"
+              value={`${quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" 
+              type="number"
               onChange={(event) => setQuantity(Number(event.target.value))}
               onBlur={updateQuantity}
               onKeyDown={(ev) => {

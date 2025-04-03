@@ -16,7 +16,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
       <div className={`${viewCart ? '-translate-x-0' : 'translate-x-full'} flex flex-col card-body p-2 w-[384px] 
         h-full right-0 absolute bg-white transition-all duration-300 ease justify-between`}>
         <div className="flex justify-between p-2">
-          <span className="text-base ">8 Items agregados al carrito</span>
+          <span className="text-base ">{`${cartItems.length}`} Items agregados al carrito</span>
           <button className="btn btn-secondary rounded-full shadow-none" onClick={hiddeCart}>
             Close
           </button>
