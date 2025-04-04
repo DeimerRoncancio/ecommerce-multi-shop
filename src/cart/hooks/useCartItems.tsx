@@ -3,7 +3,7 @@ import { useCartStore } from "../storage/cart";
 
 export default function useCartItems(itemId: String) {
   const { cartItems, addItem, addItems, removeItem } = useCartStore();
-  const item = cartItems.find(item => item.id ===itemId);
+  const item = cartItems.find(item => item.id === itemId);
 
   const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
 

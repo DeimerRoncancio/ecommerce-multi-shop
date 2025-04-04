@@ -43,6 +43,6 @@ export default function useCart() {
     itemsQuantity,
     handleAddItem,
     handleRemoveItem,
-    loadItemsFromStorage
+    loadItemsFromStorage,
   }
 }
