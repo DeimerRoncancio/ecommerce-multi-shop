@@ -21,8 +21,8 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
 
   return (
     <li className="flex flex-col p-1 w-full items-center ">
-      <div className="flex">
-        <div className="flex items-center w-20 h-20 p-1 object-contain">
+      <div className="flex w-full items-center">
+        <div className="flex items-center w-20 h-20 p-0 pr-1 object-contain">
           <img src={`${item.productImage}`} />
         </div>
         <div className="flex-1">
@@ -37,12 +37,12 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
               </p>
             </div>
             <div className="flex items-center gap-2 p-2 shadow-md rounded-2xl bg-[#f4f4f4]">
-              <button className="btn btn-link text-[#9e5e43] w-6 text-center text-xl h-6 p-0 rounded-full"
+              <button className="btn btn-link text-[#7c2908b7] hover:text-[#7c2908ea] w-6 text-center text-xl h-6 p-0 rounded-full"
                 onClick={handleRemoveItem}>
                 <MdDeleteOutline />
               </button>
 
-              <button className={`btn ${item.quantity === 1 ? 'btn-disabled' : 'btn'} w-6 text-center h-6 p-0 rounded-full`}
+              <button className={`btn ${item.quantity === 1 ? 'btn-disabled' : 'btn-soft'} w-6 text-center h-6 p-0 rounded-full`}
                 onClick={decreaseQuantity}>
                 <FaMinus />
               </button>
@@ -60,7 +60,7 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
                 }}
               />
 
-              <button className="btn w-6 text-center h-6 p-0 rounded-full"
+              <button className="btn btn-soft w-6 text-center h-6 p-0 rounded-full"
                 onClick={increaseQuantity}>
                 <FaPlus />
               </button>

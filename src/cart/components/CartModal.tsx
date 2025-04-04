@@ -25,7 +25,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           </button>
         </div>
 
-        <ul className="flex flex-col h-[calc(100%-69px)] p-2 overflow-auto">
+        <ul className="flex flex-col h-[calc(100%-69px)] p-1 overflow-auto">
           {
             !items.length ?
               <div className="flex items-center text-[#646464] text-base w-full h-40">
@@ -49,7 +49,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
               ${new Intl.NumberFormat("es-ES").format(totalPrice)}
             </span>
           </div>
-          <button className="btn btn-accent btn-block rounded-sm">Ver carrito</button>
+          <button className="btn btn-neutral btn-block rounded-sm">Ver carrito</button>
           <button className="btn btn-link btn-block p-0 m-0 h-fit text-[#646464] hover:text-black"
           onClick={clear}>
             <AiOutlineClear /> Limpiar carrito
