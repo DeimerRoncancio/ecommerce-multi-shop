@@ -4,7 +4,7 @@ import { productToCar } from "../mappers/items-mapper";
 import { useCartStore } from "../storage/cart";
 
 export default function useCart() {
-  const { cartItems, addItem, setItemsFromStorage, removeItem } = useCartStore();
+  const { cartItems, addItem, setItemsFromStorage, removeItem, clearCart } = useCartStore();
   const [ itemsQuantity, setItemsQuantity ] = useState(0);
   const [ totalPrice, setTotalPrice ] = useState(0);
 
@@ -19,6 +19,10 @@ export default function useCart() {
     
     const itemToRemove = { ...productItem, quantity: 1 }
     removeItem(itemToRemove);
+  }
+
+  const clear = () => {
+    clearCart();
   }
 
   const loadItemsFromStorage = () => {
@@ -44,5 +48,6 @@ export default function useCart() {
     handleAddItem,
     handleRemoveItem,
     loadItemsFromStorage,
+    clear
   }
 }

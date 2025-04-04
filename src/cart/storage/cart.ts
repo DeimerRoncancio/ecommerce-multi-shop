@@ -7,6 +7,7 @@ interface State {
   addItem: (productItem: CartItemType) => void;
   addItems: (productItem: CartItemType) => void;
   removeItem: (productItem: CartItemType) => void;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<State>((set, get) => {
@@ -72,5 +73,9 @@ export const useCartStore = create<State>((set, get) => {
       localStorage.setItem("cartItems", JSON.stringify([ ...itemsUpdated ]));
       set({ cartItems: [ ...itemsUpdated ] })
     },
+
+    clearCart: () => {
+      set({ cartItems: [] })
+    }
   }
 })
