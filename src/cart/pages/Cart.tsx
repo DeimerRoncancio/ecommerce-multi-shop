@@ -3,9 +3,10 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { FaDollarSign } from "react-icons/fa6";
 import { BsPerson } from "react-icons/bs";
-import ProfileButton from "../../shared/components/navbar/ProfileButton";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { GiPadlock } from "react-icons/gi";
+import ProfileButton from "../../shared/components/navbar/ProfileButton";
+import CartStepsItem from "../components/CartStepsItem";
 
 export default function Cart() {
   return (
@@ -42,34 +43,17 @@ export default function Cart() {
           </li>
         </ul>
       </header>
-      <div className="w-full flex items-start gap-8 justify-center p-10">
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <button className="bg-[#f14913] p-1 rounded-full">
-            <MdOutlineShoppingCart color="white" size={25} />
-          </button>
-          <p className="text-[#5a5a5a] font-semibold">Carrito</p>
-        </div>
+      <div className="w-full flex items-start gap-8 justify-center p-10 pb-6">
+        <CartStepsItem isComplete step="Carrito" Icon={MdOutlineShoppingCart} />
         <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f14913]"></span>
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <button className="p-1 rounded-full">
-            <BsPerson color="#9a9a9a" size={25} />
-          </button>
-          <p className="text-[#9a9a9a] font-sans">Datos</p>
-        </div>
+        <CartStepsItem isComplete={false} step="Datos" Icon={BsPerson} />
         <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f3e2e2]"></span>
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <button className="p-1 rounded-full">
-            <MdOutlineShoppingBag color="#9a9a9a" size={25} />
-          </button>
-          <p className="text-[#9a9a9a] font-sans">Entrega</p>
-        </div>
+        <CartStepsItem isComplete={false} step="Entrega" Icon={MdOutlineShoppingBag} />
         <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f3e2e2]"></span>
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <button className="p-1 rounded-full">
-            <FaDollarSign color="#9a9a9a" size={25} />
-          </button>
-          <p className="text-[#9a9a9a] font-sans">Pago</p>
-        </div>
+        <CartStepsItem isComplete={false} step="Pago" Icon={FaDollarSign} />
+      </div>
+      <div className="flex w-full items-center justify-center">
+        <h1 className="text-xl text-[#5a5a5a] font-semibold">Carrito de compras</h1>
       </div>
     </div>
   )
