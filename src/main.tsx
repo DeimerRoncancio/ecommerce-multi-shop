@@ -7,6 +7,7 @@ import Profile from "./profile/pages/Profile.tsx";
 import ProtectedAuth from "./auth/routes/ProtectedAuth.tsx";
 import NavBar from "./shared/components/navbar/NavBar.tsx";
 import { Register } from "./auth/pages/Register.tsx";
+import Cart from "./cart/pages/Cart.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </Route>
       </Route>
 
+      <Route path="cart" element={<Cart />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
     </Routes>

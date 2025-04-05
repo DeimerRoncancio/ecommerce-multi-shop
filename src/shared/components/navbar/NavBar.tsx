@@ -11,9 +11,8 @@ export default function NavBar() {
       <nav className="flex border-b-[1px] p-3 px-4 border-[#f1e1dc]">
         <ul className="w-1/3 gap-16 flex">
           <NavLink to="/" className="w-1/4 my-auto">
-            <button className="btn btn-link p-0 bg-transparent hover:bg-transparent border-transparent hover:border-transparent
-              shadow-transparent">
-              <img src='src\assets\images\logo-with-bag.webp' />
+            <button className="btn btn-link p-0">
+              <img src='src\assets\images\logo.webp' />
             </button>
           </NavLink>
           <MenuButton />
@@ -27,23 +26,20 @@ export default function NavBar() {
           <li className="px-4 h-full flex items-center">
             <CartButton />
           </li>
-          <li className="flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-              <div className="w-10 rounded-full flex justify-center text-[35px] text-[#343e49]">
-                <IoMdHeartEmpty />
-              </div>
-            </div>
+          <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
+            <button className="btn btn-ghost w-10 h-10 p-0 rounded-full text-[#343e49]">
+              <IoMdHeartEmpty size={32} />
+            </button>
           </li>
-          <li className="flex h-full items-center border-r-[1px] border-[#a2a9b1] px-1 text-[#a2a9b1]">
-            <div>
-              <button className="flex flex-col btn btn-link decoration-transparent items-start text-[#343e49] hover:text-[#343e499f] font-medium text-xl">
-                <span className="p-0 m-0 leading-3">Mis</span>
-                <span className="p-0 m-0 leading-3">compras</span>
-              </button>
-            </div>
+          <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
+            <button className="flex flex-col p-0 btn btn-link decoration-transparent items-start text-[#343e49] 
+              hover:text-[#343e499f] gap-0 font-semibold text-base">
+              <span className="p-0 m-0 leading-4">Mis</span>
+              <span className="p-0 m-0 leading-4">compras</span>
+            </button>
           </li>
           <li className="flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]">
-            <ProfileButton />
+            <ProfileButton size={40} />
           </li>
         </ul>
       </nav>

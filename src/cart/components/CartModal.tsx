@@ -2,6 +2,7 @@ import useCart from "../hooks/useCart";
 import CartModalItem from "./CartModalItem";
 import { IoCloseOutline    } from "react-icons/io5";
 import { AiOutlineClear } from "react-icons/ai";
+import { useNavigate } from "react-router";
 
 type CartModalProps = {
   viewCart: boolean,
@@ -10,6 +11,13 @@ type CartModalProps = {
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   const { items, totalPrice, itemsQuantity, clear } = useCart();
+
+  const navigate = useNavigate();
+
+  const goCart = () => {
+    navigate("/cart");
+    hiddeCart();
+  }
 
   return (
     <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex absolute 
@@ -49,7 +57,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
               ${new Intl.NumberFormat("es-ES").format(totalPrice)}
             </span>
           </div>
-          <button className="btn btn-neutral btn-block rounded-sm">Ver carrito</button>
+          <button className="btn btn-neutral btn-block rounded-sm" onClick={goCart}>Ver carrito/pagar</button>
           <button className="btn btn-link btn-block p-0 m-0 h-fit text-[#646464] hover:text-black"
           onClick={clear}>
             <AiOutlineClear /> Limpiar carrito

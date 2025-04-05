@@ -15,9 +15,9 @@ export default function CartButton() {
     <>
       <div className="dropdown dropdown-end">
         <div className="h-full flex items-center" onClick={() => setShowCart(!showCart)}>
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+          <div tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator text-[25px] text-[#343e49]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" 
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" 
               stroke="currentColor">
                 <IoCartOutline />
               </svg>
