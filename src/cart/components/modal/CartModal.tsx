@@ -1,8 +1,8 @@
-import useCart from "../hooks/useCart";
-import CartModalItem from "./CartModalItem";
 import { IoCloseOutline    } from "react-icons/io5";
 import { AiOutlineClear } from "react-icons/ai";
 import { useNavigate } from "react-router";
+import useCart from "../../hooks/useCart";
+import CartModalItem from "./CartModalItem";
 
 type CartModalProps = {
   viewCart: boolean,

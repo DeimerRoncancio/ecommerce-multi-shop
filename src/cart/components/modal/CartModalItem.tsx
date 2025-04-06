@@ -1,7 +1,7 @@
-import { CartItemType } from "../types/cart";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaPlus, FaMinus  } from "react-icons/fa6";
-import useCartItems from "../hooks/useCartItems";
+import useCartItems from "../../hooks/useCartItems";
+import { CartItemType } from "../../types/cart";
 
 type CartModalItemProps = {
   item: CartItemType;
