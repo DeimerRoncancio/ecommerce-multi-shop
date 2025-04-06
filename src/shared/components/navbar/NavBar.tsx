@@ -10,18 +10,16 @@ export default function NavBar() {
     <>
       <nav className="flex border-b-[1px] p-3 px-4 border-[#f1e1dc]">
         <ul className="w-1/3 gap-16 flex">
-          <NavLink to="/" className="w-1/4 my-auto">
-            <button className="btn btn-link p-0">
-              <img src='src\assets\images\logo.webp' />
-            </button>
+          <NavLink to="/" className="w-1/4 my-auto btn btn-link p-0">
+            <img src='src\assets\images\logo.webp' />
           </NavLink>
           <MenuButton />
         </ul>
 
         <ul className="w-1/3 flex justify-center items-center">
-          <Search/>
+          <Search />
         </ul>
-        
+
         <ul className="flex-row-reverse gap-0 flex items-center w-1/3">
           <li className="px-4 h-full flex items-center">
             <CartButton />
@@ -43,7 +41,9 @@ export default function NavBar() {
           </li>
         </ul>
       </nav>
-      <Outlet />
+      <main className="m-auto">
+        <Outlet />
+      </main>
     </>
   );
 }

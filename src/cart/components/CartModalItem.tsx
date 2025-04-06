@@ -28,7 +28,7 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
         <div className="flex-1">
           <div>
             <p className="truncate w-61 text-[#5a5a5a] text-base">{item.productDescription}</p>
-            <h2 className="truncate text-[10px] text-[#9a9a9a]">{item.productName.toUpperCase()}</h2>
+            <h2 className="truncate text-[10px] text-[#9a9a9a] uppercase">{item.productName}</h2>
           </div>
           <div className="flex justify-between items-center mt-2">
             <div>

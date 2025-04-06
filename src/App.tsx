@@ -14,7 +14,7 @@ function App() {
   } = useCart();
 
   useEffect(() => {
-    loadItemsFromStorage();
+    if (!items.length) loadItemsFromStorage();
   }, []);
 
   return (
