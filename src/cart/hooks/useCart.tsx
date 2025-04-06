@@ -22,6 +22,7 @@ export default function useCart() {
   }
 
   const clear = () => {
+    localStorage.removeItem("cartItems");
     clearCart();
   }
 

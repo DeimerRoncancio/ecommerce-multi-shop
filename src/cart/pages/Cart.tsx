@@ -85,7 +85,13 @@ export default function Cart() {
             </li>
 
             {
-              items.map((item, index) => <CartItem key={item.id} item={item} length={items.length} index={index} />)
+              !itemsQuantity ? 
+                <div className="flex items-center justify-center text-[#646464] text-xl w-full h-40">
+                  <p className="text-center">No tienes productos en tu carrito</p>
+                </div> :
+                items.map((item, index) =>
+                  <CartItem key={item.id} item={item} length={items.length} index={index} />
+                )
             }
           </ul>
           <ul className="w-[30%]">
@@ -134,7 +140,7 @@ export default function Cart() {
           </ul>
         </div>
       </main>
-      
+
       <footer className="px-10 py-4 flex flex-col text-[#7d7d7d]">
         <div className="w-full h-[1px] mb-4 mt-2.5 bg-[#e3e3e3]"></div>
         <div className="flex w-full justify-between">

@@ -36,7 +36,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
         <ul className="flex flex-col h-[calc(100%-69px)] p-1 overflow-auto">
           {
             !items.length ?
-              <div className="flex items-center text-[#646464] text-base w-full h-40">
+              <div className="flex items-center justify-center text-[#646464] text-base w-full h-40">
                 <p className="text-center">No tienes productos en tu carrito</p>
               </div> :
             items.map((item, index) => (
@@ -59,7 +59,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           </div>
           <button className="btn btn-neutral btn-block rounded-sm" onClick={goCart}>Ver carrito/pagar</button>
           <button className="btn btn-link btn-block p-0 m-0 h-fit text-[#646464] hover:text-black"
-          onClick={clear}>
+            onClick={clear}>
             <AiOutlineClear /> Limpiar carrito
           </button>
         </div>
