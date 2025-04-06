@@ -5,7 +5,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 export default function Cart() {
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="flex flex-col min-h-screen justify-between">
       <nav className="flex w-full bg-[#ffece59a] p-1 px-4">
         <ul className="w-1/3 gap-16 flex">
           <NavLink to="/" className="w-13 pl-4 z-10 btn btn-link p-0">

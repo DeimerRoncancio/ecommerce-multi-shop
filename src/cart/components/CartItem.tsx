@@ -3,6 +3,7 @@ import useCartItems from "../hooks/useCartItems";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { TbCurrencyDollar } from "react-icons/tb";
 import { CartItemType } from "../types/cart";
+import { useEffect } from "react";
 
 type CartItemProps = {
   item: CartItemType,
@@ -13,12 +14,16 @@ type CartItemProps = {
 export default function CartItem({ item, length, index }: CartItemProps) {
   const {
     quantity,
+    totalPrice,
     handleRemoveItem,
     increaseQuantity,
     decreaseQuantity,
+    handleTotalPrice,
     changeQuantity,
     updateQuantity
   } = useCartItems(item.id);
+
+  useEffect(() => handleTotalPrice(), [item.quantity]);
 
   return (
     <li className={`w-full flex ${length - 1 === index ? 'border-b-1' : ''} border-x-1 border-t-1 border-[#e2e1e1] 
@@ -34,7 +39,7 @@ export default function CartItem({ item, length, index }: CartItemProps) {
         <div className="flex justify-center items-center">
           <TbCurrencyDollar color="#5a5a5a" size={19} />
           <p className="text-[#5a5a5a] flex font-semibold">
-            {new Intl.NumberFormat("es-ES").format(item.productPrice)}
+            {new Intl.NumberFormat("es-ES").format(totalPrice)}
           </p>
         </div>
         <div className="flex items-center">

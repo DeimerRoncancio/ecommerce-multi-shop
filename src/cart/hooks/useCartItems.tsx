@@ -6,6 +6,7 @@ export default function useCartItems(itemId: String) {
   const item = cartItems.find(item => item.id === itemId);
 
   const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
+  const [ totalPrice, setTotalPrice ] = useState(item ? item.productPrice : 0);
 
   const handleRemoveItem = () => {
     if (item) removeItem({ ...item, quantity: 1 });
@@ -23,6 +24,11 @@ export default function useCartItems(itemId: String) {
     setQuantity(prev => prev - 1)
   }
 
+  const handleTotalPrice = () => {
+    if (!item) return;
+    setTotalPrice(item.productPrice * item.quantity);
+  }
+
   const changeQuantity = (val: number) => {
     setQuantity(val);
   }
@@ -38,8 +44,10 @@ export default function useCartItems(itemId: String) {
 
   return {
     quantity,
+    totalPrice,
     handleRemoveItem,
     increaseQuantity,
+    handleTotalPrice,
     decreaseQuantity,
     updateQuantity,
     changeQuantity,
