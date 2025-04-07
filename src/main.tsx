@@ -9,6 +9,7 @@ import NavBar from "./shared/components/navbar/NavBar.tsx";
 import { Register } from "./auth/pages/Register.tsx";
 import Cart from "./cart/pages/Cart.tsx";
 import CartContent from "./cart/components/CartContent.tsx";
+import CartHeader from "./cart/components/CartHeader.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       </Route>
 
       <Route element={<Cart />}>
-        <Route path="cart" element={<CartContent />} />
+        <Route element={<CartHeader />}>
+          <Route path="cart" element={<CartContent />} />
+        </Route>
       </Route>
 
       <Route path="login" element={<Login />} />

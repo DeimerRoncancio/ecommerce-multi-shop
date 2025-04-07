@@ -2,6 +2,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaPlus, FaMinus  } from "react-icons/fa6";
 import useCartItems from "../../hooks/useCartItems";
 import { CartItemType } from "../../types/cart";
+import { useEffect } from "react";
 
 type CartModalItemProps = {
   item: CartItemType;
@@ -12,12 +13,16 @@ type CartModalItemProps = {
 export default function CartModalItem({ item, length, index }: CartModalItemProps) {
   const {
     quantity,
+    totalPrice,
     handleRemoveItem,
     increaseQuantity,
     decreaseQuantity,
+    handleTotalPrice,
     changeQuantity,
     updateQuantity 
   } = useCartItems(item.id);
+
+  useEffect(() => handleTotalPrice(), [item.quantity]);
 
   return (
     <li className="flex flex-col p-1 w-full items-center ">
@@ -33,7 +38,7 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
           <div className="flex justify-between items-center mt-2">
             <div>
               <p className="text-[#5a5a5a] ml-2 font-semibold">
-                $ {new Intl.NumberFormat("es-ES").format(item.productPrice)}
+                $ {new Intl.NumberFormat("es-ES").format(totalPrice)}
               </p>
             </div>
             <div className="flex items-center gap-2 p-2 shadow-md rounded-2xl bg-[#f4f4f4]">

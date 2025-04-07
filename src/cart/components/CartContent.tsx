@@ -1,16 +1,14 @@
 import { useEffect } from "react";
 import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
 import useCart from "../hooks/useCart";
-import CartStepsItem from "./CartStepsItem";
-import { MdOutlineShoppingBag, MdOutlineShoppingCart } from "react-icons/md";
-import { BsPerson } from "react-icons/bs";
-import { FaDollarSign } from "react-icons/fa6";
-import { AiOutlineClear } from "react-icons/ai";
 import CartItem from "./CartItem";
 import { LiaDollarSignSolid } from "react-icons/lia";
+import { useNavigate } from "react-router";
+import ClearButton from "./ClearButton";
 
 export default function CartContent() {
-  const { items, itemsQuantity, totalPrice, clear, loadItemsFromStorage } = useCart();
+  const { items, itemsQuantity, totalPrice, loadItemsFromStorage } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!items.length) loadItemsFromStorage();
@@ -18,16 +16,6 @@ export default function CartContent() {
 
   return (
     <>
-      <header className="w-full flex items-start gap-8 justify-center p-10 pb-6 mt-10">
-        <CartStepsItem isComplete step="Carrito" Icon={MdOutlineShoppingCart} />
-        <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f14913]"></span>
-        <CartStepsItem isComplete={false} step="Datos" Icon={BsPerson} />
-        <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f3e2e2]"></span>
-        <CartStepsItem isComplete={false} step="Entrega" Icon={MdOutlineShoppingBag} />
-        <span className="relative w-[140px] h-[2.5px] top-[18px] rounded-full bg-[#f3e2e2]"></span>
-        <CartStepsItem isComplete={false} step="Pago" Icon={FaDollarSign} />
-      </header>
-
       <div className="flex m-10 mt-15 gap-10">
         <ul className="flex flex-col w-[70%]">
           <li className="flex justify-between mb-5 items-center">
@@ -37,11 +25,7 @@ export default function CartContent() {
             </div>
 
             <div>
-              <button className="btn btn-link btn-block p-0 m-0 h-fit text-base text-[#646464] hover:text-black"
-                onClick={clear}>
-                <AiOutlineClear />
-                Limpiar carrito
-              </button>
+              <ClearButton fontSize={16} />
             </div>
           </li>
 
@@ -59,7 +43,7 @@ export default function CartContent() {
           <li className="mb-5">
             <h2 className="text-2xl text-[#333333] font-semibold">Resumen de la compra</h2>
           </li>
-          <li className="text-[#5a5a5a] bg-[#f3e2e27e] py-4 rounded-xl">
+          <li className="text-[#5a5a5a] sticky top-5 bg-[#f3e2e27e] py-4 rounded-xl">
             <div className="flex gap-1 pb-3 px-4 border-b-1 border-[#e1e1e1]">
               <p className="font-semibold">Productos</p>
               <p className="font-semibold">({itemsQuantity})</p>
@@ -95,7 +79,9 @@ export default function CartContent() {
                   {new Intl.NumberFormat("es-ES").format(totalPrice)}
                 </p>
               </button>
-              <button className="btn btn-wide py-5 max-w-full w-full rounded">Seguir comprando</button>
+              <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
+                Seguir comprando
+              </button>
             </div>
           </li>
         </ul>
