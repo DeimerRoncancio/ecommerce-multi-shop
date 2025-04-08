@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
 import useCart from "../hooks/useCart";
 import CartItem from "./CartItem";
-import { LiaDollarSignSolid } from "react-icons/lia";
 import { useNavigate } from "react-router";
 import ClearButton from "./ClearButton";
+import PaymentInfoItem from "./PaymentInfoItem";
 
 export default function CartContent() {
   const { items, itemsQuantity, totalPrice, loadItemsFromStorage } = useCart();
@@ -43,35 +43,17 @@ export default function CartContent() {
           <li className="mb-5">
             <h2 className="text-2xl text-[#333333] font-semibold">Resumen de la compra</h2>
           </li>
-          <li className="text-[#5a5a5a] sticky top-5 bg-[#f3e2e27e] py-4 rounded-xl">
-            <div className="flex gap-1 pb-3 px-4 border-b-1 border-[#e1e1e1]">
+          <li className="text-[#5a5a5a] sticky top-5 bg-[#f3e2e27e] rounded-xl">
+            <div className="flex gap-1 p-4 border-b-1 border-[#e1e1e1]">
               <p className="font-semibold">Productos</p>
               <p className="font-semibold">({itemsQuantity})</p>
             </div>
-            <div className="flex flex-col mt-3 px-4 gap-2 text-sm">
-              <div className="flex justify-between">
-                <p>Total productos</p>
-                <p className="flex items-center">
-                  <LiaDollarSignSolid color="#5a5a5a" size={17} />
-                  {new Intl.NumberFormat("es-ES").format(totalPrice)}
-                </p>
-              </div>
-              <div className="flex justify-between">
-                <p>Descuentos</p>
-                <p className="flex items-center">
-                  <LiaDollarSignSolid color="#5a5a5a" size={17} />
-                  {new Intl.NumberFormat("es-ES").format(-120000)}
-                </p>
-              </div>
+            <div className="my-2">
+              <PaymentInfoItem isMain={false} label="Valor productos" value={totalPrice} />
+              <PaymentInfoItem isMain={false} label="Descuentos" value={-160000} />
+              <PaymentInfoItem isMain label="Total" value={totalPrice}/>
             </div>
-            <div className="flex justify-between px-4 bg-[#f3e2e2c9] gap-1 my-3 py-2">
-              <p className="font-semibold">Total</p>
-              <p className="flex items-center">
-                <LiaDollarSignSolid color="#5a5a5a" size={17} />
-                {new Intl.NumberFormat("es-ES").format(totalPrice)}
-              </p>
-            </div>
-            <div className="flex flex-col gap-4 px-4">
+            <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
               <button className="btn btn-accent py-5 w-full rounded">
                 Pagar/ Total
                 <p className="flex items-center">
@@ -81,7 +63,7 @@ export default function CartContent() {
               </button>
               <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
                 Seguir comprando
-              </button>
+              </button> 
             </div>
           </li>
         </ul>
