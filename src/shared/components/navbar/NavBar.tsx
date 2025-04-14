@@ -4,8 +4,11 @@ import CartButton from "./CartButton";
 import ProfileButton from "./ProfileButton";
 import Search from "./Search";
 import MenuButton from "./MenuButton";
+import useGetProducts from "../../hooks/api/useGetProducts";
 
 export default function NavBar() {
+  const { products } = useGetProducts();
+
   return (
     <>
       <nav className="flex border-b-[1px] p-3 px-4 border-[#f1e1dc]">
@@ -44,6 +47,57 @@ export default function NavBar() {
       <main className="m-auto">
         <Outlet />
       </main>
+      <footer className="grid grid-rows-[1fr_auto] m-auto">
+        <div className="grid grid-cols-[1fr_1fr_1fr_1fr] max-w-[85%] m-auto gap-5">
+          <div>
+            <NavLink to="/" className="btn btn-link h-auto">
+              <img src='src\assets\images\logo.webp' />
+            </NavLink>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Nullam in nibh vehicula, facilisis magna ut, consectetur
+                lorem.
+              </p>
+              <p>Dirección</p>
+              <p>Telefono</p>
+              <p>Email</p>
+            </div>
+          </div>
+          <div>
+            <h2>Productos</h2>
+            <ul>{products.map(item => <li>{item.productName}</li>)}</ul>
+          </div>
+          <div>
+            <h2>Sobre nosotros</h2>
+            <ul>
+              <li>Nosotros</li>
+              <li>Politica de calidad</li>
+              <li>Política de Garantías y Devoluciones</li>
+              <li>Política de tratamiento de datos</li>
+              <li>Contactenos</li>
+            </ul>
+          </div>
+          <div>
+            <h2>Siguenos</h2>
+            <ul>
+              <li>Instagram</li>
+              <li>Facebook</li>
+              <li>X</li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <p>Aceptamos medios de pago:</p>
+          <div className="flex">
+            <p>Terminos de servicio</p>
+            <p>Terminos de servicio</p>
+            <p>Terminos de servicio</p>
+          </div>
+          <p>© Copyright Multi Shop. Todos los derechos reservados</p>
+          <p>Desarrollado por Deimer Roncancio</p>
+        </div>
+      </footer>
     </>
   );
 }
