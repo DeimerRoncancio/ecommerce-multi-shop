@@ -6,6 +6,7 @@ import { TfiEmail } from "react-icons/tfi";
 import { NavLink } from "react-router";
 import useGetProducts from "../../hooks/api/useGetProducts";
 import CustomLink from "./CustomLink";
+import Icon from "./Icon";
 
 export default function Footer() {
   const { products } = useGetProducts();
@@ -70,7 +71,7 @@ export default function Footer() {
           <div className="flex gap-3">
             <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
               hover:text-white transition-all duration-300">
-              <FaInstagram size={17} />
+              <Icon name="instagram" />
             </NavLink>
             <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
               hover:text-white transition-all duration-300">
