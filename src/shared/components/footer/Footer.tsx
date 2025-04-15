@@ -1,12 +1,11 @@
-import { BsCashStack, BsPaypal, BsShop, BsTelephone } from "react-icons/bs";
+import { BsCashStack, BsPaypal, BsShop } from "react-icons/bs";
 import { FaApple, FaGoogle } from "react-icons/fa6";
 import { IoCardOutline } from "react-icons/io5";
-import { SlLocationPin } from "react-icons/sl";
-import { TfiEmail } from "react-icons/tfi";
 import { Link } from "react-router";
 import useGetProducts from "../../hooks/api/useGetProducts";
 import CustomLink from "./CustomLink";
 import SocialButton from "./SocialButton";
+import ContactItem from "./ContactItem";
 
 export default function Footer() {
   const { products } = useGetProducts();
@@ -49,24 +48,9 @@ export default function Footer() {
         <div className="flex flex-col text-[#636669]">
           <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Contactanos</h2>
           <div className="flex flex-col gap-5 mb-10">
-            <div className="flex items-center justify-start gap-2">
-              <SlLocationPin color="#f14a13" size={18} />
-              <p className="leading-4 text-[#636669]">
-                123 Fashion Street, New York, NY 10001
-              </p>
-            </div>
-            <div className="flex items-center justify-start gap-2">
-              <BsTelephone color="#f14a13" size={18} />
-              <p className="leading-4 text-[#636669]">
-                +1 (555) 123-4567
-              </p>
-            </div>
-            <div className="flex items-center justify-start gap-2">
-              <TfiEmail color="#f14a13" size={18} />
-              <p className="leading-4 text-[#636669]">
-                hello@example.com
-              </p>
-            </div>
+            <ContactItem label="123 Fashion Street, New York, NY 10001" iconName="location" size={18} />
+            <ContactItem label="+1 (555) 123-4567" iconName="phone" size={18} />
+            <ContactItem label="hello@example.com" iconName="email" size={18} />
           </div>
           <div className="flex gap-3">
             <SocialButton iconName="instagram" />
