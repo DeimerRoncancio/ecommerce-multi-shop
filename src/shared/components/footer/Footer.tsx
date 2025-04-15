@@ -5,6 +5,7 @@ import { SlLocationPin } from "react-icons/sl";
 import { TfiEmail } from "react-icons/tfi";
 import { NavLink } from "react-router";
 import useGetProducts from "../../hooks/api/useGetProducts";
+import CustomLink from "./CustomLink";
 
 export default function Footer() {
   const { products } = useGetProducts();
@@ -16,13 +17,37 @@ export default function Footer() {
           <NavLink to="/" className="btn btn-link h-auto p-0">
             <img src='src\assets\images\logo.webp' width={150} />
           </NavLink>
-          <div className="gap-6 flex flex-col">
+          <div className="flex flex-col">
             <p className="leading-[1.7]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Nullam in nibh vehicula, facilisis magna ut, consectetur
               lorem.
             </p>
-
+          </div>
+        </div>
+        <div className="text-[#636669]">
+          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Productos</h2>
+          <ul className="flex flex-col gap-4">
+            {
+              products.map(item => (
+                <li> <CustomLink>{item.productName}</CustomLink> </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div className="">
+          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Sobre nosotros</h2>
+          <ul className="flex flex-col gap-4">
+            <li> <CustomLink>Nosotros</CustomLink> </li>
+            <li> <CustomLink>Politica de calidad</CustomLink> </li>
+            <li> <CustomLink>Política de Garantías y Devoluciones</CustomLink> </li>
+            <li> <CustomLink>Política de tratamiento de datos</CustomLink> </li>
+            <li> <CustomLink>Contactenos</CustomLink> </li>
+          </ul>
+        </div>
+        <div className="flex flex-col text-[#636669]">
+          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Contactanos</h2>
+          <div className="flex flex-col gap-5 mb-10">
             <div className="flex items-center justify-start gap-2">
               <SlLocationPin color="#f14a13" size={18} />
               <p className="leading-4 text-[#636669]">
@@ -42,53 +67,6 @@ export default function Footer() {
               </p>
             </div>
           </div>
-        </div>
-        <div className="text-[#636669]">
-          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Productos</h2>
-          <ul>
-            {
-              products.map(item => (
-                <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-                  <NavLink to="">
-                    {item.productName}
-                  </NavLink>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div className="text-[#636669]">
-          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Sobre nosotros</h2>
-          <ul>
-            <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-              <NavLink to="">
-                Nosotros
-              </NavLink>
-            </li>
-            <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-              <NavLink to="">
-                Politica de calidad
-              </NavLink>
-            </li>
-            <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-              <NavLink to="">
-                Política de Garantías y Devoluciones
-              </NavLink>
-            </li>
-            <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-              <NavLink to="">
-                Política de tratamiento de datos
-              </NavLink>
-            </li>
-            <li className="mb-3 hover:text-[#f04913] transition-all duration-300">
-              <NavLink to="">
-                Contactenos
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-        <div className="text-[#636669]">
-          <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Siguenos</h2>
           <div className="flex gap-3">
             <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
               hover:text-white transition-all duration-300">
@@ -127,23 +105,15 @@ export default function Footer() {
           <BsShop size={24} className="hover:text-[#f14a13] transition-all duration-300" />
           <BsCashStack size={24} className="hover:text-[#f14a13] transition-all duration-300" />
         </div>
-        <div className="flex gap-4 text-sm text-[#7a8091] my-6">
-          <NavLink to="" className="hover:text-[#f14a13] transition-all duration-300">
-            Terminos de servicio
-          </NavLink>
-          <NavLink to="" className="hover:text-[#f14a13] transition-all duration-300">
-            Politica de privacidad
-          </NavLink>
-          <NavLink to="" className="hover:text-[#f14a13] transition-all duration-300">
-            Politicas de Cookies
-          </NavLink>
-        </div>
+        <ul className="flex gap-4 text-sm my-6">
+          <li> <CustomLink theme="secondary">Terminos de servicio</CustomLink> </li>
+          <li> <CustomLink theme="secondary">Politica de privacidad</CustomLink> </li>
+          <li> <CustomLink theme="secondary">Politica de Cookies</CustomLink> </li>
+        </ul>
         <p>© Copyright <b className="text-[#36393e]">MultiShop</b>. Todos los derechos reservados</p>
         <p className="flex gap-1">
           Desarrollado por
-          <NavLink to="" className="text-[#f14a13] hover:text-[#f14b1381] transition-all duration-300">
-            DeimerRoncancio
-          </NavLink>
+          <CustomLink theme="terciary">DeimerRoncancio</CustomLink>
         </p>
       </div>
     </footer>
