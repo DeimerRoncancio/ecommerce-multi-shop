@@ -4,6 +4,8 @@
 }
 
 #root {
+  display: grid;
+  grid-template-rows: auto auto auto;
   min-width: 320px;
   min-height: 100vh;
   margin: 0 auto;

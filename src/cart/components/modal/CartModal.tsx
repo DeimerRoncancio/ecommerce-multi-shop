@@ -20,8 +20,8 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   }
 
   return (
-    <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex absolute 
-      overflow-hidden top-0 left-0 h-full w-full shadow transition-all duration-300 ease`}>
+    <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex 
+      overflow-hidden fixed top-0 left-0 h-full w-full shadow transition-all duration-300 ease`}>
       <div className="bg-[#1c1c1c7c] h-full w-full absolute" onClick={hiddeCart} />
 
       <div className={`${viewCart ? '-translate-x-0' : 'translate-x-full'} flex flex-col card-body p-0 w-[384px] 
