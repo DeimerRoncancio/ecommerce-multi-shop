@@ -3,7 +3,7 @@ import { FaApple, FaGoogle } from "react-icons/fa6";
 import { IoCardOutline } from "react-icons/io5";
 import { SlLocationPin } from "react-icons/sl";
 import { TfiEmail } from "react-icons/tfi";
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 import useGetProducts from "../../hooks/api/useGetProducts";
 import CustomLink from "./CustomLink";
 import SocialButton from "./SocialButton";
@@ -15,9 +15,9 @@ export default function Footer() {
     <footer className="grid grid-rows-[1fr_auto] m-auto text-sm text-[#212529]">
       <div className="grid grid-cols-[1fr_1fr_1fr_1fr] max-w-[77%] m-auto gap-5 pt-[70px] pb-[40px]">
         <div className="flex flex-col items-start gap-4">
-          <NavLink to="/" className="btn btn-link h-auto p-0">
+          <Link to="/" className="btn btn-link h-auto p-0">
             <img src='src\assets\images\logo.webp' width={150} />
-          </NavLink>
+          </Link>
           <div className="flex flex-col">
             <p className="leading-[1.7]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -31,7 +31,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-4">
             {
               products.map(item => (
-                <li> <CustomLink>{item.productName}</CustomLink> </li>
+                <li> <CustomLink to="">{item.productName}</CustomLink> </li>
               ))
             }
           </ul>
@@ -39,11 +39,11 @@ export default function Footer() {
         <div className="">
           <h2 className="text-[#431d1a9c] font-medium text-lg mb-8">Sobre nosotros</h2>
           <ul className="flex flex-col gap-4">
-            <li> <CustomLink>Nosotros</CustomLink> </li>
-            <li> <CustomLink>Politica de calidad</CustomLink> </li>
-            <li> <CustomLink>Política de Garantías y Devoluciones</CustomLink> </li>
-            <li> <CustomLink>Política de tratamiento de datos</CustomLink> </li>
-            <li> <CustomLink>Contactenos</CustomLink> </li>
+            <li> <CustomLink to="">Nosotros</CustomLink> </li>
+            <li> <CustomLink to="">Politica de calidad</CustomLink> </li>
+            <li> <CustomLink to="">Política de Garantías y Devoluciones</CustomLink> </li>
+            <li> <CustomLink to="">Política de tratamiento de datos</CustomLink> </li>
+            <li> <CustomLink to="">Contactenos</CustomLink> </li>
           </ul>
         </div>
         <div className="flex flex-col text-[#636669]">
@@ -88,14 +88,14 @@ export default function Footer() {
           <BsCashStack size={24} className="hover:text-[#f14a13] transition-all duration-300" />
         </div>
         <ul className="flex gap-4 text-sm my-6">
-          <li> <CustomLink theme="secondary">Terminos de servicio</CustomLink> </li>
-          <li> <CustomLink theme="secondary">Politica de privacidad</CustomLink> </li>
-          <li> <CustomLink theme="secondary">Politica de Cookies</CustomLink> </li>
+          <li> <CustomLink to="" theme="secondary">Terminos de servicio</CustomLink> </li>
+          <li> <CustomLink to="" theme="secondary">Politica de privacidad</CustomLink> </li>
+          <li> <CustomLink to="" theme="secondary">Politica de Cookies</CustomLink> </li>
         </ul>
         <p>© Copyright <b className="text-[#36393e]">MultiShop</b>. Todos los derechos reservados</p>
         <p className="flex gap-1">
           Desarrollado por
-          <CustomLink theme="terciary">DeimerRoncancio</CustomLink>
+          <CustomLink to="" theme="terciary">DeimerRoncancio</CustomLink>
         </p>
       </div>
     </footer>

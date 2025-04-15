@@ -1,11 +1,11 @@
-import { SocialIconList, SocialIconName } from "./types/SocialIconList";
+import { IconList, IconName } from "../../types/IconNames";
 
 type IconProps = {
-  name: SocialIconName;
+  name: IconName;
 }
 
 export default function Icon({ name }: IconProps) {
-  const IconComponent = SocialIconList[name];
+  const IconComponent = IconList[name];
 
   if (!IconComponent) return null;
 

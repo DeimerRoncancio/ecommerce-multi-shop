@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import { GiPadlock } from "react-icons/gi";
 import ProfileButton from "../../shared/components/navbar/ProfileButton";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -8,9 +8,9 @@ export default function Cart() {
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <nav className="flex w-full bg-[#ffece59a] p-1 px-4">
         <ul className="w-1/3 gap-16 flex">
-          <NavLink to="/" className="w-13 pl-4 z-10 btn btn-link p-0">
+          <Link to="/" className="w-13 pl-4 z-10 btn btn-link p-0">
             <img src='src\assets\images\logo-bag.webp' />
-          </NavLink>
+          </Link>
         </ul>
 
         <ul className="w-1/3 flex z-0 gap-2 text-[#7d7d7d] font-semibold justify-center items-center">
