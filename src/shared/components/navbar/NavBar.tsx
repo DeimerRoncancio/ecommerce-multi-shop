@@ -5,6 +5,10 @@ import ProfileButton from "./ProfileButton";
 import Search from "./Search";
 import MenuButton from "./MenuButton";
 import useGetProducts from "../../hooks/api/useGetProducts";
+import { BsTelephone, BsTwitterX } from "react-icons/bs";
+import { TfiEmail } from "react-icons/tfi";
+import { SlLocationPin } from "react-icons/sl";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa6";
 
 export default function NavBar() {
   const { products } = useGetProducts();
@@ -47,44 +51,81 @@ export default function NavBar() {
       <main className="m-auto">
         <Outlet />
       </main>
-      <footer className="grid grid-rows-[1fr_auto] m-auto">
-        <div className="grid grid-cols-[1fr_1fr_1fr_1fr] max-w-[85%] m-auto gap-5">
-          <div>
-            <NavLink to="/" className="btn btn-link h-auto">
-              <img src='src\assets\images\logo.webp' />
+      <footer className="grid grid-rows-[1fr_auto] m-auto text-sm text-[#212529]">
+        <div className="grid grid-cols-[1fr_1fr_1fr_1fr] max-w-[85%] m-auto gap-8 pt-[70px] pb-[40px]">
+          <div className="flex flex-col items-start gap-4">
+            <NavLink to="/" className="btn btn-link h-auto p-0">
+              <img src='src\assets\images\logo.webp' width={150} />
             </NavLink>
-            <div>
-              <p>
+            <div className="gap-6 flex flex-col">
+              <p className="leading-[1.7]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Nullam in nibh vehicula, facilisis magna ut, consectetur
                 lorem.
               </p>
-              <p>Dirección</p>
-              <p>Telefono</p>
-              <p>Email</p>
+
+              <div className="flex items-center justify-start gap-2">
+                <SlLocationPin color="#f14a13" size={18} /> 
+                <p className="leading-4 text-[#636669]">
+                  123 Fashion Street, New York, NY 10001
+                </p>
+              </div>
+              <div className="flex items-center justify-start gap-2">
+                <BsTelephone color="#f14a13" size={18} /> 
+                <p className="leading-4 text-[#636669]">
+                  +1 (555) 123-4567
+                </p>
+              </div>
+              <div className="flex items-center justify-start gap-2">
+                <TfiEmail color="#f14a13" size={18} /> 
+                <p className="leading-4 text-[#636669]">
+                hello@example.com
+                </p>
+              </div>
             </div>
           </div>
-          <div>
-            <h2>Productos</h2>
-            <ul>{products.map(item => <li>{item.productName}</li>)}</ul>
+          <div className="text-[#636669]">
+            <h2 className="text-[#431d1a] font-medium text-lg mb-8">Productos</h2>
+            <ul>{products.map(item => <li className="mb-3">{item.productName}</li>)}</ul>
           </div>
-          <div>
-            <h2>Sobre nosotros</h2>
+          <div className="text-[#636669]">
+            <h2 className="text-[#431d1a] font-medium text-lg mb-8">Sobre nosotros</h2>
             <ul>
-              <li>Nosotros</li>
-              <li>Politica de calidad</li>
-              <li>Política de Garantías y Devoluciones</li>
-              <li>Política de tratamiento de datos</li>
-              <li>Contactenos</li>
+              <li className="mb-3">Nosotros</li>
+              <li className="mb-3">Politica de calidad</li>
+              <li className="mb-3">Política de Garantías y Devoluciones</li>
+              <li className="mb-3">Política de tratamiento de datos</li>
+              <li className="mb-3">Contactenos</li>
             </ul>
           </div>
-          <div>
-            <h2>Siguenos</h2>
-            <ul>
-              <li>Instagram</li>
-              <li>Facebook</li>
-              <li>X</li>
-            </ul>
+          <div className="text-[#636669]">
+            <h2 className="text-[#431d1a] font-medium text-lg mb-8">Siguenos</h2>
+            <div className="flex gap-3">
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <FaInstagram size={17} />
+              </NavLink>
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <FaFacebook size={17} />
+              </NavLink>
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <BsTwitterX size={17} />
+              </NavLink>
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <FaTiktok size={17} />
+              </NavLink>
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <FaYoutube size={17} />
+              </NavLink>
+              <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
+              hover:text-white transition-all duration-300">
+                <FaLinkedin size={17} />
+              </NavLink>
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-center">
