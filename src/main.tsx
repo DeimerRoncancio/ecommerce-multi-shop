@@ -5,17 +5,17 @@ import App from "./App.tsx";
 import "./index.css";
 import Profile from "./profile/pages/Profile.tsx";
 import ProtectedAuth from "./auth/routes/ProtectedAuth.tsx";
-import NavBar from "./shared/components/navbar/NavBar.tsx";
 import { Register } from "./auth/pages/Register.tsx";
 import Cart from "./cart/pages/Cart.tsx";
 import CartContent from "./cart/components/CartContent.tsx";
 import CartHeader from "./cart/components/CartHeader.tsx";
+import Home from "./home/pages/Home.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
-      <Route element={<NavBar />}>
-        <Route path="/" element={<App />} />
+      <Route element={<App />}>
+        <Route path="/" element={<Home />} />
         <Route element={<ProtectedAuth />}>
           <Route path="profile" element={<Profile />} />
         </Route>
