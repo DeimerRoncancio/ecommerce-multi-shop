@@ -1,11 +1,11 @@
-import { IconNetworkList, IconNetworkName } from "./types/IconNetworkList";
+import { SocialIconList, SocialIconName } from "./types/SocialIconList";
 
 type IconProps = {
-  name: IconNetworkName;
+  name: SocialIconName;
 }
 
 export default function Icon({ name }: IconProps) {
-  const IconComponent = IconNetworkList[name];
+  const IconComponent = SocialIconList[name];
 
   if (!IconComponent) return null;
 

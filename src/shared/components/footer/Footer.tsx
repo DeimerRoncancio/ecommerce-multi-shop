@@ -1,12 +1,12 @@
-import { BsCashStack, BsPaypal, BsShop, BsTelephone, BsTwitterX } from "react-icons/bs";
-import { FaApple, FaFacebook, FaGoogle, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa6";
+import { BsCashStack, BsPaypal, BsShop, BsTelephone } from "react-icons/bs";
+import { FaApple, FaGoogle } from "react-icons/fa6";
 import { IoCardOutline } from "react-icons/io5";
 import { SlLocationPin } from "react-icons/sl";
 import { TfiEmail } from "react-icons/tfi";
 import { NavLink } from "react-router";
 import useGetProducts from "../../hooks/api/useGetProducts";
 import CustomLink from "./CustomLink";
-import Icon from "./Icon";
+import SocialButton from "./SocialButton";
 
 export default function Footer() {
   const { products } = useGetProducts();
@@ -69,30 +69,11 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex gap-3">
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <Icon name="instagram" />
-            </NavLink>
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <FaFacebook size={17} />
-            </NavLink>
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <BsTwitterX size={17} />
-            </NavLink>
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <FaTiktok size={17} />
-            </NavLink>
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <FaYoutube size={17} />
-            </NavLink>
-            <NavLink to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-              hover:text-white transition-all duration-300">
-              <FaLinkedin size={17} />
-            </NavLink>
+            <SocialButton iconName="instagram" />
+            <SocialButton iconName="facebook" />
+            <SocialButton iconName="tiktok" />
+            <SocialButton iconName="youtube" />
+            <SocialButton iconName="linkedin" />
           </div>
         </div>
       </div>
