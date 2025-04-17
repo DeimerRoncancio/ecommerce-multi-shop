@@ -9,7 +9,7 @@ export default function NavBar() {
   return (
     <nav className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
       <ul className="w-1/3 gap-16 flex">
-        <NavLink to="/" className="w-1/4 my-auto btn btn-link p-0">
+        <NavLink to="/" className="max-w-[110px] my-auto btn btn-link p-0">
           <img src='src\assets\images\logo.webp' />
         </NavLink>
         <MenuButton />

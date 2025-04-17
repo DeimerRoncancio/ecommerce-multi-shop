@@ -12,7 +12,7 @@ export default function Footer() {
 
   return (
     <footer className="grid grid-rows-[1fr_auto] w-full m-auto text-sm text-[#212529]">
-      <div className="grid grid-cols-[1fr_1fr_1fr_1fr] w-[77%] max-w-[1366px] m-auto gap-5 pt-[70px] pb-[40px]">
+      <div className="ajust-width grid grid-cols-[1fr_1fr_1fr_1fr] gap-5 pt-[70px] pb-[40px]">
         <div className="flex flex-col items-start gap-4">
           <Link to="/" className="btn btn-link h-auto p-0">
             <img src='src\assets\images\logo.webp' width={150} />

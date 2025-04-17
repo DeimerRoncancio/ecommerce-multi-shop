@@ -21,16 +21,21 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className="flex justify-center w-full">
-      <div className="flex w-full bg-[#fff4ef]">
-        <div className="breadcrumbs text-sm">
-          <ul>
-            <li><a>Home</a></li>
-            <li><a>Documents</a></li>
-            <li>Add Document</li>
-          </ul>
+    <>
+      <div className="bg-[#fff4ef]">
+        <div className="ajust-width flex justify-between items-center py-5">
+          <h1 className="text-2xl font-semibold">Cuenta</h1>
+          <div className="breadcrumbs text-sm">
+            <ul>
+              <li><a>Home</a></li>
+              <li><a>Documents</a></li>
+              <li>Add Document</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="ajust-screen flex justify-center w-full">
+      </div>
+    </>
   );
 }

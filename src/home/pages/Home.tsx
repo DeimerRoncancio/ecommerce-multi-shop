@@ -17,7 +17,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex gap-6 justify-center p-7 items-center w-full my-7">
+    <div className="ajust-screen flex gap-6 justify-center p-7 items-center w-full my-7">
       {
         products.map(product => {
           const isProductInCart = items.some(item => item.id === product.id);
