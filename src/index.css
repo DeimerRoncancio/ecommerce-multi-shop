@@ -13,9 +13,7 @@
 }
 
 main {
+  width: 100%;
   max-width: 1366px;
-}
-
-footer {
-  max-width: 1366px;
+  margin: auto;
 }

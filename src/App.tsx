@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <main className="m-auto">
+      <main>
         <Outlet />
       </main>
       <Footer />
