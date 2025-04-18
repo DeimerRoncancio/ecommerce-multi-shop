@@ -3,18 +3,16 @@ import useGetUser from "../../shared/hooks/api/useGetUser";
 import { useEffect, useState } from "react";
 import { User } from "../types/user";
 import Cookies from "js-cookie";
-import { Outlet, useLocation, useNavigate } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import useCart from "../../cart/hooks/useCart";
-import { BsInboxes } from "react-icons/bs";
-import { IoLocationOutline, IoPersonCircleOutline, IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
-import { IoMdHeartEmpty, IoMdLogOut } from "react-icons/io";
+import { IoMdLogOut } from "react-icons/io";
+import MenuButton from "../components/MenuButton";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User>(UserInitialValues);
   const { getUser } = useGetUser();
   const { items, loadItemsFromStorage } = useCart();
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!items.length) loadItemsFromStorage();
@@ -53,8 +51,8 @@ export default function ProfilePage() {
             <h1 className="text-lg text-[#5e472d] font-semibold">
               {
                 !user.name.length
-                ? "Crea una cuenta"
-                : user.name + user.lastnames?.split(" ", 1)
+                  ? "Crea una cuenta"
+                  : user.name + user.lastnames?.split(" ", 1)
               }
             </h1>
             <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
@@ -65,44 +63,45 @@ export default function ProfilePage() {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col">
-            <button className={`btn gap-4 py-6 rounded-xl 
-            ${location.pathname === "/profile" 
-              ? 'bg-[#f04913] text-white border-[#f04913]' 
-              : 'bg-white bg-none shadow-none'} text-base font-normal 
-            text-[#292421] border-white justify-normal`} onClick={() => navigate("/profile")}>
-              <IoPersonCircleOutline size={25} />
-              Datos Personales
-            </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
-            text-[#292421] border-white justify-normal">
-              <IoWalletOutline size={25} />
-              Medios de Pago
-            </button>
-            <button className={`btn gap-4 py-6 rounded-xl 
-            ${location.pathname === "/profile/wish-list" 
-              ? 'bg-[#f04913] text-white border-[#f04913]' 
-              : 'bg-white bg-none shadow-none'} text-base font-normal 
-            text-[#292421] border-white justify-normal`} onClick={() => navigate("/profile/wish-list")}>
-              <IoMdHeartEmpty size={25} />
-              Lista de deseos
-            </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
-            text-[#292421] border-white justify-normal">
-              <BsInboxes size={25} />
-              Mis compras
-            </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
-            text-[#292421] border-white justify-normal">
-              <IoLocationOutline size={27} />
-              Direcciones
-            </button>
+            <MenuButton
+              label="Datos personales"
+              iconName="profile"
+              pathname={location.pathname}
+              to="/profile"
+            />
+            <MenuButton
+              label="Medios de pago"
+              iconName="wallet"
+              pathname={location.pathname}
+              to=""
+            />
+            <MenuButton
+              label="Lista de deseos"
+              iconName="wishlist"
+              pathname={location.pathname}
+              to="/profile/wish-list"
+            />
+            <MenuButton
+              label="Mis compras"
+              iconName="purchases"
+              pathname={location.pathname}
+              to=""
+            />
+            <MenuButton
+              label="Direcciones"
+              iconName="addresses"
+              pathname={location.pathname}
+              to=""
+            />
           </div>
           <div className="divider"></div>
           <div>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
-              <IoSettingsOutline size={30} />
-              Configuración de Cuenta
-            </button>
+            <MenuButton
+              label="Configuración de Cuenta"
+              iconName="settings"
+              pathname={location.pathname}
+              to=""
+            />
           </div>
         </div>
         <Outlet />
