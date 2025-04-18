@@ -1,5 +1,8 @@
-import { useState } from "react"
-import { NavLink } from "react-router"
+import { useState } from "react";
+import { NavLink } from "react-router";
+import useUser from "../../hooks/api/useUser";
+import AvatarImage from "../../../profile/components/AvatarImage";
+import Cookies from "js-cookie";
 
 type ProfileButtonProps = {
   size: number;
@@ -7,19 +10,17 @@ type ProfileButtonProps = {
 
 export default function ProfileButton({ size }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
+  const { user, loading } = useUser();
 
   return (
     <div className="dropdown dropdown-end">
       <div className="w-full flex items-center">
         <div className="w-full flex items-center">
-          <div tabIndex={0} className="btn btn-ghost btn-circle avatar" 
+          <div tabIndex={0} className="btn btn-ghost btn-circle avatar"
             style={{ width: size, height: size }}
             onClick={() => setShowOptions(!showOptions)}>
             <div className="rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              <AvatarImage loading={loading} user={user} />
             </div>
           </div>
         </div>
@@ -42,7 +43,10 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               </p>
             </li>
           </NavLink>
-          <NavLink to="" onClick={() => setShowOptions(false)}>
+          <NavLink to="" onClick={() => {
+            Cookies.remove("accessHome");
+            window.location.reload()
+          }}>
             <li>
               <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
                 Cerrar sesión

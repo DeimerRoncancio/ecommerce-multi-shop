@@ -17,7 +17,7 @@ export default function MenuButton({ label, iconName, pathname, to }: MenuButton
     ${pathname === to
       ? 'bg-[#f04913] text-white border-[#f04913]'
       : 'bg-white bg-none shadow-none'} text-base font-normal 
-  text-[#292421] border-white justify-normal`} onClick={() => navigate(to)}>
+    text-[#292421] border-white justify-normal`} onClick={() => navigate(to)}>
       <Icon name={iconName} size={25} />
       {label}
     </button>

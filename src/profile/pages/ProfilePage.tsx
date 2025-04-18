@@ -1,29 +1,20 @@
-import { UserInitialValues } from "../helpers/users-initial-values.helper";
-import useGetUser from "../../shared/hooks/api/useGetUser";
-import { useEffect, useState } from "react";
-import { User } from "../types/user";
+import useUser from "../../shared/hooks/api/useUser";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import useCart from "../../cart/hooks/useCart";
 import { IoMdLogOut } from "react-icons/io";
 import MenuButton from "../components/MenuButton";
+import AvatarImage from "../components/AvatarImage";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<User>(UserInitialValues);
-  const { getUser } = useGetUser();
   const { items, loadItemsFromStorage } = useCart();
+  const { user, loading } = useUser();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (!items.length) loadItemsFromStorage();
-
-    console.log(user);
-
-    const token = Cookies.get("accessHome");
-
-    getUser(token).then(res => {
-      setUser(res.data);
-    });
+    !items.length && loadItemsFromStorage();
   }, []);
 
   return (
@@ -40,12 +31,12 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className="ajust-width grid grid-cols-[auto_1fr] py-19">
+      <div className="ajust-width grid grid-cols-[auto_1fr] py-19 gap-10">
         <div className="flex flex-col justify-center w-[250px] p-5 gap-4">
           <div className="flex flex-col items-center gap-3">
-            <div className="avatar avatar-offline">
+            <div className="avatar">
               <div className="w-24 rounded-full">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                <AvatarImage loading={loading} user={user} />
               </div>
             </div>
             <h1 className="text-lg text-[#5e472d] font-semibold">
@@ -56,7 +47,11 @@ export default function ProfilePage() {
               }
             </h1>
             <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
-            justify-normal">
+            justify-normal" onClick={() => {
+              Cookies.remove("accessHome");
+              if (location.pathname === "/profile") navigate("/login");
+              if (location.pathname === "/profile/wish-list") window.location.reload();
+            }}>
               <IoMdLogOut size={17} />
               Cerrar Sesión
             </button>
