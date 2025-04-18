@@ -15,7 +15,7 @@ export default function Footer() {
       <div className="ajust-width grid grid-cols-[1fr_1fr_1fr_1fr] gap-5 pt-[70px] pb-[40px]">
         <div className="flex flex-col items-start gap-4">
           <Link to="/" className="btn btn-link h-auto p-0">
-            <img src='src\assets\images\logo.webp' width={150} />
+            <img src='/images/logo.webp' width={150} />
           </Link>
           <div className="flex flex-col">
             <p className="leading-[1.7]">
@@ -30,7 +30,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-4">
             {
               products.map(item => (
-                <li> <CustomLink to="">{item.productName}</CustomLink> </li>
+                <li key={item.id}> <CustomLink to="">{item.productName}</CustomLink> </li>
               ))
             }
           </ul>

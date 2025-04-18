@@ -19,14 +19,14 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!items.length) loadItemsFromStorage();
 
-    const token = Cookies.get("accessHome");
+    console.log(user);
 
-    console.log(location);
+    const token = Cookies.get("accessHome");
 
     getUser(token).then(res => {
       setUser(res.data);
     });
-  }, [location]);
+  }, []);
 
   return (
     <>
@@ -50,7 +50,13 @@ export default function ProfilePage() {
                 <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
               </div>
             </div>
-            <h1 className="text-lg text-[#5e472d] font-semibold">{user.name} {user.lastnames?.split(" ", 1)}</h1>
+            <h1 className="text-lg text-[#5e472d] font-semibold">
+              {
+                !user.name.length
+                ? "Crea una cuenta"
+                : user.name + user.lastnames?.split(" ", 1)
+              }
+            </h1>
             <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
             justify-normal">
               <IoMdLogOut size={17} />

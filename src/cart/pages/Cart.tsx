@@ -9,7 +9,7 @@ export default function Cart() {
       <nav className="flex w-full bg-[#ffece59a] p-1 px-4">
         <ul className="w-1/3 gap-16 flex">
           <Link to="/" className="w-13 pl-4 z-10 btn btn-link p-0">
-            <img src='src\assets\images\logo-bag.webp' />
+            <img src='/images/logo-bag.webp' />
           </Link>
         </ul>
 

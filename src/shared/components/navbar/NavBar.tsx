@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { IoMdHeartEmpty } from "react-icons/io";
 import CartButton from "./CartButton";
 import ProfileButton from "./ProfileButton";
@@ -6,11 +6,13 @@ import Search from "./Search";
 import MenuButton from "./MenuButton";
 
 export default function NavBar() {
+  const navigate = useNavigate();
+  
   return (
     <nav className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
       <ul className="w-1/3 gap-16 flex">
         <NavLink to="/" className="max-w-[110px] my-auto btn btn-link p-0">
-          <img src='src\assets\images\logo.webp' />
+          <img src='/images/logo.webp' />
         </NavLink>
         <MenuButton />
       </ul>
@@ -24,7 +26,8 @@ export default function NavBar() {
           <CartButton />
         </li>
         <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
-          <button className="btn btn-ghost w-10 h-10 p-0 rounded-full text-[#343e49]">
+          <button className="btn btn-ghost w-10 h-10 p-0 rounded-full text-[#343e49]"
+          onClick={() => navigate("profile/wish-list")}>
             <IoMdHeartEmpty size={32} />
           </button>
         </li>
