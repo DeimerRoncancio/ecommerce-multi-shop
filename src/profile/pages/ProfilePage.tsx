@@ -5,9 +5,12 @@ import { User } from "../types/user";
 import Cookies from "js-cookie";
 import { Outlet, useLocation } from "react-router";
 import useCart from "../../cart/hooks/useCart";
-import { BsPersonBadgeFill } from "react-icons/bs";
-import { IoPersonCircleOutline } from "react-icons/io5";
-import { FaWallet } from "react-icons/fa6";
+import { BsBoxSeam, BsInboxes, BsPersonBadgeFill } from "react-icons/bs";
+import { IoLocationOutline, IoPersonCircleOutline, IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
+import { FaHeart, FaRegHeart, FaWallet } from "react-icons/fa6";
+import { CiHeart, CiLocationOn } from "react-icons/ci";
+import { IoMdHeartEmpty, IoMdLogOut } from "react-icons/io";
+import { MdOutlineEditLocationAlt } from "react-icons/md";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User>(UserInitialValues);
@@ -48,6 +51,11 @@ export default function ProfilePage() {
               </div>
             </div>
             <h1 className="text-lg text-[#5e472d] font-semibold">{user.name} {user.lastnames?.split(" ", 1)}</h1>
+            <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
+            justify-normal">
+            <IoMdLogOut size={17} />
+              Cerrar Sesión
+            </button>
           </div>
           <div className="flex flex-col">
             <button className="btn gap-4 py-6 rounded-xl bg-[#f04913] text-base text-white border-[#f04913] justify-normal">
@@ -55,8 +63,25 @@ export default function ProfilePage() {
               Datos Personales
             </button>
             <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
-              <FaWallet size={25} />
+              <IoWalletOutline size={25} />
               Medios de Pago
+            </button>
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+            <IoMdHeartEmpty size={25} />
+              Lista de deseos
+            </button>
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+              <BsInboxes size={25} />
+              Mis compras
+            </button>
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+              <IoLocationOutline size={27} />
+              Direcciones
+            </button>
+            <div className="divider"></div>
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+              <IoSettingsOutline size={30} />
+              Configuración de Cuenta
             </button>
           </div>
         </div>
