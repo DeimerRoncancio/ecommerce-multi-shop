@@ -25,6 +25,6 @@ main {
 
 .ajust-width {
   width: 77%;
-  max-width: 1366;
+  max-width: 1366px;
   margin: auto;
 }
