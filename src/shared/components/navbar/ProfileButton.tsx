@@ -12,6 +12,11 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
   const { user, loading } = useUser();
 
+  const logOut = () => {
+    Cookies.remove("accessHome");
+    window.location.reload()
+  }
+
   return (
     <div className="dropdown dropdown-end">
       <div className="w-full flex items-center">
@@ -43,10 +48,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               </p>
             </li>
           </NavLink>
-          <NavLink to="" onClick={() => {
-            Cookies.remove("accessHome");
-            window.location.reload()
-          }}>
+          <NavLink to="" onClick={logOut}>
             <li>
               <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
                 Cerrar sesión

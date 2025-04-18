@@ -1,16 +1,14 @@
 import useUser from "../../shared/hooks/api/useUser";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
-import { Outlet, useLocation, useNavigate } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import useCart from "../../cart/hooks/useCart";
-import { IoMdLogOut } from "react-icons/io";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
+import LogInOutButton from "../components/LogInOutButton";
 
 export default function ProfilePage() {
   const { items, loadItemsFromStorage } = useCart();
   const { user, loading } = useUser();
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -43,18 +41,10 @@ export default function ProfilePage() {
               {
                 !user.name.length
                   ? "Crea una cuenta"
-                  : user.name + user.lastnames?.split(" ", 1)
+                  : user.name + ' ' + user.lastnames?.split(" ", 1)
               }
             </h1>
-            <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
-            justify-normal" onClick={() => {
-              Cookies.remove("accessHome");
-              if (location.pathname === "/profile") navigate("/login");
-              if (location.pathname === "/profile/wish-list") window.location.reload();
-            }}>
-              <IoMdLogOut size={17} />
-              Cerrar Sesión
-            </button>
+            <LogInOutButton loading={loading} user={user} />
           </div>
           <div className="divider"></div>
           <div className="flex flex-col">
