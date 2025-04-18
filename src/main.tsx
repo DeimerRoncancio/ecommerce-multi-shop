@@ -11,6 +11,7 @@ import CartContent from "./cart/components/CartContent.tsx";
 import CartHeader from "./cart/components/CartHeader.tsx";
 import Home from "./home/pages/Home.tsx";
 import Profile from "./profile/pages/Profile.tsx";
+import WishList from "./wishlist/pages/WishList.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route element={<ProtectedAuth />}>
             <Route path="profile" element={<Profile />} />
           </Route>
+          <Route path="profile/wish-list" element={<WishList />} />
         </Route>
       </Route>
 

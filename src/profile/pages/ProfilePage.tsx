@@ -3,30 +3,30 @@ import useGetUser from "../../shared/hooks/api/useGetUser";
 import { useEffect, useState } from "react";
 import { User } from "../types/user";
 import Cookies from "js-cookie";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import useCart from "../../cart/hooks/useCart";
-import { BsBoxSeam, BsInboxes, BsPersonBadgeFill } from "react-icons/bs";
+import { BsInboxes } from "react-icons/bs";
 import { IoLocationOutline, IoPersonCircleOutline, IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
-import { FaHeart, FaRegHeart, FaWallet } from "react-icons/fa6";
-import { CiHeart, CiLocationOn } from "react-icons/ci";
 import { IoMdHeartEmpty, IoMdLogOut } from "react-icons/io";
-import { MdOutlineEditLocationAlt } from "react-icons/md";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User>(UserInitialValues);
   const { getUser } = useGetUser();
   const { items, loadItemsFromStorage } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!items.length) loadItemsFromStorage();
 
     const token = Cookies.get("accessHome");
 
+    console.log(location);
+
     getUser(token).then(res => {
       setUser(res.data);
     });
-  }, []);
+  }, [location]);
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className="ajust-width grid grid-cols-[auto_1fr] py-20">
+      <div className="ajust-width grid grid-cols-[auto_1fr] py-19">
         <div className="flex flex-col justify-center w-[250px] p-5 gap-4">
           <div className="flex flex-col items-center gap-3">
             <div className="avatar avatar-offline">
@@ -59,23 +59,34 @@ export default function ProfilePage() {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col">
-            <button className="btn gap-4 py-6 rounded-xl bg-[#f04913] text-base text-white border-[#f04913] justify-normal">
+            <button className={`btn gap-4 py-6 rounded-xl 
+            ${location.pathname === "/profile" 
+              ? 'bg-[#f04913] text-white border-[#f04913]' 
+              : 'bg-white bg-none shadow-none'} text-base font-normal 
+            text-[#292421] border-white justify-normal`} onClick={() => navigate("/profile")}>
               <IoPersonCircleOutline size={25} />
               Datos Personales
             </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
+            text-[#292421] border-white justify-normal">
               <IoWalletOutline size={25} />
               Medios de Pago
             </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+            <button className={`btn gap-4 py-6 rounded-xl 
+            ${location.pathname === "/profile/wish-list" 
+              ? 'bg-[#f04913] text-white border-[#f04913]' 
+              : 'bg-white bg-none shadow-none'} text-base font-normal 
+            text-[#292421] border-white justify-normal`} onClick={() => navigate("/profile/wish-list")}>
               <IoMdHeartEmpty size={25} />
               Lista de deseos
             </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
+            text-[#292421] border-white justify-normal">
               <BsInboxes size={25} />
               Mis compras
             </button>
-            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
+            <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal 
+            text-[#292421] border-white justify-normal">
               <IoLocationOutline size={27} />
               Direcciones
             </button>
