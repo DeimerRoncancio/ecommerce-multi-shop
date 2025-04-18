@@ -43,7 +43,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <div className="ajust-width grid grid-cols-[auto_1fr] py-20">
-        <div className="flex flex-col justify-center w-[250px] p-5 gap-10">
+        <div className="flex flex-col justify-center w-[250px] p-5 gap-4">
           <div className="flex flex-col items-center gap-3">
             <div className="avatar avatar-offline">
               <div className="w-24 rounded-full">
@@ -53,13 +53,14 @@ export default function ProfilePage() {
             <h1 className="text-lg text-[#5e472d] font-semibold">{user.name} {user.lastnames?.split(" ", 1)}</h1>
             <button className="btn gap-2 px-4 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] border-none 
             justify-normal">
-            <IoMdLogOut size={17} />
+              <IoMdLogOut size={17} />
               Cerrar Sesión
             </button>
           </div>
+          <div className="divider"></div>
           <div className="flex flex-col">
             <button className="btn gap-4 py-6 rounded-xl bg-[#f04913] text-base text-white border-[#f04913] justify-normal">
-            <IoPersonCircleOutline size={25} />
+              <IoPersonCircleOutline size={25} />
               Datos Personales
             </button>
             <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
@@ -67,7 +68,7 @@ export default function ProfilePage() {
               Medios de Pago
             </button>
             <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
-            <IoMdHeartEmpty size={25} />
+              <IoMdHeartEmpty size={25} />
               Lista de deseos
             </button>
             <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
@@ -78,7 +79,9 @@ export default function ProfilePage() {
               <IoLocationOutline size={27} />
               Direcciones
             </button>
-            <div className="divider"></div>
+          </div>
+          <div className="divider"></div>
+          <div>
             <button className="btn gap-4 py-6 rounded-xl bg-white bg-none shadow-none text-base font-normal text-[#292421] border-white justify-normal">
               <IoSettingsOutline size={30} />
               Configuración de Cuenta
