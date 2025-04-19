@@ -27,7 +27,7 @@ export default function ProfilePage() {
         </div>
       </div>
       <div className="ajust-width grid grid-cols-[auto_1fr] py-14 gap-6">
-        <div className="flex flex-col justify-center w-[258px] p-5 pt-7 gap-4 border border-gray-200 rounded-3xl">
+        <div className="flex flex-col w-[258px] p-5 pt-5 rounded-3xl">
           <div className="flex flex-col items-center gap-3">
             <div className="avatar">
               <div className="w-24 rounded-full">
@@ -43,7 +43,7 @@ export default function ProfilePage() {
             </h1>
             <LogInOutButton loading={loading} user={user} />
           </div>
-          <div className="divider"></div>
+          <div className="divider before:h-[1px] after:h-[1px]"></div>
           <div className="flex flex-col">
             <MenuButton
               label="Datos personales"
@@ -76,7 +76,7 @@ export default function ProfilePage() {
               to=""
             />
           </div>
-          <div className="divider"></div>
+          <div className="divider before:h-[1px] after:h-[1px]"></div>
           <div>
             <MenuButton
               label="Configuración de Cuenta"
@@ -86,7 +86,7 @@ export default function ProfilePage() {
             />
           </div>
         </div>
-        <div className="w-full p-5 border border-gray-200 rounded-3xl">
+        <div className="w-full p-5 rounded-3xl">
           <Outlet />
         </div>
       </div>
