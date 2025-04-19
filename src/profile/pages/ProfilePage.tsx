@@ -29,8 +29,8 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-      <div className="ajust-width grid grid-cols-[auto_1fr] py-19 gap-10">
-        <div className="flex flex-col justify-center w-[250px] p-5 gap-4">
+      <div className="ajust-width grid grid-cols-[auto_1fr] py-14 gap-10">
+        <div className="flex flex-col justify-center w-[258px] p-5 pt-7 gap-4 border border-gray-200 rounded-3xl">
           <div className="flex flex-col items-center gap-3">
             <div className="avatar">
               <div className="w-24 rounded-full">
@@ -89,7 +89,9 @@ export default function ProfilePage() {
             />
           </div>
         </div>
-        <Outlet />
+        <div className="w-full p-7 border border-gray-200 rounded-3xl">
+          <Outlet />
+        </div>
       </div>
     </>
   );
