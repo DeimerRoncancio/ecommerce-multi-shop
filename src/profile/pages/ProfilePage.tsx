@@ -1,23 +1,20 @@
 import useUser from "../../shared/hooks/api/useUser";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
 import useCart from "../../cart/hooks/useCart";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function ProfilePage() {
   const { items, loadItemsFromStorage } = useCart();
-  const [ paths, setPaths ] = useState([""]);
   const { user, loading } = useUser();
   const location = useLocation();
 
   useEffect(() => {
     !items.length && loadItemsFromStorage();
-
-    const paths = location.pathname.split("/");
-    setPaths(paths);
-  }, [location])
+  }, [])
 
   return (
     <>
@@ -25,23 +22,7 @@ export default function ProfilePage() {
         <div className="ajust-width flex justify-between items-center py-5">
           <h1 className="text-2xl font-semibold">Cuenta</h1>
           <div className="breadcrumbs text-sm">
-            <ul>
-              {
-                paths.map((path, index) => {
-                  if (index !== paths.length - 1) {
-                    return (
-                      <li key={path}><a className="capitalize" href={`http://localhost:5173/${path}`}>
-                        {
-                          path === "" ? "Inicio" : path
-                        }
-                      </a></li>
-                    )
-                  }
-                  
-                  return (<li key={path} className="capitalize">{path}</li>)
-                })
-              }
-            </ul>
+            <Breadcrumb />
           </div>
         </div>
       </div>
