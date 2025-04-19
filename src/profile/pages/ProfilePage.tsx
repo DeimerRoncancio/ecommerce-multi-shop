@@ -1,5 +1,5 @@
 import useUser from "../../shared/hooks/api/useUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
 import useCart from "../../cart/hooks/useCart";
 import MenuButton from "../components/MenuButton";
@@ -8,12 +8,16 @@ import LogInOutButton from "../components/LogInOutButton";
 
 export default function ProfilePage() {
   const { items, loadItemsFromStorage } = useCart();
+  const [ paths, setPaths ] = useState([""]);
   const { user, loading } = useUser();
   const location = useLocation();
 
   useEffect(() => {
     !items.length && loadItemsFromStorage();
-  }, []);
+
+    const paths = location.pathname.split("/");
+    setPaths(paths);
+  }, [location])
 
   return (
     <>
@@ -22,14 +26,26 @@ export default function ProfilePage() {
           <h1 className="text-2xl font-semibold">Cuenta</h1>
           <div className="breadcrumbs text-sm">
             <ul>
-              <li><a>Inicio</a></li>
-              <li><a>Documents</a></li>
-              <li>Add Document</li>
+              {
+                paths.map((path, index) => {
+                  if (index !== paths.length - 1) {
+                    return (
+                      <li key={path}><a className="capitalize" href={`http://localhost:5173/${path}`}>
+                        {
+                          path === "" ? "Inicio" : path
+                        }
+                      </a></li>
+                    )
+                  }
+                  
+                  return (<li key={path} className="capitalize">{path}</li>)
+                })
+              }
             </ul>
           </div>
         </div>
       </div>
-      <div className="ajust-width grid grid-cols-[auto_1fr] py-14 gap-10">
+      <div className="ajust-width grid grid-cols-[auto_1fr] py-14 gap-6">
         <div className="flex flex-col justify-center w-[258px] p-5 pt-7 gap-4 border border-gray-200 rounded-3xl">
           <div className="flex flex-col items-center gap-3">
             <div className="avatar">
@@ -89,7 +105,7 @@ export default function ProfilePage() {
             />
           </div>
         </div>
-        <div className="w-full p-7 border border-gray-200 rounded-3xl">
+        <div className="w-full p-5 border border-gray-200 rounded-3xl">
           <Outlet />
         </div>
       </div>
