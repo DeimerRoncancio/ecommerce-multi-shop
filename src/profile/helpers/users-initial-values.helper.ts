@@ -1,6 +1,6 @@
-import { User } from "../types/user";
+import { UserTypes } from "../types/user";
 
-export const UserInitialValues: User = {
+export const UserInitialValues: UserTypes = {
   name: "",
   email: "",
   profileImage: {

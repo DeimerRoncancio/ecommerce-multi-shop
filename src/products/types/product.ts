@@ -3,7 +3,7 @@ export interface ProductTypes {
     productName: string;
     description: string;
     price: number;
-    productImages: ProductImage[];
+    productImages: ProductImageType[];
     categories: CategoryType[];
 }
 
@@ -11,7 +11,7 @@ export interface CategoryType {
     categoryName: string;
 }
 
-export interface ProductImage {
+export interface ProductImageType {
     name: string;
     imageUrl: string;
     imageId: string;

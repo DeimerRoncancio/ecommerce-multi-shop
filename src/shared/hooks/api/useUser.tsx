@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { envs } from "../../config/env.config";
 import { UserInitialValues } from "../../../profile/helpers/users-initial-values.helper";
-import { User } from "../../../profile/types/user";
+import { UserTypes } from "../../../profile/types/user";
 import Cookies from "js-cookie";
 import axios from "axios";
 
 export default function useUser() {
-  const [user, setUser] = useState<User>(UserInitialValues);
+  const [user, setUser] = useState<UserTypes>(UserInitialValues);
   const [loading, setLoading] = useState(false);
   
   const getUser = (token: string) => {

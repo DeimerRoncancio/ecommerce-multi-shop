@@ -1,7 +1,7 @@
-export interface User {
+export interface UserTypes {
   name: string;
   email: string;
-  profileImage?: Image;
+  profileImage?: ImageType;
   secondName?: string;
   lastnames?: string;
   phoneNumber?: number;
@@ -10,7 +10,7 @@ export interface User {
   enabled: boolean;
 }
 
-export interface Image {
+export interface ImageType {
   id: string;
   imageId: string;
   imageUrl: string;

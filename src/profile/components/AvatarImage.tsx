@@ -1,8 +1,8 @@
-import { User } from "../types/user"
+import { UserTypes } from "../types/user"
 
 type AvatarImageProps = {
   loading: boolean,
-  user: User
+  user: UserTypes
 }
 
 export default function AvatarImage({ loading, user }: AvatarImageProps) {

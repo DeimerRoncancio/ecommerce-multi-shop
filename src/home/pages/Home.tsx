@@ -1,9 +1,11 @@
 import useCart from "../../cart/hooks/useCart";
 import useGetProducts from "../../shared/hooks/api/useGetProducts";
 import { useEffect } from "react";
+import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function Home() {
   const { products } = useGetProducts();
+  const { wishListItems, addWishListItem, removeWishListItem } = useWishList();
 
   const {
     items,
@@ -21,6 +23,7 @@ export default function Home() {
       {
         products.map(product => {
           const isProductInCart = items.some(item => item.id === product.id);
+          const isProductInWishList = wishListItems.some(item => item.id === product.id);
 
           return (
             <div key={product.id}>
@@ -36,6 +39,18 @@ export default function Home() {
                   !isProductInCart
                     ? 'Add to Cart'
                     : 'Remove to Cart'
+                }
+              </button>
+              <button className="btn" onClick={() => {
+                !isProductInWishList
+                ? addWishListItem(product)
+                : removeWishListItem(product.id)
+              }
+              }>
+                {
+                  !isProductInWishList
+                  ? 'Aadd to WishList'
+                  : 'Remove to WishList'
                 }
               </button>
             </div>

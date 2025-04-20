@@ -2,10 +2,10 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { IoMdLogOut } from "react-icons/io";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
-import { User } from "../types/user";
+import { UserTypes } from "../types/user";
 
 type LogInOutButtonProps = {
-  user: User
+  user: UserTypes
   loading: boolean
 }
 
