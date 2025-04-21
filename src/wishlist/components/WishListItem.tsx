@@ -8,7 +8,7 @@ type WishListItemProps = {
 }
 
 export default function WishListItem({ item, index }: WishListItemProps) {
-  const { removeWishListItem } = useWishList();
+  const { handleRemoveWishListItem } = useWishList();
   
   return (
     <li className="relative bg-white border border-[#e5e7eb] hover:border-[#ea5721] z-10
@@ -43,7 +43,7 @@ export default function WishListItem({ item, index }: WishListItemProps) {
         </p>
         <button className="btn btn-neutral mt-3">Agregar al carrito</button>
       </div>
-      <button className="link absolute top-4 right-4" onClick={() => removeWishListItem(item.id)}>
+      <button className="link absolute top-4 right-4" onClick={() => handleRemoveWishListItem(item.id)}>
         <FaRegTrashAlt />
       </button>
     </li>

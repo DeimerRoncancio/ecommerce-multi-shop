@@ -2,7 +2,7 @@ import WishListItem from "../components/WishListItem";
 import useWishList from "../hooks/useWishList";
 
 export default function WishList() {
-  const { wishListItems } = useWishList();
+  const { wishList } = useWishList();
 
   return (
     <>
@@ -13,7 +13,7 @@ export default function WishList() {
       <div>
         <ul className="flex flex-wrap gap-6">
           {
-            wishListItems.map((item, index) => (
+            wishList.map((item, index) => (
               <WishListItem key={item.id} item={item} index={index} />
             ))
           }

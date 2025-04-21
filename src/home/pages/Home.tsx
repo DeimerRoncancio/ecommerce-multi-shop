@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function Home() {
+  const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
   const { products } = useGetProducts();
-  const { wishListItems, addWishListItem, removeWishListItem } = useWishList();
 
   const {
     items,
@@ -23,7 +23,7 @@ export default function Home() {
       {
         products.map(product => {
           const isProductInCart = items.some(item => item.id === product.id);
-          const isProductInWishList = wishListItems.some(item => item.id === product.id);
+          const isProductInWishList = wishList.some(item => item.id === product.id);
 
           return (
             <div key={product.id}>
@@ -43,13 +43,13 @@ export default function Home() {
               </button>
               <button className="btn" onClick={() => {
                 !isProductInWishList
-                ? addWishListItem(product)
-                : removeWishListItem(product.id)
+                ? handleAddWishListItem(product)
+                : handleRemoveWishListItem(product.id)
               }
               }>
                 {
                   !isProductInWishList
-                  ? 'Aadd to WishList'
+                  ? 'Add to WishList'
                   : 'Remove to WishList'
                 }
               </button>
