@@ -13,7 +13,14 @@ export default function WishList() {
       <div>
         <ul className="flex flex-wrap gap-6">
           {
-            wishList.map((item, index) => (
+            !wishList.length
+            ? (
+              <div className="flex flex-col w-full mt-15 items-center">
+                <img src="/images/wish-list-empty.png" alt="" width={150} />
+                <p className="mt-5 text-2xl font-semibold text-[#80878e]">Lista de deseos vacia</p>
+              </div>
+            )
+            : wishList.map((item, index) => (
               <WishListItem key={item.id} item={item} index={index} />
             ))
           }
