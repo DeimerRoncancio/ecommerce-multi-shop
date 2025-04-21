@@ -23,9 +23,9 @@ export default function WishList() {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl text-[#5e472d]">Lista de deseos</h2>
-        <button className="btn"
-          onClick={() => handleAddToWishList()}
-        >Agregar el carrito</button>
+        <button className="btn" onClick={handleAddToWishList}>
+          Agregar el carrito
+        </button>
       </div>
       <div>
         <ul className="flex flex-wrap gap-6">
