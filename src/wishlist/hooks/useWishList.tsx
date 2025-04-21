@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { ProductTypes } from "../../products/types/product";
 import { useWishListStorage } from "../storage/useWishListStorage";
+import { productToWishList } from "../mappers/wishlist-mapper";
 
 export default function useWishList() {
   const { wishList, addWishListItem, removeWishListItem, setWishListFromStorage } = useWishListStorage();
 
   const handleAddWishListItem = (product: ProductTypes) => {
-    const wishListItem = {
-      id: product.id,
-      productImage: product.productImages[0].imageUrl,
-      productName: product.productName,
-      productPrice: product.price
-    }
+    const wishListItem = productToWishList({ product });
 
     addWishListItem(wishListItem);
   }

@@ -1,13 +1,13 @@
 import { ProductTypes } from "../../products/types/product";
 import { CartItemType } from "../types/cart";
 
-type productToCartProps = {
+type ProductToCartProps = {
   product: ProductTypes,
   quantity: number,
   isExists: boolean
 }
 
-export const productToCar = ({ product, quantity, isExists }: productToCartProps): CartItemType => {
+export const productToCar = ({ product, quantity, isExists }: ProductToCartProps): CartItemType => {
   return {
     id: product.id,
     productName: product.productName,
