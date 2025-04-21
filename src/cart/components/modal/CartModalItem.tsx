@@ -12,7 +12,6 @@ type CartModalItemProps = {
 
 export default function CartModalItem({ item, length, index }: CartModalItemProps) {
   const {
-    quantity,
     totalPrice,
     handleRemoveItem,
     increaseQuantity,
@@ -53,7 +52,7 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
               </button>
 
               <input 
-                value={`${quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" 
+                value={`${item.quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" 
                 type="number"
                 onChange={(event) => changeQuantity(Number(event.target.value))}
                 onBlur={updateQuantity}

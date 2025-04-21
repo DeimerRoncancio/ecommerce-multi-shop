@@ -11,12 +11,11 @@ type WishListItemProps = {
 
 export default function WishListItem({ item, index }: WishListItemProps) {
   const { handleRemoveWishListItem } = useWishList();
+  const { items, handleAddItem } = useCart();
   const { products } = useGetProducts();
-  const { handleAddItem } = useCart();
 
   const handleAddToCart = (id: string) => {
     const product = products.filter(item => item.id == id)[0];
-    handleRemoveWishListItem(id);
     handleAddItem(product);
   }
 
@@ -51,12 +50,22 @@ export default function WishListItem({ item, index }: WishListItemProps) {
         <p className="text-[#5e4a2d] text-lg font-semibold">
           $ {new Intl.NumberFormat("es-ES").format(item.productPrice)}
         </p>
-        <button className="btn btn-neutral mt-3"
-        onClick={() => handleAddToCart(item.id)}>Agregar al carrito</button>
+        {
+          !items.some(itemCart => itemCart.id === item.id)
+            ? (
+              <button className="btn btn-neutral mt-3"
+                onClick={() => handleAddToCart(item.id)}>
+                Agregar al carrito
+              </button>
+            )
+            : (
+              <button className="btn btn-active mt-3">Producto añadido</button>
+            )
+        }
       </div>
       <button className="link absolute p-1 rounded-full top-0 right-3 invisible opacity-0 group-hover:visible 
       group-hover:opacity-100 group-hover:top-3 hover:text-[#ef4444] transition-all duration-300"
-      onClick={() => handleRemoveWishListItem(item.id)}>
+        onClick={() => handleRemoveWishListItem(item.id)}>
         <FaRegTrashAlt />
       </button>
     </li>
