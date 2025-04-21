@@ -1,13 +1,11 @@
-import { NavLink, useNavigate } from "react-router";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { NavLink } from "react-router";
 import CartButton from "./CartButton";
 import ProfileButton from "./ProfileButton";
 import Search from "./Search";
 import MenuButton from "./MenuButton";
+import WishListButton from "./WishListButton";
 
 export default function NavBar() {
-  const navigate = useNavigate();
-  
   return (
     <nav className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
       <ul className="w-1/3 gap-16 flex">
@@ -26,14 +24,11 @@ export default function NavBar() {
           <CartButton />
         </li>
         <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
-          <button className="btn btn-ghost w-10 h-10 p-0 rounded-full text-[#343e49]"
-          onClick={() => navigate("profile/wish-list")}>
-            <IoMdHeartEmpty size={32} />
-          </button>
+          <WishListButton />
         </li>
         <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
           <button className="flex flex-col p-0 btn btn-link decoration-transparent items-start text-[#343e49] 
-              hover:text-[#343e499f] gap-0 font-semibold text-base">
+        hover:text-[#343e499f] gap-0 font-semibold text-base">
             <span className="p-0 m-0 leading-4">Mis</span>
             <span className="p-0 m-0 leading-4">compras</span>
           </button>
