@@ -26,7 +26,7 @@ export default function WishListItem({ item, index }: WishListItemProps) {
       <div className="w-[243px] h-40 rounded-2xl overflow-hidden">
         <img
           src={item.productImage}
-          className="w-full h-full object-contain rounded-2xl hover:scale-110 transition-all duration-300"
+          className="w-full h-full object-contain rounded-2xl group-hover:scale-110 transition-all duration-300"
           alt=""
         />
       </div>
