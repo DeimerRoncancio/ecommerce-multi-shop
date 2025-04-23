@@ -8,7 +8,11 @@ export default function WishList() {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl text-[#5e472d]">Lista de deseos</h2>
-        <button className={`btn ${itemsInCart ? 'btn-neutral btn-outline' : 'btn-disabled text-[#a08f88]'}`}
+        <button className={`btn ${
+          !itemsInCart || !wishList.length
+          ? 'btn-disabled text-[#a08f88]'
+          : 'btn-neutral btn-outline'
+        }`}
         onClick={handleAddToCartSinceWishList}>
           {
             !wishList.length

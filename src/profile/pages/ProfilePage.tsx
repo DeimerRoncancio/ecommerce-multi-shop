@@ -1,20 +1,23 @@
 import useUser from "../../shared/hooks/api/useUser";
-import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router";
-import useCart from "../../cart/hooks/useCart";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
 import Breadcrumb from "../components/Breadcrumb";
+import useCart from "../../cart/hooks/useCart";
+import { useEffect } from "react";
+import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function ProfilePage() {
-  const { items, loadItemsFromStorage } = useCart();
+  const { loadItemsFromStorage } = useCart();
+    const { loadWishListFromStorage } = useWishList();
   const { user, loading } = useUser();
   const location = useLocation();
 
   useEffect(() => {
-    !items.length && loadItemsFromStorage();
-  }, [])
+    loadItemsFromStorage();
+    loadWishListFromStorage();
+  }, []);
 
   return (
     <>

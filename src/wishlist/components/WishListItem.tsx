@@ -12,7 +12,7 @@ type WishListItemProps = {
 
 export default function WishListItem({ item, index }: WishListItemProps) {
   const { handleRemoveWishListItem } = useWishList();
-  const { items, handleAddItem } = useCart();
+  const { cartItems, handleAddItem } = useCart();
   const { products } = useGetProducts();
 
   const handleAddToCart = (id: string) => {
@@ -37,7 +37,7 @@ export default function WishListItem({ item, index }: WishListItemProps) {
           $ {new Intl.NumberFormat("es-ES").format(item.productPrice)}
         </p>
         {
-          !items.some(itemCart => itemCart.id === item.id)
+          !cartItems.some(itemCart => itemCart.id === item.id)
             ? (
               <button className="btn btn-neutral mt-3"
                 onClick={() => handleAddToCart(item.id)}>

@@ -42,8 +42,13 @@ export default function useCart() {
     setTotalPrice(totalPrice);
   }, [cartItems])
 
+  // useEffect(() => {
+  //   if (!cartItems.length) loadItemsFromStorage();
+  //   console.log(cartItems);
+  // }, []);
+
   return {
-    items: cartItems,
+    cartItems,
     totalPrice,
     itemsQuantity,
     handleAddItem,

@@ -8,7 +8,7 @@ import useGetProducts from "../../shared/hooks/api/useGetProducts";
 export default function useWishList() {
   const { wishList, addWishListItem, removeWishListItem, setWishListFromStorage } = useWishListStorage();
   const [ itemsInCart, setItemInCart ] = useState(0);
-  const { items, handleAddItem } = useCart();
+  const { cartItems, handleAddItem } = useCart();
   const { products } = useGetProducts();
 
   const handleAddWishListItem = (product: ProductTypes) => {
@@ -32,7 +32,7 @@ export default function useWishList() {
   }
 
   const getItemsToAdd = () => {
-    const cartIds = new Set(items.map(listItem => listItem.id));
+    const cartIds = new Set(cartItems.map(listItem => listItem.id));
     return wishList.filter(({ id }) => !cartIds.has(id));
   }
 
@@ -43,11 +43,7 @@ export default function useWishList() {
   useEffect(()=>{
     const itemsToAdd = getItemsToAdd();
     setItemInCart(itemsToAdd.length);
-  }, [items])
-
-  useEffect(() => {
-    loadWishListFromStorage();
-  }, [])
+  }, [cartItems])
 
   return {
     wishList,

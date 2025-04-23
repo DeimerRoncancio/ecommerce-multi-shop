@@ -10,7 +10,7 @@ type CartModalProps = {
 }
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
-  const { items, totalPrice, itemsQuantity } = useCart();
+  const { cartItems, totalPrice, itemsQuantity } = useCart();
 
   const navigate = useNavigate();
 
@@ -35,15 +35,15 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
 
         <ul className="flex flex-col h-[calc(100%-69px)] p-1 overflow-auto">
           {
-            !items.length ?
+            !cartItems.length ?
               <div className="flex items-center justify-center text-[#646464] text-base w-full h-40">
                 <p className="text-center">No tienes productos en tu carrito</p>
               </div> :
-            items.map((item, index) => (
+            cartItems.map((item, index) => (
               <CartModalItem
                 key={item.id}
                 item={item}
-                length={items.length}
+                length={cartItems.length}
                 index={index}
               />
             ))
