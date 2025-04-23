@@ -6,7 +6,7 @@ import useCart from "../../cart/hooks/useCart";
 import useGetProducts from "../../shared/hooks/api/useGetProducts";
 
 export default function useWishList() {
-  const { wishList, addWishListItem, removeWishListItem, setWishListFromStorage } = useWishListStorage();
+  const { wishList, addWishListItem, removeWishListItem } = useWishListStorage();
   const [ itemsInCart, setItemInCart ] = useState(0);
   const { cartItems, handleAddItem } = useCart();
   const { products } = useGetProducts();
@@ -36,10 +36,6 @@ export default function useWishList() {
     return wishList.filter(({ id }) => !cartIds.has(id));
   }
 
-  const loadWishListFromStorage =() => {
-    if (!wishList.length) setWishListFromStorage();
-  }
-
   useEffect(()=>{
     const itemsToAdd = getItemsToAdd();
     setItemInCart(itemsToAdd.length);
@@ -51,6 +47,5 @@ export default function useWishList() {
     handleAddWishListItem,
     handleRemoveWishListItem,
     handleAddToCartSinceWishList,
-    loadWishListFromStorage
   }
 }

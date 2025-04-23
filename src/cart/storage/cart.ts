@@ -1,24 +1,18 @@
 import { create } from "zustand";
 import { CartItemType } from "../types/cart";
+import { persist } from "zustand/middleware";
 
 interface State {
   cartItems: CartItemType[];
-  setItemsFromStorage: () => void;
   addItem: (productItem: CartItemType) => void;
   addItems: (productItem: CartItemType) => void;
   removeItem: (productItem: CartItemType) => void;
   clearCart: () => void;
 }
 
-export const useCartStore = create<State>((set, get) => {
+export const useCartStore = create<State>()(persist((set, get) => {
   return {
     cartItems: [],
-
-    setItemsFromStorage: () => {
-      const cartItemsString = localStorage.getItem("cartItems");
-      const cartItems: CartItemType[] = cartItemsString ? JSON.parse(cartItemsString) : [];
-      set({ cartItems });
-    },
 
     addItem: (productItem: CartItemType) => {
       const items = get().cartItems;
@@ -78,4 +72,6 @@ export const useCartStore = create<State>((set, get) => {
       set({ cartItems: [] })
     }
   }
-})
+}, {
+  name: 'cartItems'
+}))

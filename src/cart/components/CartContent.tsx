@@ -1,13 +1,10 @@
-import { useEffect } from "react";
 import useCart from "../hooks/useCart";
 import CartItem from "./CartItem";
 import ClearButton from "./ClearButton";
 import PaymentCardInfo from "./PaymentCardInfo";
 
 export default function CartContent() {
-  const { cartItems, itemsQuantity, loadItemsFromStorage } = useCart();
-
-  useEffect(() => loadItemsFromStorage(), [])
+  const { cartItems, itemsQuantity } = useCart();
 
   return (
     <>

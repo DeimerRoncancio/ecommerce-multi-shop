@@ -4,7 +4,7 @@ import { productToCar } from "../mappers/items-mapper";
 import { useCartStore } from "../storage/cart";
 
 export default function useCart() {
-  const { cartItems, addItem, setItemsFromStorage, removeItem, clearCart } = useCartStore();
+  const { cartItems, addItem, removeItem, clearCart } = useCartStore();
   const [ itemsQuantity, setItemsQuantity ] = useState(0);
   const [ totalPrice, setTotalPrice ] = useState(0);
 
@@ -26,10 +26,6 @@ export default function useCart() {
     clearCart();
   }
 
-  const loadItemsFromStorage = () => {
-    if (!cartItems.length) setItemsFromStorage();
-  }
-
   useEffect(() => {
     const totalQuantity = cartItems.reduce((sum, item) => sum += item.quantity, 0);
     if (itemsQuantity === totalQuantity) return;
@@ -42,18 +38,12 @@ export default function useCart() {
     setTotalPrice(totalPrice);
   }, [cartItems])
 
-  // useEffect(() => {
-  //   if (!cartItems.length) loadItemsFromStorage();
-  //   console.log(cartItems);
-  // }, []);
-
   return {
     cartItems,
     totalPrice,
     itemsQuantity,
     handleAddItem,
     handleRemoveItem,
-    loadItemsFromStorage,
     clear
   }
 }

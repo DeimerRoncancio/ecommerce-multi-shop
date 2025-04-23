@@ -1,14 +1,14 @@
 import { create } from "zustand"
 import { WishListItemType } from "../types/wishlist";
+import { persist } from "zustand/middleware";
 
 interface State {
   wishList: WishListItemType[];
   addWishListItem: (wishListItem: WishListItemType) => void;
   removeWishListItem: (id: string) => void;
-  setWishListFromStorage: () => void;
 }
 
-export const useWishListStorage = create<State>((set, get) => {
+export const useWishListStorage = create<State>()(persist((set, get) => {
   return {
     wishList: [],
 
@@ -25,11 +25,7 @@ export const useWishListStorage = create<State>((set, get) => {
       localStorage.setItem("wishListItems", JSON.stringify([ ...newWishList ]));
       set({ wishList: [ ...newWishList ] });
     },
-
-    setWishListFromStorage: () => {
-      const wishListString = localStorage.getItem("wishListItems");
-      const wishList: WishListItemType[] = wishListString ? JSON.parse(wishListString) : []
-      set({ wishList });
-    }
   }
-})
+}, {
+  name: 'wishListItems'
+}))

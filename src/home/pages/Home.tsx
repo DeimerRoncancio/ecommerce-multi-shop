@@ -1,23 +1,16 @@
 import useCart from "../../cart/hooks/useCart";
 import useGetProducts from "../../shared/hooks/api/useGetProducts";
-import { useEffect } from "react";
 import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function Home() {
-  const { wishList, handleAddWishListItem, handleRemoveWishListItem, loadWishListFromStorage } = useWishList();
+  const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
   const { products } = useGetProducts();
 
   const {
     cartItems,
     handleAddItem,
     handleRemoveItem,
-    loadItemsFromStorage
   } = useCart();
-
-  useEffect(() => {
-    loadItemsFromStorage();
-    loadWishListFromStorage();
-  }, []);
 
   return (
     <div className="ajust-screen flex gap-6 justify-center p-7 items-center w-full my-7">

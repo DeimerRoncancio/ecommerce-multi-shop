@@ -4,20 +4,10 @@ import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
 import Breadcrumb from "../components/Breadcrumb";
-import useCart from "../../cart/hooks/useCart";
-import { useEffect } from "react";
-import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function ProfilePage() {
-  const { loadItemsFromStorage } = useCart();
-    const { loadWishListFromStorage } = useWishList();
   const { user, loading } = useUser();
   const location = useLocation();
-
-  useEffect(() => {
-    loadItemsFromStorage();
-    loadWishListFromStorage();
-  }, []);
 
   return (
     <>
