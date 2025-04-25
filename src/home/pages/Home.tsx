@@ -1,10 +1,10 @@
 import useCart from "../../cart/hooks/useCart";
-import useGetProducts from "../../shared/hooks/api/useGetProducts";
+import useProducts from "../../shared/hooks/api/useProducts";
 import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function Home() {
   const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
-  const { products } = useGetProducts();
+  const { products } = useProducts();
 
   const {
     cartItems,

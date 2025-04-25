@@ -1,8 +1,10 @@
+import useProducts from "../../shared/hooks/api/useProducts";
 import WishListItem from "../components/WishListItem";
 import useWishList from "../hooks/useWishList";
 
 export default function WishList() {
   const { wishList, itemsInCart, handleAddToCartSinceWishList } = useWishList();
+  const { products } = useProducts()
 
   return (
     <>
@@ -10,10 +12,10 @@ export default function WishList() {
         <h2 className="text-2xl text-[#5e472d]">Lista de deseos</h2>
         <button className={`btn ${
           !itemsInCart || !wishList.length
-          ? 'btn-disabled text-[#a08f88]'
-          : 'btn-neutral btn-outline'
+            ? 'btn-disabled text-[#a08f88]'
+            : 'btn-neutral btn-outline'
         }`}
-        onClick={handleAddToCartSinceWishList}>
+        onClick={() => handleAddToCartSinceWishList(products)}>
           {
             !wishList.length
             ? 'No hay productos'
@@ -34,7 +36,7 @@ export default function WishList() {
               </div>
             )
             : wishList.map((item, index) => (
-              <WishListItem key={item.id} item={item} index={index} />
+              <WishListItem key={item.id} products={products} item={item} index={index} />
             ))
           }
         </ul>

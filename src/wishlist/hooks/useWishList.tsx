@@ -3,13 +3,11 @@ import { ProductTypes } from "../../products/types/product";
 import { useWishListStorage } from "../storage/useWishListStorage";
 import { productToWishList } from "../mappers/wishlist-mapper";
 import useCart from "../../cart/hooks/useCart";
-import useGetProducts from "../../shared/hooks/api/useGetProducts";
 
 export default function useWishList() {
   const { wishList, addWishListItem, removeWishListItem } = useWishListStorage();
   const [ itemsInCart, setItemInCart ] = useState(0);
   const { cartItems, handleAddItem } = useCart();
-  const { products } = useGetProducts();
 
   const handleAddWishListItem = (product: ProductTypes) => {
     const wishListItem = productToWishList({ product });
@@ -20,7 +18,7 @@ export default function useWishList() {
     removeWishListItem(id);
   }
   
-  const handleAddToCartSinceWishList = () => {
+  const handleAddToCartSinceWishList = (products: ProductTypes[]) => {
     const itemsToAdd = getItemsToAdd();
     const productsById = new Map(products.map(product => [product.id, product]));
     

@@ -11,12 +11,13 @@ export default function useUser() {
   
   const getUser = (token: string) => {
     setLoading(true);
+
     axios.get(`${envs.API}/app/users/get-user/${token}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }).then(res => setUser(res.data))
-    .finally(() => setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {

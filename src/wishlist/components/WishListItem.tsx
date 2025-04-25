@@ -2,18 +2,18 @@ import { FaRegTrashAlt } from "react-icons/fa"
 import { WishListItemType } from "../types/wishlist"
 import useWishList from "../hooks/useWishList"
 import useCart from "../../cart/hooks/useCart"
-import useGetProducts from "../../shared/hooks/api/useGetProducts"
 import Rating from "./Rating"
+import { ProductTypes } from "../../products/types/product"
 
 type WishListItemProps = {
   item: WishListItemType,
-  index: number
+  index: number,
+  products: ProductTypes[]
 }
 
-export default function WishListItem({ item, index }: WishListItemProps) {
+export default function WishListItem({ item, index, products }: WishListItemProps) {
   const { handleRemoveWishListItem } = useWishList();
   const { cartItems, handleAddItem } = useCart();
-  const { products } = useGetProducts();
 
   const handleAddToCart = (id: string) => {
     const product = products.filter(item => item.id == id)[0];
