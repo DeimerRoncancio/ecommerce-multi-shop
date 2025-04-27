@@ -1,5 +1,5 @@
-import useUser from "../../shared/hooks/api/useUser";
-import { Outlet, useLocation } from "react-router";
+import useUser from "../hooks/api/useUser";
+import { Outlet } from "react-router";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
@@ -7,7 +7,6 @@ import Breadcrumb from "../components/Breadcrumb";
 
 export default function ProfilePage() {
   const { user, loading } = useUser();
-  const location = useLocation();
 
   return (
     <>
