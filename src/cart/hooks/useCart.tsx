@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { ProductTypes } from "../../products/types/product";
 import { productToCar } from "../mappers/items-mapper";
 import { useCartStore } from "../storage/cart";
-import { useLocation } from "react-router";
 
 export default function useCart() {
   const { cartItems, addItem, removeItem, clearCart } = useCartStore();
   const [ itemsQuantity, setItemsQuantity ] = useState(0);
   const [ totalPrice, setTotalPrice ] = useState(0);
-  const location = useLocation();
 
   const handleAddItem = (product: ProductTypes) => {
     const productItem = productToCar({ product, quantity: 1, isExists: true });
@@ -39,10 +37,6 @@ export default function useCart() {
     setItemsQuantity(totalQuantity);
     setTotalPrice(totalPrice);
   }, [cartItems])
-
-  useEffect(() => {
-    console.log(location.pathname)
-  }, [])
 
   return {
     cartItems,
