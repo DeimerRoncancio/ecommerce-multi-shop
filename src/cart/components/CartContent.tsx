@@ -4,7 +4,7 @@ import ClearButton from "./ClearButton";
 import PaymentCardInfo from "./PaymentCardInfo";
 
 export default function CartContent() {
-  const { cartItems, itemsQuantity } = useCart();
+  const { cartItems, itemsQuantity, clear } = useCart();
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function CartContent() {
               <h1 className="text-lg text-[#4a4a4a]">({itemsQuantity} productos)</h1>
             </div>
             <div>
-              <ClearButton fontSize={16} />
+              <ClearButton fontSize={16} clear={clear} />
             </div>
           </div>
 

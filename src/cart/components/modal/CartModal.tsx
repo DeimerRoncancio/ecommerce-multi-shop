@@ -10,7 +10,7 @@ type CartModalProps = {
 }
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
-  const { cartItems, totalPrice, itemsQuantity } = useCart();
+  const { cartItems, totalPrice, itemsQuantity, clear } = useCart();
 
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
             </span>
           </div>
           <button className="btn btn-neutral btn-block rounded-sm" onClick={goCart}>Ver carrito/pagar</button>
-          <ClearButton fontSize={14} />
+          <ClearButton fontSize={14} clear={clear} />
         </div>
       </div>
     </div>

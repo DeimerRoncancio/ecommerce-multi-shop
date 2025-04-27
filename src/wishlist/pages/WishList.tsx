@@ -36,7 +36,12 @@ export default function WishList() {
               </div>
             )
             : wishList.map((item, index) => (
-              <WishListItem key={item.id} products={products} item={item} index={index} />
+              <WishListItem 
+                key={item.id}
+                item={item}
+                index={index}
+                products={products}
+              />
             ))
           }
         </ul>
