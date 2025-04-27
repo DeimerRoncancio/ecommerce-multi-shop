@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { ProductTypes } from "../../../products/types/product";
-import { ProductsInitialValues } from "../../../products/helpers/products-initial-values.helper";
-import { envs } from "../../config/env.config";
+import { ProductTypes } from "../../types/product";
+import { ProductsInitialValues } from "../../helpers/products-initial-values.helper";
+import { getProducts } from "../../services/api/products";
 
 export default function useProducts() {
   const [products, setProducts] = useState<ProductTypes[]>(ProductsInitialValues);
@@ -11,8 +10,8 @@ export default function useProducts() {
   const loadProducts = () => {
     setLoading(true);
 
-    axios.get(`${envs.API}/app/products`)
-      .then(res => setProducts(res.data))
+    getProducts()
+      .then(data => setProducts(data))
       .finally(() => setLoading(false));
   }
 

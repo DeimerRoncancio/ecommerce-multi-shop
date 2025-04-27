@@ -1,5 +1,5 @@
 import useCart from "../../cart/hooks/useCart";
-import useProducts from "../../shared/hooks/api/useProducts";
+import useProducts from "../../products/hooks/api/useProducts";
 import useWishList from "../../wishlist/hooks/useWishList";
 
 export default function Home() {

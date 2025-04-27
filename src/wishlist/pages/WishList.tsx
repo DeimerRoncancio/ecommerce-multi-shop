@@ -1,4 +1,4 @@
-import useProducts from "../../shared/hooks/api/useProducts";
+import useProducts from "../../products/hooks/api/useProducts";
 import WishListItem from "../components/WishListItem";
 import useWishList from "../hooks/useWishList";
 

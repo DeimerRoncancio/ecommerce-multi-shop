@@ -2,7 +2,7 @@ import { BsCashStack, BsPaypal, BsShop } from "react-icons/bs";
 import { FaApple, FaGoogle } from "react-icons/fa6";
 import { IoCardOutline } from "react-icons/io5";
 import { Link } from "react-router";
-import useProducts from "../../hooks/api/useProducts";
+import useProducts from "../../../products/hooks/api/useProducts";
 import CustomLink from "./CustomLink";
 import SocialButton from "./SocialButton";
 import ContactItem from "./ContactItem";
