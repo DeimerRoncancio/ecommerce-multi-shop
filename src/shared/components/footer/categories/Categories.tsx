@@ -1,25 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react"
-import { CategoriesFromApiType, CategoriesType } from "../../../../products/types/categories";
+import { CategoriesType } from "../../../../products/types/categories";
+import { mapApiToCategories } from "../../../../products/mappers/categories-mapper";
+import { getCategories } from "../../../../products/services/api/categories";
 
 export default function Categories() {
   const [categories, setCategories] = useState<CategoriesType[]>([]);
   
   useEffect(() => {
-    const fetchCategories = (): Promise<CategoriesFromApiType[]> => {
-      return axios.get('https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/categories')
-        .then(res => res.data);
-    }
-
-    const mapApiToCategories = (apiResponse: CategoriesFromApiType): CategoriesType => {
-      return {
-        id: apiResponse.id,
-        name: apiResponse.categoryName,
-        products: apiResponse.products
-      }
-    }
-
-    fetchCategories()
+    getCategories()
       .then(res => res.map(mapApiToCategories))
       .then(setCategories);
   }, [])
