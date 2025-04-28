@@ -7,12 +7,12 @@ type ProductToCartProps = {
   isExists: boolean
 }
 
-export const productToCar = ({ product, quantity, isExists }: ProductToCartProps): CartItemType => {
+export const productToCart = ({ product, quantity, isExists }: ProductToCartProps): CartItemType => {
   return {
     id: product.id,
-    productName: product.productName,
+    productName: product.name,
     productDescription: product.description,
-    productImage: product.productImages[0].imageUrl,
+    productImage: product.images[0].imageUrl,
     isExists: isExists,
     productPrice: product.price,
     quantity: quantity

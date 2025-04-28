@@ -4,7 +4,7 @@ import ProfileButton from "./ProfileButton";
 import Search from "./Search";
 import MenuButton from "./MenuButton";
 import WishListButton from "./WishListButton";
-import Categories from "../footer/categories/Categories";
+import Categories from "./categories/Categories";
 
 export default function NavBar() {
   return (

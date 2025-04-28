@@ -1,9 +1,9 @@
 export interface ProductTypes {
     id: string;
-    productName: string;
+    name: string;
     description: string;
     price: number;
-    productImages: ProductImageType[];
+    images: ProductImageType[];
     categories: CategoryType[];
 }
 
@@ -15,4 +15,13 @@ export interface ProductImageType {
     name: string;
     imageUrl: string;
     imageId: string;
+}
+
+export interface ProductsFromApi {
+    id: string;
+    productName: string;
+    description: string;
+    price: number;
+    productImages: ProductImageType[];
+    categories: CategoryType[];
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ProductTypes } from "../../products/types/product";
-import { productToCar } from "../mappers/items-mapper";
+import { productToCart } from "../mappers/items-mapper";
 import { useCartStore } from "../storage/cart";
 
 export default function useCart() {
@@ -9,7 +9,7 @@ export default function useCart() {
   const [ totalPrice, setTotalPrice ] = useState(0);
 
   const handleAddItem = (product: ProductTypes) => {
-    const productItem = productToCar({ product, quantity: 1, isExists: true });
+    const productItem = productToCart({ product, quantity: 1, isExists: true });
     addItem(productItem);
   }
 

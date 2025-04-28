@@ -2,7 +2,7 @@ import { ProductTypes } from "../types/product";
 
 export const ProductsInitialValues: ProductTypes[] = [{
   id: "",
-  productName: "",
+  name: "",
   description: "",
   price: 0,
   categories: [
@@ -10,7 +10,7 @@ export const ProductsInitialValues: ProductTypes[] = [{
       categoryName: ""
     }
   ],
-  productImages: [
+  images: [
     {
       imageId: "",
       imageUrl: "",

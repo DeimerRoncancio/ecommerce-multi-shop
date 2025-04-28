@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ProductTypes } from "../../types/product";
 import { ProductsInitialValues } from "../../helpers/products-initial-values.helper";
 import { getProducts } from "../../services/api/products";
+import { mapApiToProducts } from "../../mappers/products-maper";
 
 export default function useProducts() {
   const [products, setProducts] = useState<ProductTypes[]>(ProductsInitialValues);
@@ -11,7 +12,8 @@ export default function useProducts() {
     setLoading(true);
 
     getProducts()
-      .then(data => setProducts(data))
+      .then(res => res.map(mapApiToProducts))
+      .then(setProducts)
       .finally(() => setLoading(false));
   }
 

@@ -30,7 +30,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-4">
             {
               products.map(item => (
-                <li key={item.id}> <CustomLink to="">{item.productName}</CustomLink> </li>
+                <li key={item.id}> <CustomLink to="">{item.name}</CustomLink> </li>
               ))
             }
           </ul>

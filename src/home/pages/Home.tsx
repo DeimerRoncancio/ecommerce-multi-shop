@@ -21,8 +21,8 @@ export default function Home() {
 
           return (
             <div key={product.id}>
-              <img src={`${product.productImages[0].imageUrl}`} />
-              <h2>{product.productName}</h2>
+              <img src={`${product.images[0].imageUrl}`} />
+              <h2>{product.name}</h2>
               <button className={`btn ${!isProductInCart ? 'btn-neutral' : 'btn-secondary'}`}
                 onClick={() => {
                   !isProductInCart

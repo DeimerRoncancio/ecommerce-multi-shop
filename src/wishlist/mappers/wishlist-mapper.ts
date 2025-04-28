@@ -8,8 +8,8 @@ type ProductToWishListProps = {
 export const productToWishList = ({ product }: ProductToWishListProps): WishListItemType => {
   return {
     id: product.id,
-    productImage: product.productImages[0].imageUrl,
-    productName: product.productName,
+    productImage: product.images[0].imageUrl,
+    productName: product.name,
     productPrice: product.price
   }
 }
