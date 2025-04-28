@@ -7,36 +7,72 @@ import WishListButton from "./WishListButton";
 
 export default function NavBar() {
   return (
-    <nav className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
-      <ul className="w-1/3 gap-16 flex">
-        <NavLink to="/" className="max-w-[110px] my-auto btn btn-link p-0">
-          <img src='/images/logo.webp' />
-        </NavLink>
-        <MenuButton />
-      </ul>
+    <nav className="fixed top-0 w-full bg-white z-20">
+      <div className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
+        <ul className="w-1/3 gap-16 flex">
+          <NavLink to="/" className="max-w-[110px] my-auto btn btn-link p-0">
+            <img src='/images/logo.webp' />
+          </NavLink>
+          <MenuButton />
+        </ul>
 
-      <ul className="w-1/3 flex justify-center items-center">
-        <Search />
-      </ul>
+        <ul className="w-1/3 flex justify-center items-center">
+          <Search />
+        </ul>
 
-      <ul className="flex-row-reverse gap-0 flex items-center w-1/3">
-        <li className="px-4 h-full flex items-center">
-          <CartButton />
-        </li>
-        <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
-          <WishListButton />
-        </li>
-        <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
-          <button className="flex flex-col p-0 btn btn-link decoration-transparent items-start text-[#343e49] 
+        <ul className="flex-row-reverse gap-0 flex items-center w-1/3">
+          <li className="px-4 h-full flex items-center">
+            <CartButton />
+          </li>
+          <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
+            <WishListButton />
+          </li>
+          <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
+            <button className="flex flex-col p-0 btn btn-link decoration-transparent items-start text-[#343e49] 
         hover:text-[#343e499f] gap-0 font-semibold text-base">
-            <span className="p-0 m-0 leading-4">Mis</span>
-            <span className="p-0 m-0 leading-4">compras</span>
-          </button>
-        </li>
-        <li className="flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]">
-          <ProfileButton size={40} />
-        </li>
-      </ul>
+              <span className="p-0 m-0 leading-4">Mis</span>
+              <span className="p-0 m-0 leading-4">compras</span>
+            </button>
+          </li>
+          <li className="flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]">
+            <ProfileButton size={40} />
+          </li>
+        </ul>
+      </div>
+      <div className="text-[#343e49] text-sm">
+        <ul className="flex justify-center items-center border-b-[1px] border-[#f1e1dc] gap-10">
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Cocina y comida</p>
+            </button>
+          </li>
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Decoraciones</p>
+            </button>
+          </li>
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Gamer</p>
+            </button>
+          </li>
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Hogar</p>
+            </button>
+          </li>
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Tecnología</p>
+            </button>
+          </li>
+          <li>
+            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
+              <p>Videojuegos</p>
+            </button>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }
