@@ -4,6 +4,7 @@ import ProfileButton from "./ProfileButton";
 import Search from "./Search";
 import MenuButton from "./MenuButton";
 import WishListButton from "./WishListButton";
+import Categories from "../footer/categories/Categories";
 
 export default function NavBar() {
   return (
@@ -29,7 +30,7 @@ export default function NavBar() {
           </li>
           <li className="flex h-full px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
             <button className="flex flex-col p-0 btn btn-link decoration-transparent items-start text-[#343e49] 
-        hover:text-[#343e499f] gap-0 font-semibold text-base">
+            hover:text-[#343e499f] gap-0 font-semibold text-base">
               <span className="p-0 m-0 leading-4">Mis</span>
               <span className="p-0 m-0 leading-4">compras</span>
             </button>
@@ -39,40 +40,7 @@ export default function NavBar() {
           </li>
         </ul>
       </div>
-      <div className="text-[#343e49] text-sm">
-        <ul className="flex justify-center items-center border-b-[1px] border-[#f1e1dc] gap-10">
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Cocina y comida</p>
-            </button>
-          </li>
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Decoraciones</p>
-            </button>
-          </li>
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Gamer</p>
-            </button>
-          </li>
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Hogar</p>
-            </button>
-          </li>
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Tecnología</p>
-            </button>
-          </li>
-          <li>
-            <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1">
-              <p>Videojuegos</p>
-            </button>
-          </li>
-        </ul>
-      </div>
+      <Categories />
     </nav>
   );
 }
