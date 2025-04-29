@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: caramellatte --default;
 }
@@ -22,4 +23,21 @@
   width: 82%;
   max-width: 1366px;
   margin: auto;
+}
+
+.tab {
+  &:not(:checked, label:has(:checked), :hover, .tab-active, [aria-selected="true"]) {
+    color: black
+  }
+}
+
+.tabs-border {
+  & .tab {
+
+    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled, [disabled]),
+    &:is(input:checked),
+    &:is(label:has(:checked)) {
+      color: #f04913
+    }
+  }
 }

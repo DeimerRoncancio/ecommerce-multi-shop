@@ -36,26 +36,57 @@ export default function Categories() {
         onMouseEnter={() => setModalVisible(true)}
         onMouseLeave={() => setModalVisible(false)}
       >
-        <ul className="flex flex-wrap gap-7">
-          {
-            products.slice(0, 4).map(product => (
-              <li key={product.id} className="flex flex-col group bg-white gap-4">
-                <div className="w-[243px] h-44 overflow-hidden">
-                  <img
-                    src={`${product.images[0].imageUrl}`}
-                    className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
-                    alt=""
-                  />
-                </div>
-                <div className="flex flex-col bg-white z-10 gap-2">
-                  <p className="">{product.name}</p>
-                  <p className="font-semibold text-[#b6401f]">${new Intl.NumberFormat("es-ES").format(product.price)}</p>
-                  <button className="btn font-normal p-3 py-1 rounded-sm w-fit h-auto border-0">Ver Producto</button>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+        <div className="tabs tabs-border">
+          <input 
+            type="radio" name="my_tabs_2"
+            className="tab px-6 before:!left-0 before:!w-full"
+            aria-label="Todos" defaultChecked
+          />
+          <div className="tab-content p-6 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9] mt-[-2px]">
+            <ul className="flex flex-wrap gap-7">
+              {
+                products.slice(0, 4).map(product => (
+                  <li key={product.id} className="flex flex-col group bg-white gap-4">
+                    <div className="w-[223px] h-44 overflow-hidden">
+                      <img
+                        src={`${product.images[0].imageUrl}`}
+                        className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex flex-col bg-white z-10 gap-2">
+                      <p className="">{product.name}</p>
+                      <p className="font-semibold text-[#b6401f]">
+                        ${new Intl.NumberFormat("es-ES").format(product.price)}
+                      </p>
+                      <button className="btn font-normal p-3 py-1 rounded-sm w-fit h-auto border-0">
+                        Ver Producto
+                      </button>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <input 
+            type="radio" name="my_tabs_2"
+            className="tab px-6 before:!left-0 before:!w-full"
+            aria-label="En ofera"
+          />
+          <div className="tab-content p-6 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9] mt-[-2px]">
+            Tab content 2
+          </div>
+
+          <input 
+            type="radio" name="my_tabs_2"
+            className="tab px-6 before:!left-0 before:!w-full"
+            aria-label="Recientes"
+          />
+          <div className="tab-content p-6 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9] mt-[-2px]">
+            Tab content 3
+          </div>
+        </div>
       </div>
     </div>
   )
