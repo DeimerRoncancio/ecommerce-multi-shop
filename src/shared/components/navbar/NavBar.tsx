@@ -8,8 +8,8 @@ import Categories from "./categories/Categories";
 
 export default function NavBar() {
   return (
-    <nav className="fixed top-0 w-full bg-white z-20">
-      <div className="flex border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
+    <nav className="fixed top-0 w-full z-20">
+      <div className="flex bg-white border-b-[1px] h-fit p-3 px-4 border-[#f1e1dc]">
         <ul className="w-1/3 gap-16 flex">
           <NavLink to="/" className="max-w-[110px] my-auto btn btn-link p-0">
             <img src='/images/logo.webp' />
