@@ -12,12 +12,6 @@
   background-color: white;
 }
 
-main {
-  width: 100%;
-  min-height: 100%;
-  margin-top: 128px;
-}
-
 .ajust-screen {
   width: 100%;
   max-width: 1366px;

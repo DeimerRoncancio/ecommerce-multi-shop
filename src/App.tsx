@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <main>
+      <main className="w-full max-w-[1366px] mx-auto mt-[128px]">
         <Outlet />
       </main>
       <Footer />

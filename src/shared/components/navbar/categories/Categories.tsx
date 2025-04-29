@@ -5,7 +5,7 @@ import { getCategories } from "../../../../products/services/api/categories";
 
 export default function Categories() {
   const [categories, setCategories] = useState<CategoriesType[]>([]);
-  
+
   useEffect(() => {
     getCategories()
       .then(res => res.map(mapApiToCategories))

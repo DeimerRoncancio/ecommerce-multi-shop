@@ -17,7 +17,7 @@ export interface ProductImageType {
     imageId: string;
 }
 
-export interface ProductsFromApi {
+export interface ProductsFromApiType {
     id: string;
     productName: string;
     description: string;
