@@ -39,7 +39,7 @@ export default function Cart() {
         </ul>
       </nav>
 
-      <main className="mx-auto w-full !mt-0">
+      <main className="!mt-0">
         <Outlet />
       </main>
 

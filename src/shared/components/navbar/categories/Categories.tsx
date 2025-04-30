@@ -42,16 +42,16 @@ export default function Categories() {
             className="tab px-10 before:!left-0 before:!w-full"
             aria-label="Todos" defaultChecked
           />
-          <div className="tab-content p-6 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9]
+          <div className="tab-content p-2 pt-5 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9]
           mt-[-1px] min-h-[300px] h-fit">
-            <ul className="flex flex-wrap gap-7 xl:max-h-[310px] xl:min-h-[300px] 2xl:h-fit overflow-auto">
+            <ul className="flex flex-wrap gap-7 xl:max-h-[310px] 2xl:h-fit overflow-auto">
               {
                 products.map(product => (
                   <li key={product.id} className="flex flex-col group bg-white gap-4">
                     <div className="w-[223px] h-40 overflow-hidden">
                       <img
                         src={`${product.images[0].imageUrl}`}
-                        className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
                         alt=""
                       />
                     </div>

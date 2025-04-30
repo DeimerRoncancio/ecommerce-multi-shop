@@ -8,7 +8,7 @@ export default function CartContent() {
 
   return (
     <>
-      <div className="flex m-10 mt-15 gap-10">
+      <div className="flex ajust-screen m-10 mt-15 gap-10 p-10">
         <div className="flex flex-col w-[70%]">
           <div className="flex justify-between mb-5 items-center">
             <div className="flex gap-1 items-center">
