@@ -1,0 +1,15 @@
+.tab {
+  &:not(:checked, label:has(:checked), :hover, .tab-active, [aria-selected="true"]) {
+    color: black
+  }
+}
+
+.tabs-border {
+  & .tab {
+    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled, [disabled]),
+    &:is(input:checked),
+    &:is(label:has(:checked)) {
+      color: #f04913
+    }
+  }
+}
