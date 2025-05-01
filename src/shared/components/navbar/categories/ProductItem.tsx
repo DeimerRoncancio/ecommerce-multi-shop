@@ -7,7 +7,7 @@ type ProductItemProps = {
 export default function ProductItem({ product }: ProductItemProps) {
   return (
     <li key={product.id} className="flex flex-col group bg-white gap-4">
-      <div className="w-[223px] h-40 overflow-hidden">
+      <div className="w-[150px] h-40 overflow-hidden">
         <img
           src={`${product.images[0].imageUrl}`}
           className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
