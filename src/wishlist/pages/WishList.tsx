@@ -31,8 +31,8 @@ export default function WishList() {
             !wishList.length
             ? (
               <div className="flex flex-col w-full mt-15 items-center">
-                <img src="/images/wish-list-empty.png" alt="" width={150} />
-                <p className="mt-5 text-2xl font-semibold text-[#80878e]">Lista de deseos vacia</p>
+                <img src="/images/box-empty.png" alt="" width={150} />
+                <p className="mt-5 text-2xl font-semibold text-[#676767]">Lista de deseos vacia</p>
               </div>
             )
             : wishList.map((item, index) => (
