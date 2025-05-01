@@ -23,7 +23,13 @@ export default function CategoriesModal({ products, showModal, changeVisibility 
           mt-[-1px] min-h-[300px] h-fit">
           <ul className="flex flex-wrap gap-7 xl:max-h-[310px] 2xl:h-fit overflow-auto">
             {
-              products.map(product => (
+              !products.length
+              ? (
+                <div className="flex flex-col w-full h-full mt-7 justify-center items-center gap-5">
+                  <p className="text-[#676767] text-xl">No hay productos en esta categoría</p>
+                  <img src="/images/box-empty.png" alt="" width={150} />
+                </div>
+              ) : products.map(product => (
                 <li key={product.id} className="flex flex-col group bg-white gap-4">
                   <div className="w-[223px] h-40 overflow-hidden">
                     <img

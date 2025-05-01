@@ -5,6 +5,7 @@ import { getCategories } from "../../../../products/services/api/categories";
 import CategoriesModal from "./CategoriesModal";
 import useProducts from "../../../../products/hooks/api/useProducts";
 import { ProductTypes } from "../../../../products/types/product";
+import CategoryButton from "./CategoryButton";
 
 export default function Categories() {
   const [categories, setCategories] = useState<CategoriesType[]>([]);
@@ -23,7 +24,7 @@ export default function Categories() {
   }
 
   const handleModalVisibility = (isVisible: boolean) => setModalVisible(isVisible);
-
+  
   useEffect(() => {
     getCategories()
       .then(res => res.map(mapApiToCategories))
@@ -35,14 +36,11 @@ export default function Categories() {
       <ul className="flex bg-white justify-center items-center border-b-[1px] border-[#f1e1dc]">
         {
           categories.map(cat => (
-            <li key={cat.id}>
-              <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1 px-5"
-                onMouseEnter={() => handleModalProducts(cat.name)}
-                onMouseLeave={() => setModalVisible(false)}
-              >
-                <p>{cat.name}</p>
-              </button>
-            </li>
+            <CategoryButton
+              category={cat}
+              handleMouseEnter={handleModalProducts}
+              handleMouseLeave={handleModalVisibility}
+            />
           ))
         }
       </ul>
