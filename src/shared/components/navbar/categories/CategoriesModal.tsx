@@ -1,13 +1,12 @@
-import useProducts from "../../../../products/hooks/api/useProducts";
+import { ProductTypes } from "../../../../products/types/product";
 
 type CategoriesModalProps = {
+  products: ProductTypes[]
   showModal: boolean,
   changeVisibility: (isVisible: boolean) => void
 }
 
-export default function CategoriesModal({ showModal, changeVisibility }: CategoriesModalProps) {
-  const { products } = useProducts();
-
+export default function CategoriesModal({ products, showModal, changeVisibility }: CategoriesModalProps) {
   return (
     <div className={`${!showModal && 'hidden'} bg-white ajust-width m-auto p-6 rounded-lg
       shadow-[0_7px_15px_0px_rgba(154,154,154,0.67)]`}

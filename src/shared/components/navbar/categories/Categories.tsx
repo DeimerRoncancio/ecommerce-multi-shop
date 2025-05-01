@@ -3,10 +3,26 @@ import { CategoriesType } from "../../../../products/types/categories";
 import { mapApiToCategories } from "../../../../products/mappers/categories-mapper";
 import { getCategories } from "../../../../products/services/api/categories";
 import CategoriesModal from "./CategoriesModal";
+import useProducts from "../../../../products/hooks/api/useProducts";
+import { ProductTypes } from "../../../../products/types/product";
 
 export default function Categories() {
   const [categories, setCategories] = useState<CategoriesType[]>([]);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [ categoryProducts, setCategoryProducts ] = useState<ProductTypes[]>([]);
+  const { products } = useProducts();
+
+  const handleModalProducts = (cat: string) => {
+    const productsFilter = products.filter(product => {
+      const cats = product.categories.map(cat => cat.categoryName);
+      return cats.some(productCat => productCat === cat);
+    })
+
+    setCategoryProducts(productsFilter);
+    setModalVisible(true);
+  }
+
+  const handleModalVisibility = (isVisible: boolean) => setModalVisible(isVisible);
 
   useEffect(() => {
     getCategories()
@@ -21,7 +37,7 @@ export default function Categories() {
           categories.map(cat => (
             <li key={cat.id}>
               <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1 px-5"
-                onMouseEnter={() => setModalVisible(true)}
+                onMouseEnter={() => handleModalProducts(cat.name)}
                 onMouseLeave={() => setModalVisible(false)}
               >
                 <p>{cat.name}</p>
@@ -31,8 +47,9 @@ export default function Categories() {
         }
       </ul>
       <CategoriesModal
+        products={categoryProducts}
         showModal={isModalVisible}
-        changeVisibility={setModalVisible}
+        changeVisibility={handleModalVisibility}
       />
     </div>
   )
