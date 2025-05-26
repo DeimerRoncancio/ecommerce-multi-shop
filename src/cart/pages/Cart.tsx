@@ -1,9 +1,11 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { GiPadlock } from "react-icons/gi";
 import ProfileButton from "../../shared/components/navbar/ProfileButton";
 import { IoMdHeartEmpty } from "react-icons/io";
 
 export default function Cart() {
+  const navigate = useNavigate();
+  
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
       <nav className="flex w-full bg-[#ffece59a] p-1 px-4">
@@ -26,7 +28,8 @@ export default function Cart() {
             <ProfileButton size={32} />
           </li>
           <li className="flex px-4 items-center border-r-[1px] border-[#a2a9b1] text-[#a2a9b1]">
-            <button className="btn btn-ghost w-8 h-8 p-0 rounded-full text-[#343e49]">
+            <button className="btn btn-ghost w-8 h-8 p-0 rounded-full text-[#343e49]" 
+              onClick={() => navigate("/profile/wish-list")}>
               <IoMdHeartEmpty size={26} />
             </button>
           </li>

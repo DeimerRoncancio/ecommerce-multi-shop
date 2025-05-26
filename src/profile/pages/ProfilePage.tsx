@@ -80,7 +80,7 @@ export default function ProfilePage() {
           </div>
         </div>
         <div className="w-full p-5 rounded-3xl">
-          <Outlet />
+          <Outlet context={{ user, userLoading: loading }} />
         </div>
       </div>
     </>

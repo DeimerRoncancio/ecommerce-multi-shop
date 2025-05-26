@@ -9,8 +9,9 @@ type CategoriesModalProps = {
 
 export default function CategoriesModal({ products, showModal, changeVisibility }: CategoriesModalProps) {
   return (
-    <div className={`${!showModal ? 'invisible opacity-0 translate-y-10' : 'visible opacity-100'} bg-white
-      ajust-width m-auto p-6 rounded-lg shadow-[0_7px_15px_0px_rgba(154,154,154,0.67)] transition-all duration-500`}
+    <div className={`${!showModal ? 'invisible opacity-0 translate-y-10' : 'visible opacity-100'} absolute right-0 
+      left-0 bg-white ajust-width !w-[78%] m-auto p-6 rounded-lg shadow-[0_7px_15px_0px_rgba(154,154,154,0.67)] 
+      transition-all duration-[0.3s,0.2s]`}
       onMouseEnter={() => changeVisibility(true)}
       onMouseLeave={() => changeVisibility(false)}
     >

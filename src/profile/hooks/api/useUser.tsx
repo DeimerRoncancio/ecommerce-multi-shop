@@ -6,10 +6,10 @@ import Cookies from "js-cookie";
 
 export default function useUser() {
   const [user, setUser] = useState<UserTypes>(UserInitialValues);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   const toGetUser = (token: string) => {
-    setLoading(true);
+    // setLoading(true);
 
     getUser(token)
       .then(data => setUser(data))

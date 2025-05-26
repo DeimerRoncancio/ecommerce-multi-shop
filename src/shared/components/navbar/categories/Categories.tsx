@@ -37,6 +37,7 @@ export default function Categories() {
         {
           categories.map(cat => (
             <CategoryButton
+              key={cat.id}
               category={cat}
               handleMouseEnter={handleModalProducts}
               handleMouseLeave={handleModalVisibility}

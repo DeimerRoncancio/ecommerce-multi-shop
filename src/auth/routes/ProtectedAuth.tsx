@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { UserTypes } from "../../profile/types/user";
+
+type userContext = {
+  user: UserTypes,
+  userLoading: boolean
+}
 
 export default function ProtectedAuth() {
   const [loading, setLoading] = useState(false);
+  const { user, userLoading } = useOutletContext<userContext>();
   const cookie = Cookies.get("accessHome");
   const redirect = useNavigate();
 
@@ -25,7 +32,7 @@ export default function ProtectedAuth() {
       {loading ? (
         <span className="loading loading-ring loading-lg"></span>
       ) : (
-        <Outlet />
+        <Outlet context={{ user, userLoading }} />
       )}
     </>
   );
