@@ -20,12 +20,20 @@ export default function Profile() {
           }
         </button>
       </div>
-      <div className="text-base text-black grid grid-cols-2 gap-5">
-          <UserDataField fieldName={"Nombres(s)"} data={ user.name + ' ' + user.secondName } />
-          <UserDataField fieldName={"Apellido(s)"} data={ user.lastnames } />
-          <UserDataField fieldName={"Email"} data={ user.email } />
-          <UserDataField fieldName={"Numero de telefono"} data={ user.phoneNumber?.toString() } />
-      </div>
+      {
+        !loading ? (
+          <div className="text-base text-black grid grid-cols-2 gap-5">
+              <UserDataField fieldName={"Nombres(s)"} data={ user.name + ' ' + user.secondName } />
+              <UserDataField fieldName={"Apellido(s)"} data={ user.lastnames } />
+              <UserDataField fieldName={"Email"} data={ user.email } />
+              <UserDataField fieldName={"Numero de telefono"} data={ user.phoneNumber?.toString() } />
+          </div>
+        ) : (
+          <div className="w-full mt-28 flex justify-center">
+            <span className="loading loading-dots loading-xl"></span>
+          </div>
+        )
+      }
     </>
   )
 }
