@@ -3,20 +3,18 @@ import { UserUpdateTypes } from "../types/user"
 
 type UserDataFieldProps = {
   register: UseFormRegister<UserUpdateTypes>,
-  name: "email" | "gender" | "lastnames" | "names" | "phoneNumber",
   fieldName: string,
-  data?: string
+  name: any,
 }
 
-export default function UserDataField({ register, name, fieldName, data }: UserDataFieldProps) {
+export default function UserDataField({ register, name, fieldName }: UserDataFieldProps) {
   return (
     <div>
       <label className="text-[#c7c7c7]">{fieldName}</label>
       <div className="p-3 border-b-[1px] border-b-[#c7c7c7]">
         <input
-          className="outline-0 w-full"
-          defaultValue={data}
           type="text"
+          className="outline-0 w-full"
           {...register(name)}
         />
       </div>

@@ -3,6 +3,7 @@ import { UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 type userContext = {
   user: UserTypes,
@@ -12,11 +13,23 @@ type userContext = {
 export default function Profile() {
   const { user, userLoading: loading } = useOutletContext<userContext>();
 
-  const { register, handleSubmit } = useForm<UserUpdateTypes>();
+  const { register, handleSubmit, reset } = useForm<UserUpdateTypes>();
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     console.log(data);
   }
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        names: user.name + (user.secondName ? ' ' + user.secondName : ''),
+        lastnames: user.lastnames,
+        email: user.email,
+        phoneNumber: user.phoneNumber?.toString(),
+        gender: user.gender,
+      })
+    }
+  }, [user, reset])
 
   return (
     <>
@@ -31,27 +44,23 @@ export default function Profile() {
                 register={register}
                 name="names"
                 fieldName={"Nombres(s)"}
-                data={`${user.name}${ user.secondName ? ' ' + user.secondName : '' }`}
               />
               <UserDataField
                 register={register}
                 name="lastnames"
                 fieldName="Apellido(s)"
-                data={user.lastnames}
               />
               <UserDataField
                 register={register}
                 name="email"
                 fieldName="Email"
-                data={user.email}
               />
               <UserDataField
                 register={register}
                 name="phoneNumber"
                 fieldName="Numero de telefono"
-                data={user.phoneNumber?.toString()}
               />
-              <UserDataRadio register={register} data={user.gender} />
+              <UserDataRadio register={register} />
             </div>
             <button className="btn mt-7 mr-3 p-1 px-7 h-9 btn-neutral">Actualizar datos</button>
             <button className="btn mt-7 p-1 px-6 h-9">Reestablecer datos</button>

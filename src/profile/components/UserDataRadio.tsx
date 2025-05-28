@@ -3,10 +3,9 @@ import { UserUpdateTypes } from "../types/user"
 
 type UserDataRadioProps = {
   register: UseFormRegister<UserUpdateTypes>,
-  data?: string
 }
 
-export default function UserDataRadio({ data, register }: UserDataRadioProps) {
+export default function UserDataRadio({ register }: UserDataRadioProps) {
   return (
     <div>
       <label className="text-[#c7c7c7]">Género</label>
@@ -15,7 +14,6 @@ export default function UserDataRadio({ data, register }: UserDataRadioProps) {
           <input
             type="radio" id="H" value="male"
             className="radio radio-neutral radio-sm"
-            defaultChecked={data == 'male'}
             {...register('gender')}
           />
           <span>Hombre</span>
@@ -24,7 +22,6 @@ export default function UserDataRadio({ data, register }: UserDataRadioProps) {
           <input
             type="radio" id="M" value="female"
             className="radio radio-neutral radio-sm"
-            defaultChecked={data == 'female'}
             {...register('gender')}
           />
           <span>Mujer</span>

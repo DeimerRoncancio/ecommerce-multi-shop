@@ -18,9 +18,9 @@ export interface ImageType {
 }
 
 export interface UserUpdateTypes {
-  email:string;
-  gender:"male" | "female";
-  lastnames:string;
-  names:string;
-  phoneNumber:string;
+  email: string;
+  gender: string;
+  lastnames: string;
+  names: string;
+  phoneNumber: string;
 }
