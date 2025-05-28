@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { FieldValues, UseFormRegister } from "react-hook-form"
 
 type UserDataRadioProps = {
@@ -7,8 +6,6 @@ type UserDataRadioProps = {
 }
 
 export default function UserDataRadio({ data, register }: UserDataRadioProps) {
-  const [selected, setSelected] = useState(data)
-  
   return (
     <div>
       <label className="text-[#c7c7c7]">Género</label>
@@ -17,9 +14,8 @@ export default function UserDataRadio({ data, register }: UserDataRadioProps) {
           <input
             type="radio" id="H" value="male"
             className="radio radio-neutral radio-sm"
-            checked={selected == 'male'}
+            defaultChecked={data == 'male'}
             {...register('gender')}
-            onChange={() => {}}
           />
           <span>Hombre</span>
         </label>
@@ -27,9 +23,8 @@ export default function UserDataRadio({ data, register }: UserDataRadioProps) {
           <input
             type="radio" id="M" value="female"
             className="radio radio-neutral radio-sm"
-            checked={selected == 'female'}
+            defaultChecked={data == 'female'}
             {...register('gender')}
-            onChange={() => {}}
           />
           <span>Mujer</span>
         </label>

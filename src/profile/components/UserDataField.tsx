@@ -14,7 +14,7 @@ export default function UserDataField({ register, name, fieldName, data }: UserD
       <div className="p-3 border-b-[1px] border-b-[#c7c7c7]">
         <input
           className="outline-0 w-full"
-          value={data}
+          defaultValue={data}
           type="text"
           {...register(name)}
         />
