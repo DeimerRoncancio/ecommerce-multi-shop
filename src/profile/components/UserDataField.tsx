@@ -1,8 +1,9 @@
-import { FieldValues, UseFormRegister } from "react-hook-form"
+import { UseFormRegister } from "react-hook-form"
+import { UserUpdateTypes } from "../types/user"
 
 type UserDataFieldProps = {
-  register: UseFormRegister<FieldValues>,
-  name: string,
+  register: UseFormRegister<UserUpdateTypes>,
+  name: "email" | "gender" | "lastnames" | "names" | "phoneNumber",
   fieldName: string,
   data?: string
 }

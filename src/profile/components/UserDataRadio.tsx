@@ -1,7 +1,8 @@
-import { FieldValues, UseFormRegister } from "react-hook-form"
+import { UseFormRegister } from "react-hook-form"
+import { UserUpdateTypes } from "../types/user"
 
 type UserDataRadioProps = {
-  register: UseFormRegister<FieldValues>,
+  register: UseFormRegister<UserUpdateTypes>,
   data?: string
 }
 

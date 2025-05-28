@@ -1,8 +1,8 @@
 import { useOutletContext } from "react-router"
-import { UserTypes } from "../types/user";
+import { UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type userContext = {
   user: UserTypes,
@@ -12,9 +12,9 @@ type userContext = {
 export default function Profile() {
   const { user, userLoading: loading } = useOutletContext<userContext>();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<UserUpdateTypes>();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     console.log(data);
   }
 
@@ -29,26 +29,27 @@ export default function Profile() {
             <div className="text-base text-black grid grid-cols-2 gap-5">
               <UserDataField
                 register={register}
-                name={"name(s)"}
+                name="names"
                 fieldName={"Nombres(s)"}
-                data={user.name + ' ' + user.secondName}
+                data={`${user.name}${ user.secondName ? ' ' + user.secondName : '' }`}
               />
               <UserDataField
                 register={register}
-                name={"lastnames"}
-                fieldName={"Apellido(s)"}
+                name="lastnames"
+                fieldName="Apellido(s)"
                 data={user.lastnames}
               />
               <UserDataField
                 register={register}
-                name={"email"}
-                fieldName={"Email"}
+                name="email"
+                fieldName="Email"
                 data={user.email}
               />
               <UserDataField
                 register={register}
-                name={"phoneNumber"}
-                fieldName={"Numero de telefono"} data={user.phoneNumber?.toString()}
+                name="phoneNumber"
+                fieldName="Numero de telefono"
+                data={user.phoneNumber?.toString()}
               />
               <UserDataRadio register={register} data={user.gender} />
             </div>
