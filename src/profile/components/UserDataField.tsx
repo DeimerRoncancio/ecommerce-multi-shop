@@ -11,7 +11,7 @@ export default function UserDataField({ register, name, fieldName }: UserDataFie
   return (
     <div>
       <label className="text-[#c7c7c7]">{fieldName}</label>
-      <div className="p-3 border-b-[1px] border-b-[#c7c7c7]">
+      <div className="p-2 border-b-[1px] border-b-[#c7c7c7]">
         <input
           type="text"
           className="outline-0 w-full"

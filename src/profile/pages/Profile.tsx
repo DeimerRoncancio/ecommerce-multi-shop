@@ -4,6 +4,9 @@ import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { envs } from "../../shared/config/env.config";
 
 type userContext = {
   user: UserTypes,
@@ -16,7 +19,22 @@ export default function Profile() {
   const { register, handleSubmit, reset } = useForm<UserUpdateTypes>();
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
-    console.log(data);
+    const userInfo = {
+      name: data.names.split(' ')[0],
+      secondName: data.names.split(' ')[1] || null,
+      lastnames: data.lastnames,
+      phoneNumber: data.phoneNumber,
+      gender: data.gender,
+      email: data.email
+    }
+
+    const token = Cookies.get("accessHome");
+
+    axios.put(`${envs.API}/app/users/update/${user.id}`, userInfo, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
   useEffect(() => {

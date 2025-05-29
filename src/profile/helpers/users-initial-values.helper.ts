@@ -1,6 +1,7 @@
 import { UserTypes } from "../types/user";
 
 export const UserInitialValues: UserTypes = {
+  id: "",
   name: "",
   email: "",
   profileImage: {
