@@ -6,7 +6,7 @@ import LogInOutButton from "../components/LogInOutButton";
 import Breadcrumb from "../components/Breadcrumb";
 
 export default function ProfilePage() {
-  const { user, loading } = useUser();
+  const { user, loading, updateUser } = useUser();
   const location = useLocation();
 
   return (
@@ -80,7 +80,7 @@ export default function ProfilePage() {
           </div>
         </div>
         <div className="w-full p-5 rounded-3xl">
-          <Outlet context={{ user, userLoading: loading }} />
+          <Outlet context={{ user, userLoading: loading, updateUser }} />
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router"
-import { UserTypes, UserUpdateTypes } from "../types/user";
+import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -7,26 +7,21 @@ import { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { envs } from "../../shared/config/env.config";
+import { updateTypesToRequestTypes } from "../mappers/profile-mapper";
 
 type userContext = {
   user: UserTypes,
-  userLoading: boolean
+  userLoading: boolean,
+  updateUser: (user: UserUpdateTypes) => void
 }
 
 export default function Profile() {
-  const { user, userLoading: loading } = useOutletContext<userContext>();
+  const { user, userLoading: loading, updateUser } = useOutletContext<userContext>();
 
   const { register, handleSubmit, reset } = useForm<UserUpdateTypes>();
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
-    const userInfo = {
-      name: data.names.split(' ')[0],
-      secondName: data.names.split(' ')[1] || null,
-      lastnames: data.lastnames,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      email: data.email
-    }
+    const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
 
     const token = Cookies.get("accessHome");
 
@@ -35,6 +30,8 @@ export default function Profile() {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    updateUser(userInfo);
   }
 
   useEffect(() => {

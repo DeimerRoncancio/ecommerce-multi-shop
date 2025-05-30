@@ -18,6 +18,15 @@ export interface ImageType {
   name: string;
 }
 
+export interface UpdateRequestTypes {
+  name: string,
+  secondName: string | undefined,
+  lastnames: string,
+  phoneNumber: string,
+  gender: string,
+  email: string
+}
+
 export interface UserUpdateTypes {
   email: string;
   gender: string;
