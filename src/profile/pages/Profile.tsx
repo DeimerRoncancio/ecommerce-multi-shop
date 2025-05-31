@@ -20,22 +20,24 @@ export default function Profile() {
   const { user, userLoading: loading, updateUser } = useOutletContext<userContext>();
   const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
   const [isActive, setIsActive] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const userInitialValues = initialUserValues(user);
   const currentValues = useWatch({ control });
-  
+
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-    
+
     const token = Cookies.get("accessHome");
-    
+
     axios.put(`${envs.API}/app/users/update/${user.id}`, userInfo, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
     setIsActive(false);
     updateUser(userInfo);
+    handleUpdatedAlert();
   }
 
   const handleActive = () => {
@@ -43,6 +45,11 @@ export default function Profile() {
     const isChanged = keys.some(key => currentValues[key] !== userInitialValues[key]);
 
     setIsActive(isChanged);
+  }
+
+  const handleUpdatedAlert = () => {
+    setIsUpdated(true);
+    setTimeout(() => setIsUpdated(false), 4000);
   }
 
   useEffect(() => {
@@ -93,6 +100,14 @@ export default function Profile() {
           </div>
         )
       }
+
+      <div role="alert" className={`alert alert-success fixed bottom-5 right-5 transition-all duration-300
+      ${isUpdated ? 'opacity-100 visible -translate-x-0' : 'opacity-0 invisible translate-x-full'}`}>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Tus datos han sido actualizados!</span>
+      </div>
     </>
   );
 }
