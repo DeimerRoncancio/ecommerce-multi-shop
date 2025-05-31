@@ -29,8 +29,8 @@ export interface UpdateRequestTypes {
 
 export interface UserUpdateTypes {
   email: string;
-  gender: string;
-  lastnames: string;
+  gender: string | undefined;
+  lastnames: string | undefined;
   names: string;
-  phoneNumber: string;
+  phoneNumber: string | undefined;
 }

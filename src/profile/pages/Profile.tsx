@@ -2,49 +2,54 @@ import { useOutletContext } from "react-router"
 import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { envs } from "../../shared/config/env.config";
 import { updateTypesToRequestTypes } from "../mappers/profile-mapper";
+import { initialUserValues } from "../helpers/users-initial-values.helper";
 
 type userContext = {
   user: UserTypes,
   userLoading: boolean,
-  updateUser: (user: UserUpdateTypes) => void
+  updateUser: (user: UpdateRequestTypes) => void
 }
 
 export default function Profile() {
   const { user, userLoading: loading, updateUser } = useOutletContext<userContext>();
-
-  const { register, handleSubmit, reset } = useForm<UserUpdateTypes>();
-
+  const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
+  const [isActive, setIsActive] = useState(false);
+  const userInitialValues = initialUserValues(user);
+  const currentValues = useWatch({ control });
+  
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-
+    
     const token = Cookies.get("accessHome");
-
+    
     axios.put(`${envs.API}/app/users/update/${user.id}`, userInfo, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
+    
+    setIsActive(false);
     updateUser(userInfo);
   }
 
+  const handleActive = () => {
+    const keys = Object.keys(userInitialValues) as (keyof UserUpdateTypes)[];
+    const isChanged = keys.some(key => currentValues[key] !== userInitialValues[key]);
+
+    setIsActive(isChanged);
+  }
+
   useEffect(() => {
-    if (user) {
-      reset({
-        names: user.name + (user.secondName ? ' ' + user.secondName : ''),
-        lastnames: user.lastnames,
-        email: user.email,
-        phoneNumber: user.phoneNumber?.toString(),
-        gender: user.gender,
-      })
-    }
-  }, [user, reset])
+    if (user) reset(userInitialValues);
+  }, [user, reset]);
+
+  useEffect(() => handleActive(), [currentValues]);
 
   return (
     <>
@@ -58,7 +63,7 @@ export default function Profile() {
               <UserDataField
                 register={register}
                 name="names"
-                fieldName={"Nombres(s)"}
+                fieldName="Nombres(s)"
               />
               <UserDataField
                 register={register}
@@ -77,8 +82,10 @@ export default function Profile() {
               />
               <UserDataRadio register={register} />
             </div>
-            <button className="btn mt-7 mr-3 p-1 px-7 h-9 btn-neutral">Actualizar datos</button>
-            <button className="btn mt-7 p-1 px-6 h-9">Reestablecer datos</button>
+            <button className={`btn btn-neutral mt-7 mr-3 p-1 px-7 h-9`} disabled={!isActive ? true : false}>
+              Actualizar datos
+            </button>
+            <button className="btn mt-7 p-1 px-6 h-9" disabled={!isActive ? true : false}>Reestablecer datos</button>
           </form>
         ) : (
           <div className="w-full mt-28 flex justify-center">
@@ -87,5 +94,5 @@ export default function Profile() {
         )
       }
     </>
-  )
+  );
 }

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { UserTypes, UserUpdateTypes } from "../../profile/types/user";
+import { UpdateRequestTypes, UserTypes } from "../../profile/types/user";
 
 type userContext = {
   user: UserTypes,
   userLoading: boolean,
-  updateUser: (user: UserUpdateTypes) => void
+  updateUser: (user: UpdateRequestTypes) => void
 }
 
 export default function ProtectedAuth() {
