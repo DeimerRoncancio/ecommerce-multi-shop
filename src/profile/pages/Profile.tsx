@@ -3,7 +3,7 @@ import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { envs } from "../../shared/config/env.config";
@@ -23,6 +23,7 @@ export default function Profile() {
   const [isUpdated, setIsUpdated] = useState(false);
   const userInitialValues = initialUserValues(user);
   const currentValues = useWatch({ control });
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
@@ -36,8 +37,14 @@ export default function Profile() {
     });
 
     setIsActive(false);
+    setIsUpdated(true);
     updateUser(userInfo);
     handleUpdatedAlert();
+  }
+
+  const handleUpdatedAlert = () => {
+    if (isUpdated && timeoutRef.current !== null) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setIsUpdated(false), 4000);
   }
 
   const handleActive = () => {
@@ -45,11 +52,6 @@ export default function Profile() {
     const isChanged = keys.some(key => currentValues[key] !== userInitialValues[key]);
 
     setIsActive(isChanged);
-  }
-
-  const handleUpdatedAlert = () => {
-    setIsUpdated(true);
-    setTimeout(() => setIsUpdated(false), 4000);
   }
 
   useEffect(() => {
