@@ -19,6 +19,7 @@ export const toUserTypes = (newUserData: UpdateRequestTypes, user: UserTypes): U
       profileImage: user.profileImage,
       lastnames: newUserData.lastnames,
       phoneNumber: Number(newUserData.phoneNumber),
+      gender: newUserData.gender,
       email: newUserData.email,
       admin: false,
       enabled: false

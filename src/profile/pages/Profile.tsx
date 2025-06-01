@@ -27,7 +27,6 @@ export default function Profile() {
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-
     const token = Cookies.get("accessHome");
 
     axios.put(`${envs.API}/app/users/update/${user.id}`, userInfo, {

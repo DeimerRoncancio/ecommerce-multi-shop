@@ -21,9 +21,9 @@ export interface ImageType {
 export interface UpdateRequestTypes {
   name: string,
   secondName: string | undefined,
-  lastnames: string,
-  phoneNumber: string,
-  gender: string,
+  lastnames: string | undefined,
+  phoneNumber: string | undefined,
+  gender: string | undefined,
   email: string
 }
 
