@@ -30,6 +30,7 @@ export default function useUser() {
   return {
     user,
     loading,
+    toGetUser,
     updateUser
   }
 }

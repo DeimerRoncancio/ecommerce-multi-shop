@@ -36,7 +36,6 @@ export default function Profile() {
   const handleActive = () => {
     const keys = Object.keys(userInitialValues) as (keyof UserUpdateTypes)[];
     const isChanged = keys.some(key => currentValues[key] !== userInitialValues[key]);
-
     setIsActive(isChanged);
   }
 
