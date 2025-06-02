@@ -1,9 +1,9 @@
 import { UserInitialValues } from "../../helpers/users-initial-values.helper";
-import { getUser } from "../../services/api/users";
+import { getUser } from "../../services/users.api";
 import { UpdateRequestTypes, UserTypes } from "../../types/user";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { toUserTypes } from "../../mappers/profile-mapper";
+import { toUserTypes } from "../../mappers/profile.mapper";
 
 export default function useUser() {
   const [user, setUser] = useState<UserTypes>(UserInitialValues);

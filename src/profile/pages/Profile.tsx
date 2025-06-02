@@ -4,11 +4,9 @@ import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
-import { envs } from "../../shared/config/env.config";
-import { updateTypesToRequestTypes } from "../mappers/profile-mapper";
+import { updateTypesToRequestTypes } from "../mappers/profile.mapper";
 import { initialUserValues } from "../helpers/users-initial-values.helper";
+import { updateDataUser } from "../services/users.api";
 
 type userContext = {
   user: UserTypes,
@@ -27,17 +25,13 @@ export default function Profile() {
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-    const token = Cookies.get("accessHome");
 
-    axios.put(`${envs.API}/app/users/update/${user.id}`, userInfo, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    updateDataUser(user.id, userInfo);
+    updateUser(userInfo);
 
     setIsActive(false);
     setIsUpdated(true);
-    updateUser(userInfo);
+
     handleUpdatedAlert();
   }
 
@@ -108,6 +102,12 @@ export default function Profile() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span>Tus datos han sido actualizados!</span>
+        <button className="btn btn-sm bg-[#186c56] border-none text-[#053b2d] shadow-none rounded-full p-0 m-0 h-fit
+        ml-10" onClick={() => setIsUpdated(false)}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
       </div>
     </>
   );
