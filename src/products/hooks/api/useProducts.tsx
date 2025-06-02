@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { ProductTypes } from "../../types/product";
 import { ProductsInitialValues } from "../../helpers/products-initial-values.helper";
-import { getProducts } from "../../services/api/products";
-import { mapApiToProducts } from "../../mappers/products-maper";
+import { getProducts } from "../../services/products.api";
+import { mapApiToProducts } from "../../mappers/products.maper";
 
 export default function useProducts() {
   const [products, setProducts] = useState<ProductTypes[]>(ProductsInitialValues);

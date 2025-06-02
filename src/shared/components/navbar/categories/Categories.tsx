@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { CategoriesType } from "../../../../products/types/categories";
-import { mapApiToCategories } from "../../../../products/mappers/categories-mapper";
-import { getCategories } from "../../../../products/services/api/categories";
+import { mapApiToCategories } from "../../../../products/mappers/categories.mapper";
+import { getCategories } from "../../../../products/services/categories.api";
 import CategoriesModal from "./CategoriesModal";
 import useProducts from "../../../../products/hooks/api/useProducts";
 import { ProductTypes } from "../../../../products/types/product";

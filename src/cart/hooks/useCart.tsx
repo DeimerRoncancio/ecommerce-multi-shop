@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ProductTypes } from "../../products/types/product";
-import { productToCart } from "../mappers/items-mapper";
+import { productToCart } from "../mappers/items.mapper";
 import { useCartStore } from "../storage/cart";
 
 export default function useCart() {
