@@ -1,5 +1,5 @@
 import { UpdateRequestTypes } from "../types/user";
-import { users } from "../api/users.axios";
+import { users } from "../api/usersApi";
 
 export const getUser = (token: string) => {
   return users.get(`/get-user/${token}`).then(res => res.data);
