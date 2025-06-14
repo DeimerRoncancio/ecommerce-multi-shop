@@ -10,13 +10,13 @@
   min-width: 320px;
   min-height: 100vh;
   margin: 0 auto;
-  background-color: white;
 }
 
 main {
   width: 100%;
   min-height: 100%;
   margin-top: 128px;
+  background-color: white;
 }
 
 .ajust-screen {
