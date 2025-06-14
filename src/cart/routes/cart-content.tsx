@@ -1,7 +1,7 @@
 import useCart from "../hooks/useCart";
-import CartItem from "./CartItem";
-import ClearButton from "./ClearButton";
-import PaymentCardInfo from "./PaymentCardInfo";
+import CartItem from "../components/CartItem";
+import ClearButton from "../components/ClearButton";
+import PaymentCardInfo from "../components/PaymentCardInfo";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();

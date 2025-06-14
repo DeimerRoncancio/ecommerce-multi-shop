@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useOutletContext } from "react-router";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { UpdateRequestTypes, UserTypes } from "../../profile/types/user";
+import { UpdateRequestTypes, UserTypes } from "../types/user";
 
 type userContext = {
   user: UserTypes,
@@ -10,7 +10,7 @@ type userContext = {
   updateUser: (user: UpdateRequestTypes) => void
 }
 
-export default function ProtectedAuth() {
+export default function AuthProfileLayout() {
   const [loading, setLoading] = useState(false);
   const { user, userLoading, updateUser } = useOutletContext<userContext>();
   const cookie = Cookies.get("accessHome");

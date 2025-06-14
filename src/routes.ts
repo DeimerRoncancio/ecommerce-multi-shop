@@ -10,30 +10,30 @@ export default [
   // App
   layout('App.tsx', [
     // Home
-    index('home/pages/Home.tsx'),
+    index('home/routes/Home.tsx'),
     
     // Profile
     ...prefix('profile', [
-      layout('profile/pages/ProfilePage.tsx', [
+      layout('profile/layouts/profile-layout.tsx', [
         //Auth Profile
-        layout('auth/routes/ProtectedAuth.tsx', [
-          index('profile/pages/Profile.tsx')
+        layout('profile/layouts/auth-profile-layout.tsx', [
+          index('profile/routes/profile.tsx')
         ]),
-        route('wish-list', 'wishlist/pages/WishList.tsx'),
+        route('wish-list', 'wishlist/routes/wish-list.tsx'),
       ]),
     ]),
   ]),
   
   // Cart
   ...prefix('cart', [
-    layout('cart/pages/Cart.tsx', [
-      layout('cart/components/CartHeader.tsx', [
-        index('cart/components/CartContent.tsx')
+    layout('cart/layouts/cart-layout.tsx', [
+      layout('cart/layouts/cart-header-layout.tsx', [
+        index('cart/routes/cart-content.tsx')
       ])
     ])
   ]),
 
   // Auth
-  route('login', 'auth/pages/Login.tsx'),
-  route('register', 'auth/pages/register.tsx'),
+  route('login', 'auth/routes/login.tsx'),
+  route('register', 'auth/routes/register.tsx'),
 ] satisfies RouteConfig;

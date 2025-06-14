@@ -3,7 +3,7 @@ import { GiPadlock } from "react-icons/gi";
 import ProfileButton from "../../shared/components/navbar/ProfileButton";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-export default function Cart() {
+export default function CartLayout() {
   const navigate = useNavigate();
   
   return (

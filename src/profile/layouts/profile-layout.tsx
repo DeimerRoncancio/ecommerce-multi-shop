@@ -5,7 +5,7 @@ import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
 import Breadcrumb from "../components/Breadcrumb";
 
-export default function ProfilePage() {
+export default function ProfileLayout() {
   const { user, loading, updateUser } = useUser();
   const location = useLocation();
 

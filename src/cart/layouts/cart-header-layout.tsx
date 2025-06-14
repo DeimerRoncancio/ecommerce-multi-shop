@@ -1,10 +1,10 @@
 import { MdOutlineShoppingBag, MdOutlineShoppingCart } from "react-icons/md";
-import CartStepsItem from "./CartStepsItem";
+import CartStepsItem from "../components/CartStepsItem";
 import { BsPerson } from "react-icons/bs";
 import { FaDollarSign } from "react-icons/fa6";
 import { Outlet } from "react-router";
 
-export default function CartHeader() {
+export default function CartHeaderLayout() {
   return (
     <>
       <header className="w-full flex items-start gap-8 justify-center p-10 pb-6 mt-10">
