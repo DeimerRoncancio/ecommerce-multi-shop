@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@react-router/node": "^7.6.2",
+    "@react-router/serve": "^7.6.2",
     "@tailwindcss/vite": "^4.0.17",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.9",

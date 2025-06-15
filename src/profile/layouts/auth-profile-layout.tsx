@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate, useOutletContext } from "react-router";
+import { Outlet, redirect, useOutletContext } from "react-router";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { UpdateRequestTypes, UserTypes } from "../types/user";
+import { parse } from "cookie";
+import { Route } from "./+types/auth-profile-layout";
+import { envs } from "../../shared/config/env.config";
 
 type userContext = {
   user: UserTypes,
@@ -10,31 +11,23 @@ type userContext = {
   updateUser: (user: UpdateRequestTypes) => void
 }
 
+export async function loader({ request }: Route.LoaderArgs) {
+  const cookieHeader = request.headers.get("cookie") ?? "";
+  const cookies = parse(cookieHeader);
+  const token = cookies.accessHome;
+
+  return axios.get(`${envs.API}/app/users/token-validation/${token}`,)
+    .then(() => {})
+    .catch(() => {
+      return redirect("/login");
+    })
+}
+
+export function HydrateFallBack() {
+  return <span className="loading loading-ring loading-lg"></span>;
+}
+
 export default function AuthProfileLayout() {
-  const [loading, setLoading] = useState(false);
   const { user, userLoading, updateUser } = useOutletContext<userContext>();
-  const cookie = Cookies.get("accessHome");
-  const redirect = useNavigate();
-
-  useEffect(() => {
-    setLoading(true);
-    axios.get(`https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/token-validation/${cookie}`,)
-      .then(() => {})
-      .catch(() => {
-        redirect("/login");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  return (
-    <>
-      {loading ? (
-        <span className="loading loading-ring loading-lg"></span>
-      ) : (
-        <Outlet context={{ user, userLoading, updateUser }} />
-      )}
-    </>
-  );
+  return <Outlet context={{ user, userLoading, updateUser }} />;
 }

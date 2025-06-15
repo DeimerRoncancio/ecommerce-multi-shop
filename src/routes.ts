@@ -7,7 +7,7 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  // App
+  // Main
   layout('App.tsx', [
     // Home
     index('home/routes/Home.tsx'),
@@ -23,7 +23,7 @@ export default [
       ]),
     ]),
   ]),
-  
+
   // Cart
   ...prefix('cart', [
     layout('cart/layouts/cart-layout.tsx', [
