@@ -11,7 +11,7 @@ export default [
   layout('App.tsx', [
     // Home
     index('home/routes/Home.tsx'),
-    
+
     // Profile
     ...prefix('profile', [
       layout('profile/layouts/profile-layout.tsx', [
