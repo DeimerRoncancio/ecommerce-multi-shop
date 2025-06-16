@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginAccessUser, LoginAccesUserFormData } from "../zod/routesAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginAccessUserType } from "../utilities/login.helper";
+import { LoginAccessUserType } from "../constants/login.helper";
 import useLogin from "../hooks/api/useLogin";
 
 export default function Login() {

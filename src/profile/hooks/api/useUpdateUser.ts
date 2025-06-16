@@ -1,4 +1,4 @@
-import { initialUserValues } from "../../utilities/users-initial-values.helper";
+import { initialUserValues } from "../../constants/users-initial-values.helper";
 import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../../types/user";
 import { updateTypesToRequestTypes } from "../../mappers/profile.mapper";
 import { updateDataUser } from "../../services/users.api";

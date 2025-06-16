@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ProductTypes } from "../../types/product";
-import { ProductsInitialValues } from "../../utilities/products-initial-values.helper";
+import { ProductsInitialValues } from "../../constants/products-initial-values.helper";
 import { getProducts } from "../../services/products.api";
 import { mapApiToProducts } from "../../mappers/products.maper";
 
