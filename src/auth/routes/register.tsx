@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { InputsFromRegister } from "../helpers/register.helpers";
+import { InputsFromRegister } from "../utilities/register.helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../zod/routesAuth";
 import { addUserType, userType } from "../types/auth";

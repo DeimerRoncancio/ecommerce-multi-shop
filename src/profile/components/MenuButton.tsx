@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import Icon from "../../shared/components/Icon";
-import { IconName } from "../../shared/types/IconList";
+import { IconName } from "../../shared/types/icon-list";
 
 type MenuButton = {
   label: string,

@@ -1,4 +1,4 @@
-import { UserInitialValues } from "../../helpers/users-initial-values.helper";
+import { UserInitialValues } from "../../utilities/users-initial-values.helper";
 import { getUser } from "../../services/users.api";
 import { UpdateRequestTypes, UserTypes } from "../../types/user";
 import { useEffect, useState } from "react";

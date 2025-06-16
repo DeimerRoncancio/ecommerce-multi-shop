@@ -1,4 +1,4 @@
-import { IconList, IconName } from "../types/IconList";
+import { IconList, IconName } from "../types/icon-list";
 
 type IconProps = {
   name: IconName;
