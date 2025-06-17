@@ -6,7 +6,7 @@ export const AxiosError = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error) => {
-      SnackbarUtilities.error(getValidationError(error.code) + `-${error.stack}`);
+      SnackbarUtilities.error(getValidationError(error.code, error.stack));
       return Promise.resolve(error);
     }
   );

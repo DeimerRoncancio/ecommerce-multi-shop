@@ -19,9 +19,12 @@ const ReportComplete = forwardRef<HTMLDivElement, CustomContentProps>(
         {
           import.meta.env.MODE !== "production"
             ? (
-              <div className="collapse max-w-96 bg-[#121212] text-white rounded-md">
+              <div className="collapse w-96 bg-[#121212] text-white rounded-md">
                 <input type="checkbox" className="peer" />
-                <IoIosArrowDown size={25} className="absolute mt-[19px] text-gray-300 right-13 peer-checked:rotate-180" />
+                <IoIosArrowDown 
+                  className="absolute mt-[19px] text-gray-300 right-13 peer-checked:rotate-180" 
+                  size={25} 
+                />
                 <div className="flex items-center justify-between pr-4 h-14 collapse-title font-semibold">
                   <div className="flex justify-center items-center gap-2">
                     <MdError size={25} color="#e74d3c" />
