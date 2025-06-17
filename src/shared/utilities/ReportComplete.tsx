@@ -1,18 +1,14 @@
-import { forwardRef, useCallback, useRef } from "react";
+import { forwardRef, useCallback } from "react";
 import { useSnackbar, SnackbarContent, CustomContentProps } from "notistack";
 import { IoClose } from "react-icons/io5";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdError } from "react-icons/md";
 
 const ReportComplete = forwardRef<HTMLDivElement, CustomContentProps>(
   ({ id, ...props }, ref) => {
     const { closeSnackbar } = useSnackbar();
     const errorCode = typeof props.message == 'string' && props.message.split('-')[0];
     const errorStack = typeof props.message == 'string' && props.message.split('-')[1];
-    // const [expanded, setExpanded] = useState(false);
-    const checkboxRef = useRef<HTMLInputElement>(null);
-
-    // const handleExpandClick = useCallback(() => {
-    //   setExpanded((oldExpanded) => !oldExpanded);
-    // }, []);
 
     const handleDismiss = useCallback(() => {
       closeSnackbar(id);
@@ -20,18 +16,39 @@ const ReportComplete = forwardRef<HTMLDivElement, CustomContentProps>(
 
     return (
       <SnackbarContent ref={ref}>
-        <div className="collapse max-w-96 bg-red-500 text-white outline-none border-base-300 border">
-          <input type="checkbox" ref={checkboxRef} id="miCheckbox" />
-          <div className="flex items-center  justify-between pr-4 collapse-title font-semibold">
-            <p>{errorCode}</p>
-            <button className="z-50" onClick={handleDismiss}>
-              <IoClose size={25} />
-            </button>
-          </div>
-          <div className="collapse-content text-sm">
-            {errorStack}
-          </div>
-        </div>
+        {
+          import.meta.env.MODE !== "production"
+            ? (
+              <div className="collapse max-w-96 bg-[#121212] text-white rounded-md">
+                <input type="checkbox" className="peer" />
+                <IoIosArrowDown size={25} className="absolute mt-[19px] text-gray-300 right-13 peer-checked:rotate-180" />
+                <div className="flex items-center justify-between pr-4 h-14 collapse-title font-semibold">
+                  <div className="flex justify-center items-center gap-2">
+                    <MdError size={25} color="#e74d3c" />
+                    <p>{errorCode}</p>
+                  </div>
+                  <button className="z-50 cursor-pointer text-gray-300 hover:text-white" onClick={handleDismiss}>
+                    <IoClose size={25} />
+                  </button>
+                </div>
+                <div className="collapse-content text-sm">
+                  {errorStack}
+                </div>
+              </div>
+            ) : (
+              <div className="w-96 bg-[#121212] text-white rounded-md">
+                <div className="flex items-center justify-between p-4 h-14 font-semibold">
+                  <div className="flex justify-center items-center gap-2">
+                    <MdError size={25} color="#e74d3c" />
+                    <p>{errorCode}</p>
+                  </div>
+                  <button className="z-50 cursor-pointer text-gray-300 hover:text-white" onClick={handleDismiss}>
+                    <IoClose size={25} />
+                  </button>
+                </div>
+              </div>
+            )
+        }
       </SnackbarContent>
     );
   }
