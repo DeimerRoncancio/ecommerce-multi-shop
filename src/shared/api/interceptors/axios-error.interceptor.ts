@@ -1,11 +1,12 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 import { getValidationError } from "../../utilities/get-validation-error";
+import { SnackbarUtilities } from "../../utilities/snackbar-manager";
 
 export const AxiosError = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error) => {
-      console.log(getValidationError(error.code));
+      SnackbarUtilities.error(getValidationError(error.code) + `-${error.stack}`);
       return Promise.resolve(error);
     }
   );
