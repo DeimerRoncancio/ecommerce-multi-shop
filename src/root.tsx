@@ -59,7 +59,6 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     <>
       <NavBar />
       <main className="container mx-auto">
-        <NavBar />
         <h1>{message}</h1>
         <p>{details}</p>
         {stack && (
