@@ -8,6 +8,8 @@ import {
 } from "react-router";
 
 import { Route } from "./+types/root";
+import NavBar from "./shared/components/navbar/NavBar";
+import Footer from "./shared/components/footer/Footer";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,7 +25,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div id="root">
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -52,14 +56,19 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <>
+      <NavBar />
+      <main className="container mx-auto">
+        <NavBar />
+        <h1>{message}</h1>
+        <p>{details}</p>
+        {stack && (
+          <pre className="w-full p-4 overflow-x-auto">
+            <code>{stack}</code>
+          </pre>
+        )}
+      </main>
+      <Footer />
+    </>
   );
 }

@@ -3,7 +3,7 @@ import NavBar from "./shared/components/navbar/NavBar";
 import Footer from "./shared/components/footer/Footer";
 import "./App.css";
 import { SnackbarProvider } from "notistack";
-import ReportComplete from "./shared/components/notistack-variants/ReportComplete";
+import SnackbarError from "./shared/components/notistack-variants/SnackBarError";
 
 declare module "notistack" {
   interface VariantOverrides {
@@ -13,10 +13,10 @@ declare module "notistack" {
 
 function App() {
   return (
-    <SnackbarProvider 
+    <SnackbarProvider
       maxSnack={5}
       Components={{
-        reportComplete: ReportComplete,
+        reportComplete: SnackbarError,
       }}
     >
       <NavBar />

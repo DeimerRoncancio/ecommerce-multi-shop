@@ -6,6 +6,8 @@ export const AxiosError = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error) => {
+      if (error.status === 401) return;
+      
       SnackbarUtilities.error(getValidationError(error.code, error.stack));
       return Promise.resolve(error);
     }

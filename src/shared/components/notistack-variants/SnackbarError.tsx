@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdError } from "react-icons/md";
 
-const ReportComplete = forwardRef<HTMLDivElement, CustomContentProps>(
+const SnackbarError = forwardRef<HTMLDivElement, CustomContentProps>(
   ({ id, ...props }, ref) => {
     const { closeSnackbar } = useSnackbar();
     const errorCode = typeof props.message == 'string' && props.message.split('-')[0];
@@ -57,6 +57,6 @@ const ReportComplete = forwardRef<HTMLDivElement, CustomContentProps>(
   }
 );
 
-ReportComplete.displayName = "ReportComplete";
+SnackbarError.displayName = "ReportComplete";
 
-export default ReportComplete;
+export default SnackbarError;
