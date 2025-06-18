@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@lottiefiles/dotlottie-react": "^0.14.1",
     "@react-router/node": "^7.6.2",
     "@react-router/serve": "^7.6.2",
     "@tailwindcss/vite": "^4.0.17",
