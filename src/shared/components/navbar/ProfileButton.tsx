@@ -37,7 +37,11 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
           <NavLink to="/profile" onClick={() => setShowOptions(false)}>
             <li>
               <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500 font-medium">
-                Mi cuenta
+                {
+                  !user.name.length
+                  ? 'Iniciar sesión'
+                  : 'Mi cuenta'
+                }
               </p>
             </li>
           </NavLink>
