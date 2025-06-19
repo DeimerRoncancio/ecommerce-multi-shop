@@ -39,8 +39,7 @@ export default function Home() {
                 !isProductInWishList
                 ? handleAddWishListItem(product)
                 : handleRemoveWishListItem(product.id)
-              }
-              }>
+              }}>
                 {
                   !isProductInWishList
                   ? 'Add to WishList'

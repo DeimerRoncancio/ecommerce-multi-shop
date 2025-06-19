@@ -60,8 +60,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <>
-      <NavBar />
-      <main className="container mx-auto">
+      { err.status == 404 && <NavBar /> }
+      <main className={`container mx-auto ${err.status !== 404 && '!mt-0'}`}>
         <div className={`flex w-full ${err.status === 404 && 'h-full items-center ml-[-70px]'} justify-center`}>
           {
             err.status === 404 &&
@@ -82,7 +82,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           </pre>
         )}
       </main>
-      <Footer />
+      { err.status === 404 && <Footer /> }
     </>
   );
 }
