@@ -60,29 +60,41 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <>
-      { err.status == 404 && <NavBar /> }
-      <main className={`container mx-auto ${err.status !== 404 && '!mt-0'}`}>
-        <div className={`flex w-full ${err.status === 404 && 'h-full items-center ml-[-70px]'} justify-center`}>
-          {
-            err.status === 404 &&
-            <DotLottieReact
-              src="/animations/404.json"
-              autoplay
-              style={{ width: 400, height: 400 }}
-            />
-          }
-          <div className={`flex flex-col gap-3 ${!err.status && 'my-7'}`}>
-            <h1 className={`${err.status ? 'text-8xl': 'text-5xl text-center'}`}>{message}</h1>
-            <p className={`text-lg text-black ${!err.status && 'text-center'}`}>{details}</p>
+      {
+        err.status === 404 ? (
+          <>
+          <NavBar />
+          <main className="container mx-auto">
+            <div className="flex w-full h-full items-center ml-[-70px] justify-center">
+              <DotLottieReact
+                src="/animations/404.json"
+                autoplay
+                style={{ width: 400, height: 400 }}
+                />
+              <div className="flex flex-col gap-3">
+                <h1 className="text-8xl">{message}</h1>
+                <p className="text-lg text-black">{details}</p>
+              </div>
+            </div>
+          </main>
+          <Footer />
+          </>
+        ) : (
+          <div className="container mx-auto mt-8">
+            <div className="flex w-full justify-center">
+              <div className="flex flex-col gap-3 'my-7'">
+                <h1 className="text-5xl text-center">{message}</h1>
+                <p className="text-lg text-black">{details}</p>
+              </div>
+            </div>
+            {stack && (
+              <pre className="w-full h-[400px] p-4 text-sm overflow-x-auto">
+                <code>{stack}</code>
+              </pre>
+            )}
           </div>
-        </div>
-        {stack && (
-          <pre className="w-full h-[400px] p-4 text-sm overflow-x-auto">
-            <code>{stack}</code>
-          </pre>
-        )}
-      </main>
-      { err.status === 404 && <Footer /> }
+        )
+      }
     </>
   );
 }
