@@ -8,10 +8,8 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import NotFoundPage from "./shared/components/NotFoundPage";
 import { Route } from "./+types/root";
-import NavBar from "./shared/components/navbar/NavBar";
-import Footer from "./shared/components/footer/Footer";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -45,7 +43,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
-  const err = error as ErrorResponse;
+  const errResponse = error as ErrorResponse;
 
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
@@ -61,24 +59,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
     <>
       {
-        err.status === 404 ? (
-          <>
-          <NavBar />
-          <main className="container mx-auto">
-            <div className="flex w-full h-full items-center ml-[-70px] justify-center">
-              <DotLottieReact
-                src="/animations/404.json"
-                autoplay
-                style={{ width: 400, height: 400 }}
-                />
-              <div className="flex flex-col gap-3">
-                <h1 className="text-8xl">{message}</h1>
-                <p className="text-lg text-black">{details}</p>
-              </div>
-            </div>
-          </main>
-          <Footer />
-          </>
+        errResponse.status === 404 ? (
+          <NotFoundPage message={message} details={details} />
         ) : (
           <div className="container mx-auto mt-8">
             <div className="flex w-full justify-center">
