@@ -54,7 +54,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           <div className="flex w-full items-center justify-between py-2 text-[#646464]">
             <span>Subtotal: </span>
             <span className="font-medium text-[17px]">
-              ${new Intl.NumberFormat("es-ES").format(totalPrice)}
+              ${ new Intl.NumberFormat("es-ES").format(totalPrice) }
             </span>
           </div>
           <button className="btn btn-neutral btn-block rounded-sm" onClick={goCart}>Ver carrito/pagar</button>

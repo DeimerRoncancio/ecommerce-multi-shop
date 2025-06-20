@@ -21,7 +21,7 @@ export default function CartItem({ item, length, index }: CartItemProps) {
     handleTotalPrice,
     changeQuantity,
     updateQuantity
-  } = useCartItems(item.id);
+  } = useCartItems({ itemId: item.id});
 
   useEffect(() => handleTotalPrice(), [item.quantity]);
 

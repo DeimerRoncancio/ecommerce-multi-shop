@@ -5,7 +5,7 @@ type UseCartItemsProps = {
   itemId: string;
 }
 
-export default function useCartItems({itemId}: UseCartItemsProps) {
+export default function useCartItems({ itemId }: UseCartItemsProps) {
   const { cartItems, addItem, addItems, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id === itemId);
 
