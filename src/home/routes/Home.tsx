@@ -1,10 +1,22 @@
 import useCart from "../../cart/hooks/useCart";
-import useProducts from "../../products/hooks/api/useProducts";
+import { mapApiToProducts } from "../../products/mappers/products.maper";
+import { getProducts } from "../../products/services/products.api";
 import useWishList from "../../wishlist/hooks/useWishList";
+import { Route } from "./+types/Home";
 
-export default function Home() {
+export async function loader(){
+  const apiProducts = await getProducts()
+  const products = apiProducts.map(mapApiToProducts);
+  return { products };
+}
+
+export function HydrateFallBack() {
+  return <span className="loading loading-ring loading-lg"></span>;
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
   const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
-  const { products } = useProducts();
+  const { products } = loaderData;
 
   const {
     cartItems,

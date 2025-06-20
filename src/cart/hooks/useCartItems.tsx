@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useCartStore } from "../storage/cart";
 
-export default function useCartItems(itemId: String) {
+type UseCartItemsProps = {
+  itemId: string;
+}
+
+export default function useCartItems({itemId}: UseCartItemsProps) {
   const { cartItems, addItem, addItems, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id === itemId);
 

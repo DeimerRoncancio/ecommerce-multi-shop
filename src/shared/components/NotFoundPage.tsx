@@ -1,6 +1,5 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import NavBar from "./navbar/NavBar";
-import Footer from "./footer/Footer";
 
 type NotFoundPageProps = {
   message: string;
@@ -11,7 +10,7 @@ export default function NotFoundPage({ message, details }: NotFoundPageProps) {
   return (
     <>
       <NavBar />
-      <main className="container mx-auto">
+      <div className="container mx-auto">
         <div className="flex w-full h-full items-center ml-[-70px] justify-center">
           <DotLottieReact
             src="/animations/404.json"
@@ -23,8 +22,7 @@ export default function NotFoundPage({ message, details }: NotFoundPageProps) {
             <p className="text-lg text-black">{details}</p>
           </div>
         </div>
-      </main>
-      <Footer />
+      </div>
     </>
   )
 }
