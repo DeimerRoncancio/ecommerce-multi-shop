@@ -27,7 +27,7 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function Login() {
-  const { errors } = useActionData() as { errors?: Record<string, string[]> };
+  const action = useActionData() as { errors?: Record<string, string[]> };
   
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
@@ -45,8 +45,8 @@ export default function Login() {
             placeholder="Correo electronico o numero de telefono"
           />
         </label>
-        {errors?.password && (
-          <span style={{ color: "red" }}>{errors.identifier[0]}</span>
+        {action?.errors?.password && (
+          <span style={{ color: "red" }}>{action.errors.identifier[0]}</span>
         )}
         <label htmlFor="password" className="input input-bordered flex items-center gap-2 w-[307px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-4 w-4 opacity-70">
@@ -59,8 +59,8 @@ export default function Login() {
             placeholder="Contraseña"
           />
         </label>
-        {errors?.password && (
-          <span style={{ color: "red" }}>{errors.password[0]}</span>
+        {action?.errors?.password && (
+          <span style={{ color: "red" }}>{action.errors.password[0]}</span>
         )}
         <button type="submit" className="btn btn-active btn-primary">Iniciar sesión</button>
       </Form>
