@@ -36,4 +36,7 @@ export default [
   // Auth
   route('login', 'auth/routes/login.tsx'),
   route('register', 'auth/routes/register.tsx'),
+
+  // Actions
+  route('logout-action', 'auth/actions/logout.action.ts'),
 ] satisfies RouteConfig;

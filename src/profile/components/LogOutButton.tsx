@@ -1,7 +1,6 @@
 import { BiLogOutCircle } from "react-icons/bi";
 import { IoMdLogOut } from "react-icons/io";
-import { useNavigate } from "react-router";
-import Cookies from "js-cookie";
+import { Form, useNavigate } from "react-router";
 import { UserTypes } from "../types/user";
 
 type LogInOutButtonProps = {
@@ -9,15 +8,8 @@ type LogInOutButtonProps = {
   loading: boolean
 }
 
-export default function LogInOutButton({ loading, user }: LogInOutButtonProps) {
+export default function LogOutButton({ loading, user }: LogInOutButtonProps) {
   const navigate = useNavigate();
-
-  const logOut = () => {
-    Cookies.remove("accessHome");
-    location.pathname === "/profile" && navigate("/login");
-    location.pathname === "/profile/wish-list" && window.location.reload();
-  }
-
   const logIn = () => {
     navigate("/login");
   }
@@ -35,11 +27,13 @@ export default function LogInOutButton({ loading, user }: LogInOutButtonProps) {
             Inciar Sesión
           </button>
         ) : (
-          <button className="btn gap-2 px-3 w-36 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] 
-          border-none justify-normal" onClick={logOut}>
-            <BiLogOutCircle size={17} />
-            Cerrar Sesión
-          </button>
+          <Form method="post" action="/logout-action">
+            <button className="btn gap-2 px-3 w-36 h-9 rounded-full bg-[#fff4ef] text-sm font-normal text-[#eb5324] 
+            border-none justify-normal" value={location.pathname} name="from">
+              <BiLogOutCircle size={17} />
+              Cerrar Sesión
+            </button>
+          </Form>
         )
     )
   )

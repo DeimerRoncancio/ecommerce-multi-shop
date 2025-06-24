@@ -2,7 +2,7 @@ import useUser from "../hooks/api/useUser";
 import { Outlet, useLocation } from "react-router";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
-import LogInOutButton from "../components/LogInOutButton";
+import LogOutButton from "../components/LogOutButton";
 import Breadcrumb from "../components/Breadcrumb";
 import type { Route } from "./+types/profile-layout";
 import { getSession } from "../../sessions.server";
@@ -11,10 +11,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
   const token = session.get('token')as string;
   return { token };
-}
-
-export function HydrateFallBack() {
-  return <span className="loading loading-ring loading-lg"></span>;
 }
 
 export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
@@ -47,7 +43,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
                   : user.name + ' ' + user.lastnames?.split(" ", 1)
               }
             </h1>
-            <LogInOutButton loading={loading} user={user} />
+            <LogOutButton loading={loading} user={user} />
           </div>
           <div className="divider before:h-[1px] after:h-[1px]"></div>
           <div className="flex flex-col">
