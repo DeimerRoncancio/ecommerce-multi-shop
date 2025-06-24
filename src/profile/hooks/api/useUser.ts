@@ -2,10 +2,13 @@ import { UserInitialValues } from "../../constants/users-initial-values.helper";
 import { getUser } from "../../services/users.api";
 import { UpdateRequestTypes, UserTypes } from "../../types/user";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { toUserTypes } from "../../mappers/profile.mapper";
 
-export default function useUser() {
+type UseUserTypes = {
+  token: string;
+}
+
+export default function useUser({ token }: UseUserTypes) {
   const [user, setUser] = useState<UserTypes>(UserInitialValues);
   const [loading, setLoading] = useState(false);
   
@@ -22,10 +25,7 @@ export default function useUser() {
       .finally(() => setLoading(false));
   }
 
-  useEffect(() => {
-    const token = Cookies.get("accessHome");
-    token && toGetUser(token);
-  }, []);
+  useEffect(() => { token && toGetUser(token) }, [token]);
 
   return {
     user,

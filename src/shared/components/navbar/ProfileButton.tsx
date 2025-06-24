@@ -6,11 +6,12 @@ import Cookies from "js-cookie";
 
 type ProfileButtonProps = {
   size: number;
+  token: string;
 }
 
-export default function ProfileButton({ size }: ProfileButtonProps) {
+export default function ProfileButton({ size, token }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
-  const { user, loading } = useUser();
+  const { user, loading } = useUser({ token });
 
   const logOut = () => {
     Cookies.remove("accessHome");

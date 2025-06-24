@@ -19,7 +19,7 @@ export async function action({ request }: Route.ActionArgs) {
   const data = await send({ identifier: identifier, password: password });
   session.set('token', data.token);
 
-  return redirect('/', {
+  return redirect('/profile', {
     headers: {
       'Set-Cookie': await commitSession(session),
     }

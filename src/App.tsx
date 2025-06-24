@@ -8,19 +8,20 @@ import Footer from "./shared/components/footer/Footer";
 import { SnackbarProvider } from "notistack";
 import { Outlet } from "react-router";
 import "./App.css";
+import { getSession } from "./sessions.server";
+import { Route } from "./+types/App";
 
-export async function loader() {
+export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
   const products = apiProducts.map(mapApiToProducts);
 
   const apiCategories = await getCategories();
   const categories = apiCategories.map(mapApiToCategories);
 
-  return { categories, products }
-}
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token')as string;
 
-export function HydrateFallBack() {
-  return <span className="loading loading-ring loading-lg"></span>;
+  return { categories, products, token }
 }
 
 declare module "notistack" {

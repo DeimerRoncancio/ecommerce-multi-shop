@@ -4,9 +4,22 @@ import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import LogInOutButton from "../components/LogInOutButton";
 import Breadcrumb from "../components/Breadcrumb";
+import type { Route } from "./+types/profile-layout";
+import { getSession } from "../../sessions.server";
 
-export default function ProfileLayout() {
-  const { user, loading, updateUser } = useUser();
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token')as string;
+  return { token };
+}
+
+export function HydrateFallBack() {
+  return <span className="loading loading-ring loading-lg"></span>;
+}
+
+export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
+  const { token } = loaderData;
+  const { user, loading, updateUser } = useUser({ token });
   const location = useLocation();
 
   return (

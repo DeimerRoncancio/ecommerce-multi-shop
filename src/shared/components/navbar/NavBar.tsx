@@ -8,7 +8,7 @@ import Categories from "./categories/Categories";
 
 export default function NavBar() {
   const loaderData = useLoaderData();
-  const { categories, products } = (loaderData !== undefined && loaderData !== null) && loaderData;
+  const { categories, products, token } = loaderData;
 
   return (
     <nav className="fixed top-0 w-full z-20">
@@ -43,7 +43,7 @@ export default function NavBar() {
             )
           }
           <li className={`flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]`}>
-            <ProfileButton size={40} />
+            <ProfileButton size={40} token={token} />
           </li>
         </ul>
       </div>
