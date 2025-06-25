@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 import useUser from "../../../profile/hooks/api/useUser";
 import AvatarImage from "../../../profile/components/AvatarImage";
-import Cookies from "js-cookie";
+import LogoutAction from "../../../auth/actions/logout.action";
 
 type ProfileButtonProps = {
   size: number;
@@ -12,11 +12,6 @@ type ProfileButtonProps = {
 export default function ProfileButton({ size, token }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
   const { user, loading } = useUser({ token });
-
-  const logOut = () => {
-    Cookies.remove("accessHome");
-    window.location.reload()
-  }
 
   return (
     <div className="dropdown dropdown-end">
@@ -40,8 +35,8 @@ export default function ProfileButton({ size, token }: ProfileButtonProps) {
               <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500 font-medium">
                 {
                   !user.name.length
-                  ? 'Iniciar sesión'
-                  : 'Mi cuenta'
+                    ? 'Iniciar sesión'
+                    : 'Mi cuenta'
                 }
               </p>
             </li>
@@ -53,13 +48,7 @@ export default function ProfileButton({ size, token }: ProfileButtonProps) {
               </p>
             </li>
           </NavLink>
-          <NavLink to="" onClick={logOut}>
-            <li>
-              <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500">
-                Cerrar sesión
-              </p>
-            </li>
-          </NavLink>
+          <LogoutAction />
         </ul>
       </div>
     </div>
