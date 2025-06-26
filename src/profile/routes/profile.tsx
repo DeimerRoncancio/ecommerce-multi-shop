@@ -58,7 +58,7 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
       {
         !loading ? (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="text-base text-black grid grid-cols-2 gap-5">
+            <div className="text-base border border-[#ebebeb] p-6 rounded-2xl text-black grid grid-cols-2 gap-5">
               <UserDataField
                 register={register}
                 name="names"
@@ -81,10 +81,12 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
               />
               <UserDataRadio register={register} />
             </div>
-            <button className={`btn btn-neutral mt-7 mr-3 p-1 px-7 h-9`} disabled={!isActive ? true : false}>
-              Actualizar datos
-            </button>
-            <button className="btn mt-7 p-1 px-6 h-9" disabled={!isActive ? true : false}>Reestablecer datos</button>
+            <div className="flex justify-end">
+              <button className="btn mt-7 p-1 px-6 h-9 mr-3" disabled={!isActive ? true : false}>Reestablecer datos</button>
+              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`} disabled={!isActive ? true : false}>
+                Actualizar datos
+              </button>
+            </div>
           </form>
         ) : (
           <div className="w-full mt-28 flex justify-center">

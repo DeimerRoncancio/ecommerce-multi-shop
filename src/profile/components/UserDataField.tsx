@@ -10,14 +10,15 @@ type UserDataFieldProps = {
 export default function UserDataField({ register, name, fieldName }: UserDataFieldProps) {
   return (
     <div>
-      <label className="text-[#c7c7c7]">{fieldName}</label>
-      <div className="p-2 border-b-[1px] border-b-[#c7c7c7]">
+      <span className="text-[#c7c7c7]">{fieldName}</span>
+      {/* <div className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl"> */}
         <input
           type="text"
-          className="outline-0 w-full"
+          className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
+          focus:outline-[#ffc1ad] focus:border-[#f14913]"
           {...register(name)}
         />
-      </div>
+      {/* </div> */}
     </div>
   )
 }
