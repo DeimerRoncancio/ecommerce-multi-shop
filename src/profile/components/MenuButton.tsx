@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Icon from "../../shared/components/Icon";
+import Icon from "../../shared/ui/Icon";
 import { IconName } from "../../shared/types/icon-list";
 
 type MenuButton = {

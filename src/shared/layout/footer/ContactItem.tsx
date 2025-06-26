@@ -1,4 +1,4 @@
-import Icon from "../../components/Icon";
+import Icon from "../../ui/Icon";
 import { IconName } from "../../types/icon-list";
 
 type ContactItemProps = {

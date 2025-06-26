@@ -1,4 +1,4 @@
-import SnackbarError from "./shared/components/notistack-variants/SnackbarError";
+import SnackbarError from "./shared/ui/notistack-variants/SnackbarError";
 import { mapApiToProducts } from "./products/mappers/products.maper";
 import { mapApiToCategories } from "./products/mappers/categories.mapper";
 import { getCategories } from "./products/services/categories.api";

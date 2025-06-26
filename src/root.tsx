@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-import NotFoundPage from "./shared/components/NotFoundPage";
+import NotFoundPage from "./shared/ui/NotFoundPage";
 import { Route } from "./+types/root";
 
 export function Layout({ children }: { children: React.ReactNode }) {
