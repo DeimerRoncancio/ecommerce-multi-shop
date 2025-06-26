@@ -1,5 +1,5 @@
+import Icon from "../../components/Icon";
 import { IconName } from "../../types/icon-list";
-import Icon from "../Icon";
 
 type ContactItemProps = {
   label: string,

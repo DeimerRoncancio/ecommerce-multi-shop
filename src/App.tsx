@@ -3,13 +3,13 @@ import { mapApiToProducts } from "./products/mappers/products.maper";
 import { mapApiToCategories } from "./products/mappers/categories.mapper";
 import { getCategories } from "./products/services/categories.api";
 import { getProducts } from "./products/services/products.api";
-import NavBar from "./shared/components/navbar/NavBar";
-import Footer from "./shared/components/footer/Footer";
+import NavBar from "./shared/layout/navbar/NavBar";
 import { SnackbarProvider } from "notistack";
 import { Outlet } from "react-router";
 import "./App.css";
 import { getSession } from "./sessions.server";
 import { Route } from "./+types/App";
+import Footer from "./shared/layout/footer/Footer";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
@@ -26,7 +26,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 declare module "notistack" {
   interface VariantOverrides {
-    reportComplete: true;
+    errorAlert: true;
   }
 }
 
@@ -35,7 +35,7 @@ function App() {
     <SnackbarProvider
       maxSnack={5}
       Components={{
-        reportComplete: SnackbarError,
+        errorAlert: SnackbarError,
       }}
     >
       <NavBar />

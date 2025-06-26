@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLoaderData } from "react-router";
 import useUser from "../../../profile/hooks/api/useUser";
 import AvatarImage from "../../../profile/components/AvatarImage";
 import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 
 type ProfileButtonProps = {
   size: number;
-  token: string;
 }
 
-export default function ProfileButton({ size, token }: ProfileButtonProps) {
+export default function ProfileButton({ size }: ProfileButtonProps) {
+  const { token } = useLoaderData();
   const [showOptions, setShowOptions] = useState(false);
   const { user, loading } = useUser({ token });
 

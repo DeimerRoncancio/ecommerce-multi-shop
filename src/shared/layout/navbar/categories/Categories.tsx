@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { CategoriesType } from "../../../../products/types/categories";
-import CategoriesModal from "./CategoriesModal";
 import { ProductTypes } from "../../../../products/types/product";
 import CategoryButton from "./CategoryButton";
+import CategoriesModal from "./CategoriesModal";
 
 type CategoriesProps = {
   categories: CategoriesType[];

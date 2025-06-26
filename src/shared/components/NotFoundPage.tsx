@@ -1,5 +1,5 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import NavBar from "./navbar/NavBar";
+import NavBar from "../layout/navbar/NavBar";
 
 type NotFoundPageProps = {
   message: string;

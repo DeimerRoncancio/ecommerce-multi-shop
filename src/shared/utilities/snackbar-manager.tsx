@@ -13,6 +13,6 @@ export const SnackbarUtilities = {
     this.toast(mess, "success")
   },
   error(mess: string) {
-    this.toast(mess, "reportComplete");
+    this.toast(mess, "errorAlert");
   }
 }

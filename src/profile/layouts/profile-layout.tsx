@@ -5,7 +5,7 @@ import AvatarImage from "../components/AvatarImage";
 import Breadcrumb from "../components/Breadcrumb";
 import type { Route } from "./+types/profile-layout";
 import { getSession } from "../../sessions.server";
-import LogoutButton from "../components/LogOutButton";
+import LogoutButton from "../components/LogoutButton";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));

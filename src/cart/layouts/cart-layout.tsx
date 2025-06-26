@@ -1,7 +1,15 @@
 import { Link, Outlet, useNavigate } from "react-router";
 import { GiPadlock } from "react-icons/gi";
-import ProfileButton from "../../shared/components/navbar/ProfileButton";
 import { IoMdHeartEmpty } from "react-icons/io";
+import ProfileButton from "../../shared/layout/navbar/ProfileButton";
+import { Route } from "./+types/cart-layout";
+import { getSession } from "../../sessions.server";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token');
+  return { token }
+}
 
 export default function CartLayout() {
   const navigate = useNavigate();

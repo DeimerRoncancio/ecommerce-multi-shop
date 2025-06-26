@@ -26,7 +26,6 @@ export const useUpdateUser = ({ user, token, updateUser }: UseUpdateUserProps) =
     if (user) reset(userInitialValues);
   }, [user, reset]);
 
-
   return {
     userInitialValues,
     currentValues,

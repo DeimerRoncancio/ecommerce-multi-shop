@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import Icon from "../Icon";
 import { IconName } from "../../types/icon-list";
+import Icon from "../../components/Icon";
 
 type SocialButtonProps = {
   iconName: IconName;
