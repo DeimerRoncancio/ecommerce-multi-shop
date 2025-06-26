@@ -5,10 +5,18 @@ import Search from "./Search";
 import MenuButton from "./MenuButton";
 import WishListButton from "./WishListButton";
 import Categories from "./categories/Categories";
+import { CategoriesType } from "../../../products/types/categories";
+import { ProductTypes } from "../../../products/types/product";
+
+type LoaderProps = {
+  categories: CategoriesType[];
+  products: ProductTypes[]
+}
 
 export default function NavBar() {
-  const loaderData = useLoaderData();
-  const { categories, products, token } = loaderData;
+  const loaderData = useLoaderData() as LoaderProps | undefined;
+  const categories = loaderData?.categories ?? [];
+  const products = loaderData?.products ?? [];
 
   return (
     <nav className="fixed top-0 w-full z-20">
@@ -43,7 +51,7 @@ export default function NavBar() {
             )
           }
           <li className={`flex h-full items-center border-r-[1px] border-[#a2a9b1] px-4 text-[#a2a9b1]`}>
-            <ProfileButton size={40} token={token} />
+            <ProfileButton size={40} />
           </li>
         </ul>
       </div>

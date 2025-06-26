@@ -1,14 +1,14 @@
 import { BsCashStack, BsPaypal, BsShop } from "react-icons/bs";
 import { FaApple, FaGoogle } from "react-icons/fa6";
 import { IoCardOutline } from "react-icons/io5";
-import { Link } from "react-router";
-import useProducts from "../../../products/hooks/api/useProducts";
+import { Link, useLoaderData } from "react-router";
 import CustomLink from "./CustomLink";
 import SocialButton from "./SocialButton";
 import ContactItem from "./ContactItem";
+import { ProductTypes } from "../../../products/types/product";
 
 export default function Footer() {
-  const { products } = useProducts();
+  const products = useLoaderData().products as ProductTypes[];
 
   return (
     <footer className="grid grid-rows-[1fr_auto] w-full m-auto text-sm text-[#212529]">

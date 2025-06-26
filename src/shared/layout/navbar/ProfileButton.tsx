@@ -4,13 +4,18 @@ import useUser from "../../../profile/hooks/api/useUser";
 import AvatarImage from "../../../profile/components/AvatarImage";
 import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 
+type LoaderProps = {
+  token?: string;
+}
+
 type ProfileButtonProps = {
   size: number;
 }
 
 export default function ProfileButton({ size }: ProfileButtonProps) {
-  const { token } = useLoaderData();
   const [showOptions, setShowOptions] = useState(false);
+  const loaderData = useLoaderData() as LoaderProps | undefined;
+  const token = loaderData?.token || "";
   const { user, loading } = useUser({ token });
 
   return (

@@ -1,7 +1,7 @@
 import { initialUserValues } from "../../constants/users-initial-values.helper";
 import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../../types/user";
 import { updateTypesToRequestTypes } from "../../mappers/profile.mapper";
-import { updateDataUser } from "../../services/users.api";
+import { updateUserData } from "../../services/users.api";
 import { useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 
@@ -18,7 +18,7 @@ export const useUpdateUser = ({ user, token, updateUser }: UseUpdateUserProps) =
 
   const sendData = (data: UserUpdateTypes) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-    updateDataUser(user.id, token, userInfo);
+    updateUserData(user.id, token, userInfo);
     updateUser(userInfo);
   }
 
