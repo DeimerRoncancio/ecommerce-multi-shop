@@ -2,10 +2,10 @@ import useUser from "../hooks/api/useUser";
 import { Outlet, useLocation } from "react-router";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
-import LogOutButton from "../components/LogOutButton";
 import Breadcrumb from "../components/Breadcrumb";
 import type { Route } from "./+types/profile-layout";
 import { getSession } from "../../sessions.server";
+import LogoutButton from "../components/LogOutButton";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -43,7 +43,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
                   : user.name + ' ' + user.lastnames?.split(" ", 1)
               }
             </h1>
-            <LogOutButton loading={loading} user={user} />
+            <LogoutButton loading={loading} user={user} />
           </div>
           <div className="divider before:h-[1px] after:h-[1px]"></div>
           <div className="flex flex-col">

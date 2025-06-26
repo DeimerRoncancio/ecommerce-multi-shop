@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 import useUser from "../../../profile/hooks/api/useUser";
 import AvatarImage from "../../../profile/components/AvatarImage";
-import LogoutAction from "../../../auth/actions/logout.action";
+import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 
 type ProfileButtonProps = {
   size: number;
@@ -29,7 +29,7 @@ export default function ProfileButton({ size, token }: ProfileButtonProps) {
 
       <div className={`${!showOptions ? 'hidden' : ''} `}>
         <ul tabIndex={0} className="menu menu-sm dropdown-content bg-white rounded-box z-1 mt-4 w-52 p-3 
-          shadow-[0_0_20px_0px_rgba(0,0,0,0.15)]">
+        shadow-[0_0_20px_0px_rgba(0,0,0,0.15)]">
           <NavLink to="/profile" onClick={() => setShowOptions(false)}>
             <li>
               <p className="text-base active:!bg-[#1f2937] py-2 text-gray-500 font-medium">
@@ -48,7 +48,14 @@ export default function ProfileButton({ size, token }: ProfileButtonProps) {
               </p>
             </li>
           </NavLink>
-          <LogoutAction />
+          <li>
+            <LogoutActionButton className="w-full">
+              <p className="w-full text-base text-left rounded-md active:!bg-[#1f2937] px-2.5 p-2 text-gray-500
+              cursor-pointer active:text-[#fff7ed]">
+                Cerrar sesión
+              </p>
+            </LogoutActionButton>
+          </li>
         </ul>
       </div>
     </div>

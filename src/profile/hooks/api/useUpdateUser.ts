@@ -6,18 +6,19 @@ import { useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 
 type UseUpdateUserProps = {
-  user: UserTypes,
-  updateUser: (user: UpdateRequestTypes) => void
+  user: UserTypes;
+  token: string;
+  updateUser: (user: UpdateRequestTypes) => void;
 }
 
-export const useUpdateUser = ({ user, updateUser }: UseUpdateUserProps) => {
+export const useUpdateUser = ({ user, token, updateUser }: UseUpdateUserProps) => {
   const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
   const userInitialValues = initialUserValues(user);
   const currentValues = useWatch({ control });
 
   const sendData = (data: UserUpdateTypes) => {
     const userInfo: UpdateRequestTypes = updateTypesToRequestTypes(data);
-    updateDataUser(user.id, userInfo);
+    updateDataUser(user.id, token, userInfo);
     updateUser(userInfo);
   }
 

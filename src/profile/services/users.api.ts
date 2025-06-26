@@ -9,6 +9,10 @@ export const getUser = (token: string) => {
   }).then(res => res.data);
 }
 
-export const updateDataUser = (id: string, userInfo: UpdateRequestTypes) => {
-  return users.put(`/update/${id}`, userInfo);
+export const updateDataUser = (id: string, token: string, userInfo: UpdateRequestTypes) => {
+  return users.put(`/update/${id}`, userInfo, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 }

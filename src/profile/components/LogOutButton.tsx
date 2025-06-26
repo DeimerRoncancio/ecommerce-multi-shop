@@ -1,18 +1,17 @@
 import { IoMdLogOut } from "react-icons/io";
 import { useNavigate } from "react-router";
-import { UserTypes } from "../types/user";
-import LogoutAction from "../../auth/actions/logout.action";
+import { UserTypes } from "../types/user.ts";
+import LogoutActionButton from "./LogoutActionButton.tsx";
+import { BiLogOutCircle } from "react-icons/bi";
 
 type LogInOutButtonProps = {
   user: UserTypes
   loading: boolean
 }
 
-export default function LogOutButton({ loading, user }: LogInOutButtonProps) {
+export default function LogoutButton({ loading, user }: LogInOutButtonProps) {
   const navigate = useNavigate();
-  const logIn = () => {
-    navigate("/login");
-  }
+  const logIn = () => navigate("/login");
 
   return (
     loading ? (
@@ -27,7 +26,11 @@ export default function LogOutButton({ loading, user }: LogInOutButtonProps) {
             Inciar Sesión
           </button>
         ) : (
-          <LogoutAction />
+          <LogoutActionButton className="btn gap-2 px-3 w-36 h-9 rounded-full bg-[#fff4ef] text-sm font-normal 
+          text-[#eb5324] border-none justify-normal">
+            <BiLogOutCircle size={17} />
+            Cerrar sesión
+          </LogoutActionButton>
         )
     )
   )

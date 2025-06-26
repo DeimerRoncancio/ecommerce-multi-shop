@@ -7,6 +7,14 @@ import { useEffect, useState } from "react";
 import { useUpdateUser } from "../hooks/api/useUpdateUser";
 import UserUpdateAlert from "../components/UserUpdateAlert";
 import { useUpdateAlert } from "../hooks/useUpdateAlert";
+import { Route } from "./+types/profile";
+import { getSession } from "../../sessions.server";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token') as string;
+  return { token }
+}
 
 type userContext = {
   user: UserTypes,
@@ -14,17 +22,18 @@ type userContext = {
   updateUser: (user: UpdateRequestTypes) => void
 }
 
-export default function Profile() {
+export default function Profile({ loaderData }: Route.ComponentProps) {
   const { user, userLoading: loading, updateUser } = useOutletContext<userContext>();
   const { showAlert, handleAlert, handleUpdatedAlert } = useUpdateAlert();
   const [isActive, setIsActive] = useState(false);
+  const { token } = loaderData;
 
   const {
     userInitialValues,
     currentValues,
     sendData, register,
     handleSubmit 
-  } = useUpdateUser({ user, updateUser });
+  } = useUpdateUser({ user, token, updateUser });
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     sendData(data);
