@@ -19,8 +19,6 @@ export const Register = () => {
   } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterForm) });
 
   const onSubmit: SubmitHandler<userType> = (data) => {
-    console.log(data);
-    console.log(file.current);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { profileImage, ...rest } = data;
 
