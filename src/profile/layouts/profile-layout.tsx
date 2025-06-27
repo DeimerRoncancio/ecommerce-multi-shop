@@ -130,19 +130,50 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
         </div>
       </div>
 
-      <div className={`${showProfileModal ? 'visible opacity-100' : 'invisible opacity-0 '} w-screen h-full z-20 
-      fixed top-0 flex justify-center items-center`}>
+      <div
+        className={`${showProfileModal ? 'visible opacity-100' : 'invisible opacity-0 '} w-screen h-full z-20 
+        fixed top-0 flex justify-center items-center`}
+      >
         <div className="bg-[#1c1c1c7c] w-full h-full absolute" onClick={onCloseEditProfileModal} />
-        <div className="grid grid-rows-[auto_1fr_auto] z-20 bg-white w-[960px] text-[#212529] h-[calc(100%-110px)]
-        min-h-[164px] max-h-[853px] rounded-3xl">
+        <div
+          className="grid grid-rows-[auto_1fr_auto] z-20 bg-white w-[560px] text-[#212529] h-[calc(100%-110px)]
+          min-h-[164px] max-h-[853px] rounded-3xl"
+        >
           <div className="p-3 pl-4 text-xl font-medium border-b border-[#ebebeb]">
             <h1>Personaliza tu foto</h1>
           </div>
           <div className="flex justify-center items-center">
 
-            <label className="w-25 h-25 bg-amber-400" onDrop={handleDrop}
-            onDragOver={(e: React.DragEvent) => e.preventDefault()}>
+            <label 
+              className="w-72 h-60 border-2 border-dashed border-gray-300 hover:bg-[#f9fafb] 
+              hover:border-gray-400 rounded-2xl cursor-pointer"
+              onDrop={handleDrop}
+              onDragOver={(e: React.DragEvent) => e.preventDefault()}
+            >
               <input type="file" className="hidden" onChange={handleChangeImage} />
+              <div className="flex flex-col h-full items-center justify-center space-y-1">
+                <div
+                  className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors
+                  duration-200 ${false ? "bg-blue-100" : "bg-gray-100"}`}
+                >
+                  {false ? (
+                    <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <BiUpload
+                      className={`w-8 h-8 transition-colors duration-200 
+                      ${false ? "text-blue-500" : "text-gray-500"}`}
+                    />
+                  )}
+                </div>
+
+                <div className="space-y-2 text-center">
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    {false ? "Subiendo imágenes..." : "Arrastra tus imágenes aquí"}
+                  </h3>
+                  <p className="text-sm text-gray-500">o haz clic para seleccionar archivos</p>
+                  <p className="text-xs text-gray-400">PNG, JPG, GIF, WEBP</p>
+                </div>
+              </div>
             </label>
 
           </div>
