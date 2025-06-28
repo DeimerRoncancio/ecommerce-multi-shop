@@ -10,7 +10,12 @@ export const SnackbarUtilities = {
     enqueueSnackbar(msg, { variant, persist: true })
   },
   toast(msg: string, variant: VariantType = "default") {
-    enqueueSnackbar(msg, { variant, autoHideDuration: 3000 })
+    enqueueSnackbar(msg, {
+      variant, autoHideDuration: 3000, anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right'
+      }
+    })
   },
   succes(mess: string) {
     this.toast(mess, "success")
