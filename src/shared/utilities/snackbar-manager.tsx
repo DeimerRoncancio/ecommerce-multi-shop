@@ -6,13 +6,16 @@ export const setSnackbarRef = () => {
 };
 
 export const SnackbarUtilities = {
-  toast(msg: string, variant: VariantType = "default") {
+  toastError(msg: string, variant: VariantType = "default") {
     enqueueSnackbar(msg, { variant, persist: true })
+  },
+  toast(msg: string, variant: VariantType = "default") {
+    enqueueSnackbar(msg, { variant, autoHideDuration: 3000 })
   },
   succes(mess: string) {
     this.toast(mess, "success")
   },
   error(mess: string) {
-    this.toast(mess, "errorAlert");
+    this.toastError(mess, "errorAlert");
   }
 }

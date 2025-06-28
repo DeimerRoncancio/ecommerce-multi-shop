@@ -1,21 +1,24 @@
-import axios from "axios";
 import { useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { BiUpload } from "react-icons/bi";
-import { envs } from "../../../shared/config/env.config";
+import { useUpdateUser } from "../../hooks/api/useUpdateUser";
+import { ImageType, UserTypes } from "../../types/user";
+import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
 
 type EditImageModalProps = {
   token: string;
-  userId: string;
+  user: UserTypes;
   showModal: boolean;
   onClose: () => void;
+  updateImageUser: (image: ImageType) => void;
 }
 
-export default function EditImageModal({ token, userId, showModal, onClose }: EditImageModalProps) {
+export default function EditImageModal({ token, user, showModal, onClose, updateImageUser }: EditImageModalProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const { sendImage } = useUpdateUser({ user, token, updateImageUser });
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
 
@@ -24,15 +27,11 @@ export default function EditImageModal({ token, userId, showModal, onClose }: Ed
     const formData = new FormData();
     if (ref.current) formData.append('file', ref.current);
 
-    axios.put(`${envs.API}/app/users/update/profile-image/${userId}`, formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    ).then(() => {
+    sendImage(formData).then(() => {
+      setPreviewImage(null);
       setIsLoading(false);
       onClose();
+      SnackbarUtilities.succes('Imagen cambiada con exito')
     });
   }
 

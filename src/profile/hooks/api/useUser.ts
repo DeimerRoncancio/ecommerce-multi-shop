@@ -1,6 +1,6 @@
 import { UserInitialValues } from "../../constants/users-initial-values.helper";
 import { getUser } from "../../services/users.api";
-import { UpdateRequestTypes, UserTypes } from "../../types/user";
+import { ImageType, UpdateRequestTypes, UserTypes } from "../../types/user";
 import { useEffect, useState } from "react";
 import { toUserTypes } from "../../mappers/profile.mapper";
 
@@ -15,6 +15,11 @@ export default function useUser({ token }: UseUserTypes) {
   const updateUser = (newUserData: UpdateRequestTypes) => {
     const newUser: UserTypes = toUserTypes(newUserData, user);
     setUser(newUser);
+  }
+
+  const updateImageUser = (image: ImageType) => {
+    user.profileImage = image;
+    setUser(user);
   }
   
   const toGetUser = (token: string) => {
@@ -31,6 +36,7 @@ export default function useUser({ token }: UseUserTypes) {
     user,
     loading,
     toGetUser,
-    updateUser
+    updateUser,
+    updateImageUser
   }
 }

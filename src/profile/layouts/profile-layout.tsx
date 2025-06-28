@@ -18,7 +18,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
   const { token } = loaderData;
-  const { user, loading, updateUser } = useUser({ token });
+  const { user, loading, updateUser, updateImageUser } = useUser({ token });
   const [showProfileModal, setProfileModal] = useState(false);
   const location = useLocation();
 
@@ -115,7 +115,12 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
           <Outlet context={{ user, userLoading: loading, updateUser }} />
         </div>
       </div>
-      <EditImageModal token={token} userId={user.id} showModal={showProfileModal} onClose={onCloseEditProfileModal} />
+      <EditImageModal 
+        token={token} user={user}
+        showModal={showProfileModal}
+        onClose={onCloseEditProfileModal}
+        updateImageUser={updateImageUser}
+      />
     </>
   );
 }
