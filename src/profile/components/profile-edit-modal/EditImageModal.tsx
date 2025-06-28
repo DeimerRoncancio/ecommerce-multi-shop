@@ -1,15 +1,35 @@
-import { useState } from "react";
+import axios from "axios";
+import { useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { BiUpload } from "react-icons/bi";
+import { envs } from "../../../shared/config/env.config";
 
 type EditImageModalProps = {
+  token: string;
+  userId: string;
   showModal: boolean;
   onClose: () => void;
 }
 
-export default function EditImageModal({ showModal, onClose }: EditImageModalProps) {
+export default function EditImageModal({ token, userId, showModal, onClose }: EditImageModalProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const { register, handleSubmit } = useForm();
+  const ref = useRef<File | null>();
+
+  const submit = () => {
+    const formData = new FormData();
+    if (ref.current) formData.append('file', ref.current);
+
+    axios.put(`${envs.API}/app/users/update/profile-image/${userId}`, formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    ).then((res) => console.log(res));
+  }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
@@ -27,6 +47,7 @@ export default function EditImageModal({ showModal, onClose }: EditImageModalPro
   const handleFiles = (files: File[]) => {
     if (files) {
       const urlImage = URL.createObjectURL(files[0]);
+      ref.current = files[0];
       setPreviewImage(urlImage);
     }
   }
@@ -40,7 +61,7 @@ export default function EditImageModal({ showModal, onClose }: EditImageModalPro
       }} />
       <div className={`z-20 bg-white w-[560px] text-[#212529] h-[calc(100%-110px)] min-h-[164px] max-h-[853px]
       rounded-3xl  ${!showModal && 'scale-105'} transition-all duration-150`}>
-        <form className="grid grid-rows-[auto_1fr_auto] h-full">
+        <form className="grid grid-rows-[auto_1fr_auto] h-full" onSubmit={handleSubmit(submit)}>
           <div className="p-3 pl-4 text-xl font-medium border-b border-[#ebebeb]">
             <h1>Personaliza tu foto</h1>
           </div>
@@ -49,18 +70,19 @@ export default function EditImageModal({ showModal, onClose }: EditImageModalPro
               previewImage == null
                 ? (
                   <label onDrop={handleDrop} onDragEnter={() => setIsDragOver(true)} onDragLeave={() => setIsDragOver(false)}
-                    className={`w-72 h-60 border-2 border-dashed hover:bg-[#f9fafb] rounded-2xl cursor-pointer transition-all
+                  className={`w-72 h-60 border-2 border-dashed hover:bg-[#f9fafb] rounded-2xl cursor-pointer transition-all
                   duration-300 ${isUploading && "pointer-events-none opacity-75"}
                   ${isDragOver
-                        ? "border-[#ec5320] bg-[#fff4f0] scale-105"
-                        : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"}`}
-                    onDragOver={(e: React.DragEvent) => {
-                      e.preventDefault()
-                      setIsDragOver(true);
-                    }}>
+                    ? "border-[#ec5320] bg-[#fff4f0] scale-105"
+                    : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"}`}
+                  onDragOver={(e: React.DragEvent) => {
+                    e.preventDefault()
+                    setIsDragOver(true);
+                  }}>
                     <input
                       type="file"
                       className="hidden"
+                      {...register("image")}
                       onChange={handleChangeImage}
                     />
                     <div className="flex flex-col h-full items-center justify-center space-y-1">

@@ -115,7 +115,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
           <Outlet context={{ user, userLoading: loading, updateUser }} />
         </div>
       </div>
-      <EditImageModal showModal={showProfileModal} onClose={onCloseEditProfileModal} />
+      <EditImageModal token={token} userId={user.id} showModal={showProfileModal} onClose={onCloseEditProfileModal} />
     </>
   );
 }

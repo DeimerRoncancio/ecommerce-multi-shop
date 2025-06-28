@@ -25,7 +25,6 @@ export const Register = () => {
     const formData = new FormData();
     Object.entries(rest).forEach(([key, value]) => {
       if (value.length > 0) {
-        console.log(key, value);
         formData.append(key, value);
       }
     });
