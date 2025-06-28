@@ -14,11 +14,13 @@ type EditImageModalProps = {
 export default function EditImageModal({ token, userId, showModal, onClose }: EditImageModalProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
 
   const submit = () => {
+    setIsLoading(true);
     const formData = new FormData();
     if (ref.current) formData.append('file', ref.current);
 
@@ -28,15 +30,20 @@ export default function EditImageModal({ token, userId, showModal, onClose }: Ed
           Authorization: `Bearer ${token}`
         }
       }
-    ).then((res) => console.log(res));
+    ).then(() => {
+      setIsLoading(false);
+      onClose();
+    });
   }
 
   const handleDrop = (e: React.DragEvent) => {
+    setIsUploading(true);
     e.preventDefault()
     e.stopPropagation()
     const images = Array.from(e.dataTransfer.files);
     handleFiles(images);
     setIsDragOver(false);
+    setIsUploading(false);
   }
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,9 +114,12 @@ export default function EditImageModal({ token, userId, showModal, onClose }: Ed
                     </div>
                   </label>
                 ) : (
-                  <div className="avatar">
+                  <div className="avatar relative">
                     <div className="w-80 rounded-full bg-black border-4 border-[#f9761a] shadow-[0_0_25px_3px_#ffc69e]">
                       <img src={previewImage} />
+                    </div>
+                    <div className={`${!loading ? 'opacity-0' : 'opacity-100'} absolute !flex justify-center items-center w-full h-full bg-[#16161683] rounded-full`}>
+                      <span className="loading loading-spinner w-14 text-white"></span>
                     </div>
                   </div>
                 )
