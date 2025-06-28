@@ -36,7 +36,10 @@ export default function EditImageModal({ showModal, onClose }: EditImageModalPro
       className={`${showModal ? 'visible opacity-100' : 'invisible opacity-0'}  transition-all duration-100 w-screen
       h-full z-20 fixed top-0 flex justify-center items-center`}
     >
-      <div className="bg-[#1c1c1c7c] w-full h-full absolute" onClick={onClose} />
+      <div className="bg-[#1c1c1c7c] w-full h-full absolute" onClick={() => {
+        onClose();
+        setPreviewImage(null);
+      }} />
       <div
         className={`grid grid-rows-[auto_1fr_auto] z-20 bg-white w-[560px] text-[#212529] h-[calc(100%-110px)]
         min-h-[164px] max-h-[853px] rounded-3xl  ${!showModal && 'scale-105'} transition-all duration-150`}
@@ -92,12 +95,19 @@ export default function EditImageModal({ showModal, onClose }: EditImageModalPro
                   </div>
                 </label>
               ) : (
-                <img src={previewImage} />
+                <div className="avatar">
+                  <div className="w-80 rounded-full border-4 bg-black border-white outline-2 outline-[#ec5320]">
+                    <img src={previewImage} />
+                  </div>
+                </div>
               )
           }
         </div>
         <div className="p-4 text-xl flex justify-end font-medium border-t gap-4 border-[#ebebeb]">
-          <button className="btn rounded-full" onClick={onClose}>Cancelar</button>
+          <button className="btn rounded-full" onClick={() => {
+            onClose();
+            setPreviewImage(null);
+          }}>Cancelar</button>
           <button className="btn btn-neutral rounded-full">Guardar</button>
         </div>
       </div>
