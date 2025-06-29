@@ -29,7 +29,6 @@ export default function EditImageModal({ token, user, showModal, onClose, update
       setPreviewImage(null);
       setIsLoading(false);
       onClose();
-      console.log('Entra');
       SnackbarUtilities.succes('Imagen cambiada con exito')
     });
   }

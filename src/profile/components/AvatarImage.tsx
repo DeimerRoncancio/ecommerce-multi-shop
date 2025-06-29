@@ -1,19 +1,17 @@
-import { UserTypes } from "../types/user"
-
 type AvatarImageProps = {
   loading: boolean,
-  user: UserTypes
+  userImage: string;
 }
 
-export default function AvatarImage({ loading, user }: AvatarImageProps) {
+export default function AvatarImage({ loading, userImage }: AvatarImageProps) {
   return (
     loading ? (
       <div className="w-full h-full bg-gray-200"></div>
     ) : (
       <img src={
-        !user.name.length
+        !userImage
           ? '/images/uknown-profile.png'
-          : user.profileImage?.imageUrl
+          : userImage
       } />
     )
   )

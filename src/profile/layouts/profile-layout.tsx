@@ -18,7 +18,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
   const { token } = loaderData;
-  const { user, loading, updateUser, updateImageUser } = useUser({ token });
+  const { 
+    user, loading,
+    userImage,
+    updateUser,
+    updateImageUser
+  } = useUser({ token });
   const [showProfileModal, setProfileModal] = useState(false);
   const location = useLocation();
 
@@ -48,7 +53,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
           <div className="flex flex-col items-center gap-3">
             <div className="avatar">
               <div className="w-28 rounded-full border-4 border-white shadow-[0px_7px_29px_0px_rgba(100,100,111,0.2)]">
-                <AvatarImage loading={loading} user={user} />
+                <AvatarImage loading={loading} userImage={userImage} />
                 {
                   user.name.length &&
                   <button className="absolute rounded-full top-1 text-transparent hover:text-gray-200 
@@ -62,7 +67,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
             <h1 className="text-lg text-[#5e472d] font-semibold">
               {
                 !user.name.length
-                  ? "Crea una cuenta"
+                  ? "Accede a una cuenta"
                   : user.name + ' ' + user.lastnames?.split(" ", 1)
               }
             </h1>

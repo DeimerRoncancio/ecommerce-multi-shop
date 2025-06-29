@@ -16,7 +16,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
   const loaderData = useLoaderData() as LoaderProps | undefined;
   const token = loaderData?.token || "";
-  const { user, loading } = useUser({ token });
+  const { user, loading, userImage } = useUser({ token });
 
   return (
     <div className="dropdown dropdown-end">
@@ -26,7 +26,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
             style={{ width: size, height: size }}
             onClick={() => setShowOptions(!showOptions)}>
             <div className="rounded-full">
-              <AvatarImage loading={loading} user={user} />
+              <AvatarImage loading={loading} userImage={userImage} />
             </div>
           </div>
         </div>
