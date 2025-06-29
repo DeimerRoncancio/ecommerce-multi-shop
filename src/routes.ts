@@ -17,7 +17,8 @@ export default [
       layout('profile/layouts/profile-layout.tsx', [
         //Auth Profile
         layout('profile/layouts/auth-profile-layout.tsx', [
-          index('profile/routes/profile.tsx')
+          index('profile/routes/profile.tsx'),
+          route('settings', 'profile/routes/profile-settings.tsx'),
         ]),
         route('wish-list', 'wishlist/routes/wish-list.tsx'),
       ]),

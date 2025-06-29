@@ -112,7 +112,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               label="Configuración de Cuenta"
               iconName="settings"
               pathname={location.pathname}
-              to=""
+              to="/profile/settings"
             />
           </div>
         </div>

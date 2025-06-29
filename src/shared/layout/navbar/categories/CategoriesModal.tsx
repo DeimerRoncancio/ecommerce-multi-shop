@@ -11,7 +11,7 @@ export default function CategoriesModal({ products, showModal, changeVisibility 
   return (
     <div className={`${!showModal ? 'invisible opacity-0 translate-y-10' : 'visible opacity-100'} absolute right-0 
       left-0 bg-white ajust-width !w-[78%] m-auto p-6 rounded-lg shadow-[0_7px_15px_0px_rgba(154,154,154,0.67)] 
-      transition-all duration-[0.3s,0.2s]`}
+      transition-all duration-[0.1s,0.1s]`}
       onMouseEnter={() => changeVisibility(true)}
       onMouseLeave={() => changeVisibility(false)}
     >
@@ -22,7 +22,7 @@ export default function CategoriesModal({ products, showModal, changeVisibility 
           aria-label="Todos" defaultChecked
         />
         <div className="tab-content p-2 pt-5 bg-white border-x-0 border-b-0 border-t-1 border-[#e8e9e9]
-          mt-[-1px] min-h-[300px] h-fit">
+        mt-[-1px] min-h-[300px] h-fit">
           <ul className="flex flex-wrap gap-7 xl:max-h-[310px] 2xl:h-fit overflow-auto">
             {
               !products.length
