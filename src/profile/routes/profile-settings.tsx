@@ -1,6 +1,5 @@
 import { useOutletContext } from "react-router"
 import { UserTypes } from "../types/user";
-import UserDataField from "../components/UserDataField";
 
 type userContext = {
   user: UserTypes;

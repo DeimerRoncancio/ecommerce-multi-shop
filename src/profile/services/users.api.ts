@@ -20,3 +20,12 @@ export const updateUserData = (id: string, token: string, userInfo: UpdateReques
     }
   });
 }
+
+export const updateUserImage = (id: string, token: string, formData: FormData) => {
+  return users.put(`update/profile-image/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )
+}
