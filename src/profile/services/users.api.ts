@@ -1,4 +1,4 @@
-import { UpdateRequestTypes } from "../types/user";
+import { PasswordRequestType, UpdateRequestTypes } from "../types/user";
 import { users } from "../api/usersApi";
 
 export const validationUser = (token: string) => {
@@ -21,11 +21,18 @@ export const updateUserData = (id: string, token: string, userInfo: UpdateReques
   });
 }
 
-export const updateUserImage = (id: string, token: string, formData: FormData) => {
-  return users.put(`update/profile-image/${id}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+export const updatePassword = (id: string, token: string, data: PasswordRequestType) => {
+  return users.put(`/update/password/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
-  )
+  });
+}
+
+export const updateUserImage = (id: string, token: string, formData: FormData) => {
+  return users.put(`/update/profile-image/${id}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 }

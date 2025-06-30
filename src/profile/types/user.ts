@@ -18,6 +18,17 @@ export interface ImageType {
   name: string;
 }
 
+export interface PasswordType {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface PasswordRequestType {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface UpdateRequestTypes {
   name: string,
   secondName: string | undefined,

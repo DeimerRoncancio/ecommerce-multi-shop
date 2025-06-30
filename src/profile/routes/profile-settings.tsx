@@ -1,10 +1,9 @@
 import { useOutletContext } from "react-router"
-import { UserTypes } from "../types/user";
+import { PasswordType, UserTypes } from "../types/user";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { envs } from "../../shared/config/env.config";
 import { Route } from "./+types/profile-settings";
 import { getSession } from "../../sessions.server";
+import { useUpdateUser } from "../hooks/api/useUpdateUser";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -17,33 +16,18 @@ type userContext = {
   loading: boolean;
 }
 
-type PasswordType = {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
-
 export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const { user, loading } = useOutletContext<userContext>();
   const { token } = loaderData;
   const { register, handleSubmit } = useForm<PasswordType>();
+  const { sendPassword } = useUpdateUser({ user, token });
 
   const submit = (data: PasswordType) => {
     if (data.newPassword !== data.confirmPassword) throw Error('Las contraseñas no coinciden');
 
-    axios.put(`${envs.API}/app/users/update/password/${user.id}`, { 
-      currentPassword: data.currentPassword,
-      newPassword: data.newPassword
-     }, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-     })
-      .then((res) => {
-        alert('La contraseña se cambió con exito');
-        console.log(res.data);
-      })
-      .catch(() => alert('No se pudo cambiar la contraseña'));
+    sendPassword(data)
+      .then(() => alert('Contraseña cambiada exitosamente'))
+      .catch(() => alert('No se pudo cambiar la contraseña'))
   }
 
   return (

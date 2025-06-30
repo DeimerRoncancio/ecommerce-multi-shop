@@ -1,12 +1,8 @@
 import { VariantType, enqueueSnackbar } from "notistack";
 
-let useSnackbarRef;
-export const setSnackbarRef = () => {
-  useSnackbarRef = enqueueSnackbar;
-};
-
 export const SnackbarUtilities = {
   toastError(msg: string, variant: VariantType = "default") {
+    if (!enqueueSnackbar) return; 
     enqueueSnackbar(msg, { variant, persist: true })
   },
   toast(msg: string, variant: VariantType = "default") {
