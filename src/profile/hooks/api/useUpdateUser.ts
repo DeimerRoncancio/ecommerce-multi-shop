@@ -28,9 +28,7 @@ export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseU
       .then((res) => updateImageUser && updateImageUser(res.data));
   }
 
-  useEffect(() => {
-    if (user) reset(userInitialValues);
-  }, [user, reset]);
+  useEffect(() => user && reset(userInitialValues), [user, reset]);
 
   return {
     userInitialValues,

@@ -1,13 +1,50 @@
 import { useOutletContext } from "react-router"
 import { UserTypes } from "../types/user";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { envs } from "../../shared/config/env.config";
+import { Route } from "./+types/profile-settings";
+import { getSession } from "../../sessions.server";
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token') as string;
+  return { token }
+}
 
 type userContext = {
   user: UserTypes;
   loading: boolean;
 }
 
-export default function ProfileSettings() {
-  const { loading } = useOutletContext<userContext>();
+type PasswordType = {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
+  const { user, loading } = useOutletContext<userContext>();
+  const { token } = loaderData;
+  const { register, handleSubmit } = useForm<PasswordType>();
+
+  const submit = (data: PasswordType) => {
+    if (data.newPassword !== data.confirmPassword) throw Error('Las contraseñas no coinciden');
+
+    axios.put(`${envs.API}/app/users/update/password/${user.id}`, { 
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword
+     }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+     })
+      .then((res) => {
+        alert('La contraseña se cambió con exito');
+        console.log(res.data);
+      })
+      .catch(() => alert('No se pudo cambiar la contraseña'));
+  }
 
   return (
     <>
@@ -16,43 +53,46 @@ export default function ProfileSettings() {
       </div>
       {
         !loading ? (
-          <form>
+          <form onSubmit={handleSubmit(submit)}>
             <div className="text-base border border-[#ebebeb] p-6 rounded-2xl text-black">
               <h2 className="mb-6 text-lg font-semibold text-[#84633f]">Cambiar contraseña</h2>
               <div className="flex flex-col gap-5">
                 <div>
                   <span className="text-[#c7c7c7]">Contraseña actual</span>
                   <input
-                    type="password"
+                    type="text"
                     className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
                   focus:outline-[#ffc1ad] focus:border-[#f14913]"
                     placeholder="Ingresa tu contraseña actual"
+                    {...register("currentPassword")}
                   />
                 </div>
                 <div className="flex gap-5">
                   <div>
                     <span className="text-[#c7c7c7]">Nueva contraseña</span>
                     <input
-                      type="password"
+                      type="text"
                       className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
                     focus:outline-[#ffc1ad] focus:border-[#f14913]"
                       placeholder="Ingresa tu neva contraseña"
+                      {...register("newPassword")}
                     />
                   </div>
                   <div>
                     <span className="text-[#c7c7c7]">Confirma tu nueva contraseña</span>
                     <input
-                      type="password"
+                      type="text"
                       className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
                       focus:outline-[#ffc1ad] focus:border-[#f14913]"
                       placeholder="Confirma tu neva contraseña"
+                      {...register("confirmPassword")}
                     />
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex justify-end">
-              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`}>
+              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`} type="submit">
                 Cambiar contraseña
               </button>
             </div>
