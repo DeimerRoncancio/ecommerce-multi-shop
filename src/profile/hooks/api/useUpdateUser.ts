@@ -3,7 +3,7 @@ import { ImageType, PasswordRequestType, UpdateRequestTypes, UserTypes, UserUpda
 import { updateTypesToRequestTypes } from "../../mappers/profile.mapper";
 import { updatePassword, updateUserData, updateUserImage } from "../../services/users.api";
 import { useForm, useWatch } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type UseUpdateUserProps = {
   user: UserTypes;
@@ -14,6 +14,7 @@ type UseUpdateUserProps = {
 
 export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseUpdateUserProps) => {
   const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
+  const [passwordLoading, setLoadingPassword] = useState(false);
   const userInitialValues = initialUserValues(user);
   const currentValues = useWatch({ control });
 
@@ -29,7 +30,9 @@ export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseU
   }
 
   const sendPassword = (data: PasswordRequestType) => {
-    return updatePassword(user.id, token, data);
+    setLoadingPassword(true);
+    return updatePassword(user.id, token, data)
+      .finally(() => setLoadingPassword(false));
   }
 
   useEffect(() => user && reset(userInitialValues), [user, reset]);
@@ -37,6 +40,7 @@ export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseU
   return {
     userInitialValues,
     currentValues,
+    passwordLoading,
     sendData,
     sendImage,
     sendPassword,

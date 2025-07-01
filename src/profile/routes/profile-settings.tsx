@@ -6,6 +6,7 @@ import { getSession } from "../../sessions.server";
 import { useUpdateUser } from "../hooks/api/useUpdateUser";
 import { TiWarningOutline } from "react-icons/ti";
 import { useState } from "react";
+import { ChangePasswordUser, ChangePasswordUserFormData } from "../zod/routesProfile";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -19,18 +20,41 @@ type userContext = {
 }
 
 export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
+  const [showConfirmModal, setConfirmModal] = useState(false);
+  const [ data, setData ] = useState<PasswordType | null>(null);
+  const [ fieldErrors, setFieldError] = useState<Partial<ChangePasswordUserFormData>>({});
+
+  const { register, handleSubmit } = useForm<PasswordType>();
   const { user, loading } = useOutletContext<userContext>();
   const { token } = loaderData;
-  const { register, handleSubmit } = useForm<PasswordType>();
-  const { sendPassword } = useUpdateUser({ user, token });
-  const [showConfirmModal, setConfirmModal] = useState(false);
+
+  const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
 
   const submit = (data: PasswordType) => {
     if (data.newPassword !== data.confirmPassword) throw Error('Las contraseñas no coinciden');
+    if (!validationFields(data)) return;
 
+    setConfirmModal(true);
+    setData(data);
+  }
+  
+  const sendData = () => {
+    if (!data) return;
     sendPassword(data)
-      .then(() => alert('Contraseña cambiada exitosamente'))
-      .catch(() => alert('No se pudo cambiar la contraseña'))
+    .then(() => alert('Contraseña cambiada exitosamente'))
+    .catch(() => alert('No se pudo cambiar la contraseña'))
+  }
+  
+  const validationFields = (data: PasswordType) => {
+    const result = ChangePasswordUser.safeParse(data);
+    if (!result.success) {
+      setFieldError(result.error.flatten().fieldErrors as Partial<ChangePasswordUserFormData>);
+      console.log(result.error.flatten().fieldErrors);
+      return false;
+    }
+
+    setFieldError({});
+    return true;
   }
 
   return (
@@ -53,6 +77,9 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     placeholder="Ingresa tu contraseña actual"
                     {...register("currentPassword")}
                   />
+                  {fieldErrors.currentPassword &&  (
+                    <span style={{ color: "red" }}>{fieldErrors.currentPassword[0]}</span>
+                  )}
                 </div>
                 <div className="flex gap-5">
                   <div>
@@ -60,10 +87,13 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     <input
                       type="text"
                       className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
-                    focus:outline-[#ffc1ad] focus:border-[#f14913]"
+                      focus:outline-[#ffc1ad] focus:border-[#f14913]"
                       placeholder="Ingresa tu neva contraseña"
                       {...register("newPassword")}
-                    />
+                      />
+                    {fieldErrors.newPassword && (
+                      <span style={{ color: "red" }}>{fieldErrors.newPassword[0]}</span>
+                    )}
                   </div>
                   <div>
                     <span className="text-[#c7c7c7]">Confirma tu nueva contraseña</span>
@@ -73,19 +103,18 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                       focus:outline-[#ffc1ad] focus:border-[#f14913]"
                       placeholder="Confirma tu neva contraseña"
                       {...register("confirmPassword")}
-                    />
+                      />
+                    {fieldErrors.confirmPassword && (
+                      <span style={{ color: "red" }}>{fieldErrors.confirmPassword[0]}</span>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             <div className="flex justify-end">
-              <div className={`btn btn-neutral mt-7 p-1 px-7 h-9`}
-              onClick={() => {
-                document.body.classList.add('overflow-hidden');
-                setConfirmModal(true);
-              }}>
+              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`} type="submit">
                 Cambiar contraseña
-              </div>
+              </button>
             </div>
             <div className={`${showConfirmModal ? 'visible opacity-100' : 'invisible opacity-0'} fixed w-full 
             h-full z-20 top-0 left-0 flex justify-center items-center transition-all duration-75`}>
@@ -110,7 +139,10 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     document.body.classList.remove('overflow-hidden');
                     setConfirmModal(false);
                   }}>Cancelar</div>
-                  <button className="btn rounded-sm btn-error">Confirmar</button>
+                  <div className={`btn rounded-sm btn-error ${passwordLoading && 'btn-disabled'}`}
+                  onClick={sendData}>{
+                    passwordLoading ? 'Confirmando...' : 'Confirmar'}
+                  </div>
                 </div>
               </div>
             </div>
