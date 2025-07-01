@@ -64,6 +64,12 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
                 }
               </div>
             </div>
+            <EditImageModal
+              token={token} user={user}
+              showModal={showProfileModal}
+              onClose={onCloseEditProfileModal}
+              updateImageUser={updateImageUser}
+            />
             <h1 className="text-lg text-[#5e472d] font-semibold">
               {
                 !user.name.length
@@ -120,12 +126,6 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
           <Outlet context={{ user, userLoading: loading, updateUser }} />
         </div>
       </div>
-      <EditImageModal 
-        token={token} user={user}
-        showModal={showProfileModal}
-        onClose={onCloseEditProfileModal}
-        updateImageUser={updateImageUser}
-      />
     </>
   );
 }
