@@ -7,6 +7,7 @@ import { useUpdateUser } from "../hooks/api/useUpdateUser";
 import { TiWarningOutline } from "react-icons/ti";
 import { useState } from "react";
 import { ChangePasswordUser, ChangePasswordUserFormData } from "../zod/routesProfile";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -22,9 +23,11 @@ type userContext = {
 export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [ data, setData ] = useState<PasswordType | null>(null);
-  const [ fieldErrors, setFieldError] = useState<Partial<ChangePasswordUserFormData>>({});
 
-  const { register, handleSubmit } = useForm<PasswordType>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors } } = useForm<ChangePasswordUserFormData>({ resolver: zodResolver(ChangePasswordUser) });
   const { user, loading } = useOutletContext<userContext>();
   const { token } = loaderData;
 
@@ -37,23 +40,17 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
     setConfirmModal(true);
     setData(data);
   }
-  
+
   const sendData = () => {
     if (!data) return;
     sendPassword(data)
-    .then(() => alert('Contraseña cambiada exitosamente'))
-    .catch(() => alert('No se pudo cambiar la contraseña'))
+      .then(() => alert('Contraseña cambiada exitosamente'))
+      .catch(() => alert('No se pudo cambiar la contraseña'))
   }
-  
+
   const validationFields = (data: PasswordType) => {
     const result = ChangePasswordUser.safeParse(data);
-    if (!result.success) {
-      setFieldError(result.error.flatten().fieldErrors as Partial<ChangePasswordUserFormData>);
-      console.log(result.error.flatten().fieldErrors);
-      return false;
-    }
-
-    setFieldError({});
+    if (!result.success) return false;
     return true;
   }
 
@@ -77,8 +74,8 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     placeholder="Ingresa tu contraseña actual"
                     {...register("currentPassword")}
                   />
-                  {fieldErrors.currentPassword &&  (
-                    <span style={{ color: "red" }}>{fieldErrors.currentPassword[0]}</span>
+                  {errors.currentPassword?.message &&  (
+                    <span style={{ color: "red" }}>{errors.currentPassword?.message}</span>
                   )}
                 </div>
                 <div className="flex gap-5">
@@ -91,8 +88,8 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                       placeholder="Ingresa tu neva contraseña"
                       {...register("newPassword")}
                       />
-                    {fieldErrors.newPassword && (
-                      <span style={{ color: "red" }}>{fieldErrors.newPassword[0]}</span>
+                    {errors.newPassword?.message && (
+                      <span style={{ color: "red" }}>{errors.newPassword.message}</span>
                     )}
                   </div>
                   <div>
@@ -104,8 +101,8 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                       placeholder="Confirma tu neva contraseña"
                       {...register("confirmPassword")}
                       />
-                    {fieldErrors.confirmPassword && (
-                      <span style={{ color: "red" }}>{fieldErrors.confirmPassword[0]}</span>
+                    {errors.confirmPassword?.message && (
+                      <span style={{ color: "red" }}>{errors.confirmPassword.message}</span>
                     )}
                   </div>
                 </div>
