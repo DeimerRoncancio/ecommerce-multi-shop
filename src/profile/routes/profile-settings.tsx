@@ -28,6 +28,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
     newPassword: '',
     confirmPassword: ''
   })
+  const [ isCurrentPassword, setCurrentPassword ] = useState(false);
 
   const [ isSucces, setSucces ] = useState(false);
 
@@ -64,7 +65,12 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
           setSucces(false);
         }, 2000)
       })
-      .catch(() => alert('No se pudo cambiar la contraseña'))
+      .catch((err) => {
+        if (err.response.data == 'PASSWORD_UNAUTHORIZED' || err.status == 401) {
+          setCurrentPassword(true);
+          setConfirmModal(false);
+        }
+      })
   }
 
   const onFieldsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +85,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
 
   const validationFields = (data: PasswordType) => {
     const result = ChangePasswordUser.safeParse(data);
-    if (!result.success) return false;
+    if (!result.success || isCurrentPassword) return false;
     return true;
   }
 
@@ -101,13 +107,17 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full focus:outline-2 
                   focus:outline-[#ffc1ad] focus:border-[#f14913]"
                     placeholder="Ingresa tu contraseña actual"
-                    {...register("currentPassword")}
+                    {...register("currentPassword", {
+                      onChange: () => setCurrentPassword(false)
+                    })}
                   />
-                  {errors.currentPassword?.message && (
+                  {errors.currentPassword?.message ? (
                     <span style={{ color: "red" }}>{errors.currentPassword?.message}</span>
+                  ) : isCurrentPassword && (
+                    <span style={{ color: "red" }}>Esta no es tu contraseña actual</span>
                   )}
                 </div>
-                <div className="flex gap-5">
+                <div className="grid grid-cols-2 gap-5">
                   <div>
                     <span className="text-[#c7c7c7]">Nueva contraseña</span>
                     <input
@@ -135,9 +145,9 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                       })}
                     />
                     {errors.confirmPassword?.message ? (
-                      <span style={{ color: "red", width: "fit-content" }}>{errors.confirmPassword?.message}</span>
+                      <span style={{ color: "red" }}>{errors.confirmPassword?.message}</span>
                     ) : newPasswordConfirmation && (
-                      <span style={{ color: "red", width: "fit-content" }}>Las contraseñas no coinciden</span>
+                      <span style={{ color: "red" }}>Las contraseñas no coinciden</span>
                     )}
                   </div>
                 </div>
