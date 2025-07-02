@@ -6,7 +6,7 @@ import { getSession } from "../../sessions.server";
 import { useState } from "react";
 import { ChangePasswordUser, ChangePasswordUserFormData } from "../zod/routesProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ConfirmChangePassword from "../components/ConfirmChangePasswordModal";
+import ConfirmChangePassword from "../components/PasswordChangeConfirmationModal";
 import { useUpdateUser } from "../hooks/api/useUpdateUser";
 import { PasswordMatchInitialValues } from "../constants/password-match-initial-values.helper";
 
