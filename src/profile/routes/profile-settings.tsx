@@ -8,6 +8,7 @@ import { TiWarningOutline } from "react-icons/ti";
 import { useState } from "react";
 import { ChangePasswordUser, ChangePasswordUserFormData } from "../zod/routesProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { BsCheck2Circle } from "react-icons/bs";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -28,9 +29,11 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
     confirmPassword: ''
   })
 
+  const [ isSucces, setSucces ] = useState(false);
+
   const [
-    errorUpdatePassword,
-    setErrorUpdatePassword
+    newPasswordConfirmation,
+    setPasswordConfirmation
   ] = useState(false);
 
   const {
@@ -54,21 +57,24 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const sendData = () => {
     if (!data) return;
     sendPassword(data)
-      .then(() => alert('Contraseña cambiada exitosamente'))
+      .then(() => {
+        setSucces(true);
+        setTimeout(() => {
+          setConfirmModal(false);
+          setSucces(false);
+        }, 2000)
+      })
       .catch(() => alert('No se pudo cambiar la contraseña'))
   }
 
   const onFieldsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdateData((prev) => {
-      const isMismatch =
-        e.target.name === 'newPassword'
-          ? prev.confirmPassword !== e.target.value
-          : prev.newPassword !== e.target.value;
+    const isMismatch =
+      e.target.name === 'newPassword'
+        ? updateData.confirmPassword !== e.target.value
+        : updateData.newPassword !== e.target.value;
 
-      setErrorUpdatePassword(isMismatch);
-
-      return ({ ...prev, [e.target.name]: e.target.value })
-    });
+    setPasswordConfirmation(isMismatch);
+    setUpdateData(prev =>  ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   const validationFields = (data: PasswordType) => {
@@ -130,7 +136,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     />
                     {errors.confirmPassword?.message ? (
                       <span style={{ color: "red", width: "fit-content" }}>{errors.confirmPassword?.message}</span>
-                    ) : errorUpdatePassword && (
+                    ) : newPasswordConfirmation && (
                       <span style={{ color: "red", width: "fit-content" }}>Las contraseñas no coinciden</span>
                     )}
                   </div>
@@ -160,16 +166,25 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                     ¿Estás seguro de que deseas cambiar tu contraseña? Esta acción no se puede deshacer.
                   </p>
                 </div>
-                <div className="flex justify-end items-center gap-4 mt-4">
-                  <div className="btn rounded-sm" onClick={() => {
-                    document.body.classList.remove('overflow-hidden');
-                    setConfirmModal(false);
-                  }}>Cancelar</div>
-                  <div className={`btn rounded-sm btn-error ${passwordLoading && 'btn-disabled'}`}
-                    onClick={sendData}>{
-                      passwordLoading ? 'Confirmando...' : 'Confirmar'}
-                  </div>
-                </div>
+                {
+                  isSucces ? (
+                    <span className="flex p-3 mt-4 items-center gap-2 bg-green-50 border border-green-200 rounded-md">
+                      <BsCheck2Circle />
+                      <p className="text-sm text-green-800">Contraseña cambiada exitosamente</p>
+                    </span>
+                  ) : (
+                    <div className="flex justify-end items-center gap-4 mt-4">
+                      <div className="btn rounded-sm" onClick={() => {
+                        document.body.classList.remove('overflow-hidden');
+                        setConfirmModal(false);
+                      }}>Cancelar</div>
+                      <div className={`btn rounded-sm btn-error ${passwordLoading && 'btn-disabled'}`}
+                        onClick={sendData}>{
+                          passwordLoading ? 'Confirmando...' : 'Confirmar'}
+                      </div>
+                    </div>
+                  )
+                }
               </div>
             </div>
           </form>
