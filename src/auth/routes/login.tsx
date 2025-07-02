@@ -28,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 export default function Login() {
   const action = useActionData() as { errors?: Record<string, string[]> };
-  
+
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <h1 className="text-3xl">Login</h1>
