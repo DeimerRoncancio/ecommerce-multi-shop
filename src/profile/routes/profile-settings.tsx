@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router"
+import { Link, NavLink, useOutletContext } from "react-router"
 import { PasswordType, UserTypes } from "../types/user";
 import { useForm } from "react-hook-form";
 import { Route } from "./+types/profile-settings";
@@ -40,6 +40,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<ChangePasswordUserFormData>({ resolver: zodResolver(ChangePasswordUser) });
   const { user, loading } = useOutletContext<userContext>();
@@ -60,6 +61,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
     sendPassword(data)
       .then(() => {
         setSucces(true);
+        reset();
         setTimeout(() => {
           setConfirmModal(false);
           setSucces(false);
@@ -153,8 +155,11 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
                 </div>
               </div>
             </div>
-            <div className="flex justify-end">
-              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`} type="submit">
+            <div className="flex mt-7 justify-between">
+              <Link to="" className="text-[#f17147] hover:text-[#f04913] hover:underline">
+                ¿Olvidaste tu contraseña?
+              </Link>
+              <button className={`btn btn-neutral p-1 px-7 h-9`} type="submit">
                 Cambiar contraseña
               </button>
             </div>
