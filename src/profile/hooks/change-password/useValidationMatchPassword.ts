@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { PasswordMatchInitialValues } from "../constants/password-match-initial-values.helper";
-import { PasswordMatchType } from "../types/user";
+import { PasswordMatchType } from "../../types/user";
+import { PasswordMatchInitialValues } from "../../constants/password-match-initial-values.helper";
 
 export default function useValidationMatchPassword() {
   const [isPasswordMatch, setIsPasswordMatch] = useState(false);

@@ -1,6 +1,6 @@
-import { PasswordType } from "../types/user";
+import useValidationMatchPassword from "../../hooks/change-password/useValidationMatchPassword";
+import { PasswordType } from "../../types/user";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import useValidationMatchPassword from "../hooks/useValidationMatchPassword";
 
 type Props = {
   errors: FieldErrors<PasswordType>;

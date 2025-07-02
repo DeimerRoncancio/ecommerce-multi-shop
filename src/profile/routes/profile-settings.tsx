@@ -1,14 +1,12 @@
 import { Link, useOutletContext } from "react-router"
 import { PasswordType, UserTypes } from "../types/user";
-import { useForm } from "react-hook-form";
 import { Route } from "./+types/profile-settings";
 import { getSession } from "../../sessions.server";
 import { useState } from "react";
-import { ChangePasswordUser, ChangePasswordUserFormData } from "../zod/routesProfile";
-import { zodResolver } from "@hookform/resolvers/zod";
-import ConfirmChangePassword from "../components/PasswordChangeConfirmationModal";
+import ConfirmChangePassword from "../components/change-password/PasswordChangeConfirmationModal";
 import { useUpdateUser } from "../hooks/api/useUpdateUser";
-import NewPasswordFields from "../components/NewPasswordFields";
+import NewPasswordFields from "../components/change-password/NewPasswordFields";
+import useChangePasswordForm from "../hooks/change-password/useChangePasswordForm";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -24,7 +22,7 @@ type userContext = {
 export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const { user, loading } = useOutletContext<userContext>();
   const { token } = loaderData;
-
+  
   const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
   const [data, setData] = useState<PasswordType | null>(null);
   const [isCurrentPassword, setCurrentPassword] = useState(false);
@@ -32,17 +30,11 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   const [isSucces, setSucces] = useState(false);
 
   const {
-    register,
+    errors,
     handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm<ChangePasswordUserFormData>({ resolver: zodResolver(ChangePasswordUser) });
-
-  const submit = (data: PasswordType) => {
-    if (!validationFields(data)) return;
-    setConfirmModal(true);
-    setData(data);
-  }
+    submit, reset,
+    register 
+  } = useChangePasswordForm({ isCurrentPassword, setData, setConfirmModal });
 
   const sendData = () => {
     if (!data) return;
@@ -60,12 +52,6 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
           setConfirmModal(false);
         }
       })
-  }
-
-  const validationFields = (data: PasswordType) => {
-    const result = ChangePasswordUser.safeParse(data);
-    if (!result.success || isCurrentPassword) return false;
-    return true;
   }
 
   const onCloseConfirmModal = () => {
