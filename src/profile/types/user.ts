@@ -24,6 +24,11 @@ export interface PasswordType {
   confirmPassword: string;
 }
 
+export interface PasswordMatchType {
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
 export interface PasswordRequestType {
   currentPassword: string;
   newPassword: string;
