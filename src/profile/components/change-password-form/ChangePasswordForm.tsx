@@ -14,6 +14,7 @@ type Props = {
 export default function ChangePasswordForm({ user, token }: Props) {
   const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
   const [isCurrentPasswordInvalid, setCurrentPassword] = useState(false);
+  const [isSamePassword, setIsSamePassword] = useState(false);
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [isSucces, setSucces] = useState(false);
 
@@ -37,12 +38,18 @@ export default function ChangePasswordForm({ user, token }: Props) {
           setSucces(false);
         }, 1000)
       }).catch((err) => {
-        if (err.response.data == 'PASSWORD_UNAUTHORIZED' || err.status == 401) {
+        console.log(err);
+        if (err.response.data == 'PASSWORD_UNAUTHORIZED' && err.status == 401) {
           setCurrentPassword(true);
+          setConfirmModal(false);
+        } else if (err.response.data == 'SAME_PASSWORD' && err.status == 401) {
+          setIsSamePassword(true);
           setConfirmModal(false);
         }
       })
   }
+
+  const isSamePasswordStatus = (isSame: boolean) => setIsSamePassword(isSame);
 
   const onCloseConfirmModal = () => {
     document.body.classList.remove('overflow-hidden');
@@ -75,6 +82,8 @@ export default function ChangePasswordForm({ user, token }: Props) {
           <NewPasswordFields
             errors={errors}
             register={register}
+            samePassword={isSamePassword}
+            changeSamePasswordStatus={isSamePasswordStatus}
           />
         </div>
       </div>

@@ -2,7 +2,11 @@ import { useState } from "react";
 import { PasswordMatchType } from "../../types/user";
 import { PasswordMatchInitialValues } from "../../constants/password-match-initial-values.helper";
 
-export default function useValidationMatchPassword() {
+type Props = {
+  changeSamePasswordStatus: (isSame: boolean) => void;
+}
+
+export default function useValidationMatchPassword({ changeSamePasswordStatus }: Props) {
   const [isPasswordMatch, setIsPasswordMatch] = useState(false);
   const [
     passwordMatch,
@@ -17,6 +21,7 @@ export default function useValidationMatchPassword() {
 
     setIsPasswordMatch(isMismatch);
     setPasswordMatch(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    changeSamePasswordStatus(false);
   }
 
   return {

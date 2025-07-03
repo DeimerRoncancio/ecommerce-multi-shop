@@ -4,11 +4,13 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type Props = {
   errors: FieldErrors<PasswordType>;
-  register: UseFormRegister<PasswordType>
+  samePassword: boolean;
+  changeSamePasswordStatus: (isSame: boolean) => void;
+  register: UseFormRegister<PasswordType>;
 }
 
-export default function NewPasswordFields({ errors, register }: Props) {
-  const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword();
+export default function NewPasswordFields({ errors, samePassword, changeSamePasswordStatus, register }: Props) {
+  const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword({ changeSamePasswordStatus });
 
   return (
     <div className="grid grid-cols-2 gap-5">
@@ -24,8 +26,10 @@ export default function NewPasswordFields({ errors, register }: Props) {
             onChange: onFieldsChange
           })}
         />
-        {errors.newPassword?.message && (
+        {errors.newPassword?.message ? (
           <span className="text-red-500 ml-2">{errors.newPassword.message}</span>
+        ) : samePassword && (
+          <span className="text-red-500 ml-2">Esta ya es tu contraseña actual</span>
         )}
       </div>
       <div>
@@ -34,7 +38,7 @@ export default function NewPasswordFields({ errors, register }: Props) {
           type="text"
           className={`p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full
           focus:outline-2 focus:outline-[#ffdacd] focus:border-[#ff9b7a]
-          ${errors.confirmPassword?.message && 'border-red-500'}`}
+          ${(errors.confirmPassword?.message || isPasswordMatch) && 'border-red-500'}`}
           placeholder="Confirma tu neva contraseña"
           {...register("confirmPassword", {
             onChange: onFieldsChange
