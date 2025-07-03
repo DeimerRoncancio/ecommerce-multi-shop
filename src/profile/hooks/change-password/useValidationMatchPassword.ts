@@ -3,10 +3,10 @@ import { PasswordMatchType } from "../../types/user";
 import { PasswordMatchInitialValues } from "../../constants/password-match-initial-values.helper";
 
 type Props = {
-  changeSamePasswordStatus: (isSame: boolean) => void;
+  clearErrors: () => void;
 }
 
-export default function useValidationMatchPassword({ changeSamePasswordStatus }: Props) {
+export default function useValidationMatchPassword({ clearErrors }: Props) {
   const [isPasswordMatch, setIsPasswordMatch] = useState(false);
   const [
     passwordMatch,
@@ -21,7 +21,7 @@ export default function useValidationMatchPassword({ changeSamePasswordStatus }:
 
     setIsPasswordMatch(isMismatch);
     setPasswordMatch(prev => ({ ...prev, [e.target.name]: e.target.value }));
-    changeSamePasswordStatus(false);
+    clearErrors();
   }
 
   return {

@@ -11,10 +11,11 @@ type Props = {
   token: string;
 }
 
+type FieldErros = 'currentPassword' | 'newPassword';
+
 export default function ChangePasswordForm({ user, token }: Props) {
   const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
-  const [isCurrentPasswordInvalid, setCurrentPassword] = useState(false);
-  const [isSamePassword, setIsSamePassword] = useState(false);
+  const [handlerErrors, setHandlerErrors ] = useState<Partial<Record<FieldErros, string>>>({}); 
   const [showConfirmModal, setConfirmModal] = useState(false);
   const [isSucces, setSucces] = useState(false);
 
@@ -25,7 +26,7 @@ export default function ChangePasswordForm({ user, token }: Props) {
     register,
     submit,
     reset
-  } = useChangePasswordForm({ isCurrentPasswordInvalid, setConfirmModal });
+  } = useChangePasswordForm({ handlerErrors, setConfirmModal });
 
   const sendData = () => {
     if (!formData) return;
@@ -40,16 +41,20 @@ export default function ChangePasswordForm({ user, token }: Props) {
       }).catch((err) => {
         console.log(err);
         if (err.response.data == 'PASSWORD_UNAUTHORIZED' && err.status == 401) {
-          setCurrentPassword(true);
+          setHandlerErrors({
+            currentPassword: 'Esta no es tu contraseña actual'
+          });
           setConfirmModal(false);
         } else if (err.response.data == 'SAME_PASSWORD' && err.status == 401) {
-          setIsSamePassword(true);
+          setHandlerErrors({
+            newPassword: 'Esta ya es tu contraseña actual'
+          });
           setConfirmModal(false);
         }
       })
   }
 
-  const isSamePasswordStatus = (isSame: boolean) => setIsSamePassword(isSame);
+  const clearErrors = () => setHandlerErrors({});
 
   const onCloseConfirmModal = () => {
     document.body.classList.remove('overflow-hidden');
@@ -70,20 +75,20 @@ export default function ChangePasswordForm({ user, token }: Props) {
               ${errors.currentPassword?.message && 'border-red-500'}`}
               placeholder="Ingresa tu contraseña actual"
               {...register("currentPassword", {
-                onChange: () => setCurrentPassword(false)
+                onChange: () => clearErrors()
               })}
             />
             {errors.currentPassword?.message ? (
               <span className="text-red-500 ml-2">{errors.currentPassword?.message}</span>
-            ) : isCurrentPasswordInvalid && (
-              <span className="text-red-500 ml-2">Esta no es tu contraseña actual</span>
+            ) : handlerErrors.currentPassword && (
+              <span className="text-red-500 ml-2">{handlerErrors.currentPassword}</span>
             )}
           </div>
           <NewPasswordFields
             errors={errors}
             register={register}
-            samePassword={isSamePassword}
-            changeSamePasswordStatus={isSamePasswordStatus}
+            handlerErrors={handlerErrors}
+            clearErrors={clearErrors}
           />
         </div>
       </div>

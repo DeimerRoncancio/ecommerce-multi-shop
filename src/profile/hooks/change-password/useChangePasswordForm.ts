@@ -4,12 +4,14 @@ import { PasswordType } from "../../types/user";
 import { ChangePasswordUser, ChangePasswordUserFormData } from "../../zod/routesProfile";
 import { useState } from "react";
 
+type FieldErros = 'currentPassword' | 'newPassword';
+
 type Props = {
-  isCurrentPasswordInvalid: boolean;
+  handlerErrors: Partial<Record<FieldErros, string>>;
   setConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function useChangePasswordForm({ isCurrentPasswordInvalid, setConfirmModal }: Props) {
+export default function useChangePasswordForm({ handlerErrors, setConfirmModal }: Props) {
   const [formData, setFormData] = useState<PasswordType | null>(null);
   
   const {
@@ -24,10 +26,10 @@ export default function useChangePasswordForm({ isCurrentPasswordInvalid, setCon
     setConfirmModal(true);
     setFormData(data);
   }
-  
+
   const isValid = (data: PasswordType) => {
     const result = ChangePasswordUser.safeParse(data);
-    return result.success && !isCurrentPasswordInvalid;
+    return result.success && !Object.keys(handlerErrors).length;
   }
 
   return {

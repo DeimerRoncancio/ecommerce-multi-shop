@@ -2,15 +2,17 @@ import useValidationMatchPassword from "../../hooks/change-password/useValidatio
 import { PasswordType } from "../../types/user";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
+type Errors = 'currentPassword' | 'newPassword';
+
 type Props = {
   errors: FieldErrors<PasswordType>;
-  samePassword: boolean;
-  changeSamePasswordStatus: (isSame: boolean) => void;
+  handlerErrors: Partial<Record<Errors, string>>;
+  clearErrors: () => void;
   register: UseFormRegister<PasswordType>;
 }
 
-export default function NewPasswordFields({ errors, samePassword, changeSamePasswordStatus, register }: Props) {
-  const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword({ changeSamePasswordStatus });
+export default function NewPasswordFields({ errors, handlerErrors, clearErrors, register }: Props) {
+  const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword({ clearErrors });
 
   return (
     <div className="grid grid-cols-2 gap-5">
@@ -28,8 +30,8 @@ export default function NewPasswordFields({ errors, samePassword, changeSamePass
         />
         {errors.newPassword?.message ? (
           <span className="text-red-500 ml-2">{errors.newPassword.message}</span>
-        ) : samePassword && (
-          <span className="text-red-500 ml-2">Esta ya es tu contraseña actual</span>
+        ) : handlerErrors.newPassword && (
+          <span className="text-red-500 ml-2">{handlerErrors.newPassword}</span>
         )}
       </div>
       <div>
