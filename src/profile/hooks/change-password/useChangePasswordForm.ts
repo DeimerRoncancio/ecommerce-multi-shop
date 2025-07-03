@@ -27,8 +27,7 @@ export default function useChangePasswordForm({ isCurrentPasswordInvalid, setCon
   
   const isValid = (data: PasswordType) => {
     const result = ChangePasswordUser.safeParse(data);
-    if (!result.success || isCurrentPasswordInvalid) return false;
-    return true;
+    return result.success && !isCurrentPasswordInvalid;
   }
 
   return {

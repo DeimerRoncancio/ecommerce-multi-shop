@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import PasswordChangeConfirmationModal from "./PasswordChangeConfirmationModal";
+import ChangePasswordConfirmationModal from "./ChangePasswordConfirmationModal";
 import NewPasswordFields from "./NewPasswordFields";
 import useChangePasswordForm from "../../hooks/change-password/useChangePasswordForm";
 import { useState } from "react";
@@ -58,17 +58,18 @@ export default function ChangePasswordForm({ user, token }: Props) {
             <span className="text-[#c7c7c7]">Contraseña actual</span>
             <input
               type="text"
-              className="p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full 
-                    focus:outline-2 focus:outline-[#ffc1ad] focus:border-[#f14913]"
+              className={`p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full 
+              focus:outline-2 focus:outline-[#ffdacd] focus:border-[#ff9b7a]
+              ${errors.currentPassword?.message && 'border-red-500'}`}
               placeholder="Ingresa tu contraseña actual"
               {...register("currentPassword", {
                 onChange: () => setCurrentPassword(false)
               })}
             />
             {errors.currentPassword?.message ? (
-              <span style={{ color: "red" }}>{errors.currentPassword?.message}</span>
+              <span className="text-red-500 ml-2">{errors.currentPassword?.message}</span>
             ) : isCurrentPasswordInvalid && (
-              <span style={{ color: "red" }}>Esta no es tu contraseña actual</span>
+              <span className="text-red-500 ml-2">Esta no es tu contraseña actual</span>
             )}
           </div>
           <NewPasswordFields
@@ -85,7 +86,7 @@ export default function ChangePasswordForm({ user, token }: Props) {
           Cambiar contraseña
         </button>
       </div>
-      <PasswordChangeConfirmationModal
+      <ChangePasswordConfirmationModal
         onClose={onCloseConfirmModal}
         onSubmit={sendData}
         showModal={showConfirmModal}

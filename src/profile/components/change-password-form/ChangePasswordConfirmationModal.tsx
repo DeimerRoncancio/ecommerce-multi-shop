@@ -9,7 +9,7 @@ type PasswordChangeConfirmationModalProps = {
   isSucces: boolean;
 }
 
-export default function PasswordChangeConfirmationModal({ 
+export default function ChangePasswordConfirmationModal({ 
   onClose,
   onSubmit,
   loading,
