@@ -2,14 +2,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordType } from "../../types/user";
 import { ChangePasswordUser, ChangePasswordUserFormData } from "../../zod/routesProfile";
+import { useState } from "react";
 
 type Props = {
-  isCurrentPassword: boolean;
-  setData: React.Dispatch<React.SetStateAction<PasswordType | null>>;
+  isCurrentPasswordInvalid: boolean;
   setConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function useChangePasswordForm({ isCurrentPassword, setData, setConfirmModal }: Props) {
+export default function useChangePasswordForm({ isCurrentPasswordInvalid, setConfirmModal }: Props) {
+  const [formData, setFormData] = useState<PasswordType | null>(null);
+  
   const {
     register,
     handleSubmit,
@@ -18,18 +20,19 @@ export default function useChangePasswordForm({ isCurrentPassword, setData, setC
   } = useForm<ChangePasswordUserFormData>({ resolver: zodResolver(ChangePasswordUser) });
 
   const submit = (data: PasswordType) => {
-    if (!validationFields(data)) return;
+    if (!isValid(data)) return;
     setConfirmModal(true);
-    setData(data);
+    setFormData(data);
   }
   
-  const validationFields = (data: PasswordType) => {
+  const isValid = (data: PasswordType) => {
     const result = ChangePasswordUser.safeParse(data);
-    if (!result.success || isCurrentPassword) return false;
+    if (!result.success || isCurrentPasswordInvalid) return false;
     return true;
   }
 
   return {
+    formData,
     errors,
     submit,
     reset,
