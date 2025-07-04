@@ -2,63 +2,34 @@ import { Link } from "react-router";
 import ChangePasswordConfirmationModal from "./ChangePasswordConfirmationModal";
 import NewPasswordFields from "./NewPasswordFields";
 import useChangePasswordForm from "../../hooks/change-password/useChangePasswordForm";
-import { useState } from "react";
 import { useUpdateUser } from "../../hooks/api/useUpdateUser";
 import { UserTypes } from "../../types/user";
+import useChangePassword from "../../hooks/change-password/useChangePassword";
 
 type Props = {
   user: UserTypes;
   token: string;
 }
 
-type FieldErros = 'currentPassword' | 'newPassword';
-
 export default function ChangePasswordForm({ user, token }: Props) {
   const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
-  const [handlerErrors, setHandlerErrors ] = useState<Partial<Record<FieldErros, string>>>({}); 
-  const [showConfirmModal, setConfirmModal] = useState(false);
-  const [isSucces, setSucces] = useState(false);
+  const {
+    showConfirmModal, isSucces, handlerErrors,
+    confirmModal, success, clearErrors,
+    handleErrors, onCloseConfirmModal
+  } = useChangePassword();
 
   const {
-    formData,
-    errors,
-    handleSubmit,
-    register,
-    submit,
-    reset
-  } = useChangePasswordForm({ handlerErrors, setConfirmModal });
+    formData, errors,
+    handleSubmit, register,
+    submit, reset
+  } = useChangePasswordForm({ handlerErrors, confirmModal });
 
   const sendData = () => {
     if (!formData) return;
     sendPassword(formData)
-      .then(() => {
-        setSucces(true);
-        reset();
-        setTimeout(() => {
-          setConfirmModal(false);
-          setSucces(false);
-        }, 1000)
-      }).catch((err) => {
-        console.log(err);
-        if (err.response.data == 'PASSWORD_UNAUTHORIZED' && err.status == 401) {
-          setHandlerErrors({
-            currentPassword: 'Esta no es tu contraseña actual'
-          });
-          setConfirmModal(false);
-        } else if (err.response.data == 'SAME_PASSWORD' && err.status == 401) {
-          setHandlerErrors({
-            newPassword: 'Esta ya es tu contraseña actual'
-          });
-          setConfirmModal(false);
-        }
-      })
-  }
-
-  const clearErrors = () => setHandlerErrors({});
-
-  const onCloseConfirmModal = () => {
-    document.body.classList.remove('overflow-hidden');
-    setConfirmModal(false);
+      .then(() => success(reset))
+      .catch(handleErrors);
   }
 
   return (

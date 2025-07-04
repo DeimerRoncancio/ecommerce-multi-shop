@@ -34,6 +34,8 @@ export interface PasswordRequestType {
   newPassword: string;
 }
 
+export type PasswordFieldErrors = 'currentPassword' | 'newPassword';
+
 export interface UpdateRequestTypes {
   name: string,
   secondName: string | undefined,
