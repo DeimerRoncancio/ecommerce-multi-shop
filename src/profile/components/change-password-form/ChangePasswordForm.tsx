@@ -36,7 +36,7 @@ export default function ChangePasswordForm({ user, token }: Props) {
   return (
     <form onSubmit={handleSubmit(submit)}>
       <div className="text-base border border-[#ebebeb] p-6 rounded-2xl text-black">
-        <h2 className="mb-6 text-lg font-semibold text-[#84633f]">Cambiar contraseña</h2>
+        <h2 className="mb-6 text-lg font-semibold text-[#84633f]">Cambiar Contraseña</h2>
         <div className="flex flex-col gap-5">
           <div>
             <span className="text-[#c7c7c7]">Contraseña actual</span>
@@ -63,14 +63,14 @@ export default function ChangePasswordForm({ user, token }: Props) {
             clearErrors={clearErrors}
           />
         </div>
-      </div>
-      <div className="flex mt-7 justify-between">
-        <Link to="" className="text-[#f17147] hover:text-[#f04913] hover:underline">
-          ¿Olvidaste tu contraseña?
-        </Link>
-        <button className={`btn btn-neutral p-1 px-7 h-9`} type="submit">
-          Cambiar contraseña
-        </button>
+        <div className="flex mt-7 justify-between items-center">
+          <Link to="" className="text-[#f17147] hover:text-[#f04913] hover:underline">
+            ¿Olvidaste tu contraseña?
+          </Link>
+          <button className={`btn btn-neutral p-1 px-7 h-9`} type="submit">
+            Cambiar contraseña
+          </button>
+        </div>
       </div>
       <ChangePasswordConfirmationModal
         onClose={onCloseConfirmModal}

@@ -13,9 +13,9 @@ export default function useChangePasswordForm({ handlerErrors, confirmModal }: P
   const [formData, setFormData] = useState<PasswordType | null>(null);
   
   const {
+    reset,
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<ChangePasswordUserFormData>({ resolver: zodResolver(ChangePasswordUser) });
 

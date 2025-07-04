@@ -28,7 +28,10 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
       {
         !loading ? (
           <>
-            <ChangePasswordForm user={user} token={token} />
+            <ChangePasswordForm
+              user={user}
+              token={token}
+            />
             <DeleteForm />
           </>
         ) : (
@@ -38,5 +41,5 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
         )
       }
     </>
-  )
+  );
 }

@@ -10,11 +10,11 @@ type PasswordChangeConfirmationModalProps = {
 }
 
 export default function ChangePasswordConfirmationModal({ 
-  onClose,
-  onSubmit,
   loading,
   showModal,
   isSucces,
+  onClose,
+  onSubmit,
 }: PasswordChangeConfirmationModalProps) {
   return (
     <div className={`${showModal ? 'visible opacity-100' : 'invisible opacity-0'} fixed w-full 
