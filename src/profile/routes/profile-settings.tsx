@@ -3,6 +3,7 @@ import { UserTypes } from "../types/user";
 import { Route } from "./+types/profile-settings";
 import { getSession } from "../../sessions.server";
 import ChangePasswordForm from "../components/change-password-form/ChangePasswordForm";
+import DeleteForm from "../components/delete-account-form/DeleteForm";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -26,7 +27,10 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
       </div>
       {
         !loading ? (
-          <ChangePasswordForm user={user} token={token} />
+          <>
+            <ChangePasswordForm user={user} token={token} />
+            <DeleteForm />
+          </>
         ) : (
           <div className="w-full mt-28 flex justify-center">
             <span className="loading loading-dots loading-xl"></span>

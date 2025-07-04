@@ -22,7 +22,9 @@ export default function useChangePassword() {
         currentPassword: ERROR_MESSAGES.currentPassword
       });
       setConfirmModal(false);
-    } else if (err.response.data == ERROR.SAME_PASSWORD && err.status == 401) {
+    }
+
+    if (err.response.data == ERROR.SAME_PASSWORD && err.status == 401) {
       setHandlerErrors({
         newPassword: ERROR_MESSAGES.newPassword
       });
