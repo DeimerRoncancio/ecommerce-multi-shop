@@ -36,6 +36,16 @@ export interface PasswordRequestType {
 
 export type PasswordFieldErrors = 'currentPassword' | 'newPassword';
 
+export const ERROR = {
+  PASSWORD_UNAUTHORIZED: 'PASSWORD_UNAUTHORIZED',
+  SAME_PASSWORD: 'SAME_PASSWORD'
+}
+
+export const ERROR_MESSAGES: Record<PasswordFieldErrors, string> = {
+  currentPassword: 'Esta no es tu contraseña actual',
+  newPassword: 'Esta ya es tu contraseña actual',
+}
+
 export interface UpdateRequestTypes {
   name: string,
   secondName: string | undefined,

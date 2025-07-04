@@ -13,6 +13,7 @@ type Props = {
 
 export default function ChangePasswordForm({ user, token }: Props) {
   const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
+
   const {
     showConfirmModal, isSucces, handlerErrors,
     confirmModal, success, clearErrors,
@@ -21,8 +22,8 @@ export default function ChangePasswordForm({ user, token }: Props) {
 
   const {
     formData, errors,
-    handleSubmit, register,
-    submit, reset
+    handleSubmit, submit,
+    reset, register,
   } = useChangePasswordForm({ handlerErrors, confirmModal });
 
   const sendData = () => {

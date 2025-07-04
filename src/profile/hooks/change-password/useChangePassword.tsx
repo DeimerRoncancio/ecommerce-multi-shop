@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PasswordFieldErrors, PasswordType } from "../../types/user";
+import { ERROR_MESSAGES, ERROR, PasswordFieldErrors, PasswordType } from "../../types/user";
 import { UseFormReset } from "react-hook-form";
 
 export default function useChangePassword() {
@@ -17,14 +17,14 @@ export default function useChangePassword() {
   }
 
   const handleErrors = (err: any) => {
-    if (err.response.data == 'PASSWORD_UNAUTHORIZED' && err.status == 401) {
+    if (err.response.data == ERROR.PASSWORD_UNAUTHORIZED && err.status == 401) {
       setHandlerErrors({
-        currentPassword: 'Esta no es tu contraseña actual'
+        currentPassword: ERROR_MESSAGES.currentPassword
       });
       setConfirmModal(false);
-    } else if (err.response.data == 'SAME_PASSWORD' && err.status == 401) {
+    } else if (err.response.data == ERROR.SAME_PASSWORD && err.status == 401) {
       setHandlerErrors({
-        newPassword: 'Esta ya es tu contraseña actual'
+        newPassword: ERROR_MESSAGES.newPassword
       });
       setConfirmModal(false);
     }
