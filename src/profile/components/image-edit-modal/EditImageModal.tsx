@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useUpdateUser } from "../../hooks/api/useUpdateUser";
+import { useUpdateUser } from "../../hooks/api/useUserService";
 import { ImageType, UserTypes } from "../../types/user";
 import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
 import ImageDragBox from "./ImageDragBox";

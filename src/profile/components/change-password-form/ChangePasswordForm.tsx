@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import ChangePasswordConfirmationModal from "./ChangePasswordConfirmationModal";
 import NewPasswordFields from "./NewPasswordFields";
 import useChangePasswordForm from "../../hooks/change-password/useChangePasswordForm";
-import { useUpdateUser } from "../../hooks/api/useUpdateUser";
+import { useUpdateUser } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
 import useChangePassword from "../../hooks/change-password/useChangePassword";
 

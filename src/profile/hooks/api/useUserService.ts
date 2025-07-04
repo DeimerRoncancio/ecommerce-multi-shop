@@ -1,7 +1,7 @@
 import { initialUserValues } from "../../constants/users-initial-values.helper";
 import { ImageType, PasswordRequestType, UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../../types/user";
 import { updateTypesToRequestTypes } from "../../mappers/profile.mapper";
-import { updatePassword, updateUserData, updateUserImage } from "../../services/users.api";
+import { deleteUserAccount, updatePassword, updateUserData, updateUserImage } from "../../services/users.api";
 import { useForm, useWatch } from "react-hook-form";
 import { useEffect, useState } from "react";
 
@@ -35,16 +35,19 @@ export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseU
       .finally(() => setLoadingPassword(false));
   }
 
+  const deleteAccount = (id: string, token: string) =>  deleteUserAccount(id, token);
+
   useEffect(() => user && reset(userInitialValues), [user, reset]);
 
   return {
     userInitialValues,
     currentValues,
     passwordLoading,
+    register,
+    handleSubmit,
     sendData,
     sendImage,
     sendPassword,
-    register,
-    handleSubmit
+    deleteAccount
   }
 }

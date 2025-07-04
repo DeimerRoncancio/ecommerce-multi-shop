@@ -4,7 +4,7 @@ import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useUpdateUser } from "../hooks/api/useUpdateUser";
+import { useUpdateUser } from "../hooks/api/useUserService";
 import UserUpdateAlert from "../components/UserUpdateAlert";
 import { useUpdateAlert } from "../hooks/useUpdateAlert";
 import { Route } from "./+types/profile";

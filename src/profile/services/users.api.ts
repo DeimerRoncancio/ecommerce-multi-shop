@@ -36,3 +36,11 @@ export const updateUserImage = (id: string, token: string, formData: FormData) =
     }
   });
 }
+
+export const deleteUserAccount = (id: string, token: string) => {
+  return users.delete(`/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
