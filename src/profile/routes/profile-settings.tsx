@@ -31,8 +31,11 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
             <ChangePasswordForm
               user={user}
               token={token}
+              />
+            <DeleteForm
+              user={user}
+              token={token}
             />
-            <DeleteForm />
           </>
         ) : (
           <div className="w-full mt-28 flex justify-center">

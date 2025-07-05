@@ -3,11 +3,27 @@ import { GoDatabase } from "react-icons/go";
 import { FiUser } from "react-icons/fi";
 import { GrConfigure } from "react-icons/gr";
 import { TbAccessPoint } from "react-icons/tb";
+import { useFetcher } from "react-router";
+import { useEffect } from "react";
 
-export default function DeleteAccountConfirmationModal() {
+type Props = {
+  showDeleteModal: boolean;
+  onClose: () => void;
+  deleteAccount: () => void;
+}
+
+export default function DeleteAccountConfirmationModal({ showDeleteModal, onClose, deleteAccount }: Props) {
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    if (fetcher.data?.reload) deleteAccount();
+  }, [fetcher.data]);
+
   return (
-    <div className="fixed w-full h-full bg-[#1c1c1c7c] top-0 left-0 z-20 flex justify-center items-center">
-      <div className={`flex flex-col z-20 bg-white w-[446px] text-[#212529] min-h-[164px]
+    <div className={`${!showDeleteModal && 'opacity-0 invisible'} fixed w-full h-full top-0 left-0
+    z-20 flex justify-center items-center transition-all duration-200`}>
+      <div className="absolute bg-[#1c1c1c7c] w-full h-full" onClick={onClose} />
+      <div className={`${!showDeleteModal && 'scale-110'} flex flex-col z-20 bg-white w-[446px] text-[#212529] min-h-[164px]
       rounded-lg transition-all duration-150 p-6 gap-3`}>
         <div className="bg-[#ffedd5] p-2 w-fit rounded-lg">
           <TiWarningOutline size={25} color="#ff6467" />
@@ -47,12 +63,12 @@ export default function DeleteAccountConfirmationModal() {
             </ul>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <div className="btn rounded-sm">Cancelar</div>
-          <div className={`btn rounded-sm btn-error`}>
+        <fetcher.Form method="post" className="grid grid-cols-2 gap-4 mt-4" action="/logout-action">
+          <div className="btn rounded-sm" onClick={onClose}>Cancelar</div>
+          <button className={`btn rounded-sm btn-error`} type="submit">
             Eliminar definitivamente
-          </div>
-        </div>
+          </button>
+        </fetcher.Form>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ type UseUpdateUserProps = {
   updateImageUser?: (image: ImageType) => void;
 }
 
-export const useUpdateUser = ({ user, token, updateUser, updateImageUser }: UseUpdateUserProps) => {
+export const useUserService = ({ user, token, updateUser, updateImageUser }: UseUpdateUserProps) => {
   const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
   const [passwordLoading, setLoadingPassword] = useState(false);
   const userInitialValues = initialUserValues(user);

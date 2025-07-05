@@ -22,14 +22,14 @@ export default function ChangePasswordConfirmationModal({
       <div className="absolute w-full h-full top-0 bg-[#1c1c1c7c]"
         onClick={onClose}
       />
-      <div className={`${showModal && 'scale-110'} z-20 bg-white w-[450px] text-[#212529] min-h-[164px]
+      <div className={`${showModal && 'scale-110'} z-20 bg-white w-[400px] text-[#212529] min-h-[164px]
       rounded-lg transition-all duration-150 p-6`}>
         <div className="flex items-center gap-2">
           <TiWarningOutline size={25} color="#f6aa2a" />
-          <p className="text-lg font-semibold">Confirmar Cambio de Contraseña</p>
+          <p className="text-base font-semibold">Confirmar Cambio de Contraseña</p>
         </div>
         <div>
-          <p className="text-base text-[#71717a]">
+          <p className="text-sm text-[#71717a]">
             ¿Estás seguro de que deseas cambiar tu contraseña? Esta acción no se puede deshacer.
           </p>
         </div>

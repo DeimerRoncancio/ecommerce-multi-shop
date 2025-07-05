@@ -36,10 +36,13 @@ export default function useChangePassword() {
     document.body.classList.remove('overflow-hidden');
     setConfirmModal(false);
   }
-  
+
   const clearErrors = () => setHandlerErrors({});
 
-  const confirmModal = () => setConfirmModal(true);
+  const confirmModal = () => {
+    document.body.classList.add('overflow-hidden');
+    setConfirmModal(true)
+  };
 
   return {
     showConfirmModal,

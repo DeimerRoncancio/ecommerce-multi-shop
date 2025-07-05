@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import ChangePasswordConfirmationModal from "./ChangePasswordConfirmationModal";
 import NewPasswordFields from "./NewPasswordFields";
 import useChangePasswordForm from "../../hooks/change-password/useChangePasswordForm";
-import { useUpdateUser } from "../../hooks/api/useUserService";
+import { useUserService } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
 import useChangePassword from "../../hooks/change-password/useChangePassword";
 
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export default function ChangePasswordForm({ user, token }: Props) {
-  const { passwordLoading, sendPassword } = useUpdateUser({ user, token });
+  const { passwordLoading, sendPassword } = useUserService({ user, token });
 
   const {
     showConfirmModal, isSucces, handlerErrors,

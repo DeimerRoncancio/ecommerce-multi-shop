@@ -4,7 +4,7 @@ import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useUpdateUser } from "../hooks/api/useUserService";
+import { useUserService } from "../hooks/api/useUserService";
 import UserUpdateAlert from "../components/UserUpdateAlert";
 import { useUpdateAlert } from "../hooks/useUpdateAlert";
 import { Route } from "./+types/profile";
@@ -33,7 +33,7 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
     currentValues,
     sendData, register,
     handleSubmit
-  } = useUpdateUser({ user, token, updateUser });
+  } = useUserService({ user, token, updateUser });
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
     sendData(data);

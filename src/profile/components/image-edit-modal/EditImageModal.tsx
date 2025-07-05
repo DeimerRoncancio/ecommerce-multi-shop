@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useUpdateUser } from "../../hooks/api/useUserService";
+import { useUserService } from "../../hooks/api/useUserService";
 import { ImageType, UserTypes } from "../../types/user";
 import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
 import ImageDragBox from "./ImageDragBox";
@@ -17,7 +17,7 @@ type EditImageModalProps = {
 export default function EditImageModal({ token, user, showModal, onClose, updateImageUser }: EditImageModalProps) {
   const [loading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null)
-  const { sendImage } = useUpdateUser({ user, token, updateImageUser });
+  const { sendImage } = useUserService({ user, token, updateImageUser });
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
 
