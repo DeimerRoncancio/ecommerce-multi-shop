@@ -2,13 +2,18 @@ import { PasswordRequestType, UpdateRequestTypes } from "../types/user";
 import { users } from "../api/usersApi";
 
 export const validationUser = (token: string) => {
-  return users.get(`/token-validation/${token}`);
+  return users.get('/token-validation', {
+    headers: {
+      'Token': token,
+    }
+  });
 }
 
 export const getUser = (token: string) => {
-  return users.get(`/get-user/${token}`, {
+  return users.get('/me', {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
+      Token: token,
     }
   }).then(res => res.data);
 }
