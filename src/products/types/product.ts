@@ -7,6 +7,20 @@ export interface ProductTypes {
     categories: CategoryType[];
 }
 
+export interface ProductItemType {
+    id: string;
+    productName: string;
+    price: number;
+    mainImage: MainImageType;
+    categories: CategoryType[];
+}
+
+export interface MainImageType {
+    name: string,
+    imageUrl: string,
+    imageId: string
+}
+
 export interface CategoryType {
     categoryName: string;
 }

@@ -16,7 +16,6 @@ type LoaderProps = {
 export default function NavBar() {
   const loaderData = useLoaderData() as LoaderProps | undefined;
   const categories = loaderData?.categories ?? [];
-  const products = loaderData?.products ?? [];
 
   return (
     <nav className="fixed top-0 w-full z-20">
@@ -55,7 +54,7 @@ export default function NavBar() {
           </li>
         </ul>
       </div>
-      { categories && <Categories categories={categories} products={products} /> }
+      { categories && <Categories categories={categories}/> }
     </nav>
   );
 }

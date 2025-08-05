@@ -1,8 +1,8 @@
-import { ProductTypes } from "../../../../products/types/product";
+import { ProductItemType, } from "../../../../products/types/product";
 import ProductItem from "./ProductItem";
 
 type CategoriesModalProps = {
-  products: ProductTypes[]
+  products: ProductItemType[],
   showModal: boolean,
   changeVisibility: (isVisible: boolean) => void
 }

@@ -1,9 +1,9 @@
-import { ProductTypes } from "./product";
+import { ProductItemType, ProductTypes } from "./product";
 
 export interface CategoriesType {
     id: string;
     name: string;
-    products: ProductTypes[]
+    products: ProductItemType[]
 }
 
 export interface CategoriesFromApiType {

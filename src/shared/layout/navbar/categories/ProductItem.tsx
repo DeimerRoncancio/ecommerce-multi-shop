@@ -1,7 +1,7 @@
-import { ProductTypes } from "../../../../products/types/product"
+import { ProductItemType } from "../../../../products/types/product"
 
 type ProductItemProps = {
-  product: ProductTypes
+  product: ProductItemType
 }
 
 export default function ProductItem({ product }: ProductItemProps) {
@@ -9,13 +9,13 @@ export default function ProductItem({ product }: ProductItemProps) {
     <li key={product.id} className="flex flex-col group bg-white gap-4">
       <div className="w-[150px] h-40 overflow-hidden">
         <img
-          src={`${product.images[0].imageUrl}`}
+          src={`${product.mainImage.imageUrl}`}
           className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
           alt=""
         />
       </div>
       <div className="flex flex-col bg-white z-10 gap-2">
-        <p className="">{product.name}</p>
+        <p className="">{product.productName}</p>
         <p className="font-semibold text-[#b6401f]">
           ${new Intl.NumberFormat("es-ES").format(product.price)}
         </p>

@@ -1,25 +1,21 @@
 import { useState } from "react"
 import { CategoriesType } from "../../../../products/types/categories";
-import { ProductTypes } from "../../../../products/types/product";
+import { ProductItemType } from "../../../../products/types/product";
 import CategoryButton from "./CategoryButton";
 import CategoriesModal from "./CategoriesModal";
 
 type CategoriesProps = {
   categories: CategoriesType[];
-  products: ProductTypes[];
 }
 
-export default function Categories({ categories, products }: CategoriesProps) {
+export default function Categories({ categories }: CategoriesProps) {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [ categoryProducts, setCategoryProducts ] = useState<ProductTypes[]>([]);
+  const [ categoryProducts, setCategoryProducts ] = useState<ProductItemType[]>([]);
 
   const handleModalProducts = (cat: string) => {
-    const productsFilter = products.filter(product => {
-      const cats = product.categories.map(cat => cat.categoryName);
-      return cats.some(productCat => productCat === cat);
-    })
-
-    setCategoryProducts(productsFilter);
+    const productsFilter = categories.filter(category =>  category.name == cat)[0];
+    console.log(productsFilter.products)
+    setCategoryProducts(productsFilter.products);
     setModalVisible(true);
   }
 
