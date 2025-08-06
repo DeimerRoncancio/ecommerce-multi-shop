@@ -32,7 +32,7 @@ export default function CategoriesModal({ products, showModal, changeVisibility 
                   <img src="/images/list-empty.png" alt="" width={150} />
                 </div>
               ) : products.map(product => (
-                <ProductItem key={product.id} product={product} />
+                <ProductItem key={product.id} product={product} closeModal={changeVisibility} />
               ))
             }
           </ul>

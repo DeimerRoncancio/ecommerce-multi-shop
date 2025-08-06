@@ -30,7 +30,6 @@ export default function SinglePageProduct({ loaderData }: Route.ComponentProps) 
           product.productImages.map(img => <img src={`${img.imageUrl}`} />)
         }
       </div>
-      
     </div>
   )
 }
