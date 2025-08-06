@@ -38,7 +38,7 @@ export type PasswordFieldErrors = 'currentPassword' | 'newPassword';
 
 export const ERROR = {
   PASSWORD_UNAUTHORIZED: 'PASSWORD_UNAUTHORIZED',
-  SAME_PASSWORD: 'SAME_PASSWORD'
+  MATCH_PASSWORD: 'MATCH_PASSWORD'
 }
 
 export const ERROR_MESSAGES: Record<PasswordFieldErrors, string> = {

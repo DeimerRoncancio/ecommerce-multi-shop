@@ -23,8 +23,11 @@ export default [
         route('wish-list', 'wishlist/routes/wish-list.tsx'),
       ]),
     ]),
+
+    route('product/:id', 'products/routes/single-page-product.tsx'),
   ]),
 
+  
   // Cart
   ...prefix('cart', [
     layout('cart/layouts/cart-layout.tsx', [

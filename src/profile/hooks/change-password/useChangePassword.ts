@@ -17,14 +17,14 @@ export default function useChangePassword() {
   }
 
   const handleErrors = (err: any) => {
-    if (err.response.data == ERROR.PASSWORD_UNAUTHORIZED && err.status == 401) {
+    if (err.response.data.errorCode == ERROR.PASSWORD_UNAUTHORIZED && err.status == 401) {
       setHandlerErrors({
         currentPassword: ERROR_MESSAGES.currentPassword
       });
       setConfirmModal(false);
     }
 
-    if (err.response.data == ERROR.SAME_PASSWORD && err.status == 401) {
+    if (err.response.data.errorCode == ERROR.MATCH_PASSWORD && err.status == 401) {
       setHandlerErrors({
         newPassword: ERROR_MESSAGES.newPassword
       });

@@ -31,7 +31,7 @@ export default function useUser({ token }: UseUserTypes) {
     getUser(token)
       .then(data => {
         setUser(data)
-        setImage(data.profileImage?.imageUrl as string);
+        setImage(data.imageUser?.imageUrl as string);
       })
       .finally(() => setLoading(false));
   }
