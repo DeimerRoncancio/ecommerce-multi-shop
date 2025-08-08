@@ -24,7 +24,7 @@ export default [
       ]),
     ]),
 
-    route('product/:id', 'products/routes/single-page-product.tsx'),
+    route('product/:id', 'products/routes/product-details.tsx'),
   ]),
 
   
