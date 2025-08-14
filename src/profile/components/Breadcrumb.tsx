@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 
-export default function Breadcrumb() {
+export default function Breadcrumb({ namePage, isProduct }: { namePage: string, isProduct?: boolean }) {
   const [paths, setPaths] = useState<string[]>([]);
   const location = useLocation();
 
@@ -11,22 +11,33 @@ export default function Breadcrumb() {
   }, [location])
 
   return (
-    <ul>
-      {
-        paths.map((path, index) => {
-          if (index !== paths.length - 1) {
-            return (
-              <li key={path}><a className="capitalize" href={`http://localhost:5173/${path}`}>
-                {
-                  path === "" ? "Inicio" : path
+    <div className="bg-[#fff4ef]">
+      <div className="ajust-width flex justify-between items-center py-5">
+        <h1 className="text-2xl font-semibold">{namePage}</h1>
+        <div className="breadcrumbs text-sm">
+          <ul>
+            {
+              paths.map((path, index) => {
+                if (index !== paths.length - 1) {
+                  
+                  return (
+                    <li key={path}><a className="capitalize" href={`http://localhost:5173/${path}`}>
+                      {
+                        path === "" ? "Inicio" : path
+                      }
+                    </a></li>
+                  )
                 }
-              </a></li>
-            )
-          }
 
-          return (<li key={path} className="capitalize">{path}</li>)
-        })
-      }
-    </ul>
+                if (isProduct == true)
+                  return (<li key={path} className="capitalize">{namePage}</li>)
+
+                return (<li key={path} className="capitalize">{path}</li>)
+              })
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
   )
 }

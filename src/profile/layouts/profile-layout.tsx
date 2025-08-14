@@ -39,14 +39,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="bg-[#fff4ef]">
-        <div className="ajust-width flex justify-between items-center py-5">
-          <h1 className="text-2xl font-semibold">Cuenta</h1>
-          <div className="breadcrumbs text-sm">
-            <Breadcrumb />
-          </div>
-        </div>
-      </div>
+      <Breadcrumb namePage="Cuenta" />
 
       <div className="ajust-width grid grid-cols-[auto_1fr] py-14 gap-6">
         <div className="flex flex-col w-[258px] p-5 pt-5 rounded-3xl">

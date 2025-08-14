@@ -21,14 +21,8 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="bg-[#fff4ef]">
-        <div className="ajust-width flex justify-between items-center py-5">
-          <h1 className="text-2xl font-semibold">{product.productName}</h1>
-          <div className="breadcrumbs text-sm">
-            <Breadcrumb />
-          </div>
-        </div>
-      </div>
+      <Breadcrumb namePage={product.productName} isProduct={true} />
+
       <div className="ajust-width grid grid-cols-2 gap-6 pt-14">
         <div className="relative w-full mx-auto">
           <ProductGallery images={product.productImages} />
@@ -39,6 +33,7 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
           <WarrantyCard />
         </div>
       </div>
+
       <div className="w-screen flex flex-col text-black border-b border-[#e5e5e5]">
         <div className="ajust-width flex flex-col items-center !mt-20 !mb-10 gap-4">
           <h2 className="text-3xl font-bold">Encuentra lo que quieres</h2>
