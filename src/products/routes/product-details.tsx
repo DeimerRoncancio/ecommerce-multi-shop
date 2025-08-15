@@ -1,11 +1,11 @@
 import ProductGallery from "../components/ProductGallery";
+import Breadcrumb from "../../profile/components/Breadcrumb";
+import ProductInfo from "../components/ProductInfo";
+import BuyProduct from "../components/BuyProduct";
+import ProductRecommendations from "../components/ProductRecommendations";
+import { WarrantyCard } from "../components/WarrantyCard";
 import { getProduct, getProducts } from "../services/products.api";
 import { Route } from "./+types/product-details";
-import Breadcrumb from "../../profile/components/Breadcrumb";
-import ProductInfo from "../components/ProductDetails";
-import BuyProduct from "../components/BuyProduct";
-import { WarrantyCard } from "../components/WarrantyCard";
-import ProductRecommendations from "../components/ProductRecommendations";
 
 import "swiper/css";
 import 'swiper/css/navigation';
@@ -29,7 +29,7 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
         </div>
         <div className="flex flex-col gap-5 text-[#101828]">
           <ProductInfo product={product} />
-          <BuyProduct />
+          <BuyProduct productFromApi={product} />
           <WarrantyCard />
         </div>
       </div>

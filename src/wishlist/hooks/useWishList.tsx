@@ -17,7 +17,7 @@ export default function useWishList() {
   const handleRemoveWishListItem = (id: string) => {
     removeWishListItem(id);
   }
-  
+
   const handleAddToCartSinceWishList = (products: ProductTypes[]) => {
     const itemsToAdd = getItemsToAdd();
     const productsById = new Map(products.map(product => [product.id, product]));
@@ -34,6 +34,10 @@ export default function useWishList() {
     return wishList.filter(({ id }) => !cartIds.has(id));
   }
 
+  const isInWishList = (id: string) => {
+    return wishList.some(item => item.id === id);
+  }
+
   useEffect(()=>{
     const itemsToAdd = getItemsToAdd();
     setItemInCart(itemsToAdd.length);
@@ -42,6 +46,7 @@ export default function useWishList() {
   return {
     wishList,
     itemsInCart,
+    isInWishList,
     handleAddWishListItem,
     handleRemoveWishListItem,
     handleAddToCartSinceWishList,
