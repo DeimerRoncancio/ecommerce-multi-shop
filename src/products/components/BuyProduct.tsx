@@ -5,6 +5,7 @@ import ProductQuantity from "./ProductQuantity";
 import useWishList from "../../wishlist/hooks/useWishList";
 import { ProductsFromApiType } from "../types/product";
 import { mapApiToProducts } from "../mappers/products.maper";
+import useCart from "../../cart/hooks/useCart";
 
 type BuyProductProps = {
   productFromApi: ProductsFromApiType;
@@ -12,10 +13,16 @@ type BuyProductProps = {
 
 export default function BuyProduct({ productFromApi }: BuyProductProps) {
   const { isInWishList, handleAddWishListItem, handleRemoveWishListItem} = useWishList();
+  const { handleAddItem, isInCart } = useCart()
 
   const handleAddToWishList = () => {
     const product = mapApiToProducts(productFromApi);
     handleAddWishListItem(product);
+  };
+
+  const handleAddToCart = () => {
+    const product = mapApiToProducts(productFromApi);
+    handleAddItem(product);
   };
 
   return (
@@ -23,10 +30,13 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
       <ProductQuantity />
       <div className="flex flex-col gap-2 mr-6">
         <div className="flex flex-col">
-          <button className="btn btn-info bg-[#f04913] border-[#f04913] text-white rounded-2xl
-          shadow-none outline-none focus-visible:outline-none">
+          <button className={`btn btn-info disabled:!bg-[#af4b29] bg-[#f04913]
+          border-none text-white rounded-2xl shadow-none outline-none focus-visible:outline-none`} 
+          disabled={isInCart(productFromApi.id)}
+          onClick={handleAddToCart}>
             <IoBagHandleOutline size={17} />
-            Agregar al carrito - $18000
+            {isInCart(productFromApi.id) ? "Agregado " : "Agregar "}
+            al carrito - $ {new Intl.NumberFormat("es-ES").format(productFromApi.price)} (1)
           </button>
         </div>
         <div className="grid grid-cols-2 gap-2">

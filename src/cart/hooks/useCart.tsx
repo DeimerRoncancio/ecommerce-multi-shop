@@ -26,6 +26,8 @@ export default function useCart() {
     clearCart();
   }
 
+  const isInCart = (productId: string) => cartItems.some(item => item.id === productId)
+
   useEffect(() => {
     const totalQuantity = cartItems.reduce((sum, item) => sum += item.quantity, 0);
     if (itemsQuantity === totalQuantity) return;
@@ -44,6 +46,7 @@ export default function useCart() {
     itemsQuantity,
     handleAddItem,
     handleRemoveItem,
+    isInCart,
     clear
   }
 }

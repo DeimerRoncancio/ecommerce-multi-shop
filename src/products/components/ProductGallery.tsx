@@ -48,9 +48,9 @@ export default function ProductGallery({ images }: Props) {
       >
         {images.map((image) => (
           <SwiperSlide key={image.imageId} className="!h-auto !w-20 !flex items-center !justify-center
-            cursor-pointer border-2 border-gray-300 rounded-lg m-1 transition-all duration-300
-            [&.swiper-slide-thumb-active]:border-blue-500
-            [&.swiper-slide-thumb-active]:outline-2 outline-blue-300">
+          cursor-pointer border-2 border-gray-300 rounded-lg m-1 transition-all duration-300
+          [&.swiper-slide-thumb-active]:border-blue-500
+          [&.swiper-slide-thumb-active]:outline-2 outline-blue-300">
             <img
               src={image.imageUrl}
               alt={`Thumbnail ${image.imageId}`}
