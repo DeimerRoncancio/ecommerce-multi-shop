@@ -1,4 +1,3 @@
-import { AiOutlineThunderbolt } from "react-icons/ai";
 import { IoIosHeartEmpty, IoMdHeart } from "react-icons/io";
 import { IoBagHandleOutline } from "react-icons/io5";
 import ProductQuantity from "./ProductQuantity";
@@ -7,6 +6,7 @@ import { ProductsFromApiType } from "../types/product";
 import { mapApiToProducts } from "../mappers/products.maper";
 import useCart from "../../cart/hooks/useCart";
 import { useState } from "react";
+import BuyButton from "./BuyButton";
 
 type BuyProductProps = {
   productFromApi: ProductsFromApiType;
@@ -40,7 +40,7 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
           onClick={handleAddToCart}>
             <IoBagHandleOutline size={17} />
             {isInCart(productFromApi.id) ? "Agregado " : "Agregar "}
-            al carrito - $ 
+            al carrito - $
             {
               new Intl.NumberFormat("es-ES").format(productFromApi.price * quantity)
             }
@@ -63,12 +63,7 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
               "Agregar "}
              a lista de deseos
           </button>
-          <button className="btn btn-outline btn-primary border border-gray-300 rounded-2xl
-          hover:bg-gray-100 hover:text-black focus-visible:!outline-[#f04913] shadow-none 
-          focus-visible:bg-white focus-visible:text-black focus-visible:outline-none">
-            <AiOutlineThunderbolt size={17} />
-            Comprar ahora
-          </button>
+          <BuyButton product={productFromApi} />
         </div>
       </div>
     </>

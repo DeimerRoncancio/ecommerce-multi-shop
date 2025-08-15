@@ -14,7 +14,6 @@ export default function Categories({ categories }: CategoriesProps) {
 
   const handleModalProducts = (cat: string) => {
     const productsFilter = categories.filter(category =>  category.name == cat)[0];
-    console.log(productsFilter.products)
     setCategoryProducts(productsFilter.products);
     setModalVisible(true);
   }
