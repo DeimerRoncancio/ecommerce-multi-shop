@@ -15,7 +15,7 @@ type BuyProductProps = {
 export default function BuyProduct({ productFromApi }: BuyProductProps) {
   const { isInWishList, handleAddWishListItem, handleRemoveWishListItem} = useWishList();
   const { handleAddItem, isInCart } = useCart()
-   const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
 
   const handleAddToWishList = () => {
     const product = mapApiToProducts(productFromApi);
@@ -39,22 +39,21 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
           disabled={isInCart(productFromApi.id)}
           onClick={handleAddToCart}>
             <IoBagHandleOutline size={17} />
-            {isInCart(productFromApi.id) ? "Agregado " : "Agregar "}
+            { isInCart(productFromApi.id) ? "Agregado " : "Agregar " }
             al carrito - $
-            {
-              new Intl.NumberFormat("es-ES").format(productFromApi.price * quantity)
-            }
+            { new Intl.NumberFormat("es-ES").format(productFromApi.price * quantity) }
             {` (${quantity})`}
           </button>
         </div>
         <div className="grid grid-cols-2 gap-2">
           <button className="btn btn-outline btn-primary border border-gray-300 rounded-2xl 
           hover:bg-gray-100 hover:text-black shadow-none focus-visible:bg-white 
-          focus-visible:text-black focus-visible:outline-none" onClick={() => {
-              isInWishList(productFromApi.id) ?
-                handleRemoveWishListItem(productFromApi.id) :
-                handleAddToWishList()
-            }}>
+          focus-visible:text-black focus-visible:outline-none" 
+          onClick={() => {
+            isInWishList(productFromApi.id) ?
+              handleRemoveWishListItem(productFromApi.id) :
+              handleAddToWishList()
+          }}>
             {isInWishList(productFromApi.id) ?
               <IoMdHeart size={17} color="#fb2c36" /> :
               <IoIosHeartEmpty size={17} />}

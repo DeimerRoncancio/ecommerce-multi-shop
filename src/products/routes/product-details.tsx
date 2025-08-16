@@ -2,7 +2,7 @@ import ProductGallery from "../components/ProductGallery";
 import Breadcrumb from "../../profile/components/Breadcrumb";
 import ProductInfo from "../components/ProductInfo";
 import BuyProduct from "../components/BuyProduct";
-import ProductRecommendations from "../components/ProductRecommendations";
+import ProductRecommendations from "../components/product-details-recommendations/ProductRecommendations";
 import { WarrantyCard } from "../components/WarrantyCard";
 import { getProduct, getProducts } from "../services/products.api";
 import { Route } from "./+types/product-details";
