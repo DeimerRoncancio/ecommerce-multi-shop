@@ -1,6 +1,6 @@
 import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
-import { envs } from "../../shared/config/env.config";
 import { CartItemType } from "../types/cart";
+import { payments } from "../../shared/api/payments/paymentsApi";
 
 type BuyButtonProps = {
   totalPrice: number;
@@ -18,14 +18,8 @@ export default function BuyButton({ totalPrice, productsToBuy }: BuyButtonProps)
       }))
     }
 
-    fetch(`${envs.API}/app/payments/create-payment-session`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(session),
-    })
-      .then((res) => res.json())
+    payments.post("", session)
+      .then((res) => res.data)
       .then((data) => {
         window.location.href = data.sessionUrl;
       });

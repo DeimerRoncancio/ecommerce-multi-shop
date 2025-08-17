@@ -1,6 +1,6 @@
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import { envs } from "../../shared/config/env.config";
 import { ProductsFromApiType } from "../types/product";
+import { payments } from "../../shared/api/payments/paymentsApi";
 
 type BuyButtonProps = {
   product: ProductsFromApiType;
@@ -8,23 +8,17 @@ type BuyButtonProps = {
 
 export default function BuyButton({ product }: BuyButtonProps) {
   const handleBuyNow = () => {
-    fetch(`${envs.API}/app/payments/create-payment-session`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "currency": "COP",
-        "items": [
-          {
-            "name": product.productName,
-            "price": product.price + "00",
-            "quantity": 1
-          }
-        ]
-      }),
+    payments.post("", {
+      currency: "COP",
+      items: [
+        {
+          name: product.productName,
+          price: product.price + "00",
+          quantity: 1
+        }
+      ]
     })
-      .then((res) => res.json())
+      .then((res) => res.data)
       .then((data) => window.location.href = data.sessionUrl);
   };
 
