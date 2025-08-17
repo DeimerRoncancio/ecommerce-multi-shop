@@ -24,8 +24,8 @@ export default function BuyButton({ product }: BuyButtonProps) {
         ]
       }),
     })
-    .then((response) => response.json())
-    .then((data) => window.location.href = data.sessionUrl);
+      .then((res) => res.json())
+      .then((data) => window.location.href = data.sessionUrl);
   };
 
   return (

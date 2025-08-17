@@ -1,12 +1,17 @@
-import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
 import useCart from "../hooks/useCart";
 import PaymentInfoItem from "./PaymentInfoItem";
 import { useNavigate } from "react-router";
+import BuyButton from "./BuyButton";
+import { CartItemType } from "../types/cart";
 
-export default function PaymentCardInfo() {
+type PaymentCardInfoProps = {
+  products: CartItemType[];
+};
+
+export default function PaymentCardInfo({ products }: PaymentCardInfoProps) {
   const { itemsQuantity, totalPrice } = useCart();
   const navigate = useNavigate();
-  
+
   return (
     <div className="text-[#5a5a5a] sticky top-5 bg-[#f3e2e27e] rounded-xl">
       <div className="flex gap-1 p-4 border-b-1 border-[#e1e1e1]">
@@ -21,13 +26,7 @@ export default function PaymentCardInfo() {
       </ul>
 
       <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
-        <button className="btn btn-accent py-5 w-full rounded">
-          Pagar/ Total
-          <p className="flex items-center">
-            <PiCurrencyDollarSimpleBold color="#ffd6a7" size={15} />
-            {new Intl.NumberFormat("es-ES").format(totalPrice)}
-          </p>
-        </button>
+        <BuyButton totalPrice={totalPrice} productsToBuy={products} />
         <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
           Seguir comprando
         </button>

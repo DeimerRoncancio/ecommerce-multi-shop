@@ -21,15 +21,13 @@ export default function CartContent() {
           </div>
 
           <ul>
-            {
-              !itemsQuantity ?
-                <li className="flex items-center justify-center text-[#646464] text-xl w-full h-40">
-                  <p className="text-center">No tienes productos en tu carrito</p>
-                </li> :
-                cartItems.map((item, index) =>
-                  <CartItem key={item.id} item={item} length={cartItems.length} index={index} />
-                )
-            }
+            {!itemsQuantity ?
+              <li className="flex items-center justify-center text-[#646464] text-xl w-full h-40">
+                <p className="text-center">No tienes productos en tu carrito</p>
+              </li> :
+              cartItems.map((item, index) =>
+                <CartItem key={item.id} item={item} length={cartItems.length} index={index} />
+              )}
           </ul>
         </div>
 
@@ -37,7 +35,7 @@ export default function CartContent() {
           <div className="mb-5">
             <h2 className="text-2xl text-[#333333] font-semibold">Resumen de la compra</h2>
           </div>
-          <PaymentCardInfo />
+          <PaymentCardInfo products={cartItems} />
         </div>
       </div>
     </>
