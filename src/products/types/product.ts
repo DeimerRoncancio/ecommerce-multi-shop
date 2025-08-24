@@ -38,4 +38,11 @@ export interface ProductsFromApiType {
     price: number;
     productImages: ProductImageType[];
     categories: CategoryType[];
+    variants: ProductVariantType[];
+}
+
+export interface ProductVariantType {
+    name: string;
+    tag: string;
+    listValues: string[];
 }

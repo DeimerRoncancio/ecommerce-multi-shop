@@ -1,12 +1,13 @@
 import { FaCheckCircle } from "react-icons/fa";
 import Rating from "../../wishlist/components/Rating";
-import { ProductsFromApiType } from "../types/product";
+import { ProductsFromApiType, ProductVariantType } from "../types/product";
 
 type ProductInfoProps = {
-  product: ProductsFromApiType
+  product: ProductsFromApiType;
+  variants?: ProductVariantType[];
 }
 
-export default function ProductInfo({ product }: ProductInfoProps) {
+export default function ProductInfo({ product, variants }: ProductInfoProps) {
   return (
     <>
       <div>
@@ -14,7 +15,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <ul className="flex gap-2">
             {
               product.categories.map(cat =>
-                <p className="text-[#7a7c7f] text-sm">{cat.categoryName.toUpperCase()}</p>
+                <p key={cat.categoryName} className="text-[#7a7c7f] text-sm">{cat.categoryName.toUpperCase()}</p>
               )
             }
           </ul>
@@ -38,6 +39,33 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         <FaCheckCircle color="#198754" />
         <p>En Stock</p>
       </div>
+
+      {
+        variants && variants.length > 0 && (
+          <ul>
+            {variants.map(variant => (
+              <li key={variant.name} className="flex flex-col gap-2">
+                <p className="text-[#364153] font-medium">
+                  {variant.tag.charAt(0).toUpperCase() + variant.tag.slice(1)}:
+                </p>
+                <ul className="flex gap-3">
+                  {
+                    variant.tag == "color" &&
+                    variant.listValues.map(value => (
+                      <li key={value} className="flex items-center gap-2 cursor-pointer">
+                        <div
+                          className={`w-8 h-8 rounded-full hover:scale-110 transition-all duration-300`}
+                          style={{ backgroundColor: value }}
+                        />
+                      </li>
+                    ))
+                  }
+                </ul>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </>
   );
 }

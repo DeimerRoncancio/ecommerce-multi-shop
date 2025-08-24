@@ -28,7 +28,7 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
           <ProductGallery images={product.productImages} />
         </div>
         <div className="flex flex-col gap-5 text-[#101828]">
-          <ProductInfo product={product} />
+          <ProductInfo product={product} variants={product.variants} />
           <BuyProduct productFromApi={product} />
           <WarrantyCard />
         </div>
