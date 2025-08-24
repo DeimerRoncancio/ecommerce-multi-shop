@@ -39,8 +39,12 @@ export default function ProductGallery({ images }: Props) {
       </Swiper>
 
       <Swiper
-        modules={[Thumbs]}
+        modules={[Thumbs, Navigation]}
         onSwiper={setThumbsSwiper}
+        navigation={{
+          nextEl: ".custom-next-mini",
+          prevEl: ".custom-prev-mini",
+        }}
         spaceBetween={10}
         slidesPerView={4}
         watchSlidesProgress
@@ -58,6 +62,14 @@ export default function ProductGallery({ images }: Props) {
             />
           </SwiperSlide>
         ))}
+        <button className="custom-prev-mini absolute text-xs top-2/6 left-3 z-10 p-2 text-black bg-white rounded-full
+        shadow-[0_0_1px_1px_#d1d5dc] cursor-pointer hover:bg-gray-100 w-8">
+          ❮
+        </button>
+        <button className="custom-next-mini absolute text-xs top-2/6 right-2 z-10 p-2 text-black bg-white rounded-full
+        shadow-[0_0_1px_1px_#d1d5dc] cursor-pointer hover:bg-gray-100 w-8">
+          ❯
+        </button>
       </Swiper>
 
       <button className="custom-prev absolute top-2/6 left-4 z-10 p-2 text-black bg-white rounded-full
@@ -68,6 +80,7 @@ export default function ProductGallery({ images }: Props) {
         shadow-[0_0_1px_1px_#d1d5dc] cursor-pointer hover:bg-gray-100 w-10">
         ❯
       </button>
+
     </>
   )
 }
