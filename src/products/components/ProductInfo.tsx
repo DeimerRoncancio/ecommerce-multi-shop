@@ -1,6 +1,7 @@
 import { FaCheckCircle } from "react-icons/fa";
 import Rating from "../../wishlist/components/Rating";
 import { ProductsFromApiType, ProductVariantType } from "../types/product";
+import Variants from "./variants/Variants";
 
 type ProductInfoProps = {
   product: ProductsFromApiType;
@@ -40,32 +41,7 @@ export default function ProductInfo({ product, variants }: ProductInfoProps) {
         <p>En Stock</p>
       </div>
 
-      {
-        variants && variants.length > 0 && (
-          <ul>
-            {variants.map(variant => (
-              <li key={variant.name} className="flex flex-col gap-2">
-                <p className="text-[#364153] font-medium">
-                  {variant.tag.charAt(0).toUpperCase() + variant.tag.slice(1)}:
-                </p>
-                <ul className="flex gap-3">
-                  {
-                    variant.tag == "color" &&
-                    variant.listValues.map(value => (
-                      <li key={value} className="flex items-center gap-2 cursor-pointer">
-                        <div
-                          className={`w-8 h-8 rounded-full hover:scale-110 transition-all duration-300`}
-                          style={{ backgroundColor: value }}
-                        />
-                      </li>
-                    ))
-                  }
-                </ul>
-              </li>
-            ))}
-          </ul>
-        )
-      }
+      <Variants variants={variants} />
     </>
   );
 }
