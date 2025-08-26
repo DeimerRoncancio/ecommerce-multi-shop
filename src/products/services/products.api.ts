@@ -6,5 +6,8 @@ export const getProducts = (): Promise<ProductsFromApiType[]> => {
 }
 
 export const getProduct = (id: string): Promise<ProductsFromApiType> => {
-  return products.get(`/${id}`).then(res => res.data);
+  return products.get(`/${id}`).then(res => {
+    console.log(res.data.variants[0]);
+    return res.data
+  });
 }

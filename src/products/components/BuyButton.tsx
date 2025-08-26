@@ -14,6 +14,7 @@ export default function BuyButton({ product }: BuyButtonProps) {
         {
           name: product.productName,
           price: product.price + "00",
+          description: product.description,
           quantity: 1
         }
       ]

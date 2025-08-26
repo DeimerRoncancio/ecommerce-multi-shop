@@ -44,5 +44,6 @@ export interface ProductsFromApiType {
 export interface ProductVariantType {
     name: string;
     tag: string;
+    type: string;
     listValues: string[];
 }

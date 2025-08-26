@@ -13,12 +13,13 @@ import 'swiper/css/navigation';
 export async function loader({ params }: Route.LoaderArgs) {
   const product = await getProduct(params.id);
   const products = await getProducts();
+  console.log(product.variants[0].type);
   return { product, products };
 }
 
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {
   const { product, products } = loaderData;
-
+  
   return (
     <>
       <Breadcrumb namePage={product.productName} isProduct={true} />
