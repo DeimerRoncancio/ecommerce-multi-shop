@@ -7,6 +7,7 @@ export const mapApiToProducts = (product: ProductsFromApiType): ProductTypes => 
     description: product.description,
     price: product.price,
     images: product.productImages,
-    categories: product.categories
+    categories: product.categories,
+    variants: product.variants
   }
 }

@@ -2,9 +2,13 @@ import useCart from "../hooks/useCart";
 import CartItem from "../components/CartItem";
 import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
+import { useNavigate } from "react-router";
+import { useSteps } from "../storage/steps";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
+  const { nextSteps } = useSteps();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -36,6 +40,10 @@ export default function CartContent() {
             <h2 className="text-2xl text-[#333333] font-semibold">Resumen de la compra</h2>
           </div>
           <PaymentCardInfo products={cartItems} />
+          <button className="btn btn-primary" onClick={() => {
+            nextSteps("Carrito");
+            navigate("/cart/user-data");
+          }}>Ir</button>
         </div>
       </div>
     </>

@@ -1,9 +1,10 @@
-import { FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa6";
-import { BsInboxes, BsTelephone, BsTwitterX } from "react-icons/bs";
+import { FaDollarSign, FaFacebook, FaInstagram, FaLinkedin, FaTiktok, FaYoutube } from "react-icons/fa6";
+import { BsInboxes, BsPerson, BsTelephone, BsTwitterX } from "react-icons/bs";
 import { SlLocationPin } from "react-icons/sl";
 import { TfiEmail } from "react-icons/tfi";
 import { IoLocationOutline, IoPersonCircleOutline, IoSettingsOutline, IoWalletOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { MdOutlineShoppingBag, MdOutlineShoppingCart } from "react-icons/md";
 
 export const IconList = {
     instagram: FaInstagram,
@@ -20,7 +21,11 @@ export const IconList = {
     wishlist: IoMdHeartEmpty,
     purchases: BsInboxes,
     addresses: IoLocationOutline,
-    settings: IoSettingsOutline
+    settings: IoSettingsOutline,
+    cart: MdOutlineShoppingCart,
+    userData: BsPerson,
+    deliver: MdOutlineShoppingBag,
+    payment: FaDollarSign
 }
 
 export type IconName = keyof typeof IconList;

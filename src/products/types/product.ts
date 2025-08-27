@@ -5,6 +5,7 @@ export interface ProductTypes {
     price: number;
     images: ProductImageType[];
     categories: CategoryType[];
+    variants?: ProductVariantType[];
 }
 
 export interface ProductItemType {
