@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 type Props = {
   steps: StepType[];
   nextSteps: (nameStep: string) => void;
+  clearSteps: () => void;
 };
 
 export const useSteps = create<Props>()(persist((set) => ({
@@ -21,6 +22,12 @@ export const useSteps = create<Props>()(persist((set) => ({
       steps: state.steps.map((step) =>
         step.name === nameStep ? { ...step, isComplete: true } : step
       )
+    }));
+  },
+
+  clearSteps: () => {
+    set((state) => ({
+      steps: state.steps.map((step) => ({ ...step, isComplete: false }))
     }));
   },
 }), {

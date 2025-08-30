@@ -5,11 +5,13 @@ import { getCategories } from "./products/services/categories.api";
 import { getProducts } from "./products/services/products.api";
 import NavBar from "./shared/layout/navbar/NavBar";
 import { SnackbarProvider } from "notistack";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import "./App.css";
 import { getSession } from "./sessions.server";
 import { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
+import { useEffect } from "react";
+import { useSteps } from "./cart/storage/steps";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
@@ -31,6 +33,13 @@ declare module "notistack" {
 }
 
 function App() {
+  const location = useLocation();
+  const { clearSteps } = useSteps();
+  
+  useEffect(() => {
+    location.pathname !== '/cart' && clearSteps();
+  }, []);
+
   return (
     <SnackbarProvider
       maxSnack={5}

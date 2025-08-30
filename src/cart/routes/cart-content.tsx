@@ -2,13 +2,18 @@ import useCart from "../hooks/useCart";
 import CartItem from "../components/CartItem";
 import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
-import { useNavigate } from "react-router";
 import { useSteps } from "../storage/steps";
+import { useNavigate } from "react-router";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
-  const { nextSteps } = useSteps();
   const navigate = useNavigate();
+  const { nextSteps } = useSteps();
+
+  const nextStep = () => {
+    nextSteps("Carrito");
+    navigate("/cart/user-data");
+  }
 
   return (
     <>
@@ -16,7 +21,7 @@ export default function CartContent() {
         <div className="flex flex-col w-[70%]">
           <div className="flex justify-between mb-5 items-center">
             <div className="flex gap-1 items-center">
-              <h1 className="text-2xl text-[#333333] font-semibold">Carrito</h1>
+              <h1 className="text-[#333333] text-xl">Carrito</h1>
               <h1 className="text-lg text-[#4a4a4a]">({itemsQuantity} productos)</h1>
             </div>
             <div>
@@ -36,14 +41,7 @@ export default function CartContent() {
         </div>
 
         <div className="w-[30%]">
-          <div className="mb-5">
-            <h2 className="text-2xl text-[#333333] font-semibold">Resumen de la compra</h2>
-          </div>
-          <PaymentCardInfo products={cartItems} />
-          <button className="btn btn-primary" onClick={() => {
-            nextSteps("Carrito");
-            navigate("/cart/user-data");
-          }}>Ir</button>
+          <PaymentCardInfo products={cartItems} nextStep={nextStep} />
         </div>
       </div>
     </>
