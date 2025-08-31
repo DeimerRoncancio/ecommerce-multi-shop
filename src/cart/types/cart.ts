@@ -2,19 +2,20 @@ import { ProductVariantType } from "../../products/types/product";
 import { IconName } from "../../shared/types/icon-list";
 
 export interface CartItemType {
-    id: string;
-    productName: string;
-    productDescription: string;
-    productPrice: number;
-    isExists: boolean;
-    productImage: string;
-    quantity: number;
-    variants?: ProductVariantType[];
+  id: string;
+  productName: string;
+  productDescription: string;
+  productPrice: number;
+  isExists: boolean;
+  productImage: string;
+  quantity: number;
+  variants?: ProductVariantType[];
 }
 
 export interface StepType {
-    name: string;
-    isComplete: boolean;
-    path: string;
-    icon: IconName;
+  name: string;
+  isComplete: boolean;
+  path: string;
+  icon: IconName;
+  isActive?: boolean;
 }

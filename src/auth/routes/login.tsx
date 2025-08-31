@@ -9,12 +9,14 @@ export async function action({ request }: Route.ActionArgs) {
   const form = await request.formData();
   const identifier = form.get("identifier") as string;
   const password = form.get("password") as string;
-
+  
   const raw = Object.fromEntries(form.entries());
   const result = LoginAccessUser.safeParse(raw);
-
+  console.log(result.data);
+  
   if (!result.success)
     return { errors: result.error.flatten().fieldErrors };
+  
 
   const data = await send({ identifier: identifier, password: password });
   session.set('token', data.token);

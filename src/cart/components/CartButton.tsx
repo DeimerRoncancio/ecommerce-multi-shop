@@ -1,13 +1,13 @@
 import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
-import { CartItemType } from "../types/cart";
 
-type BuyButtonProps = {
+type CartButtonProps = {
   totalPrice: number;
-  productsToBuy: CartItemType[];
-  nextStep: () => void;
+  onContinue: () => void;
+  disabled?: boolean;
+  label?: string;
 };
 
-export default function CartButton({ totalPrice, productsToBuy, nextStep }: BuyButtonProps) {
+export default function CartButton({ totalPrice, onContinue, disabled, label }: CartButtonProps) {
   // const handleBuyNow = () => {
   //   const session = {
   //     currency: "COP",
@@ -26,8 +26,8 @@ export default function CartButton({ totalPrice, productsToBuy, nextStep }: BuyB
   // }
 
   return (
-    <button className="btn btn-accent py-5 w-full rounded " disabled={productsToBuy.length <= 0} onClick={nextStep}>
-      Continuar / Total
+    <button className="btn btn-accent py-5 w-full rounded " disabled={disabled} onClick={onContinue} type="button">
+      {label ?? 'Continuar'} / Total
       <p className="flex items-center">
         <PiCurrencyDollarSimpleBold color="#ffd6a7" size={15} />
         {new Intl.NumberFormat("es-ES").format(totalPrice)}

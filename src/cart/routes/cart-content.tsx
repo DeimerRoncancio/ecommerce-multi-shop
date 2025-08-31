@@ -41,7 +41,7 @@ export default function CartContent() {
         </div>
 
         <div className="w-[30%]">
-          <PaymentCardInfo products={cartItems} nextStep={nextStep} />
+          <PaymentCardInfo onContinue={nextStep} disabledContinue={!itemsQuantity} />
         </div>
       </div>
     </>

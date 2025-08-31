@@ -2,14 +2,13 @@ import useCart from "../hooks/useCart";
 import PaymentInfoItem from "./PaymentInfoItem";
 import { useNavigate } from "react-router";
 import CartButton from "./CartButton";
-import { CartItemType } from "../types/cart";
 
 type PaymentCardInfoProps = {
-  products: CartItemType[];
-  nextStep: () => void;
+  onContinue: () => void;
+  disabledContinue?: boolean;
 };
 
-export default function PaymentCardInfo({ products, nextStep }: PaymentCardInfoProps) {
+export default function PaymentCardInfo({ onContinue, disabledContinue }: PaymentCardInfoProps) {
   const { itemsQuantity, totalPrice } = useCart();
   const navigate = useNavigate();
 
@@ -31,7 +30,7 @@ export default function PaymentCardInfo({ products, nextStep }: PaymentCardInfoP
         </ul>
 
         <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
-          <CartButton totalPrice={totalPrice} productsToBuy={products} nextStep={nextStep} />
+          <CartButton totalPrice={totalPrice} onContinue={onContinue} disabled={disabledContinue} />
           <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
             Seguir comprando
           </button>

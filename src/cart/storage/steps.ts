@@ -17,7 +17,6 @@ export const useSteps = create<Props>()(persist((set) => ({
   ],
 
   nextSteps: (nameStep: string) => {
-    console.log(nameStep);
     set((state) => ({
       steps: state.steps.map((step) =>
         step.name === nameStep ? { ...step, isComplete: true } : step

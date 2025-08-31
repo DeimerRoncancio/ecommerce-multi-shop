@@ -81,12 +81,6 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               to="/profile"
             />
             <MenuButton
-              label="Medios de pago"
-              iconName="wallet"
-              pathname={location.pathname}
-              to=""
-            />
-            <MenuButton
               label="Lista de deseos"
               iconName="wishlist"
               pathname={location.pathname}

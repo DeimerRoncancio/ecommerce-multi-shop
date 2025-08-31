@@ -17,8 +17,8 @@ export default function CartHeaderLayout() {
           return (
             <>
               <CartStepsItem
+                key={index}
                 step={step}
-                key={step.name}
                 isFirst={isFirst}
                 currentStepIndex={currentIndex}
                 index={index}
