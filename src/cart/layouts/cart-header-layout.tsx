@@ -1,9 +1,9 @@
 import CartStepsItem from "../components/CartStepsItem";
 import { Outlet, useLocation } from "react-router";
-import { useSteps } from "../storage/steps";
+import { useStepsStorage } from "../storage/steps";
 
 export default function CartHeaderLayout() {
-  const { steps } = useSteps();
+  const { steps } = useStepsStorage();
   const location = useLocation();
 
   return (

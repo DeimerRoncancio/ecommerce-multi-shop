@@ -8,7 +8,7 @@ type Props = {
   clearSteps: () => void;
 };
 
-export const useSteps = create<Props>()(persist((set) => ({
+export const useStepsStorage = create<Props>()(persist((set) => ({
   steps: [
     { name: "Carrito", isComplete: false, path: "/cart", icon: "cart" },
     { name: "Datos de usuario", isComplete: false, path: "/cart/user-data", icon: "profile" },

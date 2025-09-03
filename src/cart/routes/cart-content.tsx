@@ -2,15 +2,18 @@ import useCart from "../hooks/useCart";
 import CartItem from "../components/CartItem";
 import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
-import { useSteps } from "../storage/steps";
+import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
+import { useOrderStorage } from "../storage/orders";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
+  const { addProducts } = useOrderStorage();
   const navigate = useNavigate();
-  const { nextSteps } = useSteps();
+  const { nextSteps } = useStepsStorage();
 
-  const nextStep = () => {
+  const onContinue = () => {
+    addProducts(cartItems);
     nextSteps("Carrito");
     navigate("/cart/user-data");
   }
@@ -41,7 +44,7 @@ export default function CartContent() {
         </div>
 
         <div className="w-[30%]">
-          <PaymentCardInfo onContinue={nextStep} disabledContinue={!itemsQuantity} />
+          <PaymentCardInfo onContinue={onContinue} disabledContinue={!itemsQuantity} />
         </div>
       </div>
     </>

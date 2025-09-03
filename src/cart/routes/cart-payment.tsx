@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
-import { useSteps } from "../storage/steps";
+import { useStepsStorage } from "../storage/steps";
 
 export default function CartPayment() {
-  const { nextSteps } = useSteps();
+  const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
   return (

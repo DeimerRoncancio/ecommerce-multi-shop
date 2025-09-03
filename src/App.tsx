@@ -11,7 +11,8 @@ import { getSession } from "./sessions.server";
 import { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
-import { useSteps } from "./cart/storage/steps";
+import { useStepsStorage } from "./cart/storage/steps";
+import { useOrderStorage } from "./cart/storage/orders";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
@@ -34,10 +35,12 @@ declare module "notistack" {
 
 function App() {
   const location = useLocation();
-  const { clearSteps } = useSteps();
+  const { cleanOrder } = useOrderStorage();
+  const { clearSteps } = useStepsStorage();
   
   useEffect(() => {
-    location.pathname !== '/cart' && clearSteps();
+    location.pathname !== '/cart' && clearSteps()
+    location.pathname !== '/cart' && cleanOrder();
   }, []);
 
   return (

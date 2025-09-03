@@ -12,6 +12,21 @@ export interface CartItemType {
   variants?: ProductVariantType[];
 }
 
+export interface OrderType {
+  items: CartItemType[];
+  user: UserData;
+}
+
+export interface UserData {
+  names: string;
+  lastnames: string;
+  email: string;
+  phone: string;
+  term1: boolean;
+  term2: boolean;
+  term3?: boolean | undefined;
+}
+
 export interface StepType {
   name: string;
   isComplete: boolean;

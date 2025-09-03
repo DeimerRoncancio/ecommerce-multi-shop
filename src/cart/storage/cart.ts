@@ -74,4 +74,4 @@ export const useCartStore = create<State>()(persist((set, get) => {
   }
 }, {
   name: 'cartItems'
-}))
+}));
