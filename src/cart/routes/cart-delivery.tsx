@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router";
 import { useStepsStorage } from "../storage/steps";
 
+export async function loader() {
+}
+
 export default function CartDelivery() {
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();

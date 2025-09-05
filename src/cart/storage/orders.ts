@@ -12,7 +12,7 @@ type Props = {
 
 export const useOrderStorage = create<Props>()(persist((set) => ({
   order: {
-    items: [] as CartItemType[],
+    items: [],
     user: { names: "", lastnames: "", email: "", phone: "", term1: false, term2: false, term3: false },
   },
 

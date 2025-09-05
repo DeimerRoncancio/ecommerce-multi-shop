@@ -1,4 +1,5 @@
 export interface UserTypes {
+  phone: string | undefined;
   id: string;
   name: string;
   email: string;

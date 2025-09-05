@@ -32,5 +32,4 @@ export interface StepType {
   isComplete: boolean;
   path: string;
   icon: IconName;
-  isActive?: boolean;
 }

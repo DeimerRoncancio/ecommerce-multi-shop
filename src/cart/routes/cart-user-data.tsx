@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useForm } from "react-hook-form";
@@ -8,8 +8,19 @@ import { ImputsFromUserData, TermsOfService } from "../constants/user-data.helpe
 import { useOrderStorage } from "../storage/orders";
 import { useEffect } from "react";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
+import useUser from "../../profile/hooks/api/useUser";
+import { Route } from "./+types/cart-user-data";
+import { getSession } from "../../sessions.server";
 
-export default function CartUserData() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const token = session.get('token') as string;
+  return { token };
+}
+
+export default function CartUserData({ loaderData }: Route.ComponentProps) {
+  const { token } = loaderData;
+  const { user } = useUser({ token });
   const { order, addUser } = useOrderStorage();
   const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<UserDataForm>({
     resolver: zodResolver(UserData),
@@ -26,12 +37,22 @@ export default function CartUserData() {
     navigate('/cart/delivery');
   };
 
-  useEffect(() => order.user && reset(UserDataInitialValues(order.user)), [order.user, reset]);
+  useEffect(() => {
+    order.user.email
+      ? reset(UserDataInitialValues(order.user))
+      : user && reset(UserDataInitialValues(order.user, user));
+  }, [user, order.user, reset]);
 
   return (
     <div className="flex gap-3 justify-center text-black mb-4">
       <div className="flex flex-col p-4 w-[50%] max-w-[850px] min-w-[600px]">
-        <h2 className="text-[#333333] text-xl m-4">Datos de usuario</h2>
+        <h2 className={`text-[#333333] text-xl mx-4 mt-4 ${(order.user.email || user.email) && 'mb-4'}`}>
+          Datos de usuario
+        </h2>
+        {(!order.user.email && !user.email) &&
+          <p className="text-[#575757] text- mx-4 mb-4">
+            <Link className="text-[#f14913]" to="/login">Inicia sesión</Link> para rellenar los datos rapidamente
+          </p>}
         <form className=" text-sm border-t-1 border-[#e8e9e9]"
           onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4 p-5">
