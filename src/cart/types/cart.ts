@@ -15,6 +15,7 @@ export interface CartItemType {
 export interface OrderType {
   items: CartItemType[];
   user: UserData;
+  address: AddressType;
 }
 
 export interface UserData {
@@ -32,4 +33,15 @@ export interface StepType {
   isComplete: boolean;
   path: string;
   icon: IconName;
+}
+
+export interface AddressType {
+  id: number;
+  name: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  country: string;
+  phone: string;
 }

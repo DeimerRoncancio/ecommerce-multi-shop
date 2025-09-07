@@ -53,8 +53,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
           <p className="text-[#575757] text- mx-4 mb-4">
             <Link className="text-[#f14913]" to="/login">Inicia sesión</Link> para rellenar los datos rapidamente
           </p>}
-        <form className=" text-sm border-t-1 border-[#e8e9e9]"
-          onSubmit={handleSubmit(onSubmit)}>
+        <form className=" text-sm border-t-1 border-[#e8e9e9]" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4 p-5">
             {ImputsFromUserData.map((input) => (
               <div key={input.name} className={`${input.name === "phone" || input.name === "email" ? "col-span-2" : ""}`}>
