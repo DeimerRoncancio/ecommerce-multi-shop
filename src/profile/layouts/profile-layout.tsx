@@ -5,7 +5,7 @@ import AvatarImage from "../components/AvatarImage";
 import Breadcrumb from "../components/Breadcrumb";
 import type { Route } from "./+types/profile-layout";
 import { getSession } from "../../sessions.server";
-import LogoutButton from "../components/LogoutButton";
+import LogoutButton from "../components/LogOutButton";
 import { RiImageEditLine } from "react-icons/ri";
 import { useState } from "react";
 import EditImageModal from "../components/image-edit-modal/EditImageModal";
