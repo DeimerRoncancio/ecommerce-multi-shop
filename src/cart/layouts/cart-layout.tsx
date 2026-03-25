@@ -2,7 +2,7 @@ import { Link, Outlet, useNavigate } from "react-router";
 import { GiPadlock } from "react-icons/gi";
 import { IoMdHeartEmpty } from "react-icons/io";
 import ProfileButton from "../../shared/layout/navbar/ProfileButton";
-import { Route } from "./+types/cart-layout";
+import type { Route } from "./+types/cart-layout";
 import { getSession } from "../../sessions.server";
 
 export async function loader({ request }: Route.LoaderArgs) {

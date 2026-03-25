@@ -2,7 +2,7 @@ import useCart from "../../cart/hooks/useCart";
 import { mapApiToProducts } from "../../products/mappers/products.maper";
 import { getProducts } from "../../products/services/products.api";
 import useWishList from "../../wishlist/hooks/useWishList";
-import { Route } from "./+types/Home";
+import type { Route } from "./+types/Home";
 
 export async function loader(){
   const apiProducts = await getProducts()

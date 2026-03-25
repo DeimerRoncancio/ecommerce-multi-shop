@@ -9,7 +9,7 @@ import { useOrderStorage } from "../storage/orders";
 import { useEffect } from "react";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
 import useUser from "../../profile/hooks/api/useUser";
-import { Route } from "./+types/cart-user-data";
+import type { Route } from "./+types/cart-user-data";
 import { getSession } from "../../sessions.server";
 
 export async function loader({ request }: Route.LoaderArgs) {

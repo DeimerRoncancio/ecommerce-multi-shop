@@ -1,6 +1,6 @@
 import { Outlet, redirect, useOutletContext } from "react-router";
 import { UpdateRequestTypes, UserTypes } from "../types/user";
-import { Route } from "./+types/auth-profile-layout";
+import type { Route } from "./+types/auth-profile-layout";
 import { getSession } from "../../sessions.server";
 import { validationUser } from "../services/users.api";
 

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useUserService } from "../hooks/api/useUserService";
 import UserUpdateAlert from "../components/UserUpdateAlert";
 import { useUpdateAlert } from "../hooks/useUpdateAlert";
-import { Route } from "./+types/profile";
+import type { Route } from "./+types/profile";
 import { getSession } from "../../sessions.server";
 
 export async function loader({ request }: Route.LoaderArgs) {

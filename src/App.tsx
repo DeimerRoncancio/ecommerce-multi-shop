@@ -8,7 +8,7 @@ import { SnackbarProvider } from "notistack";
 import { Outlet, useLocation } from "react-router";
 import "./App.css";
 import { getSession } from "./sessions.server";
-import { Route } from "./+types/App";
+import type { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";

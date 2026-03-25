@@ -5,7 +5,7 @@ import BuyProduct from "../components/BuyProduct";
 import ProductRecommendations from "../components/product-details-recommendations/ProductRecommendations";
 import { WarrantyCard } from "../components/WarrantyCard";
 import { getProduct, getProducts } from "../services/products.api";
-import { Route } from "./+types/product-details";
+import type { Route } from "./+types/product-details";
 
 import "swiper/css";
 import 'swiper/css/navigation';
@@ -13,7 +13,7 @@ import 'swiper/css/navigation';
 export async function loader({ params }: Route.LoaderArgs) {
   const product = await getProduct(params.id);
   const products = await getProducts();
-  console.log(product.variants[0].type);
+
   return { product, products };
 }
 

@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router"
 import { UserTypes } from "../types/user";
-import { Route } from "./+types/profile-settings";
+import type { Route } from "./+types/profile-settings";
 import { getSession } from "../../sessions.server";
 import ChangePasswordForm from "../components/change-password-form/ChangePasswordForm";
 import DeleteForm from "../components/delete-account-form/DeleteForm";
