@@ -5,15 +5,23 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
 import { useOrderStorage } from "../storage/orders";
+import { payments } from "../api/paymentsApi";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
-  const { addProducts } = useOrderStorage();
   const navigate = useNavigate();
   const { nextSteps } = useStepsStorage();
 
   const onContinue = () => {
-    addProducts(cartItems);
+    payments.post("/create-transaction", {
+      productItems: cartItems.map(item => ({
+        id: item.id,
+        price: item.productPrice,
+        quantity: item.quantity
+      })),
+      status: "pending"
+    });
+
     nextSteps("Carrito");
     navigate("/cart/user-data");
   }
