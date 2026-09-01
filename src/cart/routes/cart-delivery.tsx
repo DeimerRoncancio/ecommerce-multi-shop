@@ -39,21 +39,22 @@ export default function CartDelivery() {
 
   const handleAddressSelect = (address: AddressType) => setSelectedAddress(address);
 
-  const onContinue = () => {
+  const onContinue = async () => {
     const transactionId = localStorage.getItem("transactionId");
     if (!transactionId || !selectedAddress) return;
 
     const raw = localStorage.getItem("orders")
     const orderStorage: OrderStorageType = raw ? JSON.parse(raw) : null
 
-    payments.put(`/add-user/${transactionId}`, {
+    const { data } = await payments.put(`/add-user/${transactionId}`, {
       userNames: orderStorage.state.order.user.names + " " + orderStorage.state.order.user.lastnames,
       userEmail: orderStorage.state.order.user.email,
       userPhone: orderStorage.state.order.user.phone,
       userAddress: selectedAddress.addressLine1
     });
   
-    // addAddress(selectedAddress!);
+    if (data) sessionStorage.setItem("guestEmail", data);
+
     nextSteps("Entrega");
     navigate("/cart/payment");
   }

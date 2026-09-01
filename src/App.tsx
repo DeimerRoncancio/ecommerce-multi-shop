@@ -13,6 +13,7 @@ import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useOrderStorage } from "./cart/storage/orders";
+import { payments } from "./cart/api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
@@ -38,9 +39,21 @@ function App() {
   const { cleanOrder } = useOrderStorage();
   const { clearSteps } = useStepsStorage();
 
+  const deleteTransaction = () => {
+    const transactionId = localStorage.getItem("transactionId");
+
+    if (transactionId) {
+      localStorage.removeItem("transactionId");
+      payments.delete(transactionId); 
+    }
+  }
+
   useEffect(() => {
-    location.pathname !== '/cart' && clearSteps()
-    location.pathname !== '/cart' && cleanOrder();
+    if (location.pathname !== '/cart') {
+      clearSteps();
+      cleanOrder();
+      deleteTransaction();
+    }
   }, []);
 
   return (

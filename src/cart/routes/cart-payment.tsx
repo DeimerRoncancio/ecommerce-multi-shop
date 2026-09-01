@@ -41,7 +41,6 @@ export default function CartPayment() {
       nextSteps("Pago");
       window.location.href = session.sessionUrl;
     } catch {
-      // El interceptor de axios ya muestra el error al usuario.
       setIsRedirecting(false);
     }
   }
@@ -70,7 +69,7 @@ export default function CartPayment() {
           ))}
         </div>
 
-        <div className="mt-8 p-6 border-1 border-[#dedfdf] rounded-xl">
+        <div className="mt-8 p-6 border border-[#dedfdf] rounded-xl">
           <h2 className="text-[#5e472d] text-lg font-semibold mb-4">Resumen del pedido</h2>
 
           <ul className="flex flex-col gap-2 text-sm text-black border-b border-[#e8e9e9] pb-4">
