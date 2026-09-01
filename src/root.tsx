@@ -10,6 +10,7 @@ import {
 
 import NotFoundPage from "./shared/ui/NotFoundPage";
 import { Route } from "./+types/root";
+import "./index.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

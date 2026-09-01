@@ -10,7 +10,7 @@ export default function NotFoundPage({ message, details }: NotFoundPageProps) {
   return (
     <>
       <NavBar />
-      <div className="container mx-auto">
+      <main className="container mx-auto">
         <div className="flex w-full h-full items-center ml-[-70px] justify-center">
           <DotLottieReact
             src="/animations/404.json"
@@ -18,11 +18,11 @@ export default function NotFoundPage({ message, details }: NotFoundPageProps) {
             style={{ width: 400, height: 400 }}
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-8xl">{message}</h1>
-            <p className="text-lg text-black">{details}</p>
+            <h1 className="text-8xl font-bold text-[#3a2f2a]">{message}</h1>
+            <p className="text-lg text-[#7a6f6a]">{details}</p>
           </div>
         </div>
-      </div>
+      </main>
     </>
   )
 }

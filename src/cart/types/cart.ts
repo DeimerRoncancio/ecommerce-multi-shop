@@ -12,6 +12,14 @@ export interface CartItemType {
   variants?: ProductVariantType[];
 }
 
+export interface OrderStorageType {
+  state: OrderStateType;
+}
+
+export interface OrderStateType {
+  order: OrderType;
+}
+
 export interface OrderType {
   items: CartItemType[];
   user: UserData;
@@ -44,4 +52,29 @@ export interface AddressType {
   state: string;
   country: string;
   phone: string;
+}
+
+export interface PaymentMethodType {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface StripeItemType {
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+}
+
+export interface StripeSessionType {
+  currency: string;
+  items: StripeItemType[];
+}
+
+export interface StripeSessionResponseType {
+  status: string;
+  message: string;
+  sessionId: string;
+  sessionUrl: string;
 }

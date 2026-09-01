@@ -45,7 +45,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="flex gap-3 justify-center text-black mb-4">
-      <div className="flex flex-col p-4 w-[50%] max-w-[850px] min-w-[600px]">
+      <div className="flex flex-col p-4 w-[50%] max-w-212.5 min-w-150">
         <h2 className={`text-[#333333] text-xl mx-4 mt-4 ${(order.user.email || user.email) && 'mb-4'}`}>
           Datos de usuario
         </h2>
@@ -53,7 +53,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
           <p className="text-[#575757] text- mx-4 mb-4">
             <Link className="text-[#f14913]" to="/login">Inicia sesión</Link> para rellenar los datos rapidamente
           </p>}
-        <form className=" text-sm border-t-1 border-[#e8e9e9]" onSubmit={handleSubmit(onSubmit)}>
+        <form className=" text-sm border-t border-[#e8e9e9]" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-2 gap-4 p-5">
             {ImputsFromUserData.map((input) => (
               <div key={input.name} className={`${input.name === "phone" || input.name === "email" ? "col-span-2" : ""}`}>
@@ -73,7 +73,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
               </div>
             ))}
           </div>
-          <div className="flex flex-col col-span-2 text-[#969696] border-t-1 border-[#e8e9e9] px-5">
+          <div className="flex flex-col col-span-2 text-[#969696] border-t border-[#e8e9e9] px-5">
             {TermsOfService.map(term => (
               <div key={term.id} className="flex items-center mt-4">
                 <input

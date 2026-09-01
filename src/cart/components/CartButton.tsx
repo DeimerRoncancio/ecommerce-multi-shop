@@ -8,23 +8,6 @@ type CartButtonProps = {
 };
 
 export default function CartButton({ totalPrice, onContinue, disabled, label }: CartButtonProps) {
-  // const handleBuyNow = () => {
-  //   const session = {
-  //     currency: "COP",
-  //     items: productsToBuy.map(product => ({
-  //       name: product.productName,
-  //       price: product.productPrice + "00",
-  //       quantity: product.quantity
-  //     }))
-  //   }
-
-  //   payments.post("", session)
-  //     .then((res) => res.data)
-  //     .then((data) => {
-  //       window.location.href = data.sessionUrl;
-  //     });
-  // }
-
   return (
     <button className="btn btn-accent py-5 w-full rounded " disabled={disabled} onClick={onContinue} type="button">
       {label ?? 'Continuar'} / Total

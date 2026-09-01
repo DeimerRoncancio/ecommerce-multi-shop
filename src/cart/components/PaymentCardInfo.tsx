@@ -6,9 +6,10 @@ import CartButton from "./CartButton";
 type PaymentCardInfoProps = {
   onContinue: () => void;
   disabledContinue?: boolean;
+  continueLabel?: string;
 };
 
-export default function PaymentCardInfo({ onContinue, disabledContinue }: PaymentCardInfoProps) {
+export default function PaymentCardInfo({ onContinue, disabledContinue, continueLabel }: PaymentCardInfoProps) {
   const { itemsQuantity, totalPrice } = useCart();
   const navigate = useNavigate();
 
@@ -30,7 +31,12 @@ export default function PaymentCardInfo({ onContinue, disabledContinue }: Paymen
         </ul>
 
         <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
-          <CartButton totalPrice={totalPrice} onContinue={onContinue} disabled={disabledContinue} />
+          <CartButton
+            totalPrice={totalPrice}
+            onContinue={onContinue}
+            disabled={disabledContinue}
+            label={continueLabel}
+          />
           <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
             Seguir comprando
           </button>

@@ -4,8 +4,9 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FaPlus } from "react-icons/fa6";
 import AddressItem from "../components/AddressItem";
 import { useState } from "react";
-import { AddressType } from "../types/cart";
+import { AddressType, OrderStorageType } from "../types/cart";
 import { useOrderStorage } from "../storage/orders";
+import { payments } from "../api/paymentsApi";
 
 const addresses = [
   {
@@ -32,21 +33,34 @@ const addresses = [
 
 export default function CartDelivery() {
   const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
-  const { order, addAddress } = useOrderStorage();
+  const { order } = useOrderStorage();
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
   const handleAddressSelect = (address: AddressType) => setSelectedAddress(address);
 
   const onContinue = () => {
-    addAddress(selectedAddress!);
+    const transactionId = localStorage.getItem("transactionId");
+    if (!transactionId || !selectedAddress) return;
+
+    const raw = localStorage.getItem("orders")
+    const orderStorage: OrderStorageType = raw ? JSON.parse(raw) : null
+
+    payments.put(`/add-user/${transactionId}`, {
+      userNames: orderStorage.state.order.user.names + " " + orderStorage.state.order.user.lastnames,
+      userEmail: orderStorage.state.order.user.email,
+      userPhone: orderStorage.state.order.user.phone,
+      userAddress: selectedAddress.addressLine1
+    });
+  
+    // addAddress(selectedAddress!);
     nextSteps("Entrega");
     navigate("/cart/payment");
   }
 
   return (
     <div className="flex gap-10 justify-center mt-8 mb-15">
-      <div className="w-[55%] max-w-[850px] min-w-[600px]">
+      <div className="w-[55%] max-w-212.5 min-w-150">
         <div className="flex justify-between">
           <h1 className="text-[#333333] text-xl">Dirección de envío</h1>
           <button className="btn bg-[#ffccb4] hover:bg-[#ffc0a3] text-[#f14913] btn-sm max-w-max border-none shadow-none

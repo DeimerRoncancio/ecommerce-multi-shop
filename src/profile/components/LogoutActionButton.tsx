@@ -3,10 +3,11 @@ import { useFetcher } from "react-router";
 
 type LogoutActionProps = {
   children: React.ReactNode;
+  disabled?: boolean;
   className?: string
 }
 
-export default function LogoutActionButton({ children, className }: LogoutActionProps) {
+export default function LogoutActionButton({ children, disabled, className }: LogoutActionProps) {
   const fetcher = useFetcher();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export default function LogoutActionButton({ children, className }: LogoutAction
 
   return (
     <fetcher.Form method="post" action="/logout-action" className="p-0 flex">
-      <button className={className} name="path" type="submit">
+      <button disabled={disabled} className={className} name="path" type="submit">
         {children}
       </button>
     </fetcher.Form>

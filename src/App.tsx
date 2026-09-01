@@ -37,7 +37,7 @@ function App() {
   const location = useLocation();
   const { cleanOrder } = useOrderStorage();
   const { clearSteps } = useStepsStorage();
-  
+
   useEffect(() => {
     location.pathname !== '/cart' && clearSteps()
     location.pathname !== '/cart' && cleanOrder();

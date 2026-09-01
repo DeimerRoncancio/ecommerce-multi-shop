@@ -1,5 +1,5 @@
 import { ProductTypes } from "../../products/types/product";
-import { CartItemType } from "../types/cart";
+import { CartItemType, StripeItemType } from "../types/cart";
 
 type ProductToCartProps = {
   product: ProductTypes,
@@ -17,5 +17,16 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
     productPrice: product.price,
     quantity: quantity,
     variants: product.variants
+  }
+}
+
+// El backend valida description con @NotBlank, por eso se usa el nombre
+// como respaldo cuando el producto no trae descripción.
+export const cartItemToStripeItem = (item: CartItemType): StripeItemType => {
+  return {
+    name: item.productName,
+    description: item.productDescription?.trim() || item.productName,
+    price: Math.round(item.productPrice * 100),
+    quantity: item.quantity
   }
 }

@@ -4,7 +4,6 @@ import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
-import { useOrderStorage } from "../storage/orders";
 import { payments } from "../api/paymentsApi";
 
 export default function CartContent() {
@@ -12,8 +11,8 @@ export default function CartContent() {
   const navigate = useNavigate();
   const { nextSteps } = useStepsStorage();
 
-  const onContinue = () => {
-    payments.post("/create-transaction", {
+  const onContinue = async () => {
+    const { data } = await payments.post("/create-transaction", {
       productItems: cartItems.map(item => ({
         id: item.id,
         price: item.productPrice,
@@ -21,6 +20,8 @@ export default function CartContent() {
       })),
       status: "pending"
     });
+
+    localStorage.setItem("transactionId", data);
 
     nextSteps("Carrito");
     navigate("/cart/user-data");
