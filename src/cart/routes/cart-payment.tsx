@@ -3,11 +3,14 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import PaymentMethodItem from "../components/PaymentMethodItem";
 import useCart from "../hooks/useCart";
-import { createPaymentSession } from "../api/paymentsApi";
+import { createPaymentSession, payments } from "../api/paymentsApi";
 import { cartItemToStripeItem } from "../mappers/items.mapper";
 import { useOrderStorage } from "../storage/orders";
 import { useStepsStorage } from "../storage/steps";
 import { PaymentMethodType } from "../types/cart";
+import { Route } from "./+types/cart-payment";
+import { redirect } from "react-router";
+import { parse } from "cookie";
 
 const paymentMethods: PaymentMethodType[] = [
   {
@@ -16,6 +19,17 @@ const paymentMethods: PaymentMethodType[] = [
     description: "Te llevamos a la pasarela segura de Stripe para completar el pago.",
   },
 ];
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const transactionId = parse(request.headers.get('cookie') || '').transactionId;
+  if (!transactionId) return redirect('/cart/delivery');
+
+  return await payments.get(`/get-customer/${transactionId}`)
+    .catch((error) => {
+      if (error.status === 404) 
+        return redirect("/cart/delivery");
+    });
+}
 
 export default function CartPayment() {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType>(paymentMethods[0]);
