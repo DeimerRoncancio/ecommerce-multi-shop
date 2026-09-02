@@ -5,6 +5,7 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
 import { payments } from "../api/paymentsApi";
+import Cookie from "js-cookie";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
@@ -21,7 +22,7 @@ export default function CartContent() {
       status: "pending"
     });
 
-    localStorage.setItem("transactionId", data);
+    Cookie.set("transactionId", data);
 
     nextSteps("Carrito");
     navigate("/cart/user-data");

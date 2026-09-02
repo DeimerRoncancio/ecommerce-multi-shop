@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, redirect, useNavigate } from "react-router";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useForm } from "react-hook-form";
@@ -7,21 +7,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ImputsFromUserData, TermsOfService } from "../constants/user-data.helper";
 import { useOrderStorage } from "../storage/orders";
 import { useEffect } from "react";
+import { parse } from "cookie";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
 import useUser from "../../profile/hooks/api/useUser";
 import type { Route } from "./+types/cart-user-data";
 import { getSession } from "../../sessions.server";
+import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
   const token = session.get('token') as string;
-  return { token };
+
+  const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
+  if (!transactionId) return redirect('/cart');
+
+  return { token};
 }
 
 export default function CartUserData({ loaderData }: Route.ComponentProps) {
   const { token } = loaderData;
   const { user } = useUser({ token });
-  const { order, addUser } = useOrderStorage();
+  const { order } = useOrderStorage();
   const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<UserDataForm>({
     resolver: zodResolver(UserData),
     mode: 'onChange'
@@ -32,7 +38,8 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
 
   const onSubmit = (data: UserDataForm) => {
     if (!isValid) return;
-    addUser(data);
+
+    Cookie.set("userData", JSON.stringify(data));
     nextSteps("Datos de usuario");
     navigate('/cart/delivery');
   };

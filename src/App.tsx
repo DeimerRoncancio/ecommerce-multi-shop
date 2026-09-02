@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useOrderStorage } from "./cart/storage/orders";
 import { payments } from "./cart/api/paymentsApi";
+import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const apiProducts = await getProducts();
@@ -40,10 +41,10 @@ function App() {
   const { clearSteps } = useStepsStorage();
 
   const deleteTransaction = () => {
-    const transactionId = localStorage.getItem("transactionId");
-
+    const transactionId = Cookie.get("transactionId");
+    
     if (transactionId) {
-      localStorage.removeItem("transactionId");
+      Cookie.remove("transactionId");
       payments.delete(transactionId); 
     }
   }

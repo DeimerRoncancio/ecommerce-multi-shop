@@ -1,12 +1,15 @@
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FaPlus } from "react-icons/fa6";
 import AddressItem from "../components/AddressItem";
 import { useState } from "react";
-import { AddressType, OrderStorageType } from "../types/cart";
+import { AddressType } from "../types/cart";
 import { useOrderStorage } from "../storage/orders";
 import { payments } from "../api/paymentsApi";
+import { Route } from "./+types/cart-delivery";
+import { parse } from "cookie";
+import Cookie from "js-cookie";
 
 const addresses = [
   {
@@ -31,7 +34,15 @@ const addresses = [
   },
 ]
 
-export default function CartDelivery() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const user = parse(request.headers.get('Cookie') || '').userData;
+  if (!user) return redirect('/cart/user-data');
+
+  return { user: JSON.parse(user) as { names: string; lastnames: string; email: string; phone: string } };
+}
+
+export default function CartDelivery({ loaderData }: Route.ComponentProps) {
+  const { user } = loaderData;
   const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
   const { order } = useOrderStorage();
   const { nextSteps } = useStepsStorage();
@@ -40,20 +51,19 @@ export default function CartDelivery() {
   const handleAddressSelect = (address: AddressType) => setSelectedAddress(address);
 
   const onContinue = async () => {
-    const transactionId = localStorage.getItem("transactionId");
+    const transactionId = Cookie.get("transactionId");
     if (!transactionId || !selectedAddress) return;
 
-    const raw = localStorage.getItem("orders")
-    const orderStorage: OrderStorageType = raw ? JSON.parse(raw) : null
-
     const { data } = await payments.put(`/add-user/${transactionId}`, {
-      userNames: orderStorage.state.order.user.names + " " + orderStorage.state.order.user.lastnames,
-      userEmail: orderStorage.state.order.user.email,
-      userPhone: orderStorage.state.order.user.phone,
+      userNames: user.names + " " + user.lastnames,
+      userEmail: user.email,
+      userPhone: user.phone,
       userAddress: selectedAddress.addressLine1
     });
   
     if (data) sessionStorage.setItem("guestEmail", data);
+    Cookie.remove("transactionId");
+    Cookie.remove("userData");
 
     nextSteps("Entrega");
     navigate("/cart/payment");
