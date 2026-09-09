@@ -24,14 +24,15 @@ export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('cookie') || '').transactionId;
   if (!transactionId) return redirect('/cart/delivery');
 
-  return await payments.get(`/get-customer/${transactionId}`)
-    .catch((error) => {
-      if (error.status === 404) 
-        return redirect("/cart/delivery");
-    });
+  await payments.get(`/get-customer/${transactionId}`).then((response) => {
+    if (!response.status || response.status !== 200) return redirect('/cart/delivery');
+  });
+
+  return { transactionId };
 }
 
-export default function CartPayment() {
+export default function CartPayment({ loaderData }: Route.ComponentProps) {
+  const { transactionId } = loaderData;
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType>(paymentMethods[0]);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { cartItems, itemsQuantity } = useCart();
@@ -40,23 +41,21 @@ export default function CartPayment() {
 
   const handleMethodSelect = (method: PaymentMethodType) => setSelectedMethod(method);
 
-  const onPay = async () => {
+  const onPay = () => {
     if (!cartItems.length || isRedirecting) return;
     setIsRedirecting(true);
 
-    try {
-      const session = await createPaymentSession(cartItems.map(cartItemToStripeItem));
+    createPaymentSession(transactionId, cartItems.map(cartItemToStripeItem))
+      .then((session) => {
+        if (!session.sessionUrl) {
+          setIsRedirecting(false);
+          return;
+        }
 
-      if (!session.sessionUrl) {
-        setIsRedirecting(false);
-        return;
-      }
-
-      nextSteps("Pago");
-      window.location.href = session.sessionUrl;
-    } catch {
-      setIsRedirecting(false);
-    }
+        nextSteps("Pago");
+        window.location.href = session.sessionUrl;
+      })
+      .catch(() => setIsRedirecting(false));
   }
 
   const hasAddress = Boolean(order.address.addressLine1);

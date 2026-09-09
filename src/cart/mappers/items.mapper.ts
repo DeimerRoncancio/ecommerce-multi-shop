@@ -20,8 +20,6 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
   }
 }
 
-// El backend valida description con @NotBlank, por eso se usa el nombre
-// como respaldo cuando el producto no trae descripción.
 export const cartItemToStripeItem = (item: CartItemType): StripeItemType => {
   return {
     name: item.productName,

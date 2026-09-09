@@ -42,7 +42,7 @@ function App() {
 
   const deleteTransaction = () => {
     const transactionId = Cookie.get("transactionId");
-    
+
     if (transactionId) {
       Cookie.remove("transactionId");
       payments.delete(transactionId); 

@@ -7,10 +7,11 @@ export const payments = createInstance(`${envs.API}/app/payments`);
 export const PAYMENT_CURRENCY = "COP";
 
 export const createPaymentSession = async (
+  transactionId: string,
   items: StripeItemType[],
   currency: string = PAYMENT_CURRENCY
 ): Promise<StripeSessionResponseType> => {
-  const { data } = await payments.post<StripeSessionResponseType>("/create-payment-session", {
+  const { data } = await payments.post<StripeSessionResponseType>(`/create-payment-session/${transactionId}`, {
     currency,
     items
   });

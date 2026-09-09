@@ -35,7 +35,9 @@ export default [
         route('user-data', 'cart/routes/cart-user-data.tsx'),
         route('delivery', 'cart/routes/cart-delivery.tsx'),
         route('payment', 'cart/routes/cart-payment.tsx')
-      ])
+      ]),
+      route('success', 'cart/routes/cart-success.tsx'),
+      route('cancel', 'cart/routes/cart-cancel.tsx')
     ])
   ]),
 

@@ -62,7 +62,6 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
     });
   
     if (data) sessionStorage.setItem("guestEmail", data);
-    Cookie.remove("transactionId");
     Cookie.remove("userData");
 
     nextSteps("Entrega");

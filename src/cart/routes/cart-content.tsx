@@ -6,11 +6,12 @@ import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
 import { payments } from "../api/paymentsApi";
 import Cookie from "js-cookie";
+import { useEffect } from "react";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
-  const { nextSteps } = useStepsStorage();
+  const { clearSteps, nextSteps } = useStepsStorage();
 
   const onContinue = async () => {
     const { data } = await payments.post("/create-transaction", {
@@ -19,6 +20,7 @@ export default function CartContent() {
         price: item.productPrice,
         quantity: item.quantity
       })),
+      totalPrice: cartItems.reduce((total, item) => total + (item.productPrice * item.quantity), 0),
       status: "pending"
     });
 
@@ -27,6 +29,10 @@ export default function CartContent() {
     nextSteps("Carrito");
     navigate("/cart/user-data");
   }
+
+  useEffect(() => {
+    clearSteps();
+  }, []);
 
   return (
     <>
