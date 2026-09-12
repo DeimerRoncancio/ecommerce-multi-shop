@@ -44,7 +44,7 @@ export interface StepType {
 }
 
 export interface AddressType {
-  id: number;
+  id: string | number;
   name: string;
   addressLine1: string;
   addressLine2: string;

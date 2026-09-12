@@ -21,13 +21,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
   if (!transactionId) return redirect('/cart');
 
-  return { token};
+  const userDataFromCookies = parse(request.headers.get('Cookie') || '').userData;
+
+  return { token, userDataFromCookies };
 }
 
 export default function CartUserData({ loaderData }: Route.ComponentProps) {
-  const { token } = loaderData;
+  const { token, userDataFromCookies } = loaderData;
   const { user } = useUser({ token });
-  const { order } = useOrderStorage();
   const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<UserDataForm>({
     resolver: zodResolver(UserData),
     mode: 'onChange'
@@ -35,6 +36,8 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
 
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
+
+  const userData = JSON.parse(userDataFromCookies || '{}');
 
   const onSubmit = (data: UserDataForm) => {
     if (!isValid) return;
@@ -45,18 +48,18 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
   };
 
   useEffect(() => {
-    order.user.email
-      ? reset(UserDataInitialValues(order.user))
-      : user && reset(UserDataInitialValues(order.user, user));
-  }, [user, order.user, reset]);
+    userData
+      ? reset(UserDataInitialValues(userData))
+      : user && reset(UserDataInitialValues(userData, user));
+  }, [user, reset]);
 
   return (
     <div className="flex gap-3 justify-center text-black mb-4">
       <div className="flex flex-col p-4 w-[50%] max-w-212.5 min-w-150">
-        <h2 className={`text-[#333333] text-xl mx-4 mt-4 ${(order.user.email || user.email) && 'mb-4'}`}>
+        <h2 className={`text-[#333333] text-xl mx-4 mt-4 ${(userData.email || user.email) && 'mb-4'}`}>
           Datos de usuario
         </h2>
-        {(!order.user.email && !user.email) &&
+        {(!userData.email && !user.email) &&
           <p className="text-[#575757] text- mx-4 mb-4">
             <Link className="text-[#f14913]" to="/login">Inicia sesión</Link> para rellenar los datos rapidamente
           </p>}

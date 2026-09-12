@@ -5,6 +5,7 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
 import { payments } from "../api/paymentsApi";
+import { cartItemToProductItem } from "../mappers/items.mapper";
 import Cookie from "js-cookie";
 import { useEffect } from "react";
 
@@ -12,26 +13,26 @@ export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const { clearSteps, nextSteps } = useStepsStorage();
+  const transactionId = Cookie.get("transactionId");
 
   const onContinue = async () => {
-    const { data } = await payments.post("/create-transaction", {
-      productItems: cartItems.map(item => ({
-        id: item.id,
-        price: item.productPrice,
-        quantity: item.quantity
-      })),
-      totalPrice: cartItems.reduce((total, item) => total + (item.productPrice * item.quantity), 0),
-      status: "pending"
-    });
+    if (!transactionId) {
+      const { data } = await payments.post("/create-transaction", {
+        productItems: cartItems.map(cartItemToProductItem),
+        status: "pending"
+      });
 
-    Cookie.set("transactionId", data);
+      Cookie.set("transactionId", data);
+    } else {
+      await payments.put(`/update-products/${transactionId}`, cartItems.map(cartItemToProductItem));
+    }
 
     nextSteps("Carrito");
     navigate("/cart/user-data");
   }
 
   useEffect(() => {
-    clearSteps();
+    if (!transactionId) clearSteps();
   }, []);
 
   return (

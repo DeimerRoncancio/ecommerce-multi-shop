@@ -6,10 +6,10 @@ import AddressItem from "../components/AddressItem";
 import { useState } from "react";
 import { AddressType } from "../types/cart";
 import { useOrderStorage } from "../storage/orders";
-import { payments } from "../api/paymentsApi";
 import { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
+import { payments } from "../api/paymentsApi";
 
 const addresses = [
   {
@@ -58,11 +58,17 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
       userNames: user.names + " " + user.lastnames,
       userEmail: user.email,
       userPhone: user.phone,
-      userAddress: selectedAddress.addressLine1
+      userAddress: {
+        addressName: selectedAddress.name,
+        address: selectedAddress.addressLine1,
+        city: selectedAddress.city,
+        state: selectedAddress.state,
+        country: selectedAddress.country,
+        addressNumber: selectedAddress.phone
+      }
     });
   
     if (data) sessionStorage.setItem("guestEmail", data);
-    Cookie.remove("userData");
 
     nextSteps("Entrega");
     navigate("/cart/payment");

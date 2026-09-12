@@ -1,8 +1,7 @@
 import { UserTypes } from "../../profile/types/user";
-import { UserData } from "../types/cart";
 import { UserDataForm } from "../zod/routesCart";
 
-export const UserDataInitialValues = (orderUser: UserData, user?: UserTypes): UserDataForm => {
+export const UserDataInitialValues = (orderUser: UserDataForm, user?: UserTypes): UserDataForm => {
   return {
     names: user?.name || orderUser.names || "",
     lastnames: user?.lastnames || orderUser.lastnames || "",

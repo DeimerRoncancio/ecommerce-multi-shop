@@ -11,7 +11,7 @@ type Props = {
 
 export default function AddressItem({ address, isActive, onSelect }: Props) {
   return (
-    <div className={`flex flex-col justify-center text-left gap-4 mt-6 p-6 border-1 border-[#dedfdf] hover:border-[#f14913]
+    <div className={`flex flex-col justify-center text-left gap-4 mt-6 p-6 border border-[#dedfdf] hover:border-[#f14913]
     rounded-xl transition-colors duration-300 cursor-pointer ${isActive ? 'border-[#f14913]' : ''}`}
     onClick={() => onSelect(address)}>
       <div className="flex flex-col gap-2 mb-1">

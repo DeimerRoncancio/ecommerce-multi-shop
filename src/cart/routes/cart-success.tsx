@@ -50,7 +50,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
       </div>
 
       {transactionId && (
-        <div className="flex flex-col gap-1 px-8 py-4 border-1 border-[#dedfdf] rounded-xl">
+        <div className="flex flex-col gap-1 px-8 py-4 border border-[#dedfdf] rounded-xl">
           <span className="text-sm text-[#7d7d7d]">Número de pedido</span>
           <span className="text-lg font-semibold text-[#5e472d] tracking-wide">
             #{transactionId.slice(0, 8).toUpperCase()}

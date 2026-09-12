@@ -28,3 +28,13 @@ export const cartItemToStripeItem = (item: CartItemType): StripeItemType => {
     quantity: item.quantity
   }
 }
+
+// El endpoint /update-products recibe List<ProductItemDTO> y /create-transaction lo
+// envuelve en NewTransactionDTO.productItems; en ambos casos el objeto es el mismo.
+export const cartItemToProductItem = (item: CartItemType) => {
+  return {
+    id: item.id,
+    price: item.productPrice,
+    quantity: item.quantity
+  }
+}
