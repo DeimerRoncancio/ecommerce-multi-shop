@@ -4,8 +4,10 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useForm } from "react-hook-form";
 import { UserData, UserDataForm } from "../zod/routesCart";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImputsFromUserData, TermsOfService } from "../constants/user-data.helper";
-import { useOrderStorage } from "../storage/orders";
+import {
+  ImputsFromUserData,
+  TermsOfService,
+} from "../constants/user-data.helper";
 import { useEffect } from "react";
 import { parse } from "cookie";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
@@ -15,13 +17,17 @@ import { getSession } from "../../sessions.server";
 import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-  const token = session.get('token') as string;
+  const session = await getSession(request.headers.get("Cookie"));
+  const token = session.get("token") as string;
 
-  const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
-  if (!transactionId) return redirect('/cart');
+  const transactionId = parse(
+    request.headers.get("Cookie") || "",
+  ).transactionId;
+  if (!transactionId) return redirect("/cart");
 
-  const userDataFromCookies = parse(request.headers.get('Cookie') || '').userData;
+  const userDataFromCookies = parse(
+    request.headers.get("Cookie") || "",
+  ).userData;
 
   return { token, userDataFromCookies };
 }
@@ -29,26 +35,31 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function CartUserData({ loaderData }: Route.ComponentProps) {
   const { token, userDataFromCookies } = loaderData;
   const { user } = useUser({ token });
-  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<UserDataForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<UserDataForm>({
     resolver: zodResolver(UserData),
-    mode: 'onChange'
+    mode: "onChange",
   });
 
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
-  const userData = JSON.parse(userDataFromCookies || '{}');
+  const userData = JSON.parse(userDataFromCookies || "{}") || null;
 
   const onSubmit = (data: UserDataForm) => {
     if (!isValid) return;
 
     Cookie.set("userData", JSON.stringify(data));
     nextSteps("Datos de usuario");
-    navigate('/cart/delivery');
+    navigate("/cart/delivery");
   };
 
   useEffect(() => {
-    userData
+    !userData
       ? reset(UserDataInitialValues(userData))
       : user && reset(UserDataInitialValues(userData, user));
   }, [user, reset]);
@@ -56,17 +67,29 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
   return (
     <div className="flex gap-3 justify-center text-black mb-4">
       <div className="flex flex-col p-4 w-[50%] max-w-212.5 min-w-150">
-        <h2 className={`text-[#333333] text-xl mx-4 mt-4 ${(userData.email || user.email) && 'mb-4'}`}>
+        <h2
+          className={`text-[#333333] text-xl mx-4 mt-4 ${(userData.email || user.email) && "mb-4"}`}
+        >
           Datos de usuario
         </h2>
-        {(!userData.email && !user.email) &&
+        {!userData.email && !user.email && (
           <p className="text-[#575757] text- mx-4 mb-4">
-            <Link className="text-[#f14913]" to="/login">Inicia sesión</Link> para rellenar los datos rapidamente
-          </p>}
-        <form className=" text-sm border-t border-[#e8e9e9]" onSubmit={handleSubmit(onSubmit)}>
+            <Link className="text-[#f14913]" to="/login">
+              Inicia sesión
+            </Link>{" "}
+            para rellenar los datos rapidamente
+          </p>
+        )}
+        <form
+          className=" text-sm border-t border-[#e8e9e9]"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="grid grid-cols-2 gap-4 p-5">
             {ImputsFromUserData.map((input) => (
-              <div key={input.name} className={`${input.name === "phone" || input.name === "email" ? "col-span-2" : ""}`}>
+              <div
+                key={input.name}
+                className={`${input.name === "phone" || input.name === "email" ? "col-span-2" : ""}`}
+              >
                 <span className="text-[#5e472d]">{input.label}</span>
                 <input
                   type={input.type}
@@ -77,14 +100,17 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
                 />
                 {errors[input.name as keyof UserDataForm] && (
                   <span className="text-red-500">
-                    {errors[input.name as keyof UserDataForm]?.message as string}
+                    {
+                      errors[input.name as keyof UserDataForm]
+                        ?.message as string
+                    }
                   </span>
                 )}
               </div>
             ))}
           </div>
           <div className="flex flex-col col-span-2 text-[#969696] border-t border-[#e8e9e9] px-5">
-            {TermsOfService.map(term => (
+            {TermsOfService.map((term) => (
               <div key={term.id} className="flex items-center mt-4">
                 <input
                   type="checkbox"
@@ -92,12 +118,16 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
                   {...register(term.name as keyof UserDataForm)}
                 />
                 <span className="ml-2 text-sm">
-                  {term.mandatory ? "*" : ""} {term.isAuthorization ? "Autorizo" : "Acepto"} <b>{term.text}</b>
+                  {term.mandatory ? "*" : ""}{" "}
+                  {term.isAuthorization ? "Autorizo" : "Acepto"}{" "}
+                  <b>{term.text}</b>
                 </span>
               </div>
             ))}
           </div>
-          <button type="submit" className="hidden">Send</button>
+          <button type="submit" className="hidden">
+            Send
+          </button>
         </form>
       </div>
 
