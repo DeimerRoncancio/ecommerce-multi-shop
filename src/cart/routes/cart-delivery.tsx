@@ -4,37 +4,30 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FaPlus } from "react-icons/fa6";
 import AddressItem from "../components/AddressItem";
 import { useState } from "react";
-import type { AddressType } from "../types/cart";
+import type { AddressType, CheckoutUserData } from "../types/cart";
 import { useOrderStorage } from "../storage/orders";
 import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
-import { getCheckoutCustomer, payments } from "../api/paymentsApi";
+import {
+  getCheckoutCustomer,
+  updateTransactionCustomer,
+} from "../api/paymentsApi";
+import {
+  checkoutCustomerAddressesToAddresses,
+  checkoutToCustomerTransaction,
+} from "../mappers/customer.mapper";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = parse(request.headers.get("Cookie") || "");
   if (!cookies.userData) return redirect("/cart/user-data");
   if (!cookies.transactionId) return redirect("/cart");
 
-  const user = JSON.parse(cookies.userData) as {
-    names: string;
-    lastnames: string;
-    email: string;
-    phone: string;
-  };
+  const user: CheckoutUserData = JSON.parse(cookies.userData);
 
   const customer = await getCheckoutCustomer(cookies.transactionId, user.email);
-  const addresses: AddressType[] = (customer?.addresses ?? []).map(
-    (address, index) => ({
-      id: `${address.addressName}-${index}`,
-      name: address.addressName,
-      addressLine1: address.address,
-      addressLine2: "",
-      city: address.city,
-      state: address.state,
-      country: address.country,
-      phone: address.addressNumber,
-    }),
+  const addresses = checkoutCustomerAddressesToAddresses(
+    customer?.addresses ?? [],
   );
 
   return { user, addresses };
@@ -56,19 +49,10 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
     const transactionId = Cookie.get("transactionId");
     if (!transactionId || !selectedAddress) return;
 
-    const { data } = await payments.put(`/add-user/${transactionId}`, {
-      userNames: user.names + " " + user.lastnames,
-      userEmail: user.email,
-      userPhone: user.phone,
-      userAddress: {
-        addressName: selectedAddress.name,
-        address: selectedAddress.addressLine1,
-        city: selectedAddress.city,
-        state: selectedAddress.state,
-        country: selectedAddress.country,
-        addressNumber: selectedAddress.phone,
-      },
-    });
+    const data = await updateTransactionCustomer(
+      transactionId,
+      checkoutToCustomerTransaction(user, selectedAddress),
+    );
 
     if (data) sessionStorage.setItem("guestEmail", data);
 
