@@ -4,7 +4,10 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { parse } from "cookie";
 import type { Route } from "./+types/cart-cancel";
 import useCart from "../hooks/useCart";
-import { payments } from "../api/paymentsApi";
+import {
+  CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  payments,
+} from "../api/paymentsApi";
 import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -51,6 +54,7 @@ export default function CartCancel({ loaderData }: Route.ComponentProps) {
           onClick={() => {
             navigate("/cart")
             Cookie.remove("transactionId");
+            sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
           }}
         >
           <MdOutlineShoppingCart size={17} />
@@ -63,6 +67,7 @@ export default function CartCancel({ loaderData }: Route.ComponentProps) {
         onClick={() => {
           navigate("/")
           Cookie.remove("transactionId");
+          sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
         }}
       >
         Seguir comprando

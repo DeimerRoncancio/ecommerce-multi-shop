@@ -25,9 +25,58 @@ export interface CheckoutCustomerResponse {
   addresses: CustomerAddressRequest[];
 }
 
+export interface TransactionAccessResponse {
+  transactionId: string;
+  checkoutAccessToken: string;
+}
+
+export interface CheckoutSummaryResponse {
+  transactionId: string;
+  status: string;
+  totalPrice: number;
+  customer: {
+    userNames: string;
+    userEmail: string;
+    userPhone: string | null;
+  } | null;
+  addresses: CustomerAddressRequest[];
+  selectedAddress: CustomerAddressRequest | null;
+  items: Array<{
+    id: string;
+    productName: string;
+    price: number;
+    quantity: number;
+  }>;
+}
+
 export const payments = createInstance(`${envs.API}/app/payments`);
 
 export const PAYMENT_CURRENCY = "COP";
+
+export const CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "checkoutAccessToken";
+
+export const createTransaction = async (
+  productItems: Array<{ id: string; quantity: number }>,
+): Promise<TransactionAccessResponse> => {
+  const { data } = await payments.post<TransactionAccessResponse>(
+    "/create-transaction",
+    { productItems, status: "pending" },
+  );
+
+  return data;
+};
+
+export const getCheckoutSummary = async (
+  transactionId: string,
+  checkoutAccessToken: string,
+): Promise<CheckoutSummaryResponse> => {
+  const { data } = await payments.get<CheckoutSummaryResponse>(
+    `/checkout/${encodeURIComponent(transactionId)}`,
+    { headers: { "X-Checkout-Access-Token": checkoutAccessToken } },
+  );
+
+  return data;
+};
 
 export const createPaymentSession = async (
   transactionId: string,

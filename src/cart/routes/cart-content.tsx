@@ -4,7 +4,11 @@ import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
-import { payments } from "../api/paymentsApi";
+import {
+  CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  createTransaction,
+  payments,
+} from "../api/paymentsApi";
 import { cartItemToProductItem } from "../mappers/items.mapper";
 import Cookie from "js-cookie";
 import { useEffect } from "react";
@@ -17,12 +21,15 @@ export default function CartContent() {
 
   const onContinue = async () => {
     if (!transactionId) {
-      const { data } = await payments.post("/create-transaction", {
-        productItems: cartItems.map(cartItemToProductItem),
-        status: "pending"
-      });
+      const transaction = await createTransaction(
+        cartItems.map(cartItemToProductItem),
+      );
 
-      Cookie.set("transactionId", data);
+      Cookie.set("transactionId", transaction.transactionId);
+      sessionStorage.setItem(
+        CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+        transaction.checkoutAccessToken,
+      );
     } else {
       await payments.put(`/update-products/${transactionId}`, cartItems.map(cartItemToProductItem));
     }

@@ -50,7 +50,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (location.pathname !== '/cart') {
+    if (!location.pathname.startsWith("/cart")) {
       clearSteps();
       cleanOrder();
       deleteTransaction();

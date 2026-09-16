@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { FaCheck } from "react-icons/fa6";
 import { BsInboxes } from "react-icons/bs";
@@ -8,7 +8,12 @@ import type { Route } from "./+types/cart-success";
 import useCart from "../hooks/useCart";
 import { useOrderStorage } from "../storage/orders";
 import { useStepsStorage } from "../storage/steps";
-import { payments } from "../api/paymentsApi";
+import {
+  CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  getCheckoutSummary,
+  payments,
+  type CheckoutSummaryResponse,
+} from "../api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
@@ -26,10 +31,26 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   const { order, cleanOrder } = useOrderStorage();
   const { clearSteps } = useStepsStorage();
   const navigate = useNavigate();
+  const [summary, setSummary] = useState<CheckoutSummaryResponse | null>(null);
 
-  const email = order.user.email;
+  const email = summary?.customer?.userEmail ?? order.user.email;
 
   useEffect(() => {
+    const checkoutAccessToken = sessionStorage.getItem(
+      CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+    );
+
+    if (transactionId && checkoutAccessToken) {
+      getCheckoutSummary(transactionId, checkoutAccessToken)
+        .then(setSummary)
+        .catch(() => undefined)
+        .finally(() =>
+          sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY),
+        );
+    } else {
+      sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+    }
+
     clear();
     cleanOrder();
     clearSteps();
@@ -63,6 +84,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
           className="btn btn-accent py-5 px-8 rounded"
           onClick={() => {
             Cookie.remove("transactionId");
+            sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
             navigate("/");
           }}
         >
@@ -72,6 +94,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
           className="btn py-5 px-8 rounded"
           onClick={() => {
             Cookie.remove("transactionId");
+            sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
             navigate("/profile");
           }}
         >
