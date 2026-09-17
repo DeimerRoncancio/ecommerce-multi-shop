@@ -87,6 +87,17 @@ export const createPaymentSession = async (
   return data;
 };
 
+export const cancelPaymentSession = async (
+  transactionId: string,
+  checkoutAccessToken: string,
+): Promise<void> => {
+  await payments.post(
+    `/cancel-payment-session/${encodeURIComponent(transactionId)}`,
+    undefined,
+    { headers: { "X-Checkout-Access-Token": checkoutAccessToken } },
+  );
+};
+
 export const updateTransactionCustomer = async (
   transactionId: string,
   customer: CustomerTransactionRequest,

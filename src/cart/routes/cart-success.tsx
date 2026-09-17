@@ -11,18 +11,12 @@ import { useStepsStorage } from "../storage/steps";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   getCheckoutSummary,
-  payments,
   type CheckoutSummaryResponse,
 } from "../api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
-  if (!transactionId) return { transactionId: null };
-
-  await payments.put(`/add-transaction-date/${transactionId}`, new Date() );
-  await payments.put(`/set-status/${transactionId}/APPROVED`);
-
-  return { transactionId };
+  return { transactionId: transactionId ?? null };
 }
 
 export default function CartSuccess({ loaderData }: Route.ComponentProps) {
@@ -65,7 +59,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
       <div className="flex flex-col gap-3">
         <h1 className="text-[#333333] text-3xl">¡Gracias por tu compra!</h1>
         <p className="text-[#636669] max-w-125">
-          Tu pago se procesó correctamente y ya estamos preparando tu pedido.
+          Estamos confirmando tu pago con Stripe; en cuanto se confirme empezamos a preparar tu pedido.
           {email && <> Te enviamos la confirmación a <b className="text-[#5e472d]">{email}</b>.</>}
         </p>
       </div>

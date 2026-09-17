@@ -6,22 +6,32 @@ import type { Route } from "./+types/cart-cancel";
 import useCart from "../hooks/useCart";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
-  payments,
+  cancelPaymentSession,
 } from "../api/paymentsApi";
 import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
-  if (!transactionId) return { hasPendingTransaction: false };
-
-  await payments.put(`/add-transaction-date/${transactionId}`, new Date() );
-  await payments.put(`/set-status/${transactionId}/REJECTED`);
-
-  return { hasPendingTransaction: Boolean(transactionId) };
+  return { transactionId: transactionId ?? null };
 }
 
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+  const { transactionId } = await serverLoader();
+  const checkoutAccessToken = sessionStorage.getItem(
+    CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  );
+
+  if (transactionId && checkoutAccessToken)
+    await cancelPaymentSession(transactionId, checkoutAccessToken).catch(() => undefined);
+
+  return { transactionId };
+}
+
+clientLoader.hydrate = true as const;
+
 export default function CartCancel({ loaderData }: Route.ComponentProps) {
-  const { hasPendingTransaction } = loaderData;
+  const { transactionId } = loaderData;
+  const hasPendingTransaction = Boolean(transactionId);
   const { itemsQuantity } = useCart();
   const navigate = useNavigate();
 
