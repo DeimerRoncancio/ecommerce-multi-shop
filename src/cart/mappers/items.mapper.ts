@@ -1,5 +1,5 @@
 import { ProductTypes } from "../../products/types/product";
-import { CartItemType, StripeItemType } from "../types/cart";
+import { CartItemType } from "../types/cart";
 
 type ProductToCartProps = {
   product: ProductTypes,
@@ -17,15 +17,6 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
     productPrice: product.price,
     quantity: quantity,
     variants: product.variants
-  }
-}
-
-export const cartItemToStripeItem = (item: CartItemType): StripeItemType => {
-  return {
-    name: item.productName,
-    description: item.productDescription?.trim() || item.productName,
-    price: Math.round(item.productPrice * 100),
-    quantity: item.quantity
   }
 }
 

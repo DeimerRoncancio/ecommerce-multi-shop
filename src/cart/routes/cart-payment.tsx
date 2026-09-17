@@ -4,7 +4,6 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import PaymentMethodItem from "../components/PaymentMethodItem";
 import useCart from "../hooks/useCart";
 import { createPaymentSession, payments } from "../api/paymentsApi";
-import { cartItemToStripeItem } from "../mappers/items.mapper";
 import { useOrderStorage } from "../storage/orders";
 import { useStepsStorage } from "../storage/steps";
 import { PaymentMethodType } from "../types/cart";
@@ -46,7 +45,7 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
     if (!cartItems.length || isRedirecting) return;
     setIsRedirecting(true);
 
-    createPaymentSession(transactionId, cartItems.map(cartItemToStripeItem))
+    createPaymentSession(transactionId)
       .then((session) => {
         if (!session.sessionUrl) {
           setIsRedirecting(false);

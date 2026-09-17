@@ -1,6 +1,6 @@
 import { createInstance } from "../../shared/api/axios-factory";
 import { envs } from "../../shared/config/env.config";
-import { StripeItemType, StripeSessionResponseType } from "../types/cart";
+import { StripeSessionResponseType } from "../types/cart";
 
 export interface CustomerAddressRequest {
   addressName: string;
@@ -51,8 +51,6 @@ export interface CheckoutSummaryResponse {
 
 export const payments = createInstance(`${envs.API}/app/payments`);
 
-export const PAYMENT_CURRENCY = "COP";
-
 export const CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "checkoutAccessToken";
 
 export const createTransaction = async (
@@ -78,17 +76,12 @@ export const getCheckoutSummary = async (
   return data;
 };
 
+// Sin productos ni precios: el servidor cobra lo guardado en la transacción.
 export const createPaymentSession = async (
   transactionId: string,
-  items: StripeItemType[],
-  currency: string = PAYMENT_CURRENCY,
 ): Promise<StripeSessionResponseType> => {
   const { data } = await payments.post<StripeSessionResponseType>(
     `/create-payment-session/${transactionId}`,
-    {
-      currency,
-      items,
-    },
   );
 
   return data;

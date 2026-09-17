@@ -65,18 +65,6 @@ export interface PaymentMethodType {
   description: string;
 }
 
-export interface StripeItemType {
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-}
-
-export interface StripeSessionType {
-  currency: string;
-  items: StripeItemType[];
-}
-
 export interface StripeSessionResponseType {
   status: string;
   message: string;
