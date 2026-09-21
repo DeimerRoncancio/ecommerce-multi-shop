@@ -7,7 +7,8 @@ import { useNavigate } from "react-router";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   createTransaction,
-  payments,
+  getCheckoutAccessToken,
+  updateTransactionProducts,
 } from "../api/paymentsApi";
 import { cartItemToProductItem } from "../mappers/items.mapper";
 import Cookie from "js-cookie";
@@ -20,10 +21,10 @@ export default function CartContent() {
   const transactionId = Cookie.get("transactionId");
 
   const onContinue = async () => {
-    if (!transactionId) {
-      const transaction = await createTransaction(
-        cartItems.map(cartItemToProductItem),
-      );
+    const checkoutAccessToken = getCheckoutAccessToken();
+
+    if (!transactionId || !checkoutAccessToken) {
+      const transaction = await createTransaction(cartItems.map(cartItemToProductItem));
 
       Cookie.set("transactionId", transaction.transactionId);
       sessionStorage.setItem(
@@ -31,7 +32,11 @@ export default function CartContent() {
         transaction.checkoutAccessToken,
       );
     } else {
-      await payments.put(`/update-products/${transactionId}`, cartItems.map(cartItemToProductItem));
+      await updateTransactionProducts(
+        transactionId,
+        checkoutAccessToken,
+        cartItems.map(cartItemToProductItem),
+      );
     }
 
     nextSteps("Carrito");

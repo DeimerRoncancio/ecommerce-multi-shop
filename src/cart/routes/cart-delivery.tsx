@@ -10,6 +10,7 @@ import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
 import {
+  getCheckoutAccessToken,
   getCheckoutCustomer,
   updateTransactionCustomer,
 } from "../api/paymentsApi";
@@ -47,10 +48,13 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
 
   const onContinue = async () => {
     const transactionId = Cookie.get("transactionId");
-    if (!transactionId || !selectedAddress) return;
+    const checkoutAccessToken = getCheckoutAccessToken();
+    if (!selectedAddress) return;
+    if (!transactionId || !checkoutAccessToken) return navigate("/cart");
 
     const data = await updateTransactionCustomer(
       transactionId,
+      checkoutAccessToken,
       checkoutToCustomerTransaction(user, selectedAddress),
     );
 

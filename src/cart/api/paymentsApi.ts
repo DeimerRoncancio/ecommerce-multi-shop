@@ -53,6 +53,13 @@ export const payments = createInstance(`${envs.API}/app/payments`);
 
 export const CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "checkoutAccessToken";
 
+export const getCheckoutAccessToken = (): string | null =>
+  sessionStorage.getItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+
+const withCheckoutAccess = (checkoutAccessToken: string) => ({
+  headers: { "X-Checkout-Access-Token": checkoutAccessToken },
+});
+
 export const createTransaction = async (
   productItems: Array<{ id: string; quantity: number }>,
 ): Promise<TransactionAccessResponse> => {
@@ -70,18 +77,42 @@ export const getCheckoutSummary = async (
 ): Promise<CheckoutSummaryResponse> => {
   const { data } = await payments.get<CheckoutSummaryResponse>(
     `/checkout/${encodeURIComponent(transactionId)}`,
-    { headers: { "X-Checkout-Access-Token": checkoutAccessToken } },
+    withCheckoutAccess(checkoutAccessToken),
   );
 
   return data;
 };
 
-// Sin productos ni precios: el servidor cobra lo guardado en la transacción.
+export const updateTransactionProducts = async (
+  transactionId: string,
+  checkoutAccessToken: string,
+  productItems: Array<{ id: string; quantity: number }>,
+): Promise<void> => {
+  await payments.put(
+    `/update-products/${encodeURIComponent(transactionId)}`,
+    productItems,
+    withCheckoutAccess(checkoutAccessToken),
+  );
+};
+
+export const deleteTransaction = async (
+  transactionId: string,
+  checkoutAccessToken: string,
+): Promise<void> => {
+  await payments.delete(`/${encodeURIComponent(transactionId)}`, {
+    ...withCheckoutAccess(checkoutAccessToken),
+    validateStatus: (status) => status < 500,
+  });
+};
+
 export const createPaymentSession = async (
   transactionId: string,
+  checkoutAccessToken: string,
 ): Promise<StripeSessionResponseType> => {
   const { data } = await payments.post<StripeSessionResponseType>(
-    `/create-payment-session/${transactionId}`,
+    `/create-payment-session/${encodeURIComponent(transactionId)}`,
+    undefined,
+    withCheckoutAccess(checkoutAccessToken),
   );
 
   return data;
@@ -94,17 +125,19 @@ export const cancelPaymentSession = async (
   await payments.post(
     `/cancel-payment-session/${encodeURIComponent(transactionId)}`,
     undefined,
-    { headers: { "X-Checkout-Access-Token": checkoutAccessToken } },
+    withCheckoutAccess(checkoutAccessToken),
   );
 };
 
 export const updateTransactionCustomer = async (
   transactionId: string,
+  checkoutAccessToken: string,
   customer: CustomerTransactionRequest,
 ): Promise<string | null> => {
   const { data } = await payments.put<string | null>(
-    `/add-user/${transactionId}`,
+    `/add-user/${encodeURIComponent(transactionId)}`,
     customer,
+    withCheckoutAccess(checkoutAccessToken),
   );
 
   return data;

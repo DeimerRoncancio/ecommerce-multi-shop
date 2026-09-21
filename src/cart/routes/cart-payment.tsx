@@ -3,12 +3,12 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import PaymentMethodItem from "../components/PaymentMethodItem";
 import useCart from "../hooks/useCart";
-import { createPaymentSession, payments } from "../api/paymentsApi";
+import { createPaymentSession, getCheckoutAccessToken, payments } from "../api/paymentsApi";
 import { useOrderStorage } from "../storage/orders";
 import { useStepsStorage } from "../storage/steps";
 import { PaymentMethodType } from "../types/cart";
 import { Route } from "./+types/cart-payment";
-import { redirect } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
 
@@ -38,14 +38,22 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
   const { cartItems, itemsQuantity } = useCart();
   const { order } = useOrderStorage();
   const { nextSteps } = useStepsStorage();
+  const navigate = useNavigate();
 
   const handleMethodSelect = (method: PaymentMethodType) => setSelectedMethod(method);
 
   const onPay = () => {
     if (!cartItems.length || isRedirecting) return;
+
+    const checkoutAccessToken = getCheckoutAccessToken();
+    if (!checkoutAccessToken) {
+      navigate("/cart");
+      return;
+    }
+
     setIsRedirecting(true);
 
-    createPaymentSession(transactionId)
+    createPaymentSession(transactionId, checkoutAccessToken)
       .then((session) => {
         if (!session.sessionUrl) {
           setIsRedirecting(false);

@@ -13,7 +13,11 @@ import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useOrderStorage } from "./cart/storage/orders";
-import { payments } from "./cart/api/paymentsApi";
+import {
+  CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  deleteTransaction as deleteCheckoutTransaction,
+  getCheckoutAccessToken,
+} from "./cart/api/paymentsApi";
 import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -42,10 +46,13 @@ function App() {
 
   const deleteTransaction = () => {
     const transactionId = Cookie.get("transactionId");
+    const checkoutAccessToken = getCheckoutAccessToken();
 
-    if (transactionId) {
-      Cookie.remove("transactionId");
-      payments.delete(transactionId); 
+    Cookie.remove("transactionId");
+    sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+
+    if (transactionId && checkoutAccessToken) {
+      deleteCheckoutTransaction(transactionId, checkoutAccessToken).catch(() => undefined);
     }
   }
 
