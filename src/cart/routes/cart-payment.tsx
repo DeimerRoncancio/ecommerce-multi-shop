@@ -3,8 +3,7 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import PaymentMethodItem from "../components/PaymentMethodItem";
 import useCart from "../hooks/useCart";
-import { createPaymentSession, getCheckoutAccessToken, payments } from "../api/paymentsApi";
-import { useOrderStorage } from "../storage/orders";
+import { createPaymentSession, getCheckoutAccessToken, getCheckoutSummary } from "../api/paymentsApi";
 import { useStepsStorage } from "../storage/steps";
 import { PaymentMethodType } from "../types/cart";
 import { Route } from "./+types/cart-payment";
@@ -24,19 +23,29 @@ export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('cookie') || '').transactionId;
   if (!transactionId) return redirect('/cart/delivery');
 
-  await payments.get(`/get-customer/${transactionId}`).then((response) => {
-    if (!response.status || response.status !== 200) return redirect('/cart/delivery');
-  });
-
   return { transactionId };
 }
 
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+  const data = await serverLoader();
+  const checkoutAccessToken = getCheckoutAccessToken();
+  if (!checkoutAccessToken) return redirect('/cart');
+
+  const summary = await getCheckoutSummary(data.transactionId, checkoutAccessToken).catch(() => null);
+  if (!summary?.selectedAddress) return redirect('/cart/delivery');
+
+  return { ...data, customer: summary.customer, address: summary.selectedAddress };
+}
+
+clientLoader.hydrate = true as const;
+
 export default function CartPayment({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;
+  const customer = "customer" in loaderData ? loaderData.customer : null;
+  const address = "address" in loaderData ? loaderData.address : null;
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType>(paymentMethods[0]);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { cartItems, itemsQuantity } = useCart();
-  const { order } = useOrderStorage();
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
@@ -66,8 +75,6 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
       })
       .catch(() => setIsRedirecting(false));
   }
-
-  const hasAddress = Boolean(order.address.addressLine1);
 
   return (
     <div className="flex gap-10 justify-center mt-8 mb-15">
@@ -106,16 +113,16 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
           </ul>
 
           <div className="flex flex-col gap-1 text-sm text-[#636669] mt-4">
-            {order.user.email && (
+            {customer && (
               <>
-                <span>{order.user.names} {order.user.lastnames}</span>
-                <span>{order.user.email}</span>
-                <span>{order.user.phone}</span>
+                <span>{customer.userNames}</span>
+                <span>{customer.userEmail}</span>
+                {customer.userPhone && <span>{customer.userPhone}</span>}
               </>
             )}
-            {hasAddress && (
+            {address && (
               <span className="mt-2">
-                Envío a: {order.address.addressLine1}, {order.address.city}, {order.address.country}
+                Envío a: {address.address}, {address.city}, {address.country}
               </span>
             )}
           </div>

@@ -6,7 +6,6 @@ import { parse } from "cookie";
 import Cookie from "js-cookie";
 import type { Route } from "./+types/cart-success";
 import useCart from "../hooks/useCart";
-import { useOrderStorage } from "../storage/orders";
 import { useStepsStorage } from "../storage/steps";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
@@ -22,12 +21,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;
   const { clear } = useCart();
-  const { order, cleanOrder } = useOrderStorage();
   const { clearSteps } = useStepsStorage();
   const navigate = useNavigate();
   const [summary, setSummary] = useState<CheckoutSummaryResponse | null>(null);
 
-  const email = summary?.customer?.userEmail ?? order.user.email;
+  const email = summary?.customer?.userEmail;
 
   useEffect(() => {
     const checkoutAccessToken = sessionStorage.getItem(
@@ -46,7 +44,6 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
     }
 
     clear();
-    cleanOrder();
     clearSteps();
   }, []);
 

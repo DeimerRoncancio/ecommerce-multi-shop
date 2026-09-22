@@ -12,7 +12,6 @@ import type { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";
-import { useOrderStorage } from "./cart/storage/orders";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   deleteTransaction as deleteCheckoutTransaction,
@@ -41,7 +40,6 @@ declare module "notistack" {
 
 function App() {
   const location = useLocation();
-  const { cleanOrder } = useOrderStorage();
   const { clearSteps } = useStepsStorage();
 
   const deleteTransaction = () => {
@@ -59,7 +57,6 @@ function App() {
   useEffect(() => {
     if (!location.pathname.startsWith("/cart")) {
       clearSteps();
-      cleanOrder();
       deleteTransaction();
     }
   }, []);

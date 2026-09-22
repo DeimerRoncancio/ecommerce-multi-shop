@@ -12,20 +12,6 @@ export interface CartItemType {
   variants?: ProductVariantType[];
 }
 
-export interface OrderStorageType {
-  state: OrderStateType;
-}
-
-export interface OrderStateType {
-  order: OrderType;
-}
-
-export interface OrderType {
-  items: CartItemType[];
-  user: UserData;
-  address: AddressType;
-}
-
 export interface UserData {
   names: string;
   lastnames: string;
