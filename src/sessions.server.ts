@@ -8,6 +8,11 @@ type SessionFlashData = {
   error: string;
 }
 
+const sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+  throw new Error("SESSION_SECRET is not set. Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"");
+}
+
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData> ({
   cookie: {
     name: "___session",
@@ -16,7 +21,7 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
     maxAge: 60 * 60 * 24 * 1,
     path: "/",
     sameSite: "lax",
-    secrets: ["s3cret1"],
+    secrets: [sessionSecret],
     secure: true
   }
 })
