@@ -18,13 +18,6 @@ export interface CustomerTransactionRequest {
   userAddress: CustomerAddressRequest;
 }
 
-export interface CheckoutCustomerResponse {
-  userNames: string;
-  userEmail: string;
-  userPhone: string;
-  addresses: CustomerAddressRequest[];
-}
-
 export interface TransactionAccessResponse {
   transactionId: string;
   checkoutAccessToken: string;
@@ -129,28 +122,40 @@ export const cancelPaymentSession = async (
   );
 };
 
+// Con sesión, el backend asocia el pedido a la cuenta y guarda la dirección;
+// sin sesión, la compra es de invitado. Si la sesión venció (401), sigue como invitado.
 export const updateTransactionCustomer = async (
   transactionId: string,
   checkoutAccessToken: string,
   customer: CustomerTransactionRequest,
+  authToken?: string,
 ): Promise<string | null> => {
-  const { data } = await payments.put<string | null>(
-    `/add-user/${encodeURIComponent(transactionId)}`,
-    customer,
-    withCheckoutAccess(checkoutAccessToken),
-  );
+  const url = `/add-user/${encodeURIComponent(transactionId)}`;
+  const checkoutAccess = withCheckoutAccess(checkoutAccessToken);
 
+  if (authToken) {
+    const response = await payments.put<string | null>(url, customer, {
+      headers: { ...checkoutAccess.headers, Authorization: `Bearer ${authToken}` },
+      validateStatus: (status) => status < 400 || status === 401,
+    });
+
+    if (response.status !== 401) return response.data;
+  }
+
+  const { data } = await payments.put<string | null>(url, customer, checkoutAccess);
   return data;
 };
 
-export const getCheckoutCustomer = async (
-  transactionId: string,
-  email: string,
-): Promise<CheckoutCustomerResponse | null> => {
-  const response = await payments.get<CheckoutCustomerResponse>(
-    `/customer/${encodeURIComponent(transactionId)}/${encodeURIComponent(email)}`,
-    { validateStatus: (status) => status === 200 || status === 404 },
-  );
+export const getSavedAddresses = async (
+  authToken: string,
+): Promise<CustomerAddressRequest[]> => {
+  const response = await payments.get<CustomerAddressRequest[]>(
+    "/saved-addresses",
+    {
+      headers: { Authorization: `Bearer ${authToken}` },
+      validateStatus: () => true,
+    },
+  ).catch(() => null);
 
-  return response.status === 200 ? response.data : null;
+  return response?.status === 200 ? response.data : [];
 };

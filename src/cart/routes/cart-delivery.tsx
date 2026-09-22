@@ -3,15 +3,16 @@ import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FaPlus } from "react-icons/fa6";
 import AddressItem from "../components/AddressItem";
+import NewAddressForm from "../components/NewAddressForm";
 import { useState } from "react";
 import type { AddressType, CheckoutUserData } from "../types/cart";
-import { useOrderStorage } from "../storage/orders";
 import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
+import { getSession } from "../../sessions.server";
 import {
   getCheckoutAccessToken,
-  getCheckoutCustomer,
+  getSavedAddresses,
   updateTransactionCustomer,
 } from "../api/paymentsApi";
 import {
@@ -26,25 +27,33 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const user: CheckoutUserData = JSON.parse(cookies.userData);
 
-  const customer = await getCheckoutCustomer(cookies.transactionId, user.email);
-  const addresses = checkoutCustomerAddressesToAddresses(
-    customer?.addresses ?? [],
-  );
+  const session = await getSession(request.headers.get("Cookie"));
+  const token = (session.get("token") as string | undefined) ?? null;
 
-  return { user, addresses };
+  const savedAddresses = token ? await getSavedAddresses(token) : [];
+  const addresses = checkoutCustomerAddressesToAddresses(savedAddresses);
+
+  return { user, addresses, token };
 }
 
 export default function CartDelivery({ loaderData }: Route.ComponentProps) {
-  const { user, addresses } = loaderData;
-  const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(
-    null,
-  );
-  const { order } = useOrderStorage();
+  const { user, addresses: savedAddresses, token } = loaderData;
+  const [newAddresses, setNewAddresses] = useState<AddressType[]>([]);
+  const [showForm, setShowForm] = useState(savedAddresses.length === 0);
+  const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
+  const addresses = [...savedAddresses, ...newAddresses];
+
   const handleAddressSelect = (address: AddressType) =>
     setSelectedAddress(address);
+
+  const handleNewAddress = (address: AddressType) => {
+    setNewAddresses((current) => [...current, address]);
+    setSelectedAddress(address);
+    setShowForm(false);
+  };
 
   const onContinue = async () => {
     const transactionId = Cookie.get("transactionId");
@@ -56,6 +65,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
       transactionId,
       checkoutAccessToken,
       checkoutToCustomerTransaction(user, selectedAddress),
+      token ?? undefined,
     );
 
     if (data) sessionStorage.setItem("guestEmail", data);
@@ -69,27 +79,38 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
       <div className="w-[55%] max-w-212.5 min-w-150">
         <div className="flex justify-between">
           <h1 className="text-[#333333] text-xl">Dirección de envío</h1>
-          <button className="btn bg-[#ffccb4] hover:bg-[#ffc0a3] text-[#f14913] btn-sm max-w-max border-none shadow-none focus-visible:outline-none">
-            <FaPlus size={16} />
-            Agregar nueva dirección
-          </button>
+          {!showForm && (
+            <button
+              className="btn bg-[#ffccb4] hover:bg-[#ffc0a3] text-[#f14913] btn-sm max-w-max border-none shadow-none focus-visible:outline-none"
+              onClick={() => setShowForm(true)}
+            >
+              <FaPlus size={16} />
+              Agregar nueva dirección
+            </button>
+          )}
         </div>
 
-        {addresses.length === 0 ? (
-          <p className="mt-6 text-[#636669]">
-            No tienes direcciones guardadas.
+        {!token && (
+          <p className="mt-4 text-sm text-[#636669]">
+            Como invitado, la dirección solo se usa para este pedido y no queda guardada.
           </p>
-        ) : (
+        )}
+
+        {showForm && (
+          <NewAddressForm
+            defaultPhone={user.phone}
+            onSave={handleNewAddress}
+            onCancel={addresses.length > 0 ? () => setShowForm(false) : undefined}
+          />
+        )}
+
+        {addresses.length > 0 && (
           <div className="grid grid-cols-2 gap-6">
             {addresses.map((address) => {
               return (
                 <AddressItem
                   key={address.id}
-                  isActive={
-                    !selectedAddress
-                      ? order.address.id === address.id
-                      : address.id === selectedAddress?.id
-                  }
+                  isActive={address.id === selectedAddress?.id}
                   address={address}
                   onSelect={handleAddressSelect}
                 />
@@ -102,7 +123,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
       <div className="w-[25%]">
         <PaymentCardInfo
           onContinue={onContinue}
-          disabledContinue={!order.address && !selectedAddress}
+          disabledContinue={!selectedAddress}
         />
       </div>
     </div>

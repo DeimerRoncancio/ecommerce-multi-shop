@@ -1,11 +1,11 @@
 import type {
-  CheckoutCustomerResponse,
+  CustomerAddressRequest,
   CustomerTransactionRequest,
 } from "../api/paymentsApi";
 import type { AddressType, CheckoutUserData } from "../types/cart";
 
 export const checkoutCustomerAddressesToAddresses = (
-  addresses: CheckoutCustomerResponse["addresses"],
+  addresses: CustomerAddressRequest[],
 ): AddressType[] =>
   addresses.map((address, index) => ({
     id: `${address.addressName}-${index}`,

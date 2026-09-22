@@ -28,3 +28,28 @@ export const UserData = z.object({
 });
 
 export type UserDataForm = z.infer<typeof UserData>;
+
+export const AddressData = z.object({
+  name: z
+    .string()
+    .min(1, { message: "Ponle un nombre, por ejemplo Casa u Oficina" }),
+  addressLine1: z
+    .string()
+    .min(1, { message: "La dirección es requerida" }),
+  city: z
+    .string()
+    .min(1, { message: "La ciudad es requerida" }),
+  state: z
+    .string()
+    .min(1, { message: "El departamento es requerido" }),
+  country: z
+    .string()
+    .min(1, { message: "El país es requerido" }),
+  phone: z
+    .string()
+    .min(1, { message: "El teléfono es requerido" })
+    .min(9, { message: "El teléfono debe tener al menos 9 dígitos" })
+    .max(15, { message: "El teléfono debe tener como máximo 15 dígitos" }),
+});
+
+export type AddressDataForm = z.infer<typeof AddressData>;
