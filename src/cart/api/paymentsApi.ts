@@ -58,7 +58,7 @@ export const createTransaction = async (
 ): Promise<TransactionAccessResponse> => {
   const { data } = await payments.post<TransactionAccessResponse>(
     "/create-transaction",
-    { productItems, status: "pending" },
+    { productItems },
   );
 
   return data;
