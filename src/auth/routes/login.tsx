@@ -38,9 +38,9 @@ export default function Login() {
   const isSubmitting = navigation.state === "submitting";  
 
   return (
-    <div className="min-h-screen w-full bg-[#fffaf8]">
+    <div className="min-h-screen w-full bg-brand-soft">
       <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="relative flex flex-col justify-between overflow-hidden bg-gradient-to-br from-[#f04913] via-[#f35a2a] to-[#f07f45] px-8 py-10 text-white lg:px-12">
+        <section className="relative flex flex-col justify-between overflow-hidden bg-gradient-to-br from-brand via-brand to-brand px-8 py-10 text-white lg:px-12">
           <div className="absolute -left-12 top-12 h-56 w-56 rounded-full border border-white/20" />
           <div className="absolute right-6 top-24 h-40 w-40 rounded-full border border-white/15" />
           <div className="absolute bottom-16 left-20 h-64 w-64 rounded-full border border-white/10" />
@@ -74,8 +74,8 @@ export default function Login() {
         <section className="flex items-center justify-center bg-white px-6 py-10 lg:px-12">
           <div className="w-full max-w-md">
             <div className="mb-8">
-              <h2 className="text-3xl font-semibold text-[#3a2f2a]">Iniciar sesión</h2>
-              <p className="mt-2 text-sm text-[#7a6f6a]">
+              <h2 className="text-3xl font-semibold text-ink">Iniciar sesión</h2>
+              <p className="mt-2 text-sm text-ink-soft">
                 Ingresa tus credenciales para continuar
               </p>
 
@@ -90,15 +90,15 @@ export default function Login() {
 
             <Form method="post" className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label htmlFor="identifier" className="text-sm font-medium text-[#5e472d]">
+                <label htmlFor="identifier" className="text-sm font-medium text-ink">
                   Correo electrónico
                 </label>
-                <div className="flex items-center gap-2 rounded-2xl border border-[#f1e1dc] bg-white px-4 py-3 shadow-sm focus-within:border-[#f14913] focus-within:ring-2 focus-within:ring-[#ffc1ad]">
+                <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-3 shadow-sm focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
                     fill="currentColor"
-                    className="h-4 w-4 text-[#f14913]"
+                    className="h-4 w-4 text-brand"
                   >
                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                     <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
@@ -106,7 +106,7 @@ export default function Login() {
                   <input
                     name="identifier"
                     type="text"
-                    className="w-full bg-transparent text-sm text-[#3a2f2a] outline-none placeholder:text-[#b3a7a2]"
+                    className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
                     placeholder="nombre@correo.com"
                   />
                 </div>
@@ -116,15 +116,15 @@ export default function Login() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="password" className="text-sm font-medium text-[#5e472d]">
+                <label htmlFor="password" className="text-sm font-medium text-ink">
                   Contraseña
                 </label>
-                <div className="flex items-center gap-2 rounded-2xl border border-[#f1e1dc] bg-white px-4 py-3 shadow-sm focus-within:border-[#f14913] focus-within:ring-2 focus-within:ring-[#ffc1ad]">
+                <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-3 shadow-sm focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
                     fill="currentColor"
-                    className="h-4 w-4 text-[#f14913]"
+                    className="h-4 w-4 text-brand"
                   >
                     <path
                       fillRule="evenodd"
@@ -135,7 +135,7 @@ export default function Login() {
                   <input
                     name="password"
                     type="password"
-                    className="w-full bg-transparent text-sm text-[#3a2f2a] outline-none placeholder:text-[#b3a7a2]"
+                    className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
                     placeholder="Ingresa tu contraseña"
                   />
                 </div>
@@ -145,13 +145,13 @@ export default function Login() {
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 text-[#7a6f6a]">
-                  <input type="checkbox" className="checkbox checkbox-xs border-[#f1e1dc]" />
+                <label className="flex items-center gap-2 text-ink-soft">
+                  <input type="checkbox" className="checkbox checkbox-xs border-line" />
                   Recordarme
                 </label>
                 <button
                   type="button"
-                  className="text-[#f14913] hover:text-[#d94110]"
+                  className="text-brand hover:text-brand-dark"
                 >
                   ¿Olvidaste tu contraseña?
                 </button>
@@ -159,31 +159,31 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="btn border-none bg-[#f04913] text-white shadow-[0_10px_25px_-10px_#f04913] hover:bg-[#d94110]"
+                className="btn border-none bg-brand text-white shadow-[0_10px_25px_-10px_#f04913] hover:bg-brand-dark"
                 disabled={isSubmitting}
               >
                 Iniciar sesión
               </button>
             </Form>
 
-            <div className="mt-6 flex items-center gap-3 text-xs text-[#b3a7a2]">
-              <span className="h-px w-full bg-[#f1e1dc]" />
-              o continúa con
-              <span className="h-px w-full bg-[#f1e1dc]" />
+            <div className="mt-6 flex items-center gap-3 text-xs text-ink-muted">
+              <span className="h-px w-full bg-line" />
+              <span className="shrink-0 whitespace-nowrap">o continúa con</span>
+              <span className="h-px w-full bg-line" />
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <button className="btn btn-outline border-[#f1e1dc] text-[#3a2f2a] hover:bg-[#fff4ef]">
+              <button className="btn btn-outline border-line text-ink hover:bg-brand-soft">
                 Google
               </button>
-              <button className="btn btn-outline border-[#f1e1dc] text-[#3a2f2a] hover:bg-[#fff4ef]">
+              <button className="btn btn-outline border-line text-ink hover:bg-brand-soft">
                 Facebook
               </button>
             </div>
 
-            <p className="mt-6 text-center text-sm text-[#7a6f6a]">
+            <p className="mt-6 text-center text-sm text-ink-soft">
               ¿No tienes una cuenta?
-              <Link to="/register" className="ml-1 font-semibold text-[#f14913] hover:text-[#d94110]">
+              <Link to="/register" className="ml-1 font-semibold text-brand hover:text-brand-dark">
                 Regístrate gratis
               </Link>
             </p>

@@ -18,7 +18,7 @@ export default function Rating({ index }: RatingProps) {
         <input type="radio" name={`rating-${index + 1}`} className="mask mask-star-2 mask-half-1 bg-orange-400" aria-label="4.5 star" />
         <input type="radio" name={`rating-${index + 1}`} className="mask mask-star-2 mask-half-2 bg-orange-400" aria-label="5 star" />
       </div>
-      <p className="text-[#8c8e91]">(4/3)</p>
+      <p className="text-ink-muted">(4/3)</p>
     </div>
   )
 }

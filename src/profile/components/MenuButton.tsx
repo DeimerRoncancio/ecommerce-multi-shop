@@ -13,12 +13,16 @@ export default function MenuButton({ label, iconName, pathname, to }: MenuButton
   const navigate = useNavigate();
   
   return (
-    <button className={`btn gap-2 py-7 px-3 rounded-xl transition-all duration-300 
-    ${pathname === to
-      ? 'bg-[#f04913] text-white border-[#f04913]'
-      : 'bg-white bg-none shadow-none hover:bg-gray-300'} text-base font-semibold 
-    text-[#292421] border-white justify-normal`} onClick={() => navigate(to)}>
-      <Icon name={iconName} size={25} />
+    <button
+      onClick={() => navigate(to)}
+      className={`btn h-12 justify-normal gap-2.5 rounded-xl border-0 px-3 text-sm font-medium
+        shadow-none transition-colors ${
+          pathname === to
+            ? "bg-brand text-primary-content hover:bg-brand-dark"
+            : "bg-base-100 text-ink hover:bg-cream hover:text-brand"
+        }`}
+    >
+      <Icon name={iconName} size={20} />
       {label}
     </button>
   )

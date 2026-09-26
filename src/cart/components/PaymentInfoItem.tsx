@@ -1,19 +1,22 @@
-import { LiaDollarSignSolid } from "react-icons/lia";
+import { formatPrice } from "../../shared/utilities/format-price";
 
 type PaymentInfoItemProps = {
-  isMain: boolean,
-  label: string,
-  value: number,
-}
+  isMain: boolean;
+  label: string;
+  value: number;
+};
 
 export default function PaymentInfoItem({ isMain, label, value }: PaymentInfoItemProps) {
   return (
-    <li className={`flex justify-between p-1 px-4 ${isMain && 'bg-[#f3e2e2c9] gap-1 font-semibold'}`}>
-      <p >{label}</p>
-      <p className="flex items-center">
-        <LiaDollarSignSolid color="#5a5a5a" size={17} />
-        {new Intl.NumberFormat("es-ES").format(value)}
-      </p>
+    <li
+      className={`flex items-center justify-between px-5 py-2 ${
+        isMain
+          ? "mt-2 border-t border-line pt-3 font-display text-lg font-semibold text-ink"
+          : "text-ink-soft"
+      }`}
+    >
+      <p>{label}</p>
+      <p className={isMain ? "" : "font-medium text-ink"}>{formatPrice(value)}</p>
     </li>
-  )
+  );
 }

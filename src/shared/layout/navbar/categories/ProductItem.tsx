@@ -25,7 +25,7 @@ export default function ProductItem({ product, closeModal }: ProductItemProps) {
       </div>
       <div className="flex flex-col bg-white z-10 gap-2">
         <p className="">{product.productName}</p>
-        <p className="font-semibold text-[#b6401f]">
+        <p className="font-semibold text-brand-dark">
           ${new Intl.NumberFormat("es-ES").format(product.price)}
         </p>
         <button className="btn font-normal p-3 py-1 rounded-sm w-fit h-auto border-0" 

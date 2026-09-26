@@ -4,13 +4,17 @@ import Icon from "../../ui/Icon";
 
 type SocialButtonProps = {
   iconName: IconName;
-}
+};
 
 export default function SocialButton({ iconName }: SocialButtonProps) {
   return (
-    <Link to="" className="p-2 rounded-full bg-[#e8e9e9] text-[#212529] hover:bg-[#f04913] 
-  hover:text-white transition-all duration-300">
-      <Icon name={iconName} size={17} />
+    <Link
+      to=""
+      aria-label={iconName}
+      className="grid h-9 w-9 place-items-center rounded-full border border-line bg-cream
+        text-ink-soft transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-primary-content"
+    >
+      <Icon name={iconName} size={16} />
     </Link>
-  )
+  );
 }

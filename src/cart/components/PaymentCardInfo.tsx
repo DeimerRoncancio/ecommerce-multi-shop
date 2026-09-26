@@ -9,39 +9,42 @@ type PaymentCardInfoProps = {
   continueLabel?: string;
 };
 
-export default function PaymentCardInfo({ onContinue, disabledContinue, continueLabel }: PaymentCardInfoProps) {
+export default function PaymentCardInfo({
+  onContinue,
+  disabledContinue,
+  continueLabel,
+}: PaymentCardInfoProps) {
   const { itemsQuantity, totalPrice } = useCart();
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="mb-5">
-        <h2 className="text-[#333333] text-xl">Resumen de la compra</h2>
+    <div className="sticky top-6 overflow-hidden rounded-2xl border border-line bg-base-100 shadow-card">
+      <div className="border-b border-line px-5 py-4">
+        <h2 className="font-display text-lg font-semibold text-ink">Resumen de la compra</h2>
+        <p className="text-sm text-ink-muted">{itemsQuantity} productos</p>
       </div>
-      <div className="text-[#5a5a5a] sticky top-5 bg-[#f3e2e27e] rounded-xl">
-        <div className="flex gap-1 p-4 border-b-1 border-[#e1e1e1]">
-          <p className="font-semibold">Productos</p>
-          <p className="font-semibold">({itemsQuantity})</p>
-        </div>
 
-        <ul className="my-2">
-          <PaymentInfoItem isMain={false} label="Valor productos" value={totalPrice} />
-          <PaymentInfoItem isMain={false} label="Descuentos" value={-160000} />
-          <PaymentInfoItem isMain label="Total" value={totalPrice} />
-        </ul>
+      <ul className="py-3">
+        <PaymentInfoItem isMain={false} label="Valor productos" value={totalPrice} />
+        <PaymentInfoItem isMain label="Total" value={totalPrice} />
+      </ul>
 
-        <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
-          <CartButton
-            totalPrice={totalPrice}
-            onContinue={onContinue}
-            disabled={disabledContinue}
-            label={continueLabel}
-          />
-          <button className="btn btn-wide py-5 max-w-full w-full rounded" onClick={() => navigate("/")}>
-            Seguir comprando
-          </button>
-        </div>
+      <div className="flex flex-col gap-3 px-5 pb-5">
+        <CartButton
+          totalPrice={totalPrice}
+          onContinue={onContinue}
+          disabled={disabledContinue}
+          label={continueLabel}
+        />
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="btn h-12 w-full rounded-xl border border-line bg-base-100 text-ink shadow-none
+            hover:bg-cream"
+        >
+          Seguir comprando
+        </button>
       </div>
-    </>
-  )
+    </div>
+  );
 }

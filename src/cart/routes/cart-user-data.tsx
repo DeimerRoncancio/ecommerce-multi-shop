@@ -1,4 +1,5 @@
 import { Link, redirect, useNavigate } from "react-router";
+import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { useForm } from "react-hook-form";
@@ -65,41 +66,36 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
   }, [user, reset]);
 
   return (
-    <div className="flex gap-3 justify-center text-black mb-4">
-      <div className="flex flex-col p-4 w-[50%] max-w-212.5 min-w-150">
-        <h2
-          className={`text-[#333333] text-xl mx-4 mt-4 ${(userData.email || user.email) && "mb-4"}`}
-        >
-          Datos de usuario
-        </h2>
-        {!userData.email && !user.email && (
-          <p className="text-[#575757] text- mx-4 mb-4">
-            <Link className="text-[#f14913]" to="/login">
-              Inicia sesión
-            </Link>{" "}
-            para rellenar los datos rapidamente
-          </p>
-        )}
-        <form
-          className=" text-sm border-t border-[#e8e9e9]"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="grid grid-cols-2 gap-4 p-5">
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+      <section className="overflow-hidden rounded-2xl border border-line bg-base-100">
+        <div className="border-b border-line px-5 py-4">
+          <h2 className="font-display text-lg font-semibold text-ink">Datos de usuario</h2>
+          {!userData.email && !user.email && (
+            <p className="mt-1 text-sm text-ink-soft">
+              <Link className="font-medium text-brand hover:underline" to="/login">
+                Inicia sesión
+              </Link>{" "}
+              para rellenar los datos rápidamente
+            </p>
+          )}
+        </div>
+        <form className="text-sm" onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid gap-5 p-5 sm:grid-cols-2">
             {ImputsFromUserData.map((input) => (
               <div
                 key={input.name}
                 className={`${input.name === "phone" || input.name === "email" ? "col-span-2" : ""}`}
               >
-                <span className="text-[#5e472d]">{input.label}</span>
+                <span className="font-medium text-ink">{input.label}</span>
                 <input
                   type={input.type}
                   placeholder={input.placeholder}
-                  className="p-3 pl-4 mt-3 border-2 border-[#dedfdf] rounded-xl outline-0 w-full focus:outline-3 
-                  focus:outline-[#ffc1ad] focus:border-[#f14913]"
+                  className="mt-2 w-full rounded-xl border border-line bg-base-100 p-3 px-4 text-ink
+                    outline-none transition-colors placeholder:text-ink-muted focus:border-brand"
                   {...register(input.name as keyof UserDataForm)}
                 />
                 {errors[input.name as keyof UserDataForm] && (
-                  <span className="text-red-500">
+                  <span className="mt-1 block text-xs text-error">
                     {
                       errors[input.name as keyof UserDataForm]
                         ?.message as string
@@ -109,12 +105,12 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
               </div>
             ))}
           </div>
-          <div className="flex flex-col col-span-2 text-[#969696] border-t border-[#e8e9e9] px-5">
+          <div className="flex flex-col gap-3 border-t border-line px-5 py-5 text-ink-soft">
             {TermsOfService.map((term) => (
-              <div key={term.id} className="flex items-center mt-4">
+              <div key={term.id} className="flex items-center">
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-sm"
+                  className="checkbox checkbox-sm checkbox-primary"
                   {...register(term.name as keyof UserDataForm)}
                 />
                 <span className="ml-2 text-sm">
@@ -129,14 +125,12 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
             Send
           </button>
         </form>
-      </div>
+      </section>
 
-      <div className="w-[30%] mt-8">
-        <PaymentCardInfo
-          onContinue={handleSubmit(onSubmit)}
-          disabledContinue={!isValid}
-        />
-      </div>
-    </div>
+      <PaymentCardInfo
+        onContinue={handleSubmit(onSubmit)}
+        disabledContinue={!isValid}
+      />
+    </Container>
   );
 }

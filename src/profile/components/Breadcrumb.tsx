@@ -1,43 +1,53 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
+import { FiChevronRight } from "react-icons/fi";
+import Container from "../../shared/ui/Container";
 
-export default function Breadcrumb({ namePage, isProduct }: { namePage: string, isProduct?: boolean }) {
-  const [paths, setPaths] = useState<string[]>([]);
+export default function Breadcrumb({
+  namePage,
+  isProduct,
+}: {
+  namePage: string;
+  isProduct?: boolean;
+}) {
   const location = useLocation();
+  const segments = location.pathname.split("/").filter(Boolean);
 
-  useEffect(() => {
-    const paths = location.pathname.split("/");
-    setPaths(paths);
-  }, [location])
+  const crumbs = [
+    { label: "Inicio", to: "/" },
+    ...segments.map((segment, index) => ({
+      label: index === segments.length - 1 && isProduct ? namePage : segment,
+      to: `/${segments.slice(0, index + 1).join("/")}`,
+    })),
+  ];
 
   return (
-    <div className="bg-[#fff4ef]">
-      <div className="ajust-width flex justify-between items-center py-5">
-        <h1 className="text-2xl font-semibold">{namePage}</h1>
-        <div className="breadcrumbs text-sm">
-          <ul>
-            {
-              paths.map((path, index) => {
-                if (index !== paths.length - 1) {
-                  
-                  return (
-                    <li key={path}><a className="capitalize" href={`http://localhost:5173/${path}`}>
-                      {
-                        path === "" ? "Inicio" : path
-                      }
-                    </a></li>
-                  )
-                }
+    <div className="border-b border-line bg-brand-soft">
+      <Container className="flex flex-wrap items-center justify-between gap-2 py-5">
+        <h1 className="font-display text-2xl font-semibold text-ink">{namePage}</h1>
 
-                if (isProduct == true)
-                  return (<li key={path} className="capitalize">{namePage}</li>)
+        <nav aria-label="Ruta de navegación">
+          <ol className="flex flex-wrap items-center gap-1 text-sm text-ink-muted">
+            {crumbs.map((crumb, index) => {
+              const isLast = index === crumbs.length - 1;
 
-                return (<li key={path} className="capitalize">{path}</li>)
-              })
-            }
-          </ul>
-        </div>
-      </div>
+              return (
+                <li key={crumb.to} className="flex items-center gap-1">
+                  {index > 0 && <FiChevronRight size={14} className="opacity-60" />}
+                  {isLast ? (
+                    <span className="max-w-[220px] truncate font-medium capitalize text-ink">
+                      {crumb.label}
+                    </span>
+                  ) : (
+                    <Link to={crumb.to} className="capitalize transition-colors hover:text-brand">
+                      {crumb.label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      </Container>
     </div>
-  )
+  );
 }

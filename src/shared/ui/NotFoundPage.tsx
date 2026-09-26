@@ -18,8 +18,8 @@ export default function NotFoundPage({ message, details }: NotFoundPageProps) {
             style={{ width: 400, height: 400 }}
           />
           <div className="flex flex-col gap-3">
-            <h1 className="text-8xl font-bold text-[#3a2f2a]">{message}</h1>
-            <p className="text-lg text-[#7a6f6a]">{details}</p>
+            <h1 className="text-8xl font-bold text-ink">{message}</h1>
+            <p className="text-lg text-ink-soft">{details}</p>
           </div>
         </div>
       </main>

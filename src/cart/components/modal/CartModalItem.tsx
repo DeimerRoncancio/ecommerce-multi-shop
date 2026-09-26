@@ -1,14 +1,15 @@
 import { MdDeleteOutline } from "react-icons/md";
-import { FaPlus, FaMinus  } from "react-icons/fa6";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 import useCartItems from "../../hooks/useCartItems";
 import { CartItemType } from "../../types/cart";
 import { useEffect } from "react";
+import { formatPrice } from "../../../shared/utilities/format-price";
 
 type CartModalItemProps = {
   item: CartItemType;
   length: number;
   index: number;
-}
+};
 
 export default function CartModalItem({ item, length, index }: CartModalItemProps) {
   const {
@@ -17,62 +18,69 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
     increaseQuantity,
     decreaseQuantity,
     handleTotalPrice,
-    changeQuantity,
-    updateQuantity 
   } = useCartItems({ itemId: item.id });
 
   useEffect(() => handleTotalPrice(), [item.quantity]);
 
   return (
-    <li className="flex flex-col p-1 w-full items-center ">
-      <div className="flex w-full items-center">
-        <div className="flex items-center w-20 h-20 p-0 pr-1 object-contain">
-          <img src={`${item.productImage}`} />
-        </div>
-        <div className="flex-1">
-          <div>
-            <p className="truncate w-61 text-[#5a5a5a] text-base">{item.productDescription}</p>
-            <h2 className="truncate text-[10px] text-[#9a9a9a] uppercase">{item.productName}</h2>
-          </div>
-          <div className="flex justify-between items-center mt-2">
-            <div>
-              <p className="text-[#5a5a5a] ml-2 font-semibold">
-                $ {new Intl.NumberFormat("es-ES").format(totalPrice)}
-              </p>
+    <li className={`flex gap-3 p-4 ${index === length - 1 ? "" : "border-b border-line"}`}>
+      <div className="grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-cream p-2">
+        <img
+          src={item.productImage}
+          alt={item.productName}
+          className="h-full w-full object-contain"
+        />
+      </div>
+
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <p className="truncate text-[10px] font-medium uppercase tracking-[0.08em] text-ink-muted">
+          {item.productName}
+        </p>
+        <p className="line-clamp-2 text-sm font-medium leading-snug text-ink">
+          {item.productDescription}
+        </p>
+
+        <div className="mt-1 flex items-center justify-between gap-2">
+          <p className="font-display font-semibold text-ink">{formatPrice(totalPrice)}</p>
+
+          <div className="flex items-center gap-1">
+            <div className="flex items-center overflow-hidden rounded-lg border border-line">
+              <button
+                type="button"
+                aria-label="Quitar una unidad"
+                disabled={item.quantity === 1}
+                onClick={decreaseQuantity}
+                className="grid h-8 w-8 place-items-center text-ink-soft transition-colors
+                  hover:bg-cream hover:text-brand disabled:text-base-300 disabled:hover:bg-transparent"
+              >
+                <FaMinus size={10} />
+              </button>
+              <span className="grid h-8 w-8 place-items-center border-x border-line text-sm text-ink">
+                {item.quantity}
+              </span>
+              <button
+                type="button"
+                aria-label="Agregar una unidad"
+                onClick={increaseQuantity}
+                className="grid h-8 w-8 place-items-center text-ink-soft transition-colors
+                  hover:bg-cream hover:text-brand"
+              >
+                <FaPlus size={10} />
+              </button>
             </div>
-            <div className="flex items-center gap-2 p-2 shadow-md rounded-2xl bg-[#f4f4f4]">
-              <button className="btn btn-link text-[#7c2908b7] hover:text-[#7c2908ea] w-6 text-center text-xl h-6 p-0 rounded-full"
-                onClick={handleRemoveItem}>
-                <MdDeleteOutline />
-              </button>
 
-              <button className={`btn ${item.quantity === 1 ? 'btn-disabled' : 'btn-soft'} w-6 text-center h-6 p-0 rounded-full`}
-                onClick={decreaseQuantity}>
-                <FaMinus />
-              </button>
-
-              <input 
-                value={`${item.quantity}`} className="input w-10 h-7 text-center p-0 focus:outline-none focus:ring-0" 
-                type="number"
-                onChange={(event) => changeQuantity(Number(event.target.value))}
-                onBlur={updateQuantity}
-                onKeyDown={(ev) => {
-                  if (ev.key === "Enter") {
-                    updateQuantity()
-                    ev.currentTarget.blur();
-                  };
-                }}
-              />
-
-              <button className="btn btn-soft w-6 text-center h-6 p-0 rounded-full"
-                onClick={increaseQuantity}>
-                <FaPlus />
-              </button>
-            </div>
+            <button
+              type="button"
+              aria-label="Eliminar producto"
+              onClick={handleRemoveItem}
+              className="grid h-8 w-8 place-items-center rounded-lg text-ink-muted transition-colors
+                hover:bg-error/10 hover:text-error"
+            >
+              <MdDeleteOutline size={17} />
+            </button>
           </div>
         </div>
       </div>
-      <div className={`${length - 1 === index ? 'hidden' : ''} w-full h-[2px] mt-2.5 bg-[#e3e3e3]`}></div>
     </li>
-  )
+  );
 }

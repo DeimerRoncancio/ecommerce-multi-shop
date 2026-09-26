@@ -35,10 +35,10 @@ export default function ImageDragBox({ addImage, register }: ImageDragBoxProps) 
 
   return (
     <label onDrop={handleDrop} onDragEnter={() => setIsDragOver(true)} onDragLeave={() => setIsDragOver(false)}
-    className={`w-72 h-60 border-2 border-dashed hover:bg-[#f9fafb] rounded-2xl cursor-pointer transition-all
+    className={`w-72 h-60 border-2 border-dashed hover:bg-cream rounded-2xl cursor-pointer transition-all
     duration-300 ${isUploading && "pointer-events-none opacity-75"}
     ${isDragOver
-      ? "border-[#ec5320] bg-[#fff4f0] scale-105"
+      ? "border-brand bg-brand-soft scale-105"
       : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"}`}
     onDragOver={(e: React.DragEvent) => {
       e.preventDefault()
@@ -52,12 +52,12 @@ export default function ImageDragBox({ addImage, register }: ImageDragBoxProps) 
       />
       <div className="flex flex-col h-full items-center justify-center space-y-1">
         <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors
-        duration-200 ${isDragOver ? "bg-[#ffe7df]" : "bg-gray-100"}`}>
+        duration-200 ${isDragOver ? "bg-brand-soft" : "bg-gray-100"}`}>
           {isUploading ? (
-            <div className="w-8 h-8 border-2 border-[#ec5320] border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
           ) : (
             <BiUpload
-              className={`w-8 h-8 transition-colors duration-200 ${isDragOver ? "text-[#ec5320]" : "text-gray-500"}`}
+              className={`w-8 h-8 transition-colors duration-200 ${isDragOver ? "text-brand" : "text-gray-500"}`}
             />
           )}
         </div>

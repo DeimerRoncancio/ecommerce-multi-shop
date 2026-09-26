@@ -2,15 +2,20 @@ type Props = {
   color: string;
   colorSelected: string | null;
   pickColor: (color: string) => void;
-}
+};
 
 export default function VariantColorItem({ color, colorSelected, pickColor }: Props) {
+  const isSelected = colorSelected === color;
+
   return (
     <button
-      key={color}
+      type="button"
+      aria-label={color}
+      aria-pressed={isSelected}
       onClick={() => pickColor(color)}
-      className={`w-8 h-8 rounded-full hover:scale-110 cursor-pointer transition-all duration-300 
-      ${colorSelected === color ? "ring-2 ring-offset-2 ring-[#364153]" : ""}`}
+      className={`h-9 w-9 rounded-full border border-line transition-transform hover:scale-110 ${
+        isSelected ? "ring-2 ring-brand ring-offset-2" : ""
+      }`}
       style={{ backgroundColor: color }}
     />
   );

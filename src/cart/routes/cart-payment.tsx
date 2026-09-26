@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentCardInfo from "../components/PaymentCardInfo";
+import Container from "../../shared/ui/Container";
+import { formatPrice } from "../../shared/utilities/format-price";
 import PaymentMethodItem from "../components/PaymentMethodItem";
 import useCart from "../hooks/useCart";
 import { createPaymentSession, getCheckoutAccessToken, getCheckoutSummary } from "../api/paymentsApi";
@@ -77,11 +79,11 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
   }
 
   return (
-    <div className="flex gap-10 justify-center mt-8 mb-15">
-      <div className="w-[55%] max-w-212.5 min-w-150">
-        <div className="flex justify-between items-center">
-          <h1 className="text-[#333333] text-xl">Método de pago</h1>
-          <span className="flex items-center gap-2 text-sm text-[#7d7d7d]">
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+      <section>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-display text-xl font-semibold text-ink">Método de pago</h1>
+          <span className="flex items-center gap-2 text-sm text-ink-soft">
             <IoShieldCheckmarkOutline size={18} />
             Pago procesado por Stripe
           </span>
@@ -98,21 +100,21 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
           ))}
         </div>
 
-        <div className="mt-8 p-6 border border-[#dedfdf] rounded-xl">
-          <h2 className="text-[#5e472d] text-lg font-semibold mb-4">Resumen del pedido</h2>
+        <div className="mt-8 rounded-2xl border border-line bg-base-100 p-6">
+          <h2 className="mb-4 font-display text-lg font-semibold text-ink">Resumen del pedido</h2>
 
-          <ul className="flex flex-col gap-2 text-sm text-black border-b border-[#e8e9e9] pb-4">
+          <ul className="flex flex-col gap-2 border-b border-line pb-4 text-sm text-ink">
             {cartItems.map((item) => (
               <li key={item.id} className="flex justify-between gap-4">
                 <span className="truncate">{item.productName} x {item.quantity}</span>
-                <span className="shrink-0 text-[#636669]">
-                  ${new Intl.NumberFormat("es-ES").format(item.productPrice * item.quantity)}
+                <span className="shrink-0 font-medium text-ink-soft">
+                  {formatPrice(item.productPrice * item.quantity)}
                 </span>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-col gap-1 text-sm text-[#636669] mt-4">
+          <div className="mt-4 flex flex-col gap-1 text-sm text-ink-soft">
             {customer && (
               <>
                 <span>{customer.userNames}</span>
@@ -127,15 +129,13 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
             )}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="w-[25%]">
-        <PaymentCardInfo
-          onContinue={onPay}
-          disabledContinue={!itemsQuantity || isRedirecting}
-          continueLabel={isRedirecting ? "Redirigiendo" : "Pagar"}
-        />
-      </div>
-    </div>
+      <PaymentCardInfo
+        onContinue={onPay}
+        disabledContinue={!itemsQuantity || isRedirecting}
+        continueLabel={isRedirecting ? "Redirigiendo" : "Pagar"}
+      />
+    </Container>
   );
 }

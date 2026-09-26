@@ -5,29 +5,37 @@ type Props = {
   method: PaymentMethodType;
   isActive: boolean;
   onSelect: (method: PaymentMethodType) => void;
-}
+};
 
 export default function PaymentMethodItem({ method, isActive, onSelect }: Props) {
   return (
-    <div className={`flex items-center justify-between gap-4 mt-6 p-6 border-1 border-[#dedfdf] hover:border-[#f14913]
-    rounded-xl transition-colors duration-300 cursor-pointer ${isActive ? 'border-[#f14913]' : ''}`}
-    onClick={() => onSelect(method)}>
+    <button
+      type="button"
+      onClick={() => onSelect(method)}
+      className={`mt-6 flex w-full items-center justify-between gap-4 rounded-2xl border bg-base-100
+        p-5 text-left transition-colors ${
+          isActive ? "border-brand ring-1 ring-brand" : "border-line hover:border-brand"
+        }`}
+    >
       <div className="flex items-center gap-4">
-        <span className={`flex items-center justify-center w-11 h-11 rounded-full shrink-0
-        ${isActive ? 'bg-[#ffccb4] text-[#f14913]' : 'bg-[#f1f1f1] text-[#7d7d7d]'}`}>
+        <span
+          className={`grid h-11 w-11 shrink-0 place-items-center rounded-full ${
+            isActive ? "bg-brand-soft text-brand" : "bg-cream text-ink-muted"
+          }`}
+        >
           <FaRegCreditCard size={20} />
         </span>
-        <div className="flex flex-col gap-1 text-left">
-          <span className="text-[#5e472d] text-lg font-semibold">{method.name}</span>
-          <span className="text-sm text-[#636669]">{method.description}</span>
+        <div className="flex flex-col gap-0.5">
+          <span className="font-display text-base font-semibold text-ink">{method.name}</span>
+          <span className="text-sm text-ink-soft">{method.description}</span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-[#7d7d7d] shrink-0">
+      <div className="hidden shrink-0 items-center gap-2 text-ink-muted sm:flex">
         <FaCcVisa size={26} />
         <FaCcMastercard size={26} />
         <FaCcAmex size={26} />
       </div>
-    </div>
-  )
+    </button>
+  );
 }

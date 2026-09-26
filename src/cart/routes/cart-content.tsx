@@ -2,6 +2,7 @@ import useCart from "../hooks/useCart";
 import CartItem from "../components/CartItem";
 import ClearButton from "../components/ClearButton";
 import PaymentCardInfo from "../components/PaymentCardInfo";
+import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import { useNavigate } from "react-router";
 import {
@@ -41,41 +42,40 @@ export default function CartContent() {
 
     nextSteps("Carrito");
     navigate("/cart/user-data");
-  }
+  };
 
   useEffect(() => {
     if (!transactionId) clearSteps();
   }, []);
 
   return (
-    <>
-      <div className="flex ajust-screen m-10 mt-15 gap-10 p-10">
-        <div className="flex flex-col w-[70%]">
-          <div className="flex justify-between mb-5 items-center">
-            <div className="flex gap-1 items-center">
-              <h1 className="text-[#333333] text-xl">Carrito</h1>
-              <h1 className="text-lg text-[#4a4a4a]">({itemsQuantity} productos)</h1>
-            </div>
-            <div>
-              <ClearButton fontSize={16} clear={clear} />
-            </div>
-          </div>
-
-          <ul>
-            {!itemsQuantity ?
-              <li className="flex items-center justify-center text-[#646464] text-xl w-full h-40">
-                <p className="text-center">No tienes productos en tu carrito</p>
-              </li> :
-              cartItems.map((item, index) =>
-                <CartItem key={item.id} item={item} length={cartItems.length} index={index} />
-              )}
-          </ul>
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+      <section>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h1 className="font-display text-xl font-semibold text-ink">
+            Carrito
+            <span className="ml-2 text-base font-normal text-ink-muted">
+              ({itemsQuantity} productos)
+            </span>
+          </h1>
+          {itemsQuantity > 0 && <ClearButton fontSize={14} clear={clear} />}
         </div>
 
-        <div className="w-[30%]">
-          <PaymentCardInfo onContinue={onContinue} disabledContinue={!itemsQuantity} />
-        </div>
-      </div>
-    </>
-  )
+        <ul className="overflow-hidden rounded-2xl border border-line bg-base-100">
+          {!itemsQuantity ? (
+            <li className="flex flex-col items-center gap-3 px-4 py-16 text-center">
+              <img src="/images/box-empty.png" alt="" width={110} />
+              <p className="text-lg font-medium text-ink-soft">No tienes productos en tu carrito</p>
+            </li>
+          ) : (
+            cartItems.map((item, index) => (
+              <CartItem key={item.id} item={item} length={cartItems.length} index={index} />
+            ))
+          )}
+        </ul>
+      </section>
+
+      <PaymentCardInfo onContinue={onContinue} disabledContinue={!itemsQuantity} />
+    </Container>
+  );
 }

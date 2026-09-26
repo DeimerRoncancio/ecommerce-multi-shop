@@ -11,6 +11,7 @@ node_modules
 .react-router/
 dist
 dist-ssr
+build
 .env
 *.local
 
@@ -24,3 +25,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.codegraph/

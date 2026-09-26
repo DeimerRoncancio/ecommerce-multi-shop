@@ -39,36 +39,41 @@ export default function NewAddressForm({ defaultPhone, onSave, onCancel }: Props
 
   return (
     <form
-      className="mt-6 text-sm border border-[#dedfdf] rounded-xl"
+      className="mt-6 rounded-2xl border border-line bg-base-100 text-sm"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="grid grid-cols-2 gap-4 p-5">
+      <div className="grid gap-5 p-5 sm:grid-cols-2">
         {fields.map((field) => (
           <div key={field.name} className={field.wide ? "col-span-2" : ""}>
-            <span className="text-[#5e472d]">{field.label}</span>
+            <span className="font-medium text-ink">{field.label}</span>
             <input
               type="text"
               placeholder={field.placeholder}
-              className="p-3 pl-4 mt-3 border-2 border-[#dedfdf] rounded-xl outline-0 w-full focus:outline-3
-              focus:outline-[#ffc1ad] focus:border-[#f14913]"
+              className="mt-2 w-full rounded-xl border border-line bg-base-100 p-3 px-4 text-ink
+                outline-none transition-colors placeholder:text-ink-muted focus:border-brand"
               {...register(field.name)}
             />
             {errors[field.name] && (
-              <span className="text-red-500">{errors[field.name]?.message}</span>
+              <span className="mt-1 block text-xs text-error">{errors[field.name]?.message}</span>
             )}
           </div>
         ))}
       </div>
-      <div className="flex gap-4 px-5 pb-5">
+      <div className="flex flex-wrap gap-3 border-t border-line px-5 py-4">
         <button
           type="submit"
           disabled={!isValid}
-          className="btn bg-[#ffccb4] hover:bg-[#ffc0a3] text-[#f14913] btn-sm border-none shadow-none"
+          className="btn gap-2 rounded-xl border-0 bg-brand text-primary-content shadow-none
+            hover:bg-brand-dark disabled:bg-base-300 disabled:text-ink-muted"
         >
           Usar esta dirección
         </button>
         {onCancel && (
-          <button type="button" className="btn btn-sm shadow-none" onClick={onCancel}>
+          <button
+            type="button"
+            onClick={onCancel}
+            className="btn rounded-xl border border-line bg-base-100 text-ink shadow-none hover:bg-cream"
+          >
             Cancelar
           </button>
         )}

@@ -24,10 +24,13 @@ export default function BuyButton({ product }: BuyButtonProps) {
   };
 
   return (
-    <button className="btn btn-outline btn-primary border border-gray-300 rounded-2xl
-    hover:bg-gray-100 hover:text-black focus-visible:!outline-[#f04913] shadow-none 
-    focus-visible:bg-white focus-visible:text-black focus-visible:outline-none" onClick={handleBuyNow}>
-      <AiOutlineThunderbolt size={17} />
+    <button
+      type="button"
+      onClick={handleBuyNow}
+      className="btn h-12 gap-2 rounded-xl border-0 bg-neutral text-neutral-content shadow-none
+        hover:bg-ink-soft"
+    >
+      <AiOutlineThunderbolt size={18} />
       Comprar ahora
     </button>
   );

@@ -11,7 +11,7 @@ export default function ErrorMessage<T extends FieldValues>({
 }: ErrorMessageProps<T>) {
   const error = errors[fieldName];
   if (error && typeof error.message === "string") {
-    return <span style={{ color: "red" }}>{error.message}</span>;
+    return <span className="text-xs text-error">{error.message}</span>;
   }
   return null;
 }

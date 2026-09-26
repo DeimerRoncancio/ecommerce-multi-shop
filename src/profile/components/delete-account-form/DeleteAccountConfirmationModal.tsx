@@ -23,9 +23,9 @@ export default function DeleteAccountConfirmationModal({ showDeleteModal, onClos
     <div className={`${!showDeleteModal && 'opacity-0 invisible'} fixed w-full h-full top-0 left-0
     z-20 flex justify-center items-center transition-all duration-200`}>
       <div className="absolute bg-[#1c1c1c7c] w-full h-full" onClick={onClose} />
-      <div className={`${!showDeleteModal && 'scale-110'} flex flex-col z-20 bg-white w-[446px] text-[#212529] min-h-[164px]
+      <div className={`${!showDeleteModal && 'scale-110'} flex flex-col z-20 bg-white w-[446px] text-ink min-h-[164px]
       rounded-lg transition-all duration-150 p-6 gap-3`}>
-        <div className="bg-[#ffedd5] p-2 w-fit rounded-lg">
+        <div className="bg-brand-soft p-2 w-fit rounded-lg">
           <TiWarningOutline size={25} color="#ff6467" />
         </div>
         <div className="flex flex-col gap-1">
@@ -36,7 +36,7 @@ export default function DeleteAccountConfirmationModal({ showDeleteModal, onClos
           </p>
         </div>
         <div className="p-3 rounded-xl bg-orange-50/80 border border-orange-100">
-          <div className="text-sm text-[#71717a]">
+          <div className="text-sm text-ink-muted">
             <h4 className="flex items-center gap-1 font-semibold">
               <GoDatabase className="text-orange-600" />
               Se eliminará:

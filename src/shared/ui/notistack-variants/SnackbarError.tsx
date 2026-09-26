@@ -19,7 +19,7 @@ const SnackbarError = forwardRef<HTMLDivElement, CustomContentProps>(
         {
           import.meta.env.MODE !== "production"
             ? (
-              <div className="collapse w-96 bg-[#121212] text-white rounded-md">
+              <div className="collapse w-96 bg-ink text-white rounded-md">
                 <input type="checkbox" className="peer" />
                 <IoIosArrowDown 
                   className="absolute mt-[19px] text-gray-300 right-13 peer-checked:rotate-180" 
@@ -39,7 +39,7 @@ const SnackbarError = forwardRef<HTMLDivElement, CustomContentProps>(
                 </div>
               </div>
             ) : (
-              <div className="w-96 bg-[#121212] text-white rounded-md">
+              <div className="w-96 bg-ink text-white rounded-md">
                 <div className="flex items-center justify-between p-4 h-14 font-semibold">
                   <div className="flex justify-center items-center gap-2">
                     <MdError size={25} color="#e74d3c" />

@@ -4,11 +4,12 @@ import ProductInfo from "../components/ProductInfo";
 import BuyProduct from "../components/BuyProduct";
 import ProductRecommendations from "../components/product-details-recommendations/ProductRecommendations";
 import { WarrantyCard } from "../components/WarrantyCard";
+import Container from "../../shared/ui/Container";
 import { getProduct, getProducts } from "../services/products.api";
 import type { Route } from "./+types/product-details";
 
 import "swiper/css";
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 
 export async function loader({ params }: Route.LoaderArgs) {
   const product = await getProduct(params.id);
@@ -19,32 +20,32 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {
   const { product, products } = loaderData;
-  
+
   return (
     <>
       <Breadcrumb namePage={product.productName} isProduct={true} />
 
-      <div className="ajust-width grid grid-cols-2 gap-6 pt-14">
-        <div className="relative w-full mx-auto">
+      <Container className="grid gap-10 pb-16 pt-8 lg:grid-cols-2 lg:gap-14 lg:pt-12">
+        <div className="min-w-0 lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:self-start">
           <ProductGallery images={product.productImages} />
         </div>
-        <div className="flex flex-col gap-5 text-[#101828]">
+        <div className="flex min-w-0 flex-col gap-6">
           <ProductInfo product={product} variants={product.variants} />
           <BuyProduct productFromApi={product} />
           <WarrantyCard />
         </div>
-      </div>
+      </Container>
 
-      <div className="w-screen flex flex-col text-black border-b border-[#e5e5e5]">
-        <div className="ajust-width flex flex-col items-center !mt-20 !mb-10 gap-4">
-          <h2 className="text-3xl font-bold">Encuentra lo que quieres</h2>
-          <h2 className="text-[#4a5565]">
-            Descubre productos que suplan todas tus necesidades. Los mejores productos de tecnología
-            y videojuegos están aquí.
-          </h2>
-        </div>
+      <section className="border-t border-line bg-base-100 py-14 lg:py-20">
+        <Container className="mb-10 flex flex-col items-center gap-3 text-center">
+          <h2 className="font-display text-3xl font-bold text-ink">Encuentra lo que quieres</h2>
+          <p className="max-w-xl text-ink-soft">
+            Descubre productos que suplan todas tus necesidades. Los mejores productos de
+            tecnología y videojuegos están aquí.
+          </p>
+        </Container>
         <ProductRecommendations products={products} />
-      </div>
+      </section>
     </>
-  )
+  );
 }

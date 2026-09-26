@@ -48,31 +48,31 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   }, []);
 
   return (
-    <div className="flex flex-col items-center text-center gap-6 py-24 px-4">
-      <span className="flex items-center justify-center w-24 h-24 rounded-full bg-[#e9fff0] text-[#0cc243]">
+    <div className="flex flex-col items-center gap-6 px-4 py-20 text-center lg:py-28">
+      <span className="grid h-24 w-24 place-items-center rounded-full bg-success/10 text-success">
         <FaCheck size={44} />
       </span>
 
       <div className="flex flex-col gap-3">
-        <h1 className="text-[#333333] text-3xl">¡Gracias por tu compra!</h1>
-        <p className="text-[#636669] max-w-125">
+        <h1 className="font-display text-3xl font-bold text-ink">¡Gracias por tu compra!</h1>
+        <p className="max-w-lg text-ink-soft">
           Estamos confirmando tu pago con Stripe; en cuanto se confirme empezamos a preparar tu pedido.
-          {email && <> Te enviamos la confirmación a <b className="text-[#5e472d]">{email}</b>.</>}
+          {email && <> Te enviamos la confirmación a <b className="font-semibold text-ink">{email}</b>.</>}
         </p>
       </div>
 
       {transactionId && (
-        <div className="flex flex-col gap-1 px-8 py-4 border border-[#dedfdf] rounded-xl">
-          <span className="text-sm text-[#7d7d7d]">Número de pedido</span>
-          <span className="text-lg font-semibold text-[#5e472d] tracking-wide">
+        <div className="flex flex-col gap-1 rounded-2xl border border-line bg-base-100 px-8 py-4">
+          <span className="text-sm text-ink-muted">Número de pedido</span>
+          <span className="font-display text-lg font-semibold tracking-wide text-ink">
             #{transactionId.slice(0, 8).toUpperCase()}
           </span>
         </div>
       )}
 
-      <div className="flex gap-4 mt-2">
+      <div className="mt-2 flex flex-wrap justify-center gap-3">
         <button
-          className="btn btn-accent py-5 px-8 rounded"
+          className="btn h-12 gap-2 rounded-xl border-0 bg-brand px-7 text-primary-content shadow-none hover:bg-brand-dark"
           onClick={() => {
             Cookie.remove("transactionId");
             sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
@@ -82,7 +82,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
           Seguir comprando
         </button>
         <button
-          className="btn py-5 px-8 rounded"
+          className="btn h-12 gap-2 rounded-xl border border-line bg-base-100 px-7 text-ink shadow-none hover:bg-cream"
           onClick={() => {
             Cookie.remove("transactionId");
             sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);

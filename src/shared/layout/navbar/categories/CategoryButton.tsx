@@ -1,20 +1,27 @@
-import { CategoriesType } from "../../../../products/types/categories"
+import { CategoriesType } from "../../../../products/types/categories";
 
 type CategoryButtonProps = {
-  category: CategoriesType,
-  handleMouseEnter: (categoryName: string) => void,
-  handleMouseLeave: (isVisible: boolean) => void
-}
+  category: CategoriesType;
+  handleMouseEnter: (categoryName: string) => void;
+  handleMouseLeave: (isVisible: boolean) => void;
+};
 
-export default function CategoryButton({ category, handleMouseEnter, handleMouseLeave }: CategoryButtonProps) {
+export default function CategoryButton({
+  category,
+  handleMouseEnter,
+  handleMouseLeave,
+}: CategoryButtonProps) {
   return (
-    <li key={category.id}>
-      <button className="hover:text-black cursor-pointer py-4 hover:underline decoration-1 px-5"
+    <li className="shrink-0">
+      <button
+        type="button"
+        className="relative rounded-lg px-4 py-2 text-sm text-ink-soft transition-colors
+          hover:bg-cream hover:text-brand"
         onMouseEnter={() => handleMouseEnter(category.name)}
         onMouseLeave={() => handleMouseLeave(false)}
       >
-        <p>{category.name}</p>
+        {category.name}
       </button>
     </li>
-  )
+  );
 }

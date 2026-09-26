@@ -1,35 +1,33 @@
 import { useState } from "react";
-import { IoCartOutline } from "react-icons/io5";
+import { FiShoppingCart } from "react-icons/fi";
 import CartModal from "../../../cart/components/modal/CartModal";
 import useCart from "../../../cart/hooks/useCart";
 
 export default function CartButton() {
-  const [ showCart, setShowCart ] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const { itemsQuantity } = useCart();
-
-  const handleHiddeCart = () => {
-    setShowCart(false);
-  }
 
   return (
     <>
-      <div className="dropdown dropdown-end">
-        <div className="h-full flex items-center" onClick={() => setShowCart(!showCart)}>
-          <div tabIndex={0} className="btn btn-ghost btn-circle">
-            <div className="indicator text-[25px] text-[#343e49]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" 
-              stroke="currentColor">
-                <IoCartOutline />
-              </svg>
-              <span className="badge badge-sm indicator-item">{itemsQuantity}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <CartModal
-        viewCart={showCart}
-        hiddeCart={handleHiddeCart}
-      />
+      <button
+        type="button"
+        aria-label={`Carrito, ${itemsQuantity} productos`}
+        onClick={() => setShowCart(!showCart)}
+        className="relative grid h-10 w-10 place-items-center rounded-xl text-ink
+          transition-colors hover:bg-cream hover:text-brand"
+      >
+        <FiShoppingCart size={21} />
+        {itemsQuantity > 0 && (
+          <span
+            className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full
+              bg-brand px-1 text-[11px] font-semibold text-primary-content"
+          >
+            {itemsQuantity}
+          </span>
+        )}
+      </button>
+
+      <CartModal viewCart={showCart} hiddeCart={() => setShowCart(false)} />
     </>
-  )
+  );
 }

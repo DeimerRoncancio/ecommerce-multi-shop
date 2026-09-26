@@ -1,7 +1,109 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: caramellatte --default;
+  themes: false;
+}
+
+/* Tema propio de Multi Shop: crema cálido + naranja de marca. */
+@plugin "daisyui/theme" {
+  name: "multishop";
+  default: true;
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #fdfbf7;
+  --color-base-300: #f2ebe3;
+  --color-base-content: #1c1917;
+
+  --color-primary: #f14a13;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #fff4ef;
+  --color-secondary-content: #9a3412;
+
+  --color-accent: #5e472d;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #1c1917;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #2563eb;
+  --color-info-content: #ffffff;
+  --color-success: #16a34a;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.75rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  /* Tipografía */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Texto */
+  --color-ink: #1c1917;
+  --color-ink-soft: #57534e;
+  --color-ink-muted: #8a8078;
+
+  /* Superficies y bordes */
+  --color-cream: #fdfbf7;
+  --color-line: #efe7de;
+  --color-brand: #f14a13;
+  --color-brand-soft: #fff4ef;
+  --color-brand-dark: #c93c0d;
+
+  /* Sombras */
+  --shadow-card: 0 1px 2px rgb(28 25 23 / 0.04), 0 1px 3px rgb(28 25 23 / 0.06);
+  --shadow-card-hover: 0 12px 24px -8px rgb(28 25 23 / 0.14), 0 4px 8px -4px rgb(28 25 23 / 0.08);
+  --shadow-nav: 0 1px 0 0 var(--color-line), 0 4px 20px -12px rgb(28 25 23 / 0.2);
+}
+
+/* Alto de la navbar fija: lo usa main para no quedar por debajo de ella. */
+:root {
+  /* fila principal (4rem) + fila de categorías (2.75rem) */
+  --nav-h: 6.75rem;
+}
+
+@media (width >= 64rem) {
+  /* fila principal (4.75rem) + fila de categorías (3rem) */
+  :root {
+    --nav-h: 7.75rem;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
 }
 
 #root {
@@ -10,24 +112,46 @@
   min-width: 320px;
   min-height: 100vh;
   margin: 0 auto;
-  background-color: white;
+  background-color: var(--color-cream);
   overflow-x: hidden;
+}
+
+/* #root es una grilla, y un hijo de grilla nace con min-width: auto: nunca se
+   encoge por debajo del ancho de su contenido. Un carrusel de Swiper mide más
+   que la pantalla, así que sin esto <main> crece con él y toda la página se
+   desborda a lo ancho. */
+#root > * {
+  min-width: 0;
 }
 
 main {
   width: 100%;
-  height: calc(100% - 128px);
-  margin-top: 128px;
+  min-width: 0;
+  padding-top: var(--nav-h);
 }
 
-.ajust-screen {
-  width: 100%;
-  max-width: 1366px;
-  margin: auto
-}
-
+/* Ancho de contenido. Se mantienen los nombres viejos para no romper las
+   pantallas que todavía no se han migrado a <Container />. */
+.ajust-screen,
 .ajust-width {
-  width: 82%;
-  max-width: 1366px;
-  margin: auto;
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (width >= 48rem) {
+  .ajust-screen,
+  .ajust-width {
+    padding-inline: 2rem;
+  }
+}
+
+/* Oculta la barra de scroll en los carruseles horizontales */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

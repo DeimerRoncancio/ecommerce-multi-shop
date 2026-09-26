@@ -8,7 +8,7 @@ type UserDataRadioProps = {
 export default function UserDataRadio({ register }: UserDataRadioProps) {
   return (
     <div>
-      <label className="text-[#c7c7c7]">Género</label>
+      <label className="text-line">Género</label>
       <div className="flex pt-4 gap-6">
         <label className="flex items-center space-x-3 cursor-pointer">
           <input

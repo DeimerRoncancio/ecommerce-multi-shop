@@ -7,64 +7,62 @@ import { mapApiToProducts } from "../mappers/products.maper";
 import useCart from "../../cart/hooks/useCart";
 import { useState } from "react";
 import BuyButton from "./BuyButton";
+import { formatPrice } from "../../shared/utilities/format-price";
 
 type BuyProductProps = {
   productFromApi: ProductsFromApiType;
 };
 
 export default function BuyProduct({ productFromApi }: BuyProductProps) {
-  const { isInWishList, handleAddWishListItem, handleRemoveWishListItem} = useWishList();
-  const { handleAddItem, isInCart } = useCart()
+  const { isInWishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
+  const { handleAddItem, isInCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const handleAddToWishList = () => {
-    const product = mapApiToProducts(productFromApi);
-    handleAddWishListItem(product);
-  };
+  const inCart = isInCart(productFromApi.id);
+  const inWishList = isInWishList(productFromApi.id);
 
   const handleAddToCart = () => {
-    const product = mapApiToProducts(productFromApi);
-    handleAddItem(product, quantity);
+    handleAddItem(mapApiToProducts(productFromApi), quantity);
   };
 
-  const handleQuantityChange = (newQuantity: number) => setQuantity(newQuantity);
+  const handleToggleWishList = () => {
+    inWishList
+      ? handleRemoveWishListItem(productFromApi.id)
+      : handleAddWishListItem(mapApiToProducts(productFromApi));
+  };
 
   return (
-    <>
-      <ProductQuantity quantity={quantity} onQuantityChange={handleQuantityChange} />
-      <div className="flex flex-col gap-2 mr-6">
-        <div className="flex flex-col">
-          <button className={`btn btn-info disabled:!bg-[#af4b29] bg-[#f04913]
-          border-none text-white rounded-2xl shadow-none outline-none focus-visible:outline-none`} 
-          disabled={isInCart(productFromApi.id)}
-          onClick={handleAddToCart}>
-            <IoBagHandleOutline size={17} />
-            { isInCart(productFromApi.id) ? "Agregado " : "Agregar " }
-            al carrito - $
-            { new Intl.NumberFormat("es-ES").format(productFromApi.price * quantity) }
-            {` (${quantity})`}
-          </button>
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <button className="btn btn-outline btn-primary border border-gray-300 rounded-2xl 
-          hover:bg-gray-100 hover:text-black shadow-none focus-visible:bg-white 
-          focus-visible:text-black focus-visible:outline-none" 
-          onClick={() => {
-            isInWishList(productFromApi.id) ?
-              handleRemoveWishListItem(productFromApi.id) :
-              handleAddToWishList()
-          }}>
-            {isInWishList(productFromApi.id) ?
-              <IoMdHeart size={17} color="#fb2c36" /> :
-              <IoIosHeartEmpty size={17} />}
-            {isInWishList(productFromApi.id) ?
-              "Agregado " :
-              "Agregar "}
-             a lista de deseos
+    <div className="flex flex-col gap-5">
+      <ProductQuantity quantity={quantity} onQuantityChange={setQuantity} />
+
+      <div className="flex flex-col gap-3">
+        <button
+          type="button"
+          disabled={inCart}
+          onClick={handleAddToCart}
+          className="btn h-12 gap-2 rounded-xl border-0 bg-brand text-primary-content shadow-none
+            hover:bg-brand-dark disabled:bg-base-300 disabled:text-ink-muted"
+        >
+          <IoBagHandleOutline size={18} />
+          {inCart ? "Agregado al carrito" : "Agregar al carrito"}
+          <span className="font-semibold">
+            · {formatPrice(productFromApi.price * quantity)}
+          </span>
+        </button>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <button
+            type="button"
+            onClick={handleToggleWishList}
+            className="btn h-12 gap-2 rounded-xl border border-line bg-base-100 text-ink shadow-none
+              hover:border-brand hover:bg-brand-soft hover:text-secondary-content"
+          >
+            {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}
+            {inWishList ? "En tu lista" : "Lista de deseos"}
           </button>
           <BuyButton product={productFromApi} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

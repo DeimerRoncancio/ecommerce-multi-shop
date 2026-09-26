@@ -53,13 +53,13 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl text-[#5e472d]">Información de cuenta</h2>
+        <h2 className="text-2xl text-ink">Información de cuenta</h2>
       </div>
       {
         !loading ? (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="text-base border border-[#ebebeb] p-6 rounded-2xl text-black">
-              <h2 className="mb-6 text-lg font-semibold text-[#84633f]">Información personal</h2>
+            <div className="text-base border border-line p-6 rounded-2xl text-black">
+              <h2 className="mb-6 text-lg font-semibold text-ink">Información personal</h2>
               <div className="grid grid-cols-2 gap-5">
                 <UserDataField
                   register={register}

@@ -36,31 +36,31 @@ export default function CartCancel({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center text-center gap-6 py-24 px-4">
-      <span className="flex items-center justify-center w-24 h-24 rounded-full bg-[#fef2f2] text-[#ef4444]">
+    <div className="flex flex-col items-center gap-6 px-4 py-20 text-center lg:py-28">
+      <span className="grid h-24 w-24 place-items-center rounded-full bg-error/10 text-error">
         <IoCloseOutline size={52} />
       </span>
 
       <div className="flex flex-col gap-3">
-        <h1 className="text-[#333333] text-3xl">Pago cancelado</h1>
-        <p className="text-[#636669] max-w-125">
+        <h1 className="font-display text-3xl font-bold text-ink">Pago cancelado</h1>
+        <p className="max-w-lg text-ink-soft">
           No se realizó ningún cobro. Tu carrito sigue como lo dejaste
-          {itemsQuantity > 0 && <>, con <b className="text-[#5e472d]">{itemsQuantity} producto{itemsQuantity === 1 ? '' : 's'}</b></>},
+          {itemsQuantity > 0 && <>, con <b className="font-semibold text-ink">{itemsQuantity} producto{itemsQuantity === 1 ? '' : 's'}</b></>},
           así que puedes retomar la compra cuando quieras.
         </p>
       </div>
 
-      <div className="flex gap-4 mt-2">
+      <div className="mt-2 flex flex-wrap justify-center gap-3">
         {hasPendingTransaction && (
           <button
-            className="btn btn-accent py-5 px-8 rounded"
+            className="btn h-12 gap-2 rounded-xl border-0 bg-brand px-7 text-primary-content shadow-none hover:bg-brand-dark"
             onClick={() => navigate("/cart/payment")}
           >
             Reintentar el pago
           </button>
         )}
         <button
-          className="btn py-5 px-8 rounded"
+          className="btn h-12 gap-2 rounded-xl border border-line bg-base-100 px-7 text-ink shadow-none hover:bg-cream"
           onClick={() => {
             navigate("/cart")
             Cookie.remove("transactionId");
@@ -73,7 +73,7 @@ export default function CartCancel({ loaderData }: Route.ComponentProps) {
       </div>
 
       <button
-        className="btn btn-link text-[#7d7d7d] hover:text-[#f14913] decoration-transparent"
+        className="text-sm text-ink-muted transition-colors hover:text-brand"
         onClick={() => {
           navigate("/")
           Cookie.remove("transactionId");

@@ -1,4 +1,5 @@
 import { redirect, useNavigate } from "react-router";
+import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FaPlus } from "react-icons/fa6";
@@ -75,13 +76,15 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
   };
 
   return (
-    <div className="flex gap-10 justify-center mt-8 mb-15">
-      <div className="w-[55%] max-w-212.5 min-w-150">
-        <div className="flex justify-between">
-          <h1 className="text-[#333333] text-xl">Dirección de envío</h1>
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+      <section>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-display text-xl font-semibold text-ink">Dirección de envío</h1>
           {!showForm && (
             <button
-              className="btn bg-[#ffccb4] hover:bg-[#ffc0a3] text-[#f14913] btn-sm max-w-max border-none shadow-none focus-visible:outline-none"
+              type="button"
+              className="btn btn-sm gap-2 rounded-xl border-0 bg-brand-soft text-secondary-content
+                shadow-none hover:bg-brand hover:text-primary-content"
               onClick={() => setShowForm(true)}
             >
               <FaPlus size={16} />
@@ -91,7 +94,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
         </div>
 
         {!token && (
-          <p className="mt-4 text-sm text-[#636669]">
+          <p className="mt-4 rounded-xl border border-line bg-base-100 p-4 text-sm text-ink-soft">
             Como invitado, la dirección solo se usa para este pedido y no queda guardada.
           </p>
         )}
@@ -105,7 +108,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
         )}
 
         {addresses.length > 0 && (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {addresses.map((address) => {
               return (
                 <AddressItem
@@ -118,14 +121,12 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
             })}
           </div>
         )}
-      </div>
+      </section>
 
-      <div className="w-[25%]">
-        <PaymentCardInfo
-          onContinue={onContinue}
-          disabledContinue={!selectedAddress}
-        />
-      </div>
-    </div>
+      <PaymentCardInfo
+        onContinue={onContinue}
+        disabledContinue={!selectedAddress}
+      />
+    </Container>
   );
 }

@@ -1,66 +1,106 @@
-import { IoCloseOutline    } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import useCart from "../../hooks/useCart";
 import CartModalItem from "./CartModalItem";
 import ClearButton from "../ClearButton";
+import { formatPrice } from "../../../shared/utilities/format-price";
 
 type CartModalProps = {
-  viewCart: boolean,
-  hiddeCart: () => void
-}
+  viewCart: boolean;
+  hiddeCart: () => void;
+};
 
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   const { cartItems, totalPrice, itemsQuantity, clear } = useCart();
-
   const navigate = useNavigate();
+  // El panel se monta en <body>: la navbar usa backdrop-blur y eso la convierte en
+  // el marco de referencia de sus hijos con position: fixed, que quedarían
+  // encerrados dentro de la barra.
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => setIsMounted(true), []);
 
   const goCart = () => {
     navigate("/cart");
     hiddeCart();
-  }
+  };
 
-  return (
-    <div className={`${viewCart ? 'opacity-100 visible' : 'opacity-0 invisible'} z-20 flex 
-      overflow-hidden fixed top-0 left-0 h-full w-full shadow transition-all duration-300 ease`}>
-      <div className="bg-[#1c1c1c7c] h-full w-full absolute" onClick={hiddeCart} />
+  if (!isMounted) return null;
 
-      <div className={`${viewCart ? '-translate-x-0' : 'translate-x-full'} flex flex-col card-body p-0 w-[384px] 
-        h-full right-0 absolute bg-white transition-all duration-300 ease justify-between`}>
-        <div className="flex justify-between text-lg text-black items-center p-4 py-1 bg-[#f4f4f4]">
-          <span className="text-base">{`${itemsQuantity}`} productos en el carrito</span>
-          <button className="btn btn-link p-0 rounded-full shadow-none" onClick={hiddeCart}>
-            <IoCloseOutline  size={35} />
+  return createPortal(
+    <div
+      className={`fixed inset-0 z-40 transition-opacity duration-300 ${
+        viewCart ? "visible opacity-100" : "invisible opacity-0"
+      }`}
+    >
+      <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={hiddeCart} />
+
+      <aside
+        className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-base-100
+          shadow-card-hover transition-transform duration-300 ${
+            viewCart ? "translate-x-0" : "translate-x-full"
+          }`}
+      >
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-line
+          bg-cream px-5 py-4">
+          <div>
+            <p className="font-display text-base font-semibold text-ink">Tu carrito</p>
+            <p className="text-sm text-ink-muted">
+              {itemsQuantity} {itemsQuantity === 1 ? "producto" : "productos"}
+            </p>
+          </div>
+          <button
+            type="button"
+            aria-label="Cerrar carrito"
+            onClick={hiddeCart}
+            className="grid h-9 w-9 place-items-center rounded-xl text-ink-soft transition-colors
+              hover:bg-base-100 hover:text-brand"
+          >
+            <IoCloseOutline size={24} />
           </button>
-        </div>
+        </header>
 
-        <ul className="flex flex-col h-[calc(100%-69px)] p-1 overflow-auto">
-          {
-            !cartItems.length ?
-              <div className="flex items-center justify-center text-[#646464] text-base w-full h-40">
-                <p className="text-center">No tienes productos en tu carrito</p>
-              </div> :
+        <ul className="flex-1 overflow-y-auto">
+          {!cartItems.length ? (
+            <li className="flex flex-col items-center gap-3 px-5 py-14 text-center">
+              <img src="/images/box-empty.png" alt="" width={100} />
+              <p className="text-ink-soft">No tienes productos en tu carrito</p>
+            </li>
+          ) : (
             cartItems.map((item, index) => (
-              <CartModalItem
-                key={item.id}
-                item={item}
-                length={cartItems.length}
-                index={index}
-              />
+              <CartModalItem key={item.id} item={item} length={cartItems.length} index={index} />
             ))
-          }
+          )}
         </ul>
 
-        <div className="card-actions p-4 pt-0">
-          <div className="flex w-full items-center justify-between py-2 text-[#646464]">
-            <span>Subtotal: </span>
-            <span className="font-medium text-[17px]">
-              ${ new Intl.NumberFormat("es-ES").format(totalPrice) }
+        <footer className="shrink-0 border-t border-line p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <span className="text-ink-soft">Subtotal</span>
+            <span className="font-display text-xl font-semibold text-ink">
+              {formatPrice(totalPrice)}
             </span>
           </div>
-          <button className="btn btn-neutral btn-block rounded-sm" onClick={goCart}>Ver carrito/pagar</button>
-          <ClearButton fontSize={14} clear={clear} />
-        </div>
-      </div>
-    </div>
-  )
+
+          <button
+            type="button"
+            onClick={goCart}
+            disabled={!itemsQuantity}
+            className="btn h-12 w-full rounded-xl border-0 bg-brand text-primary-content shadow-none
+              hover:bg-brand-dark disabled:bg-base-300 disabled:text-ink-muted"
+          >
+            Ver carrito y pagar
+          </button>
+
+          {itemsQuantity > 0 && (
+            <div className="mt-3 flex justify-center">
+              <ClearButton fontSize={14} clear={clear} />
+            </div>
+          )}
+        </footer>
+      </aside>
+    </div>,
+    document.body,
+  );
 }

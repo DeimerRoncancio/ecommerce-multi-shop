@@ -23,7 +23,7 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl text-[#5e472d]">Configuración de cuenta</h2>
+        <h2 className="text-2xl text-ink">Configuración de cuenta</h2>
       </div>
       {
         !loading ? (

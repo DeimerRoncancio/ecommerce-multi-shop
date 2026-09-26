@@ -1,70 +1,71 @@
 import { Link, Outlet, useNavigate } from "react-router";
-import { GiPadlock } from "react-icons/gi";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { FiHeart, FiLock } from "react-icons/fi";
 import ProfileButton from "../../shared/layout/navbar/ProfileButton";
+import Container from "../../shared/ui/Container";
 import type { Route } from "./+types/cart-layout";
 import { getSession } from "../../sessions.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-  const token = session.get('token');
-  return { token }
+  const session = await getSession(request.headers.get("Cookie"));
+  const token = session.get("token");
+  return { token };
 }
 
 export default function CartLayout() {
   const navigate = useNavigate();
-  
+
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] min-h-screen">
-      <nav className="flex w-full bg-[#ffece59a] p-1 px-4">
-        <ul className="w-1/3 gap-16 flex">
-          <Link to="/" className="w-13 pl-4 z-10 btn btn-link p-0">
-            <img src='/images/logo-bag.webp' />
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-cream">
+      <header className="border-b border-line bg-base-100">
+        <Container className="flex h-16 items-center justify-between gap-4">
+          <Link to="/" className="block w-11 shrink-0" aria-label="Ir al inicio">
+            <img src="/images/logo-bag.webp" alt="Multi Shop" className="w-full" />
           </Link>
-        </ul>
 
-        <ul className="w-1/3 flex z-0 gap-2 text-[#7d7d7d] font-semibold justify-center items-center">
-          <div className="flex gap-1">
-            <p className="text-[#9a9a9a]">Tu compra </p>
-            <p className="text-[#bebebe]">es 100% segura</p>
+          <div className="hidden items-center gap-2 text-sm text-ink-soft sm:flex">
+            <FiLock size={16} className="text-success" />
+            <p>
+              Tu compra es <span className="font-medium text-ink">100% segura</span>
+            </p>
           </div>
-          <GiPadlock size={21} />
-        </ul>
 
-        <ul className="flex-row-reverse flex items-center w-1/3">
-          <li className="flex px-4 items-center text-[#a2a9b1]">
-            <ProfileButton size={32} />
-          </li>
-          <li className="flex px-4 items-center border-r] border-[#a2a9b1] text-[#a2a9b1]">
-            <button className="btn btn-ghost w-8 h-8 p-0 rounded-full text-[#343e49]" 
-              onClick={() => navigate("/profile/wish-list")}>
-              <IoMdHeartEmpty size={26} />
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              className="hidden rounded-xl px-3 py-2 text-sm font-medium text-ink transition-colors
+                hover:bg-cream hover:text-brand sm:block"
+            >
+              Mis compras
             </button>
-          </li>
-          <li className="flex px-4 items-center h-8 border-r border-[#a2a9b1] text-[#a2a9b1]">
-            <button className="flex flex-col p-0 btn btn-link decoration-transparent items-center text-[#343e49] 
-             hover:text-[#343e499f] gap-0 font-normal text-md">
-              <span className="p-0 m-0">Mis compras</span>
+            <button
+              type="button"
+              aria-label="Lista de deseos"
+              onClick={() => navigate("/profile/wish-list")}
+              className="grid h-10 w-10 place-items-center rounded-xl text-ink transition-colors
+                hover:bg-cream hover:text-brand"
+            >
+              <FiHeart size={20} />
             </button>
-          </li>
-        </ul>
-      </nav>
+            <div className="ml-1 border-l border-line pl-2">
+              <ProfileButton size={34} />
+            </div>
+          </div>
+        </Container>
+      </header>
 
-      <main className="mt-0!">
+      <main className="pt-0!">
         <Outlet />
       </main>
 
-      <footer className="px-10 py-4 flex flex-col text-[#7d7d7d]">
-        <div className="w-full h-px mb-4 mt-2.5 bg-[#e3e3e3]"></div>
-        <div className="flex w-full justify-between">
+      <footer className="border-t border-line bg-base-100">
+        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-sm
+          text-ink-muted sm:flex-row">
           <p>2025 Multi Shop ® marca registrada de Grupo Efma S.A.</p>
-          <div>
-            <button className="btn btn-link btn-block p-0 m-0 h-fit text-base text-[#646464] hover:text-black">
-              Ver terminos y condiciones
-            </button>
-          </div>
-        </div>
+          <button type="button" className="transition-colors hover:text-brand">
+            Ver términos y condiciones
+          </button>
+        </Container>
       </footer>
     </div>
-  )
+  );
 }

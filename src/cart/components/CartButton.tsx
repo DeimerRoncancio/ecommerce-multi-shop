@@ -1,4 +1,4 @@
-import { PiCurrencyDollarSimpleBold } from "react-icons/pi";
+import { formatPrice } from "../../shared/utilities/format-price";
 
 type CartButtonProps = {
   totalPrice: number;
@@ -9,12 +9,16 @@ type CartButtonProps = {
 
 export default function CartButton({ totalPrice, onContinue, disabled, label }: CartButtonProps) {
   return (
-    <button className="btn btn-accent py-5 w-full rounded " disabled={disabled} onClick={onContinue} type="button">
-      {label ?? 'Continuar'} / Total
-      <p className="flex items-center">
-        <PiCurrencyDollarSimpleBold color="#ffd6a7" size={15} />
-        {new Intl.NumberFormat("es-ES").format(totalPrice)}
-      </p>
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onContinue}
+      className="btn h-12 w-full justify-between rounded-xl border-0 bg-brand px-5
+        text-primary-content shadow-none hover:bg-brand-dark
+        disabled:bg-base-300 disabled:text-ink-muted"
+    >
+      <span>{label ?? "Continuar"}</span>
+      <span className="font-semibold">{formatPrice(totalPrice)}</span>
     </button>
-  )
+  );
 }

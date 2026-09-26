@@ -57,11 +57,11 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
 
       <div className={`${!showOptions ? 'hidden' : ''} `}>
         <ul tabIndex={0} className="menu menu-sm dropdown-content bg-white rounded-2xl z-30 mt-3 w-60 p-2.5 
-        border border-[#f1e1dc] shadow-xl transition-all duration-200">
+        border border-line shadow-xl transition-all duration-200">
           {user.name.length > 0 && (
-            <li className="px-3 py-2 border-b border-[#f1e1dc]/60 mb-1">
-              <span className="text-xs text-[#a2a9b1] font-medium p-0">Conectado como</span>
-              <p className="text-sm font-semibold text-[#343e49] truncate p-0">{user.name}</p>
+            <li className="px-3 py-2 border-b border-line/60 mb-1">
+              <span className="text-xs text-ink-muted font-medium p-0">Conectado como</span>
+              <p className="text-sm font-semibold text-ink truncate p-0">{user.name}</p>
             </li>
           )}
           <li>
@@ -78,9 +78,9 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
                   setShowProfileOptions(false);
                 }
               }}
-              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#f1e1dc]/40 transition-colors"
+              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors"
             >
-              <IoMdPerson className="text-lg text-[#343e49]" />
+              <IoMdPerson className="text-lg text-ink" />
               <span>{!user.name.length ? 'Ingresar' : 'Mi cuenta'}</span>
             </button>
           </li>
@@ -89,9 +89,9 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               <NavLink 
                 to="/register" 
                 onClick={() => setShowOptions(false)}
-                className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#f1e1dc]/40 transition-colors"
+                className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors"
               >
-                <RiUserReceivedFill className="text-lg text-[#343e49]" />
+                <RiUserReceivedFill className="text-lg text-ink" />
                 <span>Registrarse</span>
               </NavLink>
             </li>
@@ -100,13 +100,13 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
             <NavLink 
               to="" 
               onClick={() => setShowOptions(false)}
-              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#f1e1dc]/40 transition-colors"
+              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors"
             >
-              <IoMdCart className="text-lg text-[#343e49]" />
+              <IoMdCart className="text-lg text-ink" />
               <span>Mis compras</span>
             </NavLink>
           </li>
-          <li className="mt-2 pt-2 border-t border-[#f1e1dc]/60">
+          <li className="mt-2 pt-2 border-t border-line/60">
             <LogoutActionButton disabled={token.length === 0} className="w-full text-left text-sm rounded-lg px-3 py-2 text-red-600 hover:bg-red-50 font-medium transition-colors cursor-pointer disabled:text-gray-400 disabled:hover:bg-transparent disabled:cursor-not-allowed disabled:opacity-50">
               <div className="w-full flex items-center gap-2.5">
                 <IoMdLogOut className="text-lg" />
@@ -119,7 +119,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
 
       <div className={`${!showProfileOptions ? 'hidden' : ''} `}>
         <ul tabIndex={1} className="menu menu-sm dropdown-content bg-white rounded-2xl z-30 mt-3 w-60 p-2.5 
-        border border-[#f1e1dc] shadow-xl transition-all duration-200">
+        border border-line shadow-xl transition-all duration-200">
           <li>
             <button 
               type="button"
@@ -128,19 +128,19 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
                 setShowProfileOptions(false);
                 setShowOptions(true);
               }}
-              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#e4e4e4]/40 transition-colors"
+              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors"
             >
-              <IoCaretBack className="text-lg text-[#343e49]" />
+              <IoCaretBack className="text-lg text-ink" />
               <span>Volver</span>
             </button>
           </li>
-          <li className="mt-2 pt-2 border-t border-[#f1e1dc]/60">
+          <li className="mt-2 pt-2 border-t border-line/60">
             <NavLink 
               to="/login" 
               onClick={() => setShowOptions(false)}
-              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#f1e1dc]/40 transition-colors"
+              className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors"
             >
-              <IoMdLogIn className="text-lg text-[#343e49]" />
+              <IoMdLogIn className="text-lg text-ink" />
               <span>Iniciar sesión</span>
             </NavLink>
           </li>
@@ -154,26 +154,26 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
                   setShowOptions(false);
                   setShowGuestModal(true);
                 }}
-                className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-[#343e49] font-medium rounded-lg hover:bg-[#f1e1dc]/40 transition-colors text-left"
+                className="w-full flex items-center gap-2.5 text-sm py-2.5 px-3 text-ink font-medium rounded-lg hover:bg-line/40 transition-colors text-left"
               >
-                <IoMdPersonAdd className="text-lg text-[#343e49]" />
+                <IoMdPersonAdd className="text-lg text-ink" />
                 <span>Entrar como invitado</span>
               </button>
             </li>
           ) : (
-            <li className="mt-2 pt-2 border-t border-[#f1e1dc]/60">
+            <li className="mt-2 pt-2 border-t border-line/60">
               <NavLink 
                 to="/profile/wish-list" 
                 onClick={() => {
                   setShowOptions(false);
                   setShowProfileOptions(false);
                 }}
-                className="w-full flex items-center gap-2.5 px-3 py-2.5 bg-[#fff4ef]/80 rounded-xl border border-[#f1e1dc] hover:bg-[#fff4ef] transition-colors"
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 bg-brand-soft/80 rounded-xl border border-line hover:bg-brand-soft transition-colors"
               >
-                <IoMdMail className="text-lg text-[#f14913] shrink-0" />
+                <IoMdMail className="text-lg text-brand shrink-0" />
                 <div className="flex flex-col min-w-0">
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-[#f14913] leading-none">Invitado</span>
-                  <span className="text-xs font-semibold text-[#3a2f2a] truncate mt-0.5">
+                  <span className="text-[10px] uppercase tracking-wider font-semibold text-brand leading-none">Invitado</span>
+                  <span className="text-xs font-semibold text-ink truncate mt-0.5">
                     {guestEmail}
                   </span>
                 </div>

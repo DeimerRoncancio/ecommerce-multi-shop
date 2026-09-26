@@ -1,6 +1,7 @@
 import CartStepsItem from "../components/CartStepsItem";
 import { Outlet, useLocation } from "react-router";
 import { useStepsStorage } from "../storage/steps";
+import Container from "../../shared/ui/Container";
 
 export default function CartHeaderLayout() {
   const { steps } = useStepsStorage();
@@ -10,24 +11,19 @@ export default function CartHeaderLayout() {
 
   return (
     <>
-      <header className="w-full flex items-start gap-8 justify-center p-10 pb-6 mt-10">
-        {steps.map((step, index) => {
-          const isActive = location.pathname === step.path;
-          const isFirst = index + 1 !== 1;
-
-          return (
-            <CartStepsItem
-              key={index}
-              step={step}
-              isFirst={isFirst}
-              currentStepIndex={currentIndex}
-              index={index}
-              isActive={isActive}
-            />
-          )
-        })}
-      </header>
+      <Container as="header" className="flex items-start justify-center gap-2 py-8 sm:gap-6 lg:py-10">
+        {steps.map((step, index) => (
+          <CartStepsItem
+            key={index}
+            step={step}
+            isFirst={index !== 0}
+            currentStepIndex={currentIndex}
+            index={index}
+            isActive={location.pathname === step.path}
+          />
+        ))}
+      </Container>
       <Outlet />
     </>
-  )
+  );
 }

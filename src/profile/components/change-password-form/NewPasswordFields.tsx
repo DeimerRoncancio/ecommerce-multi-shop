@@ -17,11 +17,11 @@ export default function NewPasswordFields({ errors, handlerErrors, clearErrors, 
   return (
     <div className="grid grid-cols-2 gap-5">
       <div>
-        <span className="text-[#c7c7c7]">Nueva contraseña</span>
+        <span className="text-line">Nueva contraseña</span>
         <input
           type="text"
-          className={`p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full 
-          focus:outline-2 focus:outline-[#ffdacd] focus:border-[#ff9b7a]
+          className={`p-3 pl-4 mt-3 border-[1px] border-line rounded-xl outline-0 w-full 
+          focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
           ${errors.newPassword?.message && 'border-red-500'}`}
           placeholder="Ingresa tu neva contraseña"
           {...register("newPassword", {
@@ -35,11 +35,11 @@ export default function NewPasswordFields({ errors, handlerErrors, clearErrors, 
         )}
       </div>
       <div>
-        <span className="text-[#c7c7c7]">Confirma tu nueva contraseña</span>
+        <span className="text-line">Confirma tu nueva contraseña</span>
         <input
           type="text"
-          className={`p-3 pl-4 mt-3 border-[1px] border-[#ebebeb] rounded-xl outline-0 w-full
-          focus:outline-2 focus:outline-[#ffdacd] focus:border-[#ff9b7a]
+          className={`p-3 pl-4 mt-3 border-[1px] border-line rounded-xl outline-0 w-full
+          focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
           ${(errors.confirmPassword?.message || isPasswordMatch) && 'border-red-500'}`}
           placeholder="Confirma tu neva contraseña"
           {...register("confirmPassword", {
