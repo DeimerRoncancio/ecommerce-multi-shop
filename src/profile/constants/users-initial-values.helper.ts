@@ -16,7 +16,6 @@ export const UserInitialValues: UserTypes = {
   gender: "",
   admin: false,
   enabled: false,
-  phone: undefined
 }
 
 export const initialUserValues = (user: UserTypes): UserUpdateTypes => ({

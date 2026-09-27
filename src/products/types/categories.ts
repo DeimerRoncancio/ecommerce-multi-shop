@@ -1,4 +1,4 @@
-import { ProductItemType, ProductTypes } from "./product";
+import { ProductItemType } from "./product";
 
 export interface CategoriesType {
     id: string;
@@ -9,5 +9,5 @@ export interface CategoriesType {
 export interface CategoriesFromApiType {
     id: string;
     categoryName: string;
-    products: ProductTypes[];
+    products: ProductItemType[];
 }
