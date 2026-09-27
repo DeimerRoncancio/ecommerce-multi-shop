@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router"
 import { ProductItemType } from "../../../../products/types/product"
+import ProductImage from "../../../ui/ProductImage"
 
 type ProductItemProps = {
   product: ProductItemType;
@@ -16,11 +17,12 @@ export default function ProductItem({ product, closeModal }: ProductItemProps) {
 
   return (
     <li key={product.id} className="flex flex-col group bg-white gap-4">
-      <div className="w-[150px] h-40 overflow-hidden">
-        <img
-          src={`${product.mainImage.imageUrl}`}
-          className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105"
-          alt=""
+      <div className="w-37.5 h-40 overflow-hidden">
+        <ProductImage
+          src={product.mainImage.imageUrl}
+          width={300}
+          alt={product.productName}
+          className="transition-all duration-300 group-hover:scale-105"
         />
       </div>
       <div className="flex flex-col bg-white z-10 gap-2">

@@ -5,6 +5,7 @@ import useCart from "../../cart/hooks/useCart";
 import Rating from "./Rating";
 import { ProductTypes } from "../../products/types/product";
 import { formatPrice } from "../../shared/utilities/format-price";
+import ProductImage from "../../shared/ui/ProductImage";
 
 type WishListItemProps = {
   item: WishListItemType;
@@ -25,20 +26,22 @@ export default function WishListItem({ item, index, products }: WishListItemProp
 
   return (
     <li className="group relative flex flex-col overflow-hidden rounded-2xl border border-line
-      bg-base-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-      <div className="aspect-square w-full overflow-hidden bg-cream p-5">
-        <img
+      bg-base-100 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40
+      hover:shadow-card-hover">
+      <div className="aspect-square w-full overflow-hidden bg-cream">
+        <ProductImage
           src={item.productImage}
+          width={500}
           alt={item.productName}
           loading="lazy"
-          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+          className="transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <h2 className="line-clamp-2 font-medium leading-snug text-ink">{item.productName}</h2>
         <Rating index={index} />
-        <p className="mt-auto font-display text-lg font-semibold text-ink">
+        <p className="mt-auto font-display text-lg font-bold text-brand">
           {formatPrice(item.productPrice)}
         </p>
 
@@ -46,8 +49,8 @@ export default function WishListItem({ item, index, products }: WishListItemProp
           type="button"
           disabled={isInCart}
           onClick={() => handleAddToCart(item.id)}
-          className="btn mt-3 w-full rounded-xl border-0 bg-neutral text-neutral-content shadow-none
-            hover:bg-brand disabled:bg-base-300 disabled:text-ink-muted"
+          className="btn mt-3 w-full rounded-xl border-0 bg-brand text-primary-content shadow-none
+            hover:bg-brand-dark disabled:bg-brand-soft disabled:text-secondary-content"
         >
           {isInCart ? "Producto añadido" : "Agregar al carrito"}
         </button>

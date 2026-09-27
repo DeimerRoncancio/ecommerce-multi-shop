@@ -1,6 +1,7 @@
 import { Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductImageType } from "../../types/product";
+import ProductImage from "../../../shared/ui/ProductImage";
 
 import "swiper/css";
 import "swiper/css/thumbs";
@@ -25,11 +26,11 @@ export default function CarouselNavigation({ images, setThumbsSwiper }: Props) {
       {images.map(image => (
         <SwiperSlide
           key={image.imageId}
-          className="!flex aspect-square cursor-pointer items-center justify-center overflow-hidden
-            rounded-xl border border-line bg-cream p-2 transition-colors
+          className="flex! aspect-square cursor-pointer items-center justify-center overflow-hidden
+            rounded-xl border border-line bg-cream transition-colors
             [&.swiper-slide-thumb-active]:border-brand"
         >
-          <img src={image.imageUrl} alt={image.name} className="h-full w-full object-contain" />
+          <ProductImage src={image.imageUrl} width={200} alt={image.name} />
         </SwiperSlide>
       ))}
     </Swiper>

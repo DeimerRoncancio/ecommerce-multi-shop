@@ -3,6 +3,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { FiCheck, FiShoppingBag } from "react-icons/fi";
 import { ProductTypes } from "../types/product";
 import { formatPrice } from "../../shared/utilities/format-price";
+import ProductImage from "../../shared/ui/ProductImage";
 
 type ProductCardProps = {
   product: ProductTypes;
@@ -19,12 +20,13 @@ export default function ProductCard({
   onToggleCart,
   onToggleWishList,
 }: ProductCardProps) {
-  const category = product.categories[0]?.categoryName;
+  const categories = product.categories.slice(0, 2);
 
   return (
     <article
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-line
-        bg-base-100 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line
+        bg-base-100 shadow-card transition-all duration-300 hover:-translate-y-1
+        hover:border-brand/40 hover:shadow-card-hover"
     >
       <button
         type="button"
@@ -32,50 +34,60 @@ export default function ProductCard({
         aria-pressed={isInWishList}
         onClick={() => onToggleWishList(product)}
         className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full border
-          border-line bg-base-100/80 text-ink-soft backdrop-blur-sm transition-colors
-          hover:text-brand"
+          border-line bg-base-100/90 text-ink-soft backdrop-blur-sm transition-colors
+          hover:border-brand hover:text-brand"
       >
         {isInWishList ? <FaHeart size={15} className="text-brand" /> : <FaRegHeart size={15} />}
       </button>
 
-      <Link to={`/product/${product.id}`} className="block bg-cream p-6">
+      <Link
+        to={`/product/${product.id}`}
+        className="block bg-cream"
+      >
         <div className="aspect-square w-full overflow-hidden">
-          <img
+          <ProductImage
             src={product.images[0]?.imageUrl}
+            width={500}
             alt={product.name}
             loading="lazy"
-            className="h-full w-full object-contain transition-transform duration-500
-              group-hover:scale-105"
+            className="transition-transform duration-500 group-hover:scale-105"
           />
         </div>
       </Link>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
-        <div className="flex flex-col gap-1">
-          {category && (
-            <span className="text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">
-              {category}
-            </span>
-          )}
-          <Link
-            to={`/product/${product.id}`}
-            className="line-clamp-2 font-medium leading-snug text-ink transition-colors hover:text-brand"
-          >
-            {product.name}
-          </Link>
-        </div>
+        {categories.length > 0 && (
+          <ul className="flex flex-wrap gap-1.5">
+            {categories.map(({ categoryName }) => (
+              <li
+                key={categoryName}
+                className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold
+                  uppercase tracking-[0.06em] text-secondary-content"
+              >
+                {categoryName}
+              </li>
+            ))}
+          </ul>
+        )}
 
-        <p className="mt-auto font-display text-xl font-semibold text-ink">
+        <Link
+          to={`/product/${product.id}`}
+          className="line-clamp-2 font-medium leading-snug text-ink transition-colors hover:text-brand"
+        >
+          {product.name}
+        </Link>
+
+        <p className="mt-auto font-display text-xl font-bold text-brand">
           {formatPrice(product.price)}
         </p>
 
         <button
           type="button"
           onClick={() => onToggleCart(product)}
-          className={`btn w-full gap-2 rounded-xl border-0 font-medium shadow-none ${
+          className={`btn w-full gap-2 rounded-xl border-0 font-medium shadow-none transition-colors ${
             isInCart
-              ? "bg-secondary text-secondary-content hover:bg-brand-soft"
-              : "bg-neutral text-neutral-content hover:bg-brand"
+              ? "bg-brand-soft text-secondary-content hover:bg-brand-tint"
+              : "bg-brand text-primary-content hover:bg-brand-dark"
           }`}
         >
           {isInCart ? <FiCheck size={17} /> : <FiShoppingBag size={17} />}

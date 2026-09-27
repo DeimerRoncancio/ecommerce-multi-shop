@@ -6,6 +6,7 @@ import useWishList from "../../../wishlist/hooks/useWishList";
 import { mapApiToProducts } from "../../mappers/products.maper";
 import useCart from "../../../cart/hooks/useCart";
 import { formatPrice } from "../../../shared/utilities/format-price";
+import ProductImage from "../../../shared/ui/ProductImage";
 
 type Props = {
   product: ProductsFromApiType;
@@ -21,26 +22,32 @@ export default function RecommendationItem({ product, index }: Props) {
 
   return (
     <>
-      <div className="flex h-48 w-full items-center justify-center rounded-xl bg-cream p-4">
-        <img
+      <div className="aspect-square w-full overflow-hidden rounded-xl bg-cream">
+        <ProductImage
           src={product.productImages[0]?.imageUrl}
+          width={400}
           alt={product.productName}
           loading="lazy"
-          className="h-full w-full object-contain"
         />
       </div>
 
       <div className="mt-4 flex flex-1 flex-col gap-2">
-        <ul className="flex gap-2 text-[11px] font-medium uppercase tracking-[0.08em] text-ink-muted">
+        <ul className="flex flex-wrap gap-1.5">
           {product.categories.slice(0, 2).map(cat => (
-            <li key={cat.categoryName}>{cat.categoryName}</li>
+            <li
+              key={cat.categoryName}
+              className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold
+                uppercase tracking-[0.06em] text-secondary-content"
+            >
+              {cat.categoryName}
+            </li>
           ))}
         </ul>
 
         <h3 className="line-clamp-2 font-medium leading-snug text-ink">{product.productName}</h3>
         <Rating index={index} />
 
-        <p className="font-display text-lg font-semibold text-ink">{formatPrice(product.price)}</p>
+        <p className="font-display text-lg font-bold text-brand">{formatPrice(product.price)}</p>
 
         <button
           type="button"
@@ -49,8 +56,8 @@ export default function RecommendationItem({ product, index }: Props) {
             event.stopPropagation();
             handleAddItem(mapApiToProducts(product));
           }}
-          className="btn mt-2 w-full gap-2 rounded-xl border-0 bg-neutral text-neutral-content
-            shadow-none hover:bg-brand disabled:bg-base-300 disabled:text-ink-muted"
+          className="btn mt-2 w-full gap-2 rounded-xl border-0 bg-brand text-primary-content
+            shadow-none hover:bg-brand-dark disabled:bg-brand-soft disabled:text-secondary-content"
         >
           <FiShoppingCart size={16} />
           {inCart ? "Ya está en el carrito" : "Agregar al carrito"}

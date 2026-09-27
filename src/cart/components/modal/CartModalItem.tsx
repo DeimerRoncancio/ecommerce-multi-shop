@@ -4,6 +4,7 @@ import useCartItems from "../../hooks/useCartItems";
 import { CartItemType } from "../../types/cart";
 import { useEffect } from "react";
 import { formatPrice } from "../../../shared/utilities/format-price";
+import ProductImage from "../../../shared/ui/ProductImage";
 
 type CartModalItemProps = {
   item: CartItemType;
@@ -24,12 +25,8 @@ export default function CartModalItem({ item, length, index }: CartModalItemProp
 
   return (
     <li className={`flex gap-3 p-4 ${index === length - 1 ? "" : "border-b border-line"}`}>
-      <div className="grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-cream p-2">
-        <img
-          src={item.productImage}
-          alt={item.productName}
-          className="h-full w-full object-contain"
-        />
+      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-cream">
+        <ProductImage src={item.productImage} width={160} alt={item.productName} />
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">

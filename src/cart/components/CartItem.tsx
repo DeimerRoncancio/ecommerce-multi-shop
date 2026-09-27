@@ -4,6 +4,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { CartItemType } from "../types/cart";
 import { useEffect } from "react";
 import { formatPrice } from "../../shared/utilities/format-price";
+import ProductImage from "../../shared/ui/ProductImage";
 
 type CartItemProps = {
   item: CartItemType;
@@ -31,12 +32,8 @@ export default function CartItem({ item, length, index }: CartItemProps) {
     <li className={`flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:gap-6 ${
       isLast ? "" : "border-b border-line"
     }`}>
-      <div className="grid h-24 w-24 shrink-0 place-items-center rounded-xl bg-cream p-2">
-        <img
-          src={item.productImage}
-          alt={item.productName}
-          className="h-full w-full object-contain"
-        />
+      <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-cream">
+        <ProductImage src={item.productImage} width={200} alt={item.productName} />
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
