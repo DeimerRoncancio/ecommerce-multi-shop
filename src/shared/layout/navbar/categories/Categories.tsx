@@ -22,7 +22,7 @@ export default function Categories({ categories }: CategoriesProps) {
   const handleModalVisibility = (isVisible: boolean) => setModalVisible(isVisible);
 
   return (
-    <div className="border-t border-line bg-base-100/60">
+    <div className="brand-block">
       <Container>
         <ul className="no-scrollbar flex h-11 items-center gap-1 overflow-x-auto lg:h-12 lg:justify-center">
           {categories.map(cat => (

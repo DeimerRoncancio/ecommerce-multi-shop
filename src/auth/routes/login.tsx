@@ -40,7 +40,7 @@ export default function Login() {
   return (
     <div className="min-h-screen w-full bg-brand-soft">
       <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="relative flex flex-col justify-between overflow-hidden bg-gradient-to-br from-brand via-brand to-brand px-8 py-10 text-white lg:px-12">
+        <section className="brand-block relative flex flex-col justify-between overflow-hidden px-8 py-10 text-white lg:px-12">
           <div className="absolute -left-12 top-12 h-56 w-56 rounded-full border border-white/20" />
           <div className="absolute right-6 top-24 h-40 w-40 rounded-full border border-white/15" />
           <div className="absolute bottom-16 left-20 h-64 w-64 rounded-full border border-white/10" />

@@ -15,8 +15,8 @@ export default function CategoryButton({
     <li className="shrink-0">
       <button
         type="button"
-        className="relative rounded-lg px-4 py-2 text-sm text-ink-soft transition-colors
-          hover:bg-cream hover:text-brand"
+        className="relative rounded-lg px-4 py-2 text-sm font-medium text-white/90
+          transition-colors hover:bg-white hover:text-brand"
         onMouseEnter={() => handleMouseEnter(category.name)}
         onMouseLeave={() => handleMouseLeave(false)}
       >

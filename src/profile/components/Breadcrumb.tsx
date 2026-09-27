@@ -21,12 +21,16 @@ export default function Breadcrumb({
   ];
 
   return (
-    <div className="border-b border-line bg-brand-soft">
-      <Container className="flex flex-wrap items-center justify-between gap-2 py-5">
-        <h1 className="font-display text-2xl font-semibold text-ink">{namePage}</h1>
+    <div className="brand-block relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-white/10"
+      />
+      <Container className="relative flex flex-wrap items-center justify-between gap-2 py-6">
+        <h1 className="font-display text-2xl font-bold text-white lg:text-3xl">{namePage}</h1>
 
         <nav aria-label="Ruta de navegación">
-          <ol className="flex flex-wrap items-center gap-1 text-sm text-ink-muted">
+          <ol className="flex flex-wrap items-center gap-1 text-sm text-white/70">
             {crumbs.map((crumb, index) => {
               const isLast = index === crumbs.length - 1;
 
@@ -34,11 +38,11 @@ export default function Breadcrumb({
                 <li key={crumb.to} className="flex items-center gap-1">
                   {index > 0 && <FiChevronRight size={14} className="opacity-60" />}
                   {isLast ? (
-                    <span className="max-w-[220px] truncate font-medium capitalize text-ink">
+                    <span className="max-w-55 truncate font-semibold capitalize text-white">
                       {crumb.label}
                     </span>
                   ) : (
-                    <Link to={crumb.to} className="capitalize transition-colors hover:text-brand">
+                    <Link to={crumb.to} className="capitalize transition-colors hover:text-white">
                       {crumb.label}
                     </Link>
                   )}

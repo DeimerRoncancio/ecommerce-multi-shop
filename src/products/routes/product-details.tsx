@@ -6,6 +6,7 @@ import ProductRecommendations from "../components/product-details-recommendation
 import { WarrantyCard } from "../components/WarrantyCard";
 import Container from "../../shared/ui/Container";
 import { getProduct, getProducts } from "../services/products.api";
+import { ProductsFromApiType } from "../types/product";
 import type { Route } from "./+types/product-details";
 
 import "swiper/css";
@@ -18,8 +19,22 @@ export async function loader({ params }: Route.LoaderArgs) {
   return { product, products };
 }
 
+const relatedProducts = (product: ProductsFromApiType, products: ProductsFromApiType[]) => {
+  const categories = new Set(product.categories.map(category => category.categoryName));
+  const others = products.filter(item => item.id !== product.id);
+
+  const sameCategory = others.filter(item =>
+    item.categories.some(category => categories.has(category.categoryName)),
+  );
+
+  return sameCategory.length >= 4 ? sameCategory : others;
+};
+
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {
   const { product, products } = loaderData;
+
+  const related = relatedProducts(product, products);
+  const mainCategory = product.categories[0]?.categoryName;
 
   return (
     <>
@@ -36,15 +51,24 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
         </div>
       </Container>
 
-      <section className="border-t border-line bg-base-100 py-14 lg:py-20">
-        <Container className="mb-10 flex flex-col items-center gap-3 text-center">
-          <h2 className="font-display text-3xl font-bold text-ink">Encuentra lo que quieres</h2>
-          <p className="max-w-xl text-ink-soft">
-            Descubre productos que suplan todas tus necesidades. Los mejores productos de
-            tecnología y videojuegos están aquí.
+      <section className="brand-block relative overflow-hidden py-14 lg:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-white/10"
+        />
+        <Container className="relative mb-10 flex flex-col items-center gap-3 text-center">
+          <span className="rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase
+            tracking-[0.08em] text-white ring-1 ring-white/25">
+            También te puede gustar
+          </span>
+          <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
+            {mainCategory ? `Más de ${mainCategory}` : "Más productos"}
+          </h2>
+          <p className="max-w-xl text-white/90">
+            Productos parecidos a este, con el mismo envío rápido y la misma garantía.
           </p>
         </Container>
-        <ProductRecommendations products={products} />
+        <ProductRecommendations products={related} />
       </section>
     </>
   );

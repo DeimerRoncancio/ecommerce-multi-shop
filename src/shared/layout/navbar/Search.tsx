@@ -18,8 +18,8 @@ export default function Search() {
       <button
         type="submit"
         aria-label="Buscar"
-        className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-neutral text-neutral-content
-          transition-colors hover:bg-brand"
+        className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand text-primary-content
+          transition-colors hover:bg-brand-dark"
       >
         <FiSearch size={18} />
       </button>

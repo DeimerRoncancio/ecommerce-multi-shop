@@ -1,24 +1,26 @@
 import { Link } from "react-router";
-import { FiArrowRight, FiCreditCard, FiRefreshCw, FiShield, FiTruck } from "react-icons/fi";
+import {
+  FiArrowRight,
+  FiCreditCard,
+  FiRefreshCw,
+  FiShield,
+  FiTruck,
+} from "react-icons/fi";
 import useCart from "../../cart/hooks/useCart";
 import { mapApiToProducts } from "../../products/mappers/products.maper";
-import { mapApiToCategories } from "../../products/mappers/categories.mapper";
 import { getProducts } from "../../products/services/products.api";
-import { getCategories } from "../../products/services/categories.api";
 import useWishList from "../../wishlist/hooks/useWishList";
 import ProductCard from "../../products/components/ProductCard";
 import ProductCardSkeleton from "../../products/components/ProductCardSkeleton";
 import Container from "../../shared/ui/Container";
+import { formatPrice } from "../../shared/utilities/format-price";
+import ProductImage from "../../shared/ui/ProductImage";
+import { ProductTypes } from "../../products/types/product";
 import type { Route } from "./+types/Home";
 
 export async function loader() {
   const apiProducts = await getProducts();
-  const products = apiProducts.map(mapApiToProducts);
-
-  const apiCategories = await getCategories();
-  const categories = apiCategories.map(mapApiToCategories);
-
-  return { products, categories };
+  return { products: apiProducts.map(mapApiToProducts) };
 }
 
 export function HydrateFallBack() {
@@ -38,65 +40,115 @@ const benefits = [
   { icon: FiCreditCard, title: "Paga como quieras", text: "Tarjeta, PSE o efectivo" },
 ];
 
+const slugify = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+const groupByCategory = (products: ProductTypes[]) => {
+  const groups = new Map<string, ProductTypes[]>();
+
+  products.forEach(product => {
+    product.categories.forEach(({ categoryName }) => {
+      const current = groups.get(categoryName) ?? [];
+      groups.set(categoryName, [...current, product]);
+    });
+  });
+
+  return [...groups.entries()]
+    .map(([name, items]) => ({ name, slug: slugify(name), items }))
+    .sort((a, b) => b.items.length - a.items.length);
+};
+
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
-  const { products, categories } = loaderData;
+  const { products } = loaderData;
   const { cartItems, handleAddItem, handleRemoveItem } = useCart();
 
-  const featured = products[0];
+  const sections = groupByCategory(products);
+  const featured = [...products].sort((a, b) => b.price - a.price)[0];
 
-  const toggleCart = (product: typeof products[number]) => {
+  const toggleCart = (product: ProductTypes) => {
     cartItems.some(item => item.id === product.id)
       ? handleRemoveItem(product)
       : handleAddItem(product);
   };
 
-  const toggleWishList = (product: typeof products[number]) => {
+  const toggleWishList = (product: ProductTypes) => {
     wishList.some(item => item.id === product.id)
       ? handleRemoveWishListItem(product.id)
       : handleAddWishListItem(product);
   };
 
+  const renderGrid = (items: ProductTypes[]) => (
+    <ul className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+      {items.map(product => (
+        <li key={product.id} className="flex">
+          <div className="w-full">
+            <ProductCard
+              product={product}
+              isInCart={cartItems.some(item => item.id === product.id)}
+              isInWishList={wishList.some(item => item.id === product.id)}
+              onToggleCart={toggleCart}
+              onToggleWishList={toggleWishList}
+            />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-line bg-base-100">
+      <section className="brand-block relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] rounded-full
-            bg-brand-soft blur-3xl"
+          className="pointer-events-none absolute -right-32 -top-40 h-130 w-130 rounded-full
+            bg-white/10"
         />
-        <Container className="relative grid items-center gap-12 py-14 lg:grid-cols-2 lg:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-40 left-1/4 h-105 w-105 rounded-full
+            bg-white/5"
+        />
+
+        <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
           <div className="flex flex-col items-start gap-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-line
-              bg-brand-soft px-4 py-1.5 text-xs font-medium uppercase tracking-[0.08em] text-secondary-content">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-              Tecnología, gaming y mucho más
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5
+              text-xs font-semibold uppercase tracking-[0.08em] text-white ring-1 ring-white/25">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              {sections.length} categorías · {products.length} productos
             </span>
 
-            <h1 className="font-display text-4xl font-bold leading-[1.1] text-ink sm:text-5xl lg:text-6xl">
-              Todo lo que buscas,
-              <span className="text-brand"> en una sola tienda</span>
+            <h1 className="font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl
+              lg:text-6xl">
+              Ropa, cocina, deporte
+              <br />
+              y tecnología
+              <span className="block text-brand-tint">en una sola tienda</span>
             </h1>
 
-            <p className="max-w-md text-lg leading-relaxed text-ink-soft">
-              Explora cientos de productos seleccionados, con envío rápido, pago seguro
-              y garantía en cada compra.
+            <p className="max-w-md text-lg leading-relaxed text-white/90">
+              Desde una sartén hasta una consola. Envío rápido, pago seguro y garantía
+              en todo lo que compres.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
               <a
-                href="#productos"
-                className="btn gap-2 rounded-xl border-0 bg-brand px-7 text-primary-content
-                  shadow-none hover:bg-brand-dark"
+                href="#catalogo"
+                className="btn gap-2 rounded-xl border-0 bg-white px-7 font-semibold text-brand
+                  shadow-none hover:bg-brand-tint"
               >
-                Ver productos
+                Ver catálogo
                 <FiArrowRight size={18} />
               </a>
               <Link
                 to="/profile/wish-list"
-                className="btn gap-2 rounded-xl border border-line bg-base-100 px-7 text-ink
-                  shadow-none hover:bg-cream"
+                className="btn gap-2 rounded-xl border border-white/40 bg-transparent px-7
+                  font-medium text-white shadow-none hover:border-white hover:bg-white/10"
               >
                 Mi lista de deseos
               </Link>
@@ -104,53 +156,61 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
             <dl className="mt-2 flex flex-wrap gap-x-10 gap-y-4">
               <div>
-                <dt className="font-display text-2xl font-semibold text-ink">{products.length}+</dt>
-                <dd className="text-sm text-ink-muted">Productos disponibles</dd>
+                <dt className="font-display text-2xl font-bold text-white">{products.length}</dt>
+                <dd className="text-sm text-white/70">Productos disponibles</dd>
               </div>
               <div>
-                <dt className="font-display text-2xl font-semibold text-ink">{categories.length}</dt>
-                <dd className="text-sm text-ink-muted">Categorías</dd>
+                <dt className="font-display text-2xl font-bold text-white">{sections.length}</dt>
+                <dd className="text-sm text-white/70">Categorías</dd>
               </div>
               <div>
-                <dt className="font-display text-2xl font-semibold text-ink">24 h</dt>
-                <dd className="text-sm text-ink-muted">Tiempo de despacho</dd>
+                <dt className="font-display text-2xl font-bold text-white">24 h</dt>
+                <dd className="text-sm text-white/70">Tiempo de despacho</dd>
               </div>
             </dl>
           </div>
 
           {featured && (
-            <div className="relative">
-              <div className="absolute inset-0 -rotate-3 rounded-[2rem] bg-brand-soft" aria-hidden />
-              <Link
-                to={`/product/${featured.id}`}
-                className="relative flex flex-col gap-4 rounded-[2rem] border border-line bg-base-100
-                  p-8 shadow-card transition-shadow hover:shadow-card-hover"
-              >
-                <span className="w-fit rounded-full bg-neutral px-3 py-1 text-xs font-medium
-                  uppercase tracking-[0.08em] text-neutral-content">
-                  Destacado
-                </span>
-                <img
+            <Link
+              to={`/product/${featured.id}`}
+              className="group relative flex flex-col gap-4 rounded-4xl bg-base-100 p-8
+                shadow-card-hover transition-transform duration-300 hover:-translate-y-1"
+            >
+              <span className="w-fit rounded-full bg-brand px-3 py-1 text-xs font-semibold
+                uppercase tracking-[0.08em] text-primary-content">
+                Lo más top
+              </span>
+              <div className="aspect-square w-full overflow-hidden rounded-2xl">
+                <ProductImage
                   src={featured.images[0]?.imageUrl}
+                  width={800}
                   alt={featured.name}
-                  className="mx-auto h-64 w-full object-contain lg:h-80"
+                  className="transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="flex items-end justify-between gap-4 border-t border-line pt-4">
+              </div>
+              <div className="flex items-end justify-between gap-4 border-t border-line pt-4">
+                <div>
                   <p className="font-medium text-ink">{featured.name}</p>
-                  <FiArrowRight className="shrink-0 text-brand" size={22} />
+                  <p className="font-display text-xl font-bold text-brand">
+                    {formatPrice(featured.price)}
+                  </p>
                 </div>
-              </Link>
-            </div>
+                <FiArrowRight
+                  className="shrink-0 text-brand transition-transform group-hover:translate-x-1"
+                  size={22}
+                />
+              </div>
+            </Link>
           )}
         </Container>
       </section>
 
-      {/* Beneficios */}
-      <section className="border-b border-line bg-cream">
+      <section className="border-b border-line bg-base-100">
         <Container className="grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex items-center gap-3">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-soft
+                text-brand">
                 <Icon size={20} />
               </span>
               <div className="leading-tight">
@@ -162,42 +222,99 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </Container>
       </section>
 
-      {/* Productos */}
-      <section id="productos" className="scroll-mt-nav py-14 lg:py-20">
-        <Container>
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <h2 className="font-display text-3xl font-bold text-ink">Productos destacados</h2>
-              <p className="mt-1 text-ink-soft">Lo más buscado por nuestros clientes esta semana</p>
-            </div>
-            {categories.length > 0 && (
-              <ul className="flex flex-wrap gap-2">
-                {categories.slice(0, 5).map(category => (
-                  <li key={category.id}>
-                    <span className="rounded-full border border-line bg-base-100 px-4 py-1.5 text-sm text-ink-soft">
-                      {category.name}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
+      <section id="catalogo" className="brand-block scroll-mt-nav">
+        <Container className="flex flex-col gap-5 py-10">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="font-display text-2xl font-bold text-white sm:text-3xl">
+              Compra por categoría
+            </h2>
+            <p className="text-sm text-white/75">
+              Salta directo al rubro que te interesa
+            </p>
           </div>
 
-          <ul className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-            {products.map(product => (
-              <li key={product.id} className="flex">
-                <div className="w-full">
-                  <ProductCard
-                    product={product}
-                    isInCart={cartItems.some(item => item.id === product.id)}
-                    isInWishList={wishList.some(item => item.id === product.id)}
-                    onToggleCart={toggleCart}
-                    onToggleWishList={toggleWishList}
-                  />
-                </div>
+          <ul className="flex flex-wrap gap-2.5">
+            {sections.map(({ name, slug, items }) => (
+              <li key={slug}>
+                <a
+                  href={`#${slug}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2
+                    text-sm font-medium text-white ring-1 ring-white/25 transition-colors
+                    hover:bg-white hover:text-brand"
+                >
+                  {name}
+                  <span className="rounded-full bg-white/20 px-2 text-xs font-semibold">
+                    {items.length}
+                  </span>
+                </a>
               </li>
             ))}
           </ul>
+        </Container>
+      </section>
+
+      {sections.map(({ name, slug, items }, index) => (
+        <section
+          key={slug}
+          id={slug}
+          className={`scroll-mt-nav py-14 lg:py-16 ${
+            index % 2 === 0 ? "bg-base-100" : "bg-cream"
+          }`}
+        >
+          <Container>
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <span aria-hidden className="h-10 w-1.5 rounded-full bg-brand" />
+                <div>
+                  <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">{name}</h2>
+                  <p className="mt-0.5 text-sm text-ink-muted">
+                    {items.length} {items.length === 1 ? "producto" : "productos"}
+                  </p>
+                </div>
+              </div>
+              <a
+                href="#catalogo"
+                className="text-sm font-medium text-brand transition-colors hover:text-brand-dark"
+              >
+                Ver otras categorías
+              </a>
+            </div>
+
+            {renderGrid(items)}
+          </Container>
+        </section>
+      ))}
+
+      <section className="brand-block relative overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10"
+        />
+        <Container className="relative flex flex-col items-center gap-5 py-16 text-center lg:py-20">
+          <h2 className="max-w-2xl font-display text-3xl font-bold text-white sm:text-4xl">
+            ¿Listo para armar tu pedido?
+          </h2>
+          <p className="max-w-xl text-white/90">
+            Agrega lo que quieras al carrito y paga en minutos. Si algo no te convence,
+            tienes 30 días para devolverlo.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/cart"
+              className="btn gap-2 rounded-xl border-0 bg-white px-7 font-semibold text-brand
+                shadow-none hover:bg-brand-tint"
+            >
+              Ir al carrito
+              <FiArrowRight size={18} />
+            </Link>
+            <a
+              href="#catalogo"
+              className="btn rounded-xl border border-white/40 bg-transparent px-7 font-medium
+                text-white shadow-none hover:border-white hover:bg-white/10"
+            >
+              Seguir viendo
+            </a>
+          </div>
         </Container>
       </section>
     </>

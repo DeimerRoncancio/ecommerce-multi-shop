@@ -11,18 +11,20 @@ export default function CartHeaderLayout() {
 
   return (
     <>
-      <Container as="header" className="flex items-start justify-center gap-2 py-8 sm:gap-6 lg:py-10">
-        {steps.map((step, index) => (
-          <CartStepsItem
-            key={index}
-            step={step}
-            isFirst={index !== 0}
-            currentStepIndex={currentIndex}
-            index={index}
-            isActive={location.pathname === step.path}
-          />
-        ))}
-      </Container>
+      <div className="brand-block">
+        <Container as="header" className="flex items-start justify-center gap-2 py-8 sm:gap-6 lg:py-10">
+          {steps.map((step, index) => (
+            <CartStepsItem
+              key={index}
+              step={step}
+              isFirst={index !== 0}
+              currentStepIndex={currentIndex}
+              index={index}
+              isActive={location.pathname === step.path}
+            />
+          ))}
+        </Container>
+      </div>
       <Outlet />
     </>
   );

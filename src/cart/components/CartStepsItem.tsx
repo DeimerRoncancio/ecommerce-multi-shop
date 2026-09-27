@@ -23,15 +23,15 @@ export default function CartStepsItem({
     if (step.isComplete) navigate(step.path);
   };
 
-  const iconColor = isActive ? "#ffffff" : step.isComplete ? "#f14a13" : "#8a8078";
+  const iconColor = isActive ? "#f14a13" : step.isComplete ? "#ffffff" : "rgba(255,255,255,0.55)";
 
   return (
     <>
       {isFirst && (
         <span
           aria-hidden
-          className={`relative top-6 h-[2px] w-8 rounded-full transition-colors sm:w-24 lg:w-32 ${
-            index <= currentStepIndex ? "bg-brand" : "bg-base-300"
+          className={`relative top-6 h-0.5 w-8 rounded-full transition-colors sm:w-24 lg:w-32 ${
+            index <= currentStepIndex ? "bg-white" : "bg-white/30"
           }`}
         />
       )}
@@ -42,17 +42,17 @@ export default function CartStepsItem({
           disabled={!step.isComplete || isActive}
           className={`grid h-12 w-12 place-items-center rounded-full border transition-all ${
             isActive
-              ? "border-brand bg-brand ring-4 ring-brand-soft"
+              ? "border-white bg-white ring-4 ring-white/30"
               : step.isComplete
-                ? "cursor-pointer border-line bg-brand-soft hover:border-brand"
-                : "border-line bg-base-100"
+                ? "cursor-pointer border-white/50 bg-white/15 hover:bg-white/25"
+                : "border-white/25 bg-white/5"
           }`}
         >
           <Icon name={step.icon} color={iconColor} size={22} />
         </button>
         <p
           className={`text-center text-xs sm:text-sm ${
-            isActive || step.isComplete ? "font-medium text-ink" : "text-ink-muted"
+            isActive || step.isComplete ? "font-semibold text-white" : "text-white/60"
           }`}
         >
           {step.name}

@@ -34,8 +34,6 @@ const wideFields = ["email", "password"];
 
 export const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  // react-toastify no renderiza igual en el servidor que en el cliente y rompía
-  // la hidratación (el documento entero se reemplazaba y se perdía el CSS).
   const [isMounted, setIsMounted] = useState(false);
   const file = useRef<File | null>(null);
 
@@ -48,7 +46,6 @@ export const Register = () => {
   } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterForm) });
 
   const onSubmit: SubmitHandler<userType> = (data) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { profileImage, ...rest } = data;
 
     const formData = new FormData();
@@ -98,7 +95,7 @@ export const Register = () => {
         </Suspense>
       )}
       <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="relative flex flex-col justify-between overflow-hidden bg-brand px-8 py-10
+        <section className="brand-block relative flex flex-col justify-between overflow-hidden px-8 py-10
           text-white lg:px-12">
           <div className="absolute -left-12 top-12 h-56 w-56 rounded-full border border-white/20" />
           <div className="absolute right-6 top-24 h-40 w-40 rounded-full border border-white/15" />

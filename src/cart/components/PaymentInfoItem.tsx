@@ -11,7 +11,7 @@ export default function PaymentInfoItem({ isMain, label, value }: PaymentInfoIte
     <li
       className={`flex items-center justify-between px-5 py-2 ${
         isMain
-          ? "mt-2 border-t border-line pt-3 font-display text-lg font-semibold text-ink"
+          ? "mt-2 border-t border-line pt-3 font-display text-lg font-bold text-brand"
           : "text-ink-soft"
       }`}
     >

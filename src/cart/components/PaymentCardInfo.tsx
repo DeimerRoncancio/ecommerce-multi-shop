@@ -19,9 +19,9 @@ export default function PaymentCardInfo({
 
   return (
     <div className="sticky top-6 overflow-hidden rounded-2xl border border-line bg-base-100 shadow-card">
-      <div className="border-b border-line px-5 py-4">
-        <h2 className="font-display text-lg font-semibold text-ink">Resumen de la compra</h2>
-        <p className="text-sm text-ink-muted">{itemsQuantity} productos</p>
+      <div className="brand-block px-5 py-4">
+        <h2 className="font-display text-lg font-bold text-white">Resumen de la compra</h2>
+        <p className="text-sm text-white/80">{itemsQuantity} productos</p>
       </div>
 
       <ul className="py-3">

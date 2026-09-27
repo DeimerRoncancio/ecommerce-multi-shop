@@ -42,8 +42,10 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
       <Breadcrumb namePage="Cuenta" />
 
       <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-10 md:px-8 lg:grid-cols-[260px_1fr] lg:py-14">
-        <aside className="flex h-fit flex-col rounded-2xl border border-line bg-base-100 p-5">
-          <div className="flex flex-col items-center gap-3">
+        <aside className="flex h-fit flex-col overflow-hidden rounded-2xl border border-line
+          bg-base-100">
+          <div className="brand-block h-20" aria-hidden />
+          <div className="-mt-14 flex flex-col items-center gap-3 px-5">
             <div className="avatar">
               <div className="w-28 rounded-full relative border-4 border-white shadow-[0px_7px_29px_0px_rgba(100,100,111,0.2)]">
                 <AvatarImage loading={loading} userImage={userImage} />
@@ -72,8 +74,8 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
             </h1>
             <LogoutButton loading={loading} user={user} />
           </div>
-          <div className="divider before:h-[1px] after:h-[1px]"></div>
-          <div className="flex flex-col">
+          <div className="divider mx-5 before:h-px after:h-1"></div>
+          <div className="flex flex-col px-5">
             <MenuButton
               label="Datos personales"
               iconName="profile"
@@ -99,8 +101,8 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               to=""
             />
           </div>
-          <div className="divider before:h-[1px] after:h-[1px]"></div>
-          <div>
+          <div className="divider mx-5 before:h-1 after:h-1"></div>
+          <div className="px-5 pb-5">
             <MenuButton
               label="Configuración de Cuenta"
               iconName="settings"

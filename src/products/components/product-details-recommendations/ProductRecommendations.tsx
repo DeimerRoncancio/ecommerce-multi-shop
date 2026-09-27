@@ -9,9 +9,9 @@ type Props = {
   products: ProductsFromApiType[];
 };
 
-const arrowStyles = `absolute top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center
-  rounded-full border border-line bg-base-100 text-ink shadow-card transition-colors
-  hover:border-brand hover:text-brand`;
+const arrowStyles = `absolute top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center
+  rounded-full border-0 bg-base-100 text-brand shadow-card-hover transition-transform
+  hover:scale-110`;
 
 export default function ProductRecommendations({ products }: Props) {
   const navigate = useNavigate();
@@ -29,13 +29,13 @@ export default function ProductRecommendations({ products }: Props) {
           1280: { slidesPerView: 4 },
         }}
         navigation={{ nextEl: ".custom-next", prevEl: ".custom-prev" }}
-        className="w-full !pb-2"
+        className="w-full pb-2!"
       >
         {products.map((product, index) => (
           <SwiperSlide
             key={product.id}
             onClick={() => navigate(`/product/${product.id}`)}
-            className="!flex cursor-pointer flex-col rounded-2xl border border-line bg-base-100 p-4
+            className="flex! cursor-pointer flex-col rounded-2xl border border-line bg-base-100 p-4
               transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
           >
             <RecommendationItem product={product} index={index} />
