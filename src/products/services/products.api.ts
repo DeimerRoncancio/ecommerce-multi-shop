@@ -1,8 +1,8 @@
 import { ProductsFromApiType } from "../types/product"
 import { products } from "../api/productsApi"
 
-export const getProducts = (): Promise<ProductsFromApiType[]> => {
-  return products.get('').then(res => res.data.content);
+export const getProducts = (size = 60): Promise<ProductsFromApiType[]> => {
+  return products.get('', { params: { size } }).then(res => res.data.content);
 }
 
 export const getProduct = (id: string): Promise<ProductsFromApiType> => {
