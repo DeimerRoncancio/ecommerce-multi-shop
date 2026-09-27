@@ -3,8 +3,6 @@ import tailwindcss from '@tailwindcss/vite'
 import { reactRouter } from "@react-router/dev/vite";
 
 export default defineConfig(({ mode }) => {
-  // Vite solo lee del .env las variables VITE_*; SESSION_SECRET es solo del servidor
-  // y se pasa aquí a process.env para que sessions.server.ts la encuentre en desarrollo.
   const sessionSecret = loadEnv(mode, process.cwd(), "").SESSION_SECRET;
   if (!process.env.SESSION_SECRET && sessionSecret)
     process.env.SESSION_SECRET = sessionSecret;
