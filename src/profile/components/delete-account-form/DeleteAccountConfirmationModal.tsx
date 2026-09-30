@@ -1,16 +1,19 @@
-import { TiWarningOutline } from "react-icons/ti";
-import { GoDatabase } from "react-icons/go";
-import { FiUser } from "react-icons/fi";
-import { GrConfigure } from "react-icons/gr";
-import { TbAccessPoint } from "react-icons/tb";
+import { FiAlertTriangle, FiImage, FiLogIn, FiUser } from "react-icons/fi";
 import { useFetcher } from "react-router";
 import { useEffect } from "react";
+import Modal from "../../../shared/ui/Modal";
 
 type Props = {
   showDeleteModal: boolean;
   onClose: () => void;
   deleteAccount: () => void;
 }
+
+const removed = [
+  { icon: FiUser, text: "Tus datos personales" },
+  { icon: FiImage, text: "Tu foto de perfil" },
+  { icon: FiLogIn, text: "Tu acceso con este correo" },
+];
 
 export default function DeleteAccountConfirmationModal({ showDeleteModal, onClose, deleteAccount }: Props) {
   const fetcher = useFetcher();
@@ -20,56 +23,45 @@ export default function DeleteAccountConfirmationModal({ showDeleteModal, onClos
   }, [fetcher.data]);
 
   return (
-    <div className={`${!showDeleteModal && 'opacity-0 invisible'} fixed w-full h-full top-0 left-0
-    z-20 flex justify-center items-center transition-all duration-200`}>
-      <div className="absolute bg-[#1c1c1c7c] w-full h-full" onClick={onClose} />
-      <div className={`${!showDeleteModal && 'scale-110'} flex flex-col z-20 bg-base-100 w-111.5 text-ink min-h-41
-      rounded-lg transition-all duration-150 p-6 gap-3`}>
-        <div className="bg-brand-soft p-2 w-fit rounded-lg">
-          <TiWarningOutline size={25} color="#ff6467" />
-        </div>
-        <div className="flex flex-col gap-1">
-          <h2 className="text-lg font-semibold text-ink">Eliminar cuenta</h2>
-          <p className="text-sm text-ink-soft">
-            Esta acción no se puede deshacer. Tu cuenta y todos los datos
-            asociados serán eliminados permanentemente.
-          </p>
-        </div>
-        <div className="p-3 bg-orange-50/80 border border-orange-100">
-          <div className="text-sm text-ink-muted">
-            <h4 className="flex items-center gap-1 font-semibold">
-              <GoDatabase className="text-orange-600" />
-              Se eliminará:
-            </h4>
-            <ul className="p-2 space-y-2">
-              <li className="flex items-center gap-2">
-                <div className="p-1 bg-orange-100 text-orange-600 rounded-md">
-                  <FiUser />
-                </div>
-                Todos tus datos personales
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="p-1 bg-orange-100 text-orange-600 rounded-md">
-                  <GrConfigure />
-                </div>
-                Configuraciones y preferencias
-              </li>
-              <li className="flex items-center gap-2">
-                <div className="p-1 bg-orange-100 text-orange-600 rounded-md">
-                  <TbAccessPoint />
-                </div>
-                Acceso a algunos servicios
-              </li>
-            </ul>
-          </div>
-        </div>
-        <fetcher.Form method="post" className="grid grid-cols-2 gap-4 mt-4" action="/logout-action">
-          <div className="btn rounded-full" onClick={onClose}>Cancelar</div>
-          <button className={`btn rounded-full btn-error`} type="submit">
-            Eliminar definitivamente
+    <Modal
+      open={showDeleteModal}
+      onClose={onClose}
+      tone="error"
+      icon={<FiAlertTriangle size={20} />}
+      title="¿Eliminar tu cuenta?"
+      description="Esta acción no se puede deshacer. Tu cuenta se borra para siempre."
+      footer={
+        <fetcher.Form method="post" action="/logout-action" className="flex gap-2.5">
+          <button
+            type="button"
+            onClick={onClose}
+            className="h-10 rounded-full border border-line px-5 text-sm font-bold text-ink transition-colors
+              hover:border-ink"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={fetcher.state !== "idle"}
+            className="h-10 rounded-full bg-error px-5 text-sm font-bold text-white transition-colors hover:bg-ink
+              disabled:bg-base-300 disabled:text-ink-muted"
+          >
+            {fetcher.state !== "idle" ? "Eliminando…" : "Eliminar definitivamente"}
           </button>
         </fetcher.Form>
-      </div>
-    </div>
+      }
+    >
+      <p className="mb-2 text-xs font-bold uppercase tracking-wide text-ink-muted">Se eliminará</p>
+      <ul className="flex flex-col gap-2 rounded-xl bg-error/5 p-3">
+        {removed.map(({ icon: Icon, text }) => (
+          <li key={text} className="flex items-center gap-2.5 text-sm text-ink-soft">
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-base-100 text-error">
+              <Icon size={14} />
+            </span>
+            {text}
+          </li>
+        ))}
+      </ul>
+    </Modal>
   );
 }

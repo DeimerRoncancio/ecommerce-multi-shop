@@ -8,21 +8,26 @@ export default function WishList() {
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="font-display text-2xl font-extrabold text-ink">Lista de deseos</h2>
-        <button
-          type="button"
-          disabled={!itemsInCart || !wishList.length}
-          onClick={() => handleAddToCartSinceWishList(products)}
-          className="btn gap-2 sticker sticker-hover bg-action text-primary-content
-            hover:bg-action-dark disabled:bg-base-300 disabled:text-ink-muted font-semibold"
-        >
-          {!wishList.length
-            ? "No hay productos"
-            : itemsInCart
-              ? "Agregar todo al carrito"
-              : "Productos agregados"}
-        </button>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-extrabold text-ink">Lista de deseos</h2>
+          <p className="mt-0.5 text-sm text-ink-muted">
+            {wishList.length
+              ? `${wishList.length} ${wishList.length === 1 ? "producto guardado" : "productos guardados"} para después.`
+              : "Guarda aquí lo que te gusta con el corazón de cada producto."}
+          </p>
+        </div>
+        {wishList.length > 0 && (
+          <button
+            type="button"
+            disabled={!itemsInCart}
+            onClick={() => handleAddToCartSinceWishList(products)}
+            className="flex h-10 items-center gap-2 rounded-full bg-brand px-5 text-sm font-bold text-white
+              transition-colors hover:bg-ink disabled:bg-success/10 disabled:text-success"
+          >
+            {itemsInCart ? "Agregar todo al carrito" : "Todo está en el carrito"}
+          </button>
+        )}
       </div>
 
       {!wishList.length ? (
@@ -34,9 +39,9 @@ export default function WishList() {
           </p>
         </div>
       ) : (
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {wishList.map((item, index) => (
-            <WishListItem key={item.id} item={item} index={index} products={products} />
+        <ul className="flex flex-col gap-2.5">
+          {wishList.map(item => (
+            <WishListItem key={item.id} item={item} products={products} />
           ))}
         </ul>
       )}

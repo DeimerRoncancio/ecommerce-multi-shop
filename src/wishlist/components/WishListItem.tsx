@@ -1,76 +1,87 @@
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FiCheck, FiPlus, FiTruck } from "react-icons/fi";
+import { Link } from "react-router";
+import { FiCheck, FiShoppingCart } from "react-icons/fi";
 import { WishListItemType } from "../types/wishlist";
 import useWishList from "../hooks/useWishList";
 import useCart from "../../cart/hooks/useCart";
-import Rating from "./Rating";
 import { ProductTypes } from "../../products/types/product";
-import { formatPrice } from "../../shared/utilities/format-price";
+import PriceTag from "../../shared/ui/PriceTag";
 import ProductImage from "../../shared/ui/ProductImage";
+import { categoryStyle } from "../../shared/utilities/category-color";
 
 type WishListItemProps = {
   item: WishListItemType;
-  index: number;
   products: ProductTypes[];
 };
 
-export default function WishListItem({ item, index, products }: WishListItemProps) {
+export default function WishListItem({ item, products }: WishListItemProps) {
   const { handleRemoveWishListItem } = useWishList();
   const { cartItems, handleAddItem } = useCart();
 
+  const product = products.find(product => product.id === item.id);
+  const categories = product?.categories.map(({ categoryName }) => categoryName) ?? [];
   const isInCart = cartItems.some(itemCart => itemCart.id === item.id);
 
-  const handleAddToCart = (id: string) => {
-    const product = products.filter(product => product.id == id)[0];
-    if (product) handleAddItem(product);
-  };
-
   return (
-    <li className="group relative flex flex-col overflow-hidden border border-line
-      bg-base-100 transition-all duration-200 hover:border-transparent hover:shadow-card-hover">
-      <div className="border-b border-line bg-photo p-3">
-        <div className="aspect-square w-full overflow-hidden">
-          <ProductImage
-            src={item.productImage}
-            width={500}
-            alt={item.productName}
-            loading="lazy"
-            className="transition-transform duration-300 group-hover:scale-105"
-          />
+    <li
+      style={categoryStyle(categories[0])}
+      className="grid grid-cols-[72px_1fr] items-center gap-x-4 gap-y-3 rounded-2xl border border-line p-2.5
+        transition-colors hover:border-(--cat,var(--color-brand)) sm:grid-cols-[96px_1fr_auto]"
+    >
+      <Link
+        to={`/product/${item.id}`}
+        className="group h-18 w-18 overflow-hidden rounded-xl bg-(--cat-soft,var(--color-photo)) p-2 sm:h-24 sm:w-24"
+        aria-label={`Ver ${item.productName}`}
+      >
+        <ProductImage
+          src={product?.images[0]?.imageUrl ?? item.productImage}
+          width={200}
+          alt={item.productName}
+          loading="lazy"
+          className="mix-blend-darken transition-transform duration-300 group-hover:scale-105"
+        />
+      </Link>
+
+      <div className="min-w-0">
+        <Link
+          to={`/product/${item.id}`}
+          className="line-clamp-1 font-extrabold text-ink hover:text-(--cat,var(--color-brand))"
+        >
+          {item.productName}
+        </Link>
+        {categories.length > 0 && (
+          <p className="text-xs font-bold uppercase tracking-wide text-(--cat,var(--color-ink-soft))">
+            {categories.join(" · ")}
+          </p>
+        )}
+        <p className="mt-1 text-xs font-bold text-success">Envío gratis</p>
+      </div>
+
+      <div className="col-span-2 flex items-center justify-between gap-3 sm:col-span-1 sm:flex-col sm:items-end
+        sm:justify-center sm:gap-2">
+        <PriceTag price={product?.price ?? item.productPrice} />
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => handleRemoveWishListItem(item.id)}
+            className="text-xs font-bold text-ink-muted underline underline-offset-4 transition-colors hover:text-error"
+          >
+            Quitar
+          </button>
+          <button
+            type="button"
+            disabled={isInCart || !product}
+            onClick={() => product && handleAddItem(product)}
+            className={`flex h-9 items-center gap-1.5 rounded-full px-4 text-sm font-bold transition-colors ${
+              isInCart
+                ? "bg-success/10 text-success"
+                : "bg-(--cat,var(--color-brand)) text-white hover:bg-ink disabled:bg-base-300 disabled:text-ink-muted"
+            }`}
+          >
+            {isInCart ? <FiCheck size={15} strokeWidth={3} /> : <FiShoppingCart size={15} />}
+            {isInCart ? "En el carrito" : "Agregar"}
+          </button>
         </div>
       </div>
-
-      <div className="flex flex-1 flex-col gap-1.5 p-3.5">
-        <h2 className="line-clamp-2 text-sm leading-snug text-ink-soft">{item.productName}</h2>
-        <Rating index={index} />
-        <p className="mt-auto pt-1 text-xl font-extrabold tracking-tight text-ink">
-          {formatPrice(item.productPrice)}
-        </p>
-        <p className="flex items-center gap-1 text-xs font-bold text-success">
-          <FiTruck size={13} />
-          Envío gratis
-        </p>
-
-        <button
-          type="button"
-          disabled={isInCart}
-          onClick={() => handleAddToCart(item.id)}
-          className="btn btn-sm mt-2 w-full gap-1.5 sticker sticker-hover bg-action text-primary-content hover:bg-action-dark disabled:bg-success/10 disabled:text-success font-semibold"
-        >
-          {isInCart ? <FiCheck size={16} /> : <FiPlus size={16} />}
-          {isInCart ? "En el carrito" : "Agregar al carrito"}
-        </button>
-      </div>
-
-      <button
-        type="button"
-        aria-label="Quitar de la lista"
-        onClick={() => handleRemoveWishListItem(item.id)}
-        className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full bg-base-100
-          text-ink-muted shadow-card transition-all hover:scale-110 hover:text-deal"
-      >
-        <FaRegTrashAlt size={13} />
-      </button>
     </li>
   );
 }

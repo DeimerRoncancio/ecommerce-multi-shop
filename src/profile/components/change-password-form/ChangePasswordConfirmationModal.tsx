@@ -1,5 +1,5 @@
-import { BsCheck2Circle } from "react-icons/bs";
-import { TiWarningOutline } from "react-icons/ti";
+import { FiCheckCircle, FiLock } from "react-icons/fi";
+import Modal from "../../../shared/ui/Modal";
 
 type PasswordChangeConfirmationModalProps = {
   onClose: () => void;
@@ -9,7 +9,7 @@ type PasswordChangeConfirmationModalProps = {
   isSucces: boolean;
 }
 
-export default function ChangePasswordConfirmationModal({ 
+export default function ChangePasswordConfirmationModal({
   loading,
   showModal,
   isSucces,
@@ -17,39 +17,51 @@ export default function ChangePasswordConfirmationModal({
   onSubmit,
 }: PasswordChangeConfirmationModalProps) {
   return (
-    <div className={`${showModal ? 'visible opacity-100' : 'invisible opacity-0'} fixed w-full 
-    h-full z-20 top-0 left-0 flex justify-center items-center transition-all duration-75`}>
-      <div className="absolute w-full h-full top-0 bg-[#1c1c1c7c]"
-        onClick={onClose}
-      />
-      <div className={`${showModal && 'scale-110'} z-20 bg-base-100 w-100 text-ink min-h-41
-      rounded-lg transition-all duration-150 p-6`}>
-        <div className="flex items-center gap-2">
-          <TiWarningOutline size={25} color="#f6aa2a" />
-          <p className="text-base font-semibold">Confirmar Cambio de Contraseña</p>
-        </div>
-        <div>
-          <p className="text-sm text-ink-muted">
-            ¿Estás seguro de que deseas cambiar tu contraseña? Esta acción no se puede deshacer.
-          </p>
-        </div>
-        {
-          isSucces ? (
-            <span className="flex p-3 mt-4 items-center gap-2 bg-green-50 border border-green-200 rounded-md">
-              <BsCheck2Circle />
-              <p className="text-sm text-green-800">Contraseña cambiada exitosamente</p>
-            </span>
-          ) : (
-            <div className="flex justify-end items-center gap-4 mt-4">
-              <div className="btn rounded-full" onClick={onClose}>Cancelar</div>
-              <div className={`btn rounded-full btn-error ${loading && 'btn-disabled'}`}
-                onClick={onSubmit}>{
-                  loading ? 'Confirmando...' : 'Confirmar'}
-              </div>
-            </div>
-          )
-        }
-      </div>
-    </div>
+    <Modal
+      open={showModal}
+      onClose={onClose}
+      icon={<FiLock size={20} />}
+      title="¿Cambiar tu contraseña?"
+      description="La próxima vez que entres tendrás que usar la contraseña nueva."
+      footer={
+        isSucces ? (
+          <button
+            type="button"
+            onClick={onClose}
+            className="h-10 rounded-full bg-ink px-6 text-sm font-bold text-white transition-colors hover:bg-brand"
+          >
+            Listo
+          </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={loading}
+              className="h-10 rounded-full border border-line px-5 text-sm font-bold text-ink transition-colors
+                hover:border-ink"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              onClick={onSubmit}
+              disabled={loading}
+              className="h-10 rounded-full bg-brand px-6 text-sm font-bold text-white transition-colors hover:bg-ink
+                disabled:bg-base-300 disabled:text-ink-muted"
+            >
+              {loading ? "Cambiando…" : "Sí, cambiarla"}
+            </button>
+          </>
+        )
+      }
+    >
+      {isSucces && (
+        <p className="flex items-center gap-2.5 rounded-xl bg-success/10 px-4 py-3 text-sm font-semibold text-success">
+          <FiCheckCircle size={17} />
+          Tu contraseña se cambió correctamente.
+        </p>
+      )}
+    </Modal>
   );
 }

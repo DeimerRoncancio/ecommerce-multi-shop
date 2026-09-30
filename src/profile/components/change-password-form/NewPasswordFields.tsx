@@ -1,6 +1,7 @@
 import useValidationMatchPassword from "../../hooks/change-password/useValidationMatchPassword";
 import { PasswordType } from "../../types/user";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+import PasswordField from "../../../shared/ui/PasswordField";
 
 type Errors = 'currentPassword' | 'newPassword';
 
@@ -15,43 +16,21 @@ export default function NewPasswordFields({ errors, handlerErrors, clearErrors, 
   const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword({ clearErrors });
 
   return (
-    <div className="grid grid-cols-2 gap-5">
-      <div>
-        <span className="text-sm font-bold text-ink">Nueva contraseña</span>
-        <input
-          type="text"
-          className={`p-3 pl-4 mt-3 border border-line outline-0 w-full 
-          focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
-          ${errors.newPassword?.message && 'border-red-500'}`}
-          placeholder="Ingresa tu neva contraseña"
-          {...register("newPassword", {
-            onChange: onFieldsChange
-          })}
-        />
-        {errors.newPassword?.message ? (
-          <span className="text-red-500 ml-2">{errors.newPassword.message}</span>
-        ) : handlerErrors.newPassword && (
-          <span className="text-red-500 ml-2">{handlerErrors.newPassword}</span>
-        )}
-      </div>
-      <div>
-        <span className="text-sm font-bold text-ink">Confirma tu nueva contraseña</span>
-        <input
-          type="text"
-          className={`p-3 pl-4 mt-3 border border-line outline-0 w-full
-          focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
-          ${(errors.confirmPassword?.message || isPasswordMatch) && 'border-red-500'}`}
-          placeholder="Confirma tu neva contraseña"
-          {...register("confirmPassword", {
-            onChange: onFieldsChange
-          })}
-        />
-        {errors.confirmPassword?.message ? (
-          <span className="text-red-500  ml-2">{errors.confirmPassword?.message}</span>
-        ) : isPasswordMatch && (
-          <span className="text-red-500  ml-2">Las contraseñas no coinciden</span>
-        )}
-      </div>
+    <div className="grid gap-x-4 gap-y-3 sm:grid-cols-2">
+      <PasswordField
+        label="Nueva contraseña"
+        placeholder="Tu nueva contraseña"
+        autoComplete="new-password"
+        error={errors.newPassword?.message ?? handlerErrors.newPassword}
+        {...register("newPassword", { onChange: onFieldsChange })}
+      />
+      <PasswordField
+        label="Confirma la nueva contraseña"
+        placeholder="Escríbela otra vez"
+        autoComplete="new-password"
+        error={errors.confirmPassword?.message ?? (isPasswordMatch ? "Las contraseñas no coinciden" : undefined)}
+        {...register("confirmPassword", { onChange: onFieldsChange })}
+      />
     </div>
   );
 }

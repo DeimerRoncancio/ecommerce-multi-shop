@@ -41,7 +41,7 @@ export default function useWishList() {
   useEffect(()=>{
     const itemsToAdd = getItemsToAdd();
     setItemInCart(itemsToAdd.length);
-  }, [cartItems])
+  }, [cartItems, wishList])
 
   return {
     wishList,

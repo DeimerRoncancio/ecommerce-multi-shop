@@ -5,6 +5,7 @@ import useChangePasswordForm from "../../hooks/change-password/useChangePassword
 import { useUserService } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
 import useChangePassword from "../../hooks/change-password/useChangePassword";
+import PasswordField from "../../../shared/ui/PasswordField";
 
 type Props = {
   user: UserTypes;
@@ -35,43 +36,38 @@ export default function ChangePasswordForm({ user, token }: Props) {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <div className="text-base border border-line p-6 text-ink">
-        <h2 className="mb-6 text-lg font-extrabold text-ink">Cambiar Contraseña</h2>
-        <div className="flex flex-col gap-5">
-          <div>
-            <span className="text-sm font-bold text-ink">Contraseña actual</span>
-            <input
-              type="text"
-              className={`p-3 pl-4 mt-3 border border-line outline-0 w-full 
-              focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
-              ${errors.currentPassword?.message && 'border-red-500'}`}
-              placeholder="Ingresa tu contraseña actual"
-              {...register("currentPassword", {
-                onChange: () => clearErrors()
-              })}
-            />
-            {errors.currentPassword?.message ? (
-              <span className="text-red-500 ml-2">{errors.currentPassword?.message}</span>
-            ) : handlerErrors.currentPassword && (
-              <span className="text-red-500 ml-2">{handlerErrors.currentPassword}</span>
-            )}
-          </div>
-          <NewPasswordFields
-            errors={errors}
-            register={register}
-            handlerErrors={handlerErrors}
-            clearErrors={clearErrors}
-          />
-        </div>
-        <div className="flex mt-7 justify-between items-center">
-          <Link to="" className="text-brand hover:text-brand hover:underline">
-            ¿Olvidaste tu contraseña?
-          </Link>
-          <button className={`btn btn-neutral sticker sticker-hover p-1 px-7 h-9 font-semibold`} type="submit">
-            Cambiar contraseña
-          </button>
-        </div>
+      <h3 className="text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Seguridad</h3>
+      <p className="mt-1 text-lg font-extrabold text-ink">Cambiar contraseña</p>
+      <p className="text-sm text-ink-muted">Usa al menos 8 caracteres. Te pediremos confirmar el cambio.</p>
+
+      <div className="mt-4 flex flex-col gap-3">
+        <PasswordField
+          label="Contraseña actual"
+          placeholder="Tu contraseña actual"
+          autoComplete="current-password"
+          error={errors.currentPassword?.message ?? handlerErrors.currentPassword}
+          {...register("currentPassword", { onChange: () => clearErrors() })}
+        />
+        <NewPasswordFields
+          errors={errors}
+          register={register}
+          handlerErrors={handlerErrors}
+          clearErrors={clearErrors}
+        />
       </div>
+
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <Link to="" className="text-sm font-semibold text-brand underline-offset-4 hover:underline">
+          ¿Olvidaste tu contraseña?
+        </Link>
+        <button
+          type="submit"
+          className="h-10 rounded-full bg-brand px-6 text-sm font-bold text-white transition-colors hover:bg-ink"
+        >
+          Cambiar contraseña
+        </button>
+      </div>
+
       <ChangePasswordConfirmationModal
         onClose={onCloseConfirmModal}
         onSubmit={sendData}

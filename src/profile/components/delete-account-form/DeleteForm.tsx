@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 import DeleteAccountConfirmationModal from "./DeleteAccountConfirmationModal";
 import { useUserService } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
@@ -25,21 +26,33 @@ export default function DeleteForm({ token, user }: Props) {
   };
 
   return (
-    <div>
-      <div className="mt-7 text-base border border-red-100 p-6 text-ink">
-        <h2 className="mb-3 text-lg font-extrabold text-error">Eliminar Cuenta</h2>
-        <p className="text-ink-muted mb-3">
-          Una vez eliminada tu cuenta, no podras deshacer los cambios. Por favor, asegurate.
-        </p>
-        <button className={`btn btn-error p-1 px-7 h-9`} onClick={onSubmit}>
+    <section className="mt-8 border-t border-line pt-7">
+      <h3 className="text-xs font-extrabold uppercase tracking-[0.08em] text-error">Zona de cuidado</h3>
+      <div className="mt-3 flex flex-col gap-4 rounded-2xl border border-error/25 bg-error/5 p-5 sm:flex-row
+        sm:items-center">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-error/10 text-error">
+          <FiTrash2 size={19} />
+        </span>
+        <div className="flex-1">
+          <p className="font-extrabold text-ink">Eliminar cuenta</p>
+          <p className="text-sm text-ink-soft">
+            Se borran tus datos y tu foto de perfil. Esta acción no se puede deshacer.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onSubmit}
+          className="h-10 shrink-0 rounded-full border border-error/40 bg-base-100 px-5 text-sm font-bold text-error
+            transition-colors hover:border-error hover:bg-error hover:text-white"
+        >
           Eliminar cuenta
         </button>
-        <DeleteAccountConfirmationModal
-          showDeleteModal={showDeleteModal}
-          onClose={onCloseModal}
-          deleteAccount={deleteUser}
-        />
       </div>
-    </div>
+      <DeleteAccountConfirmationModal
+        showDeleteModal={showDeleteModal}
+        onClose={onCloseModal}
+        deleteAccount={deleteUser}
+      />
+    </section>
   );
 }

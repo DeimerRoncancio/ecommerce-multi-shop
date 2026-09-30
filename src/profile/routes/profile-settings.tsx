@@ -22,9 +22,8 @@ export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="font-display text-2xl font-extrabold text-ink">Configuración de cuenta</h2>
-      </div>
+      <h2 className="text-3xl font-extrabold text-ink">Configuración de cuenta</h2>
+      <p className="mb-6 mt-0.5 text-sm text-ink-muted">Cambia tu contraseña o elimina tu cuenta.</p>
       {
         !loading ? (
           <>

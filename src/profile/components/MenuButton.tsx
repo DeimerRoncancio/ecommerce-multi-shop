@@ -32,7 +32,7 @@ export default function MenuButton({ label, iconName, pathname, to }: MenuButton
     >
       {isActive && <span aria-hidden className="absolute inset-y-2 left-0 w-1 rounded-full bg-brand" />}
       <Icon name={iconName} size={19} />
-      <span className="flex-1">{label}</span>
+      <span className="min-w-0 flex-1 truncate">{label}</span>
       {isSoon ? (
         <span className="rounded-full bg-cream px-2 py-0.5 text-[10px] font-bold text-ink-muted">Pronto</span>
       ) : (

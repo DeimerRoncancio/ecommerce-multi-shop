@@ -105,7 +105,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
             />
             <div className="my-2 border-t border-line" />
             <MenuButton
-              label="Configuración de cuenta"
+              label="Configuración"
               iconName="settings"
               pathname={location.pathname}
               to="/profile/settings"
