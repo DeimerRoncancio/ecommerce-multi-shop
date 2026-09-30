@@ -1,6 +1,4 @@
-import { BsTelephone, BsTrash } from "react-icons/bs";
-import { IoPersonOutline } from "react-icons/io5";
-import { LuPencil } from "react-icons/lu";
+import { FiMapPin, FiPhone } from "react-icons/fi";
 import { AddressType } from "../types/cart";
 
 type Props = {
@@ -14,35 +12,34 @@ export default function AddressItem({ address, isActive, onSelect }: Props) {
     <button
       type="button"
       onClick={() => onSelect(address)}
-      className={`flex flex-col gap-4 rounded-2xl border bg-base-100 p-5 text-left transition-colors ${
-        isActive ? "border-brand ring-1 ring-brand" : "border-line hover:border-brand"
+      aria-pressed={isActive}
+      className={`relative flex flex-col gap-1.5 rounded-2xl border-2 p-4 text-left transition-colors ${
+        isActive ? "border-brand bg-brand-soft/60" : "border-line bg-base-100 hover:border-ink-muted"
       }`}
     >
-      <div className="flex flex-col gap-3">
-        <span className="font-display text-lg font-semibold text-ink">{address.name}</span>
-        <div className="flex flex-col gap-0.5 text-sm text-ink">
-          <span>{address.addressLine1}</span>
-          <span>{address.city}, {address.state}</span>
-          <span>{address.country}</span>
-        </div>
-        <div className="flex flex-col gap-1 text-sm text-ink-soft">
-          <span className="flex items-center gap-2"><IoPersonOutline /> {address.name}</span>
-          <span className="flex items-center gap-2"><BsTelephone /> {address.phone}</span>
-        </div>
-      </div>
+      <span
+        aria-hidden
+        className={`absolute right-4 top-4 grid h-5 w-5 place-items-center rounded-full border-2 ${
+          isActive ? "border-brand" : "border-line"
+        }`}
+      >
+        {isActive && <span className="h-2.5 w-2.5 rounded-full bg-brand" />}
+      </span>
 
-      <div className="flex gap-2">
-        <span className="btn btn-sm gap-1.5 rounded-lg border-0 bg-cream text-ink-soft shadow-none
-          hover:bg-brand-soft hover:text-secondary-content">
-          <LuPencil size={14} />
-          Editar
+      <span className="pr-8 font-extrabold text-ink">{address.name}</span>
+
+      <span className="flex gap-2 text-sm text-ink-soft">
+        <FiMapPin size={15} className="mt-0.5 shrink-0 text-brand" />
+        <span>
+          {address.addressLine1}
+          <br />
+          {address.city}, {address.state}, {address.country}
         </span>
-        <span className="btn btn-sm gap-1.5 rounded-lg border-0 bg-cream text-ink-soft shadow-none
-          hover:bg-error/10 hover:text-error">
-          <BsTrash size={14} />
-          Eliminar
-        </span>
-      </div>
+      </span>
+      <span className="flex items-center gap-2 text-sm text-ink-soft">
+        <FiPhone size={15} className="shrink-0 text-brand" />
+        {address.phone}
+      </span>
     </button>
   );
 }

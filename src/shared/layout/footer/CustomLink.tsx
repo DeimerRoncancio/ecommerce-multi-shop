@@ -3,13 +3,14 @@ import { Link } from "react-router";
 type CustomLinkProps = {
   to: string;
   children: React.ReactNode;
-  theme?: "primary" | "secondary" | "terciary";
+  theme?: "primary" | "secondary" | "terciary" | "inverse";
 };
 
 const themes = {
-  primary: "text-ink-soft hover:text-brand",
-  secondary: "text-ink-muted hover:text-brand",
-  terciary: "text-brand hover:text-brand-dark",
+  primary: "text-ink-soft hover:text-action",
+  secondary: "text-ink-muted hover:text-action",
+  terciary: "text-action hover:text-action-dark",
+  inverse: "text-white/60 hover:text-sun",
 };
 
 export default function CustomLink({ to, children, theme = "primary" }: CustomLinkProps) {

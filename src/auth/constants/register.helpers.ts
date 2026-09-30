@@ -1,3 +1,6 @@
+import { IconType } from "react-icons";
+import { FiLock, FiMail, FiPhone, FiUser } from "react-icons/fi";
+
 type names =
   | "name"
   | "secondName"
@@ -15,39 +18,62 @@ export interface formsTypes {
 
 export const InputsFromRegister: formsTypes[] = [
   {
-    label: "Primer Nombre",
+    label: "Nombre",
     type: "text",
-    placeholder: "Nombre",
+    placeholder: "Tu nombre",
     name: "name",
   },
   {
-    label: "Segundo Nombre",
+    label: "Segundo nombre",
     type: "text",
-    placeholder: "Apellido",
+    placeholder: "Opcional",
     name: "secondName",
   },
   {
-    label: "Apellido",
+    label: "Apellidos",
     type: "text",
-    placeholder: "Apellido",
+    placeholder: "Tus apellidos",
     name: "lastnames",
   },
   {
     label: "Celular",
-    type: "text",
-    placeholder: "Celular",
+    type: "tel",
+    placeholder: "300 123 4567",
     name: "phoneNumber",
   },
   {
-    label: "Correo",
+    label: "Correo electrónico",
     type: "email",
-    placeholder: "Correo",
+    placeholder: "nombre@correo.com",
     name: "email",
   },
   {
     label: "Contraseña",
     type: "password",
-    placeholder: "Contraseña",
+    placeholder: "Crea una contraseña",
     name: "password",
   },
+];
+
+export const requiredFields = ["name", "email", "password"];
+
+export const wideFields = ["email", "password"];
+
+export const registerIcons: Partial<Record<string, IconType>> = {
+  name: FiUser,
+  phoneNumber: FiPhone,
+  email: FiMail,
+  password: FiLock,
+};
+
+export const genderOptions = [
+  { value: "notToSaid", label: "Prefiero no decirlo" },
+  { value: "male", label: "Hombre" },
+  { value: "female", label: "Mujer" },
+];
+
+export const registerPerks = [
+  "Tus datos listos para la próxima compra",
+  "Una lista de deseos para guardar lo que te gusta",
+  "Sigue cada pedido hasta tu casa",
 ];

@@ -9,14 +9,12 @@ type PaymentInfoItemProps = {
 export default function PaymentInfoItem({ isMain, label, value }: PaymentInfoItemProps) {
   return (
     <li
-      className={`flex items-center justify-between px-5 py-2 ${
-        isMain
-          ? "mt-2 border-t border-line pt-3 font-display text-lg font-bold text-brand"
-          : "text-ink-soft"
+      className={`flex items-center justify-between py-1.5 ${
+        isMain ? "mt-2 border-t border-brand/20 pt-3 text-xl font-extrabold text-ink" : "text-ink-soft"
       }`}
     >
       <p>{label}</p>
-      <p className={isMain ? "" : "font-medium text-ink"}>{formatPrice(value)}</p>
+      <p className={isMain ? "" : "font-semibold text-ink"}>{formatPrice(value)}</p>
     </li>
   );
 }

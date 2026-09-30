@@ -1,9 +1,10 @@
 import { Link } from "react-router";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { FiCheck, FiShoppingBag } from "react-icons/fi";
+import { FiCheck, FiShoppingCart } from "react-icons/fi";
 import { ProductTypes } from "../types/product";
-import { formatPrice } from "../../shared/utilities/format-price";
+import PriceTag from "../../shared/ui/PriceTag";
 import ProductImage from "../../shared/ui/ProductImage";
+import { categoryStyle } from "../../shared/utilities/category-color";
 
 type ProductCardProps = {
   product: ProductTypes;
@@ -11,6 +12,7 @@ type ProductCardProps = {
   isInWishList: boolean;
   onToggleCart: (product: ProductTypes) => void;
   onToggleWishList: (product: ProductTypes) => void;
+  category?: string;
 };
 
 export default function ProductCard({
@@ -19,80 +21,60 @@ export default function ProductCard({
   isInWishList,
   onToggleCart,
   onToggleWishList,
+  category,
 }: ProductCardProps) {
-  const categories = product.categories.slice(0, 2);
-
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line
-        bg-base-100 shadow-card transition-all duration-300 hover:-translate-y-1
-        hover:border-brand/40 hover:shadow-card-hover"
+      style={categoryStyle(category ?? product.categories[0]?.categoryName)}
+      className="group relative flex h-full flex-col gap-2 border border-line bg-base-100 p-3 transition-all
+        duration-200 hover:border-(--cat,var(--color-brand)) hover:shadow-card-hover"
     >
+      <Link to={`/product/${product.id}`} className="block aspect-square w-full bg-(--cat-soft,var(--color-photo)) p-3">
+        <ProductImage
+          src={product.images[0]?.imageUrl}
+          width={500}
+          alt={product.name}
+          loading="lazy"
+          className="mix-blend-darken transition-transform duration-300 group-hover:scale-105"
+        />
+      </Link>
+
       <button
         type="button"
         aria-label={isInWishList ? "Quitar de la lista de deseos" : "Agregar a la lista de deseos"}
         aria-pressed={isInWishList}
         onClick={() => onToggleWishList(product)}
-        className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full border
-          border-line bg-base-100/90 text-ink-soft backdrop-blur-sm transition-colors
-          hover:border-brand hover:text-brand"
+        className={`absolute right-5 top-5 grid h-8 w-8 place-items-center rounded-full bg-base-100
+          transition-colors hover:text-brand ${isInWishList ? "text-brand" : "text-ink"}`}
       >
-        {isInWishList ? <FaHeart size={15} className="text-brand" /> : <FaRegHeart size={15} />}
+        {isInWishList ? <FaHeart size={14} /> : <FaRegHeart size={14} />}
       </button>
 
-      <Link
-        to={`/product/${product.id}`}
-        className="block bg-cream"
-      >
-        <div className="aspect-square w-full overflow-hidden">
-          <ProductImage
-            src={product.images[0]?.imageUrl}
-            width={500}
-            alt={product.name}
-            loading="lazy"
-            className="transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-      </Link>
-
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        {categories.length > 0 && (
-          <ul className="flex flex-wrap gap-1.5">
-            {categories.map(({ categoryName }) => (
-              <li
-                key={categoryName}
-                className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold
-                  uppercase tracking-[0.06em] text-secondary-content"
-              >
-                {categoryName}
-              </li>
-            ))}
-          </ul>
-        )}
-
+      <div className="flex flex-1 flex-col gap-1 pt-1">
         <Link
           to={`/product/${product.id}`}
-          className="line-clamp-2 font-medium leading-snug text-ink transition-colors hover:text-brand"
+          className="line-clamp-2 text-[15px] font-extrabold leading-snug text-ink hover:text-(--cat,var(--color-brand))"
         >
           {product.name}
         </Link>
-
-        <p className="mt-auto font-display text-xl font-bold text-brand">
-          {formatPrice(product.price)}
+        <p className="text-[13px] font-semibold text-(--cat,var(--color-ink-soft))">
+          {product.categories.map(({ categoryName }) => categoryName).join(" · ")}
         </p>
 
-        <button
-          type="button"
-          onClick={() => onToggleCart(product)}
-          className={`btn w-full gap-2 rounded-xl border-0 font-medium shadow-none transition-colors ${
-            isInCart
-              ? "bg-brand-soft text-secondary-content hover:bg-brand-tint"
-              : "bg-brand text-primary-content hover:bg-brand-dark"
-          }`}
-        >
-          {isInCart ? <FiCheck size={17} /> : <FiShoppingBag size={17} />}
-          {isInCart ? "En el carrito" : "Agregar"}
-        </button>
+        <div className="mt-auto flex items-end justify-between gap-2 pt-2">
+          <PriceTag price={product.price} />
+          <button
+            type="button"
+            aria-label={isInCart ? "Quitar del carrito" : "Agregar al carrito"}
+            aria-pressed={isInCart}
+            onClick={() => onToggleCart(product)}
+            className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-white transition-colors
+              ${isInCart ? "bg-success" : "bg-(--cat,var(--color-brand)) hover:bg-ink"}`}
+          >
+            {isInCart ? <FiCheck size={18} strokeWidth={3} /> : <FiShoppingCart size={17} />}
+          </button>
+        </div>
+        <p className="text-xs font-bold text-success">Envío gratis</p>
       </div>
     </article>
   );

@@ -1,4 +1,5 @@
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FiCheck, FiPlus, FiTruck } from "react-icons/fi";
 import { WishListItemType } from "../types/wishlist";
 import useWishList from "../hooks/useWishList";
 import useCart from "../../cart/hooks/useCart";
@@ -25,34 +26,39 @@ export default function WishListItem({ item, index, products }: WishListItemProp
   };
 
   return (
-    <li className="group relative flex flex-col overflow-hidden rounded-2xl border border-line
-      bg-base-100 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40
-      hover:shadow-card-hover">
-      <div className="aspect-square w-full overflow-hidden bg-cream">
-        <ProductImage
-          src={item.productImage}
-          width={500}
-          alt={item.productName}
-          loading="lazy"
-          className="transition-transform duration-500 group-hover:scale-105"
-        />
+    <li className="group relative flex flex-col overflow-hidden border border-line
+      bg-base-100 transition-all duration-200 hover:border-transparent hover:shadow-card-hover">
+      <div className="border-b border-line bg-photo p-3">
+        <div className="aspect-square w-full overflow-hidden">
+          <ProductImage
+            src={item.productImage}
+            width={500}
+            alt={item.productName}
+            loading="lazy"
+            className="transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-1.5 p-4">
-        <h2 className="line-clamp-2 font-medium leading-snug text-ink">{item.productName}</h2>
+      <div className="flex flex-1 flex-col gap-1.5 p-3.5">
+        <h2 className="line-clamp-2 text-sm leading-snug text-ink-soft">{item.productName}</h2>
         <Rating index={index} />
-        <p className="mt-auto font-display text-lg font-bold text-brand">
+        <p className="mt-auto pt-1 text-xl font-extrabold tracking-tight text-ink">
           {formatPrice(item.productPrice)}
+        </p>
+        <p className="flex items-center gap-1 text-xs font-bold text-success">
+          <FiTruck size={13} />
+          Envío gratis
         </p>
 
         <button
           type="button"
           disabled={isInCart}
           onClick={() => handleAddToCart(item.id)}
-          className="btn mt-3 w-full rounded-xl border-0 bg-brand text-primary-content shadow-none
-            hover:bg-brand-dark disabled:bg-brand-soft disabled:text-secondary-content"
+          className="btn btn-sm mt-2 w-full gap-1.5 sticker sticker-hover bg-action font-bold text-primary-content hover:bg-action-dark disabled:bg-success/10 disabled:text-success font-semibold"
         >
-          {isInCart ? "Producto añadido" : "Agregar al carrito"}
+          {isInCart ? <FiCheck size={16} /> : <FiPlus size={16} />}
+          {isInCart ? "En el carrito" : "Agregar al carrito"}
         </button>
       </div>
 
@@ -60,11 +66,10 @@ export default function WishListItem({ item, index, products }: WishListItemProp
         type="button"
         aria-label="Quitar de la lista"
         onClick={() => handleRemoveWishListItem(item.id)}
-        className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border
-          border-line bg-base-100/90 text-ink-soft opacity-0 backdrop-blur-sm transition-all
-          duration-300 hover:text-error group-hover:opacity-100"
+        className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-full bg-base-100
+          text-ink-muted shadow-card transition-all hover:scale-110 hover:text-deal"
       >
-        <FaRegTrashAlt size={14} />
+        <FaRegTrashAlt size={13} />
       </button>
     </li>
   );

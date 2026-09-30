@@ -32,16 +32,15 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <ProductQuantity quantity={quantity} onQuantityChange={setQuantity} />
-
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 border-t border-line pt-5">
+      <div className="flex gap-3">
+        <ProductQuantity quantity={quantity} onQuantityChange={setQuantity} />
         <button
           type="button"
           disabled={inCart}
           onClick={handleAddToCart}
-          className="btn h-12 gap-2 rounded-xl border-0 bg-brand text-primary-content shadow-none
-            hover:bg-brand-dark disabled:bg-base-300 disabled:text-ink-muted"
+          className="btn h-12 flex-1 gap-2 rounded-full border-0! bg-brand font-bold text-white
+            hover:bg-ink disabled:bg-base-300 disabled:text-ink-muted"
         >
           <IoBagHandleOutline size={18} />
           {inCart ? "Agregado al carrito" : "Agregar al carrito"}
@@ -49,19 +48,19 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
             · {formatPrice(productFromApi.price * quantity)}
           </span>
         </button>
+      </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
           <button
             type="button"
             onClick={handleToggleWishList}
-            className="btn h-12 gap-2 rounded-xl border border-line bg-base-100 text-ink shadow-none
-              hover:border-brand hover:bg-brand-soft hover:text-secondary-content"
+            className="btn h-12 gap-2 rounded-full font-bold sticker sticker-hover bg-base-100 text-ink
+              hover:border-brand hover:bg-brand-soft hover:text-secondary-content font-semibold"
           >
             {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}
             {inWishList ? "En tu lista" : "Lista de deseos"}
           </button>
           <BuyButton product={productFromApi} />
-        </div>
       </div>
     </div>
   );

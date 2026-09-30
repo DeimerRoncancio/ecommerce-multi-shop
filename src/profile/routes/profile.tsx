@@ -32,7 +32,7 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
     userInitialValues,
     currentValues,
     sendData, register,
-    handleSubmit
+    handleSubmit, reset
   } = useUserService({ user, token, updateUser });
 
   const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
@@ -52,15 +52,14 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl text-ink">Información de cuenta</h2>
-      </div>
+      <h2 className="text-3xl font-extrabold text-ink">Datos personales</h2>
+      <p className="mt-0.5 text-sm text-ink-muted">Con estos datos confirmamos tus pedidos y te avisamos del envío.</p>
       {
         !loading ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="text-base border border-line p-6 rounded-2xl text-black">
-              <h2 className="mb-6 text-lg font-semibold text-ink">Información personal</h2>
-              <div className="grid grid-cols-2 gap-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <div>
+              <h3 className="mb-3 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Información personal</h3>
+              <div className="grid gap-x-4 gap-y-3 sm:grid-cols-2">
                 <UserDataField
                   register={register}
                   name="names"
@@ -74,20 +73,36 @@ export default function Profile({ loaderData }: Route.ComponentProps) {
                 <UserDataField
                   register={register}
                   name="email"
-                  fieldName="Email"
+                  fieldName="Correo electrónico"
+                  type="email"
                 />
                 <UserDataField
                   register={register}
                   name="phoneNumber"
-                  fieldName="Numero de telefono"
+                  fieldName="Número de teléfono"
+                  type="tel"
                 />
                 <UserDataRadio register={register} />
               </div>
             </div>
-            <div className="flex justify-end">
-              <button className="btn mt-7 p-1 px-6 h-9 mr-3" disabled={!isActive ? true : false}>Reestablecer datos</button>
-              <button className={`btn btn-neutral mt-7 p-1 px-7 h-9`} disabled={!isActive ? true : false}>
-                Actualizar datos
+            <div className="mt-7 flex flex-wrap items-center justify-end gap-2.5 border-t border-line pt-5">
+              {isActive && <p className="mr-auto text-xs font-semibold text-ink-muted">Tienes cambios sin guardar</p>}
+              <button
+                type="button"
+                onClick={() => reset(userInitialValues)}
+                disabled={!isActive}
+                className="h-10 rounded-full border border-line px-5 text-sm font-bold text-ink transition-colors
+                  hover:border-ink disabled:border-line disabled:text-ink-muted"
+              >
+                Deshacer cambios
+              </button>
+              <button
+                type="submit"
+                disabled={!isActive}
+                className="h-10 rounded-full bg-brand px-6 text-sm font-bold text-white transition-colors hover:bg-ink
+                  disabled:bg-base-300 disabled:text-ink-muted"
+              >
+                Guardar cambios
               </button>
             </div>
           </form>

@@ -27,8 +27,8 @@ export default function CarouselNavigation({ images, setThumbsSwiper }: Props) {
         <SwiperSlide
           key={image.imageId}
           className="flex! aspect-square cursor-pointer items-center justify-center overflow-hidden
-            rounded-xl border border-line bg-cream transition-colors
-            [&.swiper-slide-thumb-active]:border-brand"
+            border-2 border-line bg-base-100 p-1.5 transition-colors hover:border-(--cat,var(--color-brand))
+            [&.swiper-slide-thumb-active]:border-(--cat,var(--color-brand))"
         >
           <ProductImage src={image.imageUrl} width={200} alt={image.name} />
         </SwiperSlide>

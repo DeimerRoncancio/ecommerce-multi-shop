@@ -1,8 +1,17 @@
 import { LoginAccessUser } from "../zod/routesAuth";
 import { Form, Link, redirect, useActionData, useNavigation } from "react-router";
 import { Route } from "./+types/login";
+import { useState } from "react";
+import {
+  FiAlertCircle, FiArrowRight, FiEye, FiEyeOff, FiLock, FiMail, FiShoppingBag,
+} from "react-icons/fi";
+import { FaFacebook, FaGoogle } from "react-icons/fa6";
+import TextField from "../../shared/ui/TextField";
+import AuthLayout from "../components/AuthLayout";
+import GuestModal from "../components/GuestModal";
 import { commitSession, getSession } from "../../sessions.server";
 import { send } from "../services/api/login";
+import { loginPerks } from "../constants/login.helper";
 
 export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -32,164 +41,122 @@ export async function action({ request }: Route.ActionArgs) {
 
 export default function Login() {
   const action = useActionData() as { errors?: Record<string, string[]> };
-
   const navigation = useNavigation();
-
-  const isSubmitting = navigation.state === "submitting";  
+  const isSubmitting = navigation.state === "submitting";
+  const [showPassword, setShowPassword] = useState(false);
+  const [showGuestModal, setShowGuestModal] = useState(false);
 
   return (
-    <div className="min-h-screen w-full bg-brand-soft">
-      <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="brand-block relative flex flex-col justify-between overflow-hidden px-8 py-10 text-white lg:px-12">
-          <div className="absolute -left-12 top-12 h-56 w-56 rounded-full border border-white/20" />
-          <div className="absolute right-6 top-24 h-40 w-40 rounded-full border border-white/15" />
-          <div className="absolute bottom-16 left-20 h-64 w-64 rounded-full border border-white/10" />
+    <AuthLayout
+      title="Qué bueno verte"
+      highlight="otra vez"
+      subtitle="Entra para ver tus pedidos, tus favoritos y comprar más rápido."
+      perks={loginPerks}
+    >
+      <div className="w-full max-w-sm">
+        <h2 className="text-3xl font-extrabold text-ink">Iniciar sesión</h2>
+        <p className="mt-1 text-sm text-ink-muted">
+          ¿Aún no tienes cuenta?{" "}
+          <Link to="/register" className="font-bold text-brand underline-offset-4 hover:underline">
+            Regístrate gratis
+          </Link>
+        </p>
 
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 text-lg font-semibold">
-              MS
-            </div>
-            <div className="text-lg font-semibold">MultiShop</div>
-          </div>
+        {action?.errors?.unauthorized && (
+          <p className="mt-5 flex items-center gap-2.5 rounded-xl border border-error/30 bg-error/10 px-4 py-3 text-sm
+            font-semibold text-error" role="alert">
+            <FiAlertCircle size={17} className="shrink-0" />
+            {action.errors.unauthorized[0]}
+          </p>
+        )}
 
-          <div className="relative z-10 max-w-md space-y-4">
-            <h1 className="text-4xl font-semibold leading-tight lg:text-5xl">
-              Bienvenido de vuelta
-            </h1>
-            <p className="text-base text-white/90">
-              Accede a tu cuenta para ver tus pedidos, favoritos y ofertas exclusivas.
-            </p>
-          </div>
-
-          <div className="relative z-10 flex items-center gap-4 text-sm text-white/90">
-            <div className="flex -space-x-2">
-              <div className="h-9 w-9 rounded-full border border-white/60 bg-white/25" />
-              <div className="h-9 w-9 rounded-full border border-white/60 bg-white/35" />
-              <div className="h-9 w-9 rounded-full border border-white/60 bg-white/45" />
-            </div>
-            <span>+50,000 clientes satisfechos</span>
-          </div>
-        </section>
-
-        <section className="flex items-center justify-center bg-white px-6 py-10 lg:px-12">
-          <div className="w-full max-w-md">
-            <div className="mb-8">
-              <h2 className="text-3xl font-semibold text-ink">Iniciar sesión</h2>
-              <p className="mt-2 text-sm text-ink-soft">
-                Ingresa tus credenciales para continuar
-              </p>
-
-              <div>
-                {action?.errors?.unauthorized && (
-                  <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-                    {action.errors.unauthorized[0]}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <Form method="post" className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label htmlFor="identifier" className="text-sm font-medium text-ink">
-                  Correo electrónico
-                </label>
-                <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-3 shadow-sm focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 text-brand"
-                  >
-                    <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-                    <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-                  </svg>
-                  <input
-                    name="identifier"
-                    type="text"
-                    className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
-                    placeholder="nombre@correo.com"
-                  />
-                </div>
-                {action?.errors?.identifier && (
-                  <span className="text-xs text-red-500">{action.errors.identifier[0]}</span>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="password" className="text-sm font-medium text-ink">
-                  Contraseña
-                </label>
-                <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-3 shadow-sm focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                    className="h-4 w-4 text-brand"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <input
-                    name="password"
-                    type="password"
-                    className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-muted"
-                    placeholder="Ingresa tu contraseña"
-                  />
-                </div>
-                {action?.errors?.password && (
-                  <span className="text-xs text-red-500">{action.errors.password[0]}</span>
-                )}
-              </div>
-
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 text-ink-soft">
-                  <input type="checkbox" className="checkbox checkbox-xs border-line" />
-                  Recordarme
-                </label>
-                <button
-                  type="button"
-                  className="text-brand hover:text-brand-dark"
-                >
-                  ¿Olvidaste tu contraseña?
-                </button>
-              </div>
-
+        <Form method="post" className="mt-6 flex flex-col gap-3.5">
+          <TextField
+            label="Correo electrónico"
+            name="identifier"
+            type="text"
+            autoComplete="username"
+            placeholder="nombre@correo.com"
+            icon={FiMail}
+            error={action?.errors?.identifier?.[0]}
+          />
+          <TextField
+            label="Contraseña"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="current-password"
+            placeholder="Tu contraseña"
+            icon={FiLock}
+            error={action?.errors?.password?.[0]}
+            trailing={
               <button
-                type="submit"
-                className="btn border-none bg-brand text-white shadow-[0_10px_25px_-10px_#f04913] hover:bg-brand-dark"
-                disabled={isSubmitting}
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                className="grid h-8 w-8 place-items-center rounded-md text-ink-muted transition-colors
+                  hover:bg-cream hover:text-brand"
               >
-                Iniciar sesión
+                {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
               </button>
-            </Form>
+            }
+          />
 
-            <div className="mt-6 flex items-center gap-3 text-xs text-ink-muted">
-              <span className="h-px w-full bg-line" />
-              <span className="shrink-0 whitespace-nowrap">o continúa con</span>
-              <span className="h-px w-full bg-line" />
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <button className="btn btn-outline border-line text-ink hover:bg-brand-soft">
-                Google
-              </button>
-              <button className="btn btn-outline border-line text-ink hover:bg-brand-soft">
-                Facebook
-              </button>
-            </div>
-
-            <p className="mt-6 text-center text-sm text-ink-soft">
-              ¿No tienes una cuenta?
-              <Link to="/register" className="ml-1 font-semibold text-brand hover:text-brand-dark">
-                Regístrate gratis
-              </Link>
-            </p>
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex cursor-pointer items-center gap-2 text-ink-soft">
+              <input type="checkbox" className="checkbox checkbox-xs rounded border-line checked:border-brand
+                checked:bg-brand checked:text-white" />
+              Recordarme
+            </label>
+            <button type="button" className="font-semibold text-brand underline-offset-4 hover:underline">
+              ¿Olvidaste tu contraseña?
+            </button>
           </div>
-        </section>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="mt-1 flex h-12 items-center justify-center gap-2 rounded-full bg-brand font-bold text-white
+              transition-colors hover:bg-ink disabled:bg-base-300 disabled:text-ink-muted"
+          >
+            {isSubmitting ? "Ingresando…" : "Iniciar sesión"}
+            {!isSubmitting && <FiArrowRight size={17} />}
+          </button>
+        </Form>
+
+        <div className="my-6 flex items-center gap-3 text-xs font-semibold text-ink-muted">
+          <span className="h-px flex-1 bg-line" />
+          o continúa con
+          <span className="h-px flex-1 bg-line" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2.5">
+          <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
+            text-sm font-bold text-ink transition-colors hover:border-ink">
+            <FaGoogle size={15} className="text-[#ea4335]" />
+            Google
+          </button>
+          <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
+            text-sm font-bold text-ink transition-colors hover:border-ink">
+            <FaFacebook size={16} className="text-[#1877f2]" />
+            Facebook
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setShowGuestModal(true)}
+          className="mt-6 flex w-full items-center gap-3 rounded-xl bg-cream px-4 py-3 text-left text-sm
+            transition-colors hover:bg-brand-soft"
+        >
+          <FiShoppingBag size={18} className="shrink-0 text-brand" />
+          <span className="flex-1 text-ink-soft">
+            ¿Solo quieres comprar? <b className="text-ink">Entra como invitado</b>
+          </span>
+          <FiArrowRight size={16} className="text-ink-muted" />
+        </button>
       </div>
-    </div>
+
+      <GuestModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} />
+    </AuthLayout>
   );
 }

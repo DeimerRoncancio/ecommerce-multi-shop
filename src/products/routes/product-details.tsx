@@ -5,6 +5,7 @@ import BuyProduct from "../components/BuyProduct";
 import ProductRecommendations from "../components/product-details-recommendations/ProductRecommendations";
 import { WarrantyCard } from "../components/WarrantyCard";
 import Container from "../../shared/ui/Container";
+import { categoryStyle } from "../../shared/utilities/category-color";
 import { getProduct, getProducts } from "../services/products.api";
 import { ProductsFromApiType } from "../types/product";
 import type { Route } from "./+types/product-details";
@@ -26,8 +27,9 @@ const relatedProducts = (product: ProductsFromApiType, products: ProductsFromApi
   const sameCategory = others.filter(item =>
     item.categories.some(category => categories.has(category.categoryName)),
   );
+  const rest = others.filter(item => !sameCategory.includes(item));
 
-  return sameCategory.length >= 4 ? sameCategory : others;
+  return { sameCategory, list: sameCategory.length >= 4 ? sameCategory : [...sameCategory, ...rest] };
 };
 
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {
@@ -35,41 +37,37 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
 
   const related = relatedProducts(product, products);
   const mainCategory = product.categories[0]?.categoryName;
+  const categoryNames = product.categories.map(category => category.categoryName).join(" y ");
+  const relatedTitle = related.sameCategory.length >= 4 ? `Más de ${categoryNames}` : "También te puede gustar";
 
   return (
     <>
       <Breadcrumb namePage={product.productName} isProduct={true} />
 
-      <Container className="grid gap-10 pb-16 pt-8 lg:grid-cols-2 lg:gap-14 lg:pt-12">
-        <div className="min-w-0 lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:self-start">
-          <ProductGallery images={product.productImages} />
-        </div>
-        <div className="flex min-w-0 flex-col gap-6">
-          <ProductInfo product={product} variants={product.variants} />
-          <BuyProduct productFromApi={product} />
-          <WarrantyCard />
-        </div>
-      </Container>
-
-      <section className="brand-block relative overflow-hidden py-14 lg:py-20">
+      <Container className="flex flex-col gap-8 py-6 lg:py-8">
         <div
-          aria-hidden
-          className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-white/10"
-        />
-        <Container className="relative mb-10 flex flex-col items-center gap-3 text-center">
-          <span className="rounded-full bg-white/15 px-4 py-1.5 text-xs font-semibold uppercase
-            tracking-[0.08em] text-white ring-1 ring-white/25">
-            También te puede gustar
-          </span>
-          <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
-            {mainCategory ? `Más de ${mainCategory}` : "Más productos"}
-          </h2>
-          <p className="max-w-xl text-white/90">
-            Productos parecidos a este, con el mismo envío rápido y la misma garantía.
-          </p>
-        </Container>
-        <ProductRecommendations products={related} />
-      </section>
+          style={categoryStyle(mainCategory)}
+          className="grid gap-8 border border-t-4 border-line border-t-(--cat,var(--color-brand)) bg-base-100 p-4
+            sm:p-6 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:p-8"
+        >
+          <div className="min-w-0 lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:self-start">
+            <ProductGallery images={product.productImages} />
+          </div>
+          <div className="flex min-w-0 flex-col gap-6">
+            <ProductInfo product={product} variants={product.variants} />
+            <BuyProduct productFromApi={product} />
+            <WarrantyCard />
+          </div>
+        </div>
+
+        <section style={categoryStyle(mainCategory)} className="flex flex-col gap-4">
+          <div className="border-l-[6px] border-(--cat,var(--color-brand)) pl-3">
+            <h2 className="text-2xl font-extrabold text-ink sm:text-3xl">{relatedTitle}</h2>
+            <p className="text-sm font-semibold text-ink-muted">Con el mismo envío gratis y la misma garantía</p>
+          </div>
+          <ProductRecommendations products={related.list} />
+        </section>
+      </Container>
     </>
   );
 }

@@ -12,30 +12,37 @@ export default function PaymentMethodItem({ method, isActive, onSelect }: Props)
     <button
       type="button"
       onClick={() => onSelect(method)}
-      className={`mt-6 flex w-full items-center justify-between gap-4 rounded-2xl border bg-base-100
-        p-5 text-left transition-colors ${
-          isActive ? "border-brand ring-1 ring-brand" : "border-line hover:border-brand"
-        }`}
+      aria-pressed={isActive}
+      className={`flex w-full items-center gap-4 rounded-2xl border-2 p-4 text-left transition-colors ${
+        isActive ? "border-brand bg-brand-soft/60" : "border-line bg-base-100 hover:border-ink-muted"
+      }`}
     >
-      <div className="flex items-center gap-4">
-        <span
-          className={`grid h-11 w-11 shrink-0 place-items-center rounded-full ${
-            isActive ? "bg-brand-soft text-brand" : "bg-cream text-ink-muted"
-          }`}
-        >
-          <FaRegCreditCard size={20} />
-        </span>
-        <div className="flex flex-col gap-0.5">
-          <span className="font-display text-base font-semibold text-ink">{method.name}</span>
-          <span className="text-sm text-ink-soft">{method.description}</span>
-        </div>
-      </div>
+      <span
+        aria-hidden
+        className={`grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${
+          isActive ? "border-brand" : "border-line"
+        }`}
+      >
+        {isActive && <span className="h-2.5 w-2.5 rounded-full bg-brand" />}
+      </span>
 
-      <div className="hidden shrink-0 items-center gap-2 text-ink-muted sm:flex">
+      <span
+        className={`grid h-11 w-11 shrink-0 place-items-center rounded-full ${
+          isActive ? "bg-brand text-white" : "bg-cream text-ink-muted"
+        }`}
+      >
+        <FaRegCreditCard size={19} />
+      </span>
+      <span className="flex flex-1 flex-col gap-0.5">
+        <span className="font-extrabold text-ink">{method.name}</span>
+        <span className="text-sm text-ink-soft">{method.description}</span>
+      </span>
+
+      <span className="hidden shrink-0 items-center gap-2 text-ink-muted sm:flex">
         <FaCcVisa size={26} />
         <FaCcMastercard size={26} />
         <FaCcAmex size={26} />
-      </div>
+      </span>
     </button>
   );
 }

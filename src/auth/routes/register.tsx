@@ -1,16 +1,19 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { InputsFromRegister } from "../constants/register.helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../zod/routesAuth";
 import { addUserType, userType } from "../types/auth";
-import ErrorMessage from "../components/MessageError";
-import { FiImage, FiUserPlus } from "react-icons/fi";
+import {
+  FiCamera, FiEye, FiEyeOff, FiUserPlus,
+} from "react-icons/fi";
+import TextField from "../../shared/ui/TextField";
+import AuthLayout from "../components/AuthLayout";
 import axios from "axios";
-// react-toastify inserta un nodo en el <head> al importarse. Si eso pasa antes
-// de hidratar, React descarta el HTML del servidor (incluido el CSS) y la página
-// queda sin estilos. Por eso se carga solo en el cliente, ya montada.
+import {
+  InputsFromRegister, genderOptions, registerIcons, registerPerks, requiredFields, wideFields,
+} from "../constants/register.helpers";
+
 const ToastContainer = lazy(() =>
   import("react-toastify").then(module => ({ default: module.ToastContainer })),
 );
@@ -29,12 +32,10 @@ const notify = async (type: "success" | "error", message: string) => {
   });
 };
 
-const requiredFields = ["name", "email", "password"];
-const wideFields = ["email", "password"];
-
 export const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const file = useRef<File | null>(null);
 
   useEffect(() => setIsMounted(true), []);
@@ -88,148 +89,118 @@ export const Register = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-brand-soft">
+    <AuthLayout
+      title="Crea tu cuenta,"
+      highlight="es gratis"
+      subtitle="Sigue tus pedidos, arma tu lista de deseos y paga más rápido."
+      perks={registerPerks}
+    >
       {isMounted && (
         <Suspense fallback={null}>
           <ToastContainer />
         </Suspense>
       )}
-      <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="brand-block relative flex flex-col justify-between overflow-hidden px-8 py-10
-          text-white lg:px-12">
-          <div className="absolute -left-12 top-12 h-56 w-56 rounded-full border border-white/20" />
-          <div className="absolute right-6 top-24 h-40 w-40 rounded-full border border-white/15" />
-          <div className="absolute bottom-16 left-20 h-64 w-64 rounded-full border border-white/10" />
 
-          <Link to="/" className="relative z-10 flex items-center gap-3">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15 text-lg font-semibold">
-              MS
-            </span>
-            <span className="text-lg font-semibold">MultiShop</span>
+      <div className="w-full max-w-lg">
+        <h2 className="text-3xl font-extrabold text-ink">Registrarse</h2>
+        <p className="mt-1 text-sm text-ink-muted">
+          ¿Ya tienes una cuenta?{" "}
+          <Link to="/login" className="font-bold text-brand underline-offset-4 hover:underline">
+            Inicia sesión
           </Link>
+        </p>
 
-          <div className="relative z-10 max-w-md space-y-4">
-            <h1 className="font-display text-4xl font-semibold leading-tight lg:text-5xl">
-              Crea tu cuenta
-            </h1>
-            <p className="text-base text-white/90">
-              Guarda tus direcciones, sigue tus pedidos y arma tu lista de deseos.
-            </p>
+        <form className="mt-6 flex flex-col gap-3.5" onSubmit={handleSubmit(onSubmit)}>
+          <label className="group flex w-fit cursor-pointer items-center gap-3.5">
+            <span className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border-2
+              border-dashed border-brand/40 bg-brand-soft/60 text-brand transition-colors group-hover:border-brand">
+              {previewImage ? (
+                <img src={previewImage} alt="Vista previa de tu foto" className="h-full w-full object-cover" />
+              ) : (
+                <FiCamera size={22} />
+              )}
+            </span>
+            <span className="leading-tight">
+              <b className="block text-sm text-ink group-hover:text-brand">
+                {previewImage ? "Cambiar foto" : "Agregar foto de perfil"}
+              </b>
+              <span className="text-xs text-ink-muted">Opcional · PNG o JPG</span>
+            </span>
+            <input
+              hidden
+              type="file"
+              accept="image/*"
+              {...register("profileImage")}
+              onChange={handleChange}
+            />
+          </label>
+
+          <div className="grid gap-x-4 gap-y-3.5 sm:grid-cols-2">
+            {InputsFromRegister.map((input) => (
+              <TextField
+                key={input.name}
+                id={input.name}
+                label={input.label}
+                type={input.name === "password" && showPassword ? "text" : input.type}
+                placeholder={input.placeholder}
+                icon={registerIcons[input.name]}
+                requiredMark={requiredFields.includes(input.name)}
+                hint={input.name === "password" ? "Mínimo 8 caracteres" : undefined}
+                className={wideFields.includes(input.name) ? "sm:col-span-2" : ""}
+                error={errors[input.name]?.message}
+                trailing={input.name === "password" ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    className="grid h-8 w-8 place-items-center rounded-md text-ink-muted transition-colors
+                      hover:bg-cream hover:text-brand"
+                  >
+                    {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+                  </button>
+                ) : undefined}
+                {...register(input.name)}
+              />
+            ))}
           </div>
 
-          <ul className="relative z-10 flex flex-col gap-2 text-sm text-white/90">
-            <li>· Checkout más rápido en cada compra</li>
-            <li>· Historial de pedidos siempre a mano</li>
-            <li>· Ofertas exclusivas para tu cuenta</li>
-          </ul>
-        </section>
-
-        <section className="flex items-center justify-center bg-base-100 px-6 py-10 lg:px-12">
-          <div className="w-full max-w-xl">
-            <div className="mb-8">
-              <h2 className="font-display text-3xl font-semibold text-ink">Registrarse</h2>
-              <p className="mt-2 text-sm text-ink-soft">
-                Completa tus datos para crear la cuenta
-              </p>
-            </div>
-
-            <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {InputsFromRegister.map((input) => (
-                  <div
-                    key={input.name}
-                    className={`flex flex-col gap-2 ${
-                      wideFields.includes(input.name) ? "sm:col-span-2" : ""
-                    }`}
-                  >
-                    <label htmlFor={input.name} className="text-sm font-medium text-ink">
-                      {input.label}
-                      {requiredFields.includes(input.name) && (
-                        <span className="ml-1 text-brand">*</span>
-                      )}
-                    </label>
-                    <input
-                      id={input.name}
-                      type={input.type}
-                      placeholder={input.placeholder}
-                      className="w-full rounded-xl border border-line bg-base-100 px-4 py-3 text-sm
-                        text-ink outline-none transition-colors placeholder:text-ink-muted
-                        focus:border-brand"
-                      {...register(input.name)}
-                    />
-                    <ErrorMessage errors={errors} fieldName={input.name} />
-                  </div>
-                ))}
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="gender" className="text-sm font-medium text-ink">
-                    Género
-                  </label>
-                  <select
-                    id="gender"
-                    defaultValue=""
-                    className="w-full rounded-xl border border-line bg-base-100 px-4 py-3 text-sm
-                      text-ink outline-none transition-colors focus:border-brand"
+          <fieldset>
+            <legend className="text-xs font-bold text-ink">Género</legend>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {genderOptions.map(option => (
+                <label
+                  key={option.value}
+                  className="flex h-10 cursor-pointer items-center rounded-lg border border-line px-4 text-sm text-ink
+                    transition-colors hover:border-ink-muted has-checked:border-brand has-checked:bg-brand-soft/60
+                    has-checked:font-bold has-checked:text-brand"
+                >
+                  <input
+                    type="radio"
+                    value={option.value}
+                    defaultChecked={option.value === "notToSaid"}
+                    className="sr-only"
                     {...register("gender")}
-                  >
-                    <option value="notToSaid">Seleccionar género</option>
-                    <option value="male">Hombre</option>
-                    <option value="female">Mujer</option>
-                  </select>
-                  {errors.gender?.message && (
-                    <span className="text-xs text-error">{errors.gender.message}</span>
-                  )}
-                </div>
+                  />
+                  {option.label}
+                </label>
+              ))}
+            </div>
+            {errors.gender?.message && (
+              <p className="mt-1 text-xs font-semibold text-error">{errors.gender.message}</p>
+            )}
+          </fieldset>
 
-                <div className="flex flex-col gap-2">
-                  <span className="text-sm font-medium text-ink">Foto de perfil</span>
-                  <div className="flex items-center gap-3">
-                    <label
-                      className="flex cursor-pointer items-center gap-2 rounded-xl border border-line
-                        bg-cream px-4 py-3 text-sm text-ink transition-colors hover:border-brand
-                        hover:text-brand"
-                    >
-                      <FiImage size={17} />
-                      Subir imagen
-                      <input
-                        hidden
-                        type="file"
-                        accept="image/*"
-                        {...register("profileImage")}
-                        onChange={handleChange}
-                      />
-                    </label>
-                    {previewImage && (
-                      <img
-                        src={previewImage}
-                        alt="Vista previa"
-                        className="h-12 w-12 rounded-full border border-line object-cover"
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="btn h-12 gap-2 rounded-xl border-0 bg-brand text-primary-content
-                  shadow-none hover:bg-brand-dark"
-              >
-                <FiUserPlus size={18} />
-                Crear cuenta
-              </button>
-            </form>
-
-            <p className="mt-6 text-center text-sm text-ink-soft">
-              ¿Ya tienes una cuenta?
-              <Link to="/login" className="ml-1 font-semibold text-brand hover:text-brand-dark">
-                Inicia sesión
-              </Link>
-            </p>
-          </div>
-        </section>
+          <button
+            type="submit"
+            className="mt-2 flex h-12 items-center justify-center gap-2 rounded-full bg-brand font-bold text-white
+              transition-colors hover:bg-ink"
+          >
+            <FiUserPlus size={18} />
+            Crear cuenta
+          </button>
+        </form>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

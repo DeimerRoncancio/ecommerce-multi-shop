@@ -15,25 +15,23 @@ export default function CartLayout() {
   const navigate = useNavigate();
 
   return (
-    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-cream">
-      <header className="border-b border-line bg-base-100">
+    <div className="grid min-h-screen grid-rows-[auto_1fr_auto] bg-base-100">
+      <header className="border-b border-t-4 border-line border-t-brand bg-base-100">
         <Container className="flex h-16 items-center justify-between gap-4">
-          <Link to="/" className="block w-11 shrink-0" aria-label="Ir al inicio">
-            <img src="/images/logo-bag.webp" alt="Multi Shop" className="w-full" />
+          <Link to="/" className="block shrink-0 transition-transform hover:-rotate-2" aria-label="Ir al inicio">
+            <img src="/images/logo-mark.webp" alt="Multi Shop" className="h-8 w-auto sm:hidden" />
+            <img src="/images/logo-wordmark.webp" alt="Multi Shop" className="hidden h-8 w-auto sm:block" />
           </Link>
 
-          <div className="hidden items-center gap-2 text-sm text-ink-soft sm:flex">
-            <FiLock size={16} className="text-success" />
-            <p>
-              Tu compra es <span className="font-medium text-ink">100% segura</span>
-            </p>
-          </div>
-
           <div className="flex items-center gap-1">
+            <p className="mr-3 hidden items-center gap-1.5 text-sm font-bold text-ink-soft sm:flex">
+              <FiLock size={15} className="text-success" />
+              Compra 100% segura
+            </p>
             <button
               type="button"
-              className="hidden rounded-xl px-3 py-2 text-sm font-medium text-ink transition-colors
-                hover:bg-cream hover:text-brand sm:block"
+              className="hidden rounded-full px-3 py-2 text-sm font-bold text-ink transition-colors
+                hover:bg-brand-soft hover:text-brand md:block"
             >
               Mis compras
             </button>
@@ -41,8 +39,8 @@ export default function CartLayout() {
               type="button"
               aria-label="Lista de deseos"
               onClick={() => navigate("/profile/wish-list")}
-              className="grid h-10 w-10 place-items-center rounded-xl text-ink transition-colors
-                hover:bg-cream hover:text-brand"
+              className="grid h-10 w-10 place-items-center rounded-full text-ink transition-colors
+                hover:bg-brand-soft hover:text-brand"
             >
               <FiHeart size={20} />
             </button>
@@ -53,7 +51,7 @@ export default function CartLayout() {
         </Container>
       </header>
 
-      <main className="pt-0!">
+      <main className="flex flex-col pt-0!">
         <Outlet />
       </main>
 

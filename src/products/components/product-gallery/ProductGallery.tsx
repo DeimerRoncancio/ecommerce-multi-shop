@@ -16,8 +16,8 @@ type Props = {
 };
 
 const arrowStyles = `absolute top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center
-  rounded-full border border-line bg-base-100/90 text-ink shadow-card backdrop-blur-sm
-  transition-colors hover:border-brand hover:text-brand`;
+  rounded-full bg-base-100 text-ink shadow-card transition-colors
+  hover:bg-(--cat,var(--color-brand)) hover:text-white`;
 
 export default function ProductGallery({ images }: Props) {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
@@ -31,11 +31,16 @@ export default function ProductGallery({ images }: Props) {
         loop
         spaceBetween={10}
         thumbs={{ swiper: thumbsSwiper }}
-        className="w-full overflow-hidden rounded-2xl border border-line bg-cream"
+        className="w-full overflow-hidden"
       >
         {ordered.map(image => (
-          <SwiperSlide key={image.imageId} className="flex! aspect-square items-center justify-center">
-            <ProductImage src={image.imageUrl} width={1000} alt={image.name} />
+          <SwiperSlide key={image.imageId} className="flex! aspect-square items-center justify-center bg-(--cat-soft,var(--color-cream))">
+            <ProductImage
+              src={image.imageUrl}
+              width={1000}
+              alt={image.name}
+              cutoutClassName="mix-blend-darken"
+            />
           </SwiperSlide>
         ))}
       </Swiper>

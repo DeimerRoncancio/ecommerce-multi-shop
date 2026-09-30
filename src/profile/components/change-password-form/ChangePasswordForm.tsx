@@ -35,14 +35,14 @@ export default function ChangePasswordForm({ user, token }: Props) {
 
   return (
     <form onSubmit={handleSubmit(submit)}>
-      <div className="text-base border border-line p-6 rounded-2xl text-black">
-        <h2 className="mb-6 text-lg font-semibold text-ink">Cambiar Contraseña</h2>
+      <div className="text-base border border-line p-6 text-ink">
+        <h2 className="mb-6 text-lg font-extrabold text-ink">Cambiar Contraseña</h2>
         <div className="flex flex-col gap-5">
           <div>
-            <span className="text-line">Contraseña actual</span>
+            <span className="text-sm font-bold text-ink">Contraseña actual</span>
             <input
               type="text"
-              className={`p-3 pl-4 mt-3 border-[1px] border-line rounded-xl outline-0 w-full 
+              className={`p-3 pl-4 mt-3 border border-line outline-0 w-full 
               focus:outline-2 focus:outline-brand-soft focus:border-brand-soft
               ${errors.currentPassword?.message && 'border-red-500'}`}
               placeholder="Ingresa tu contraseña actual"
@@ -67,7 +67,7 @@ export default function ChangePasswordForm({ user, token }: Props) {
           <Link to="" className="text-brand hover:text-brand hover:underline">
             ¿Olvidaste tu contraseña?
           </Link>
-          <button className={`btn btn-neutral p-1 px-7 h-9`} type="submit">
+          <button className={`btn btn-neutral sticker sticker-hover p-1 px-7 h-9 font-semibold`} type="submit">
             Cambiar contraseña
           </button>
         </div>

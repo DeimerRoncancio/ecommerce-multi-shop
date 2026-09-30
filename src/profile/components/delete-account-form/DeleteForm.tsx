@@ -26,8 +26,8 @@ export default function DeleteForm({ token, user }: Props) {
 
   return (
     <div>
-      <div className="mt-7 text-base border border-red-100 p-6 rounded-2xl text-black">
-        <h2 className="mb-3 text-lg font-semibold text-red-400">Eliminar Cuenta</h2>
+      <div className="mt-7 text-base border border-red-100 p-6 text-ink">
+        <h2 className="mb-3 text-lg font-extrabold text-error">Eliminar Cuenta</h2>
         <p className="text-ink-muted mb-3">
           Una vez eliminada tu cuenta, no podras deshacer los cambios. Por favor, asegurate.
         </p>
