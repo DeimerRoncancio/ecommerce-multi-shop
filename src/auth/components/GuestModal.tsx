@@ -11,8 +11,6 @@ type GuestModalProps = {
 
 export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
   const navigate = useNavigate();
-  // Igual que el carrito: se monta en <body> para no quedar atrapado dentro de
-  // la navbar, que crea un marco de referencia por su backdrop-blur.
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -34,7 +32,7 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
         className="fixed inset-0 bg-ink/40 backdrop-blur-xs transition-opacity"
         onClick={onClose}
       />
-      <div className="relative z-10 w-full max-w-md bg-white rounded-3xl shadow-2xl border border-line p-7 text-ink transition-all transform scale-100">
+      <div className="relative z-10 w-full max-w-md bg-base-100 shadow-2xl border border-line p-7 text-ink transition-all transform scale-100">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 text-ink-muted hover:text-ink p-1.5 rounded-full hover:bg-brand-soft transition-colors"
@@ -42,7 +40,7 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
           <IoMdClose size={20} />
         </button>
         <div className="flex items-center gap-3.5 mb-5">
-          <div className="p-3 bg-brand-soft text-brand border border-line rounded-2xl">
+          <div className="p-3 bg-brand-soft text-brand border border-line">
             <IoPersonAddOutline size={22} />
           </div>
           <div>
@@ -59,7 +57,7 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
               <label className="text-sm font-medium text-ink">
                 Correo electrónico
               </label>
-              <div className="flex items-center gap-2.5 rounded-2xl border border-line bg-white px-4 py-3 shadow-xs focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft transition-all">
+              <div className="flex items-center gap-2.5 border border-line bg-base-100 px-4 py-3 shadow-xs focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft transition-all">
                 <IoMdMail className="text-brand text-lg shrink-0" />
                 <input
                   type="email"
@@ -74,13 +72,13 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 text-sm font-medium text-ink-soft hover:text-ink hover:bg-brand-soft rounded-2xl border border-line transition-colors"
+              className="px-5 py-2.5 text-sm font-medium text-ink-soft hover:text-ink hover:bg-brand-soft border border-line transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-dark shadow-[0_8px_20px_-8px_#f04913] rounded-2xl transition-all"
+              className="px-6 py-2.5 text-sm font-semibold text-white bg-brand hover:bg-brand-dark shadow-[0_8px_20px_-8px_#f04913] transition-all"
             >
               Continuar
             </button>

@@ -22,7 +22,7 @@ export default function ChangePasswordConfirmationModal({
       <div className="absolute w-full h-full top-0 bg-[#1c1c1c7c]"
         onClick={onClose}
       />
-      <div className={`${showModal && 'scale-110'} z-20 bg-white w-[400px] text-ink min-h-[164px]
+      <div className={`${showModal && 'scale-110'} z-20 bg-base-100 w-100 text-ink min-h-41
       rounded-lg transition-all duration-150 p-6`}>
         <div className="flex items-center gap-2">
           <TiWarningOutline size={25} color="#f6aa2a" />
@@ -41,8 +41,8 @@ export default function ChangePasswordConfirmationModal({
             </span>
           ) : (
             <div className="flex justify-end items-center gap-4 mt-4">
-              <div className="btn rounded-sm" onClick={onClose}>Cancelar</div>
-              <div className={`btn rounded-sm btn-error ${loading && 'btn-disabled'}`}
+              <div className="btn rounded-full" onClick={onClose}>Cancelar</div>
+              <div className={`btn rounded-full btn-error ${loading && 'btn-disabled'}`}
                 onClick={onSubmit}>{
                   loading ? 'Confirmando...' : 'Confirmar'}
               </div>

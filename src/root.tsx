@@ -14,16 +14,17 @@ import "./index.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="data:," />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/icon-512.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&display=swap"
         />
         <title>Multi Shop</title>
         <Meta />
@@ -71,7 +72,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             <div className="flex w-full justify-center">
               <div className="flex flex-col gap-3 'my-7'">
                 <h1 className="text-5xl text-center">{message}</h1>
-                <p className="text-lg text-black">{details}</p>
+                <p className="text-lg text-ink">{details}</p>
               </div>
             </div>
             {stack && (

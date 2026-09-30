@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { FiChevronRight } from "react-icons/fi";
 import Icon from "../../shared/ui/Icon";
 import { IconName } from "../../shared/types/icon-list";
 
@@ -11,19 +12,35 @@ type MenuButton = {
 
 export default function MenuButton({ label, iconName, pathname, to }: MenuButton) {
   const navigate = useNavigate();
-  
+  const isActive = pathname === to;
+  const isSoon = !to;
+
   return (
     <button
+      type="button"
       onClick={() => navigate(to)}
-      className={`btn h-12 justify-normal gap-2.5 rounded-xl border-0 px-3 text-sm font-medium
-        shadow-none transition-colors ${
-          pathname === to
-            ? "bg-brand text-primary-content hover:bg-brand-dark"
-            : "bg-base-100 text-ink hover:bg-cream hover:text-brand"
+      disabled={isSoon}
+      aria-current={isActive ? "page" : undefined}
+      className={`group relative flex h-11 items-center gap-3 rounded-lg px-3 text-left text-sm transition-colors
+        disabled:cursor-default ${
+          isActive
+            ? "bg-brand-soft font-bold text-brand"
+            : isSoon
+              ? "text-ink-muted"
+              : "font-semibold text-ink hover:bg-cream hover:text-brand"
         }`}
     >
-      <Icon name={iconName} size={20} />
-      {label}
+      {isActive && <span aria-hidden className="absolute inset-y-2 left-0 w-1 rounded-full bg-brand" />}
+      <Icon name={iconName} size={19} />
+      <span className="flex-1">{label}</span>
+      {isSoon ? (
+        <span className="rounded-full bg-cream px-2 py-0.5 text-[10px] font-bold text-ink-muted">Pronto</span>
+      ) : (
+        <FiChevronRight
+          size={16}
+          className={`transition-transform group-hover:translate-x-0.5 ${isActive ? "" : "text-ink-muted"}`}
+        />
+      )}
     </button>
   )
 }

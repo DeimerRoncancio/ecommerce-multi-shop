@@ -12,7 +12,7 @@ export default function VariantItem({ size, variantSelected, pickVariant }: Prop
       type="button"
       aria-pressed={isSelected}
       onClick={() => pickVariant(size)}
-      className={`grid h-11 min-w-11 place-items-center rounded-xl border px-3 text-sm font-medium
+      className={`grid h-11 min-w-11 place-items-center rounded-lg border-2 px-3 text-sm font-bold
         transition-colors ${
           isSelected
             ? "border-brand bg-brand text-primary-content"

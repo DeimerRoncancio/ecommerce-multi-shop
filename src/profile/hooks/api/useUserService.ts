@@ -45,6 +45,7 @@ export const useUserService = ({ user, token, updateUser, updateImageUser }: Use
     passwordLoading,
     register,
     handleSubmit,
+    reset,
     sendData,
     sendImage,
     sendPassword,

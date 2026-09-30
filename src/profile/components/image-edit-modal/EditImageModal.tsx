@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
+import { IoCloseOutline } from "react-icons/io5";
 import { useUserService } from "../../hooks/api/useUserService";
 import { ImageType, UserTypes } from "../../types/user";
 import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
@@ -17,14 +19,18 @@ type EditImageModalProps = {
 export default function EditImageModal({ token, user, showModal, onClose, updateImageUser }: EditImageModalProps) {
   const [loading, setIsLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [isMounted, setIsMounted] = useState(false);
   const { sendImage } = useUserService({ user, token, updateImageUser });
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
 
+  useEffect(() => setIsMounted(true), []);
+
   const submit = () => {
+    if (!ref.current) return;
     setIsLoading(true);
     const formData = new FormData();
-    if (ref.current) formData.append('file', ref.current);
+    formData.append('file', ref.current);
 
     sendImage(formData).then(() => {
       setPreviewImage(null);
@@ -39,37 +45,93 @@ export default function EditImageModal({ token, user, showModal, onClose, update
     setPreviewImage(fileUrl);
   }
 
-  const closeModal = () => {
-    onClose();
+  const clearImage = () => {
+    ref.current = null;
     setPreviewImage(null);
   }
 
-  return (
-    <div className={`${showModal ? 'visible opacity-100' : 'invisible opacity-0'}  transition-all duration-100 w-full
-    h-full z-20 fixed top-0 left-0 flex justify-center items-center`}>
-      <div className="bg-[#1c1c1c7c] w-full h-full absolute" onClick={closeModal} />
-      <div className={`z-20 bg-white w-[560px] text-ink h-[calc(100%-110px)] min-h-[164px] max-h-[853px]
-      rounded-3xl  ${!showModal && 'scale-105'} transition-all duration-150`}>
-        <form className="grid grid-rows-[auto_1fr_auto] h-full" onSubmit={handleSubmit(submit)}>
-          <div className="p-3 pl-4 text-xl font-medium border-b border-line">
-            <h1>Personaliza tu foto</h1>
+  const closeModal = () => {
+    if (loading) return;
+    onClose();
+    clearImage();
+  }
+
+  if (!isMounted) return null;
+
+  return createPortal(
+    <div
+      className={`fixed inset-0 z-50 grid place-items-center p-4 transition-opacity duration-150 ${
+        showModal ? 'visible opacity-100' : 'invisible opacity-0'
+      }`}
+    >
+      <div className="absolute inset-0 bg-ink/50 backdrop-blur-[2px]" onClick={closeModal} />
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-foto-perfil"
+        className={`relative w-full max-w-md overflow-hidden rounded-2xl bg-base-100 text-ink shadow-card-hover
+          transition-transform duration-150 ${showModal ? 'scale-100' : 'scale-95'}`}
+      >
+        <form onSubmit={handleSubmit(submit)}>
+          <header className="flex items-start justify-between gap-3 border-t-4 border-brand px-5 pb-2 pt-5">
+            <div>
+              <h2 id="titulo-foto-perfil" className="text-xl font-extrabold">Cambia tu foto</h2>
+              <p className="text-sm text-ink-muted">Se verá en tu cuenta y en la barra de la tienda.</p>
+            </div>
+            <button
+              type="button"
+              aria-label="Cerrar"
+              onClick={closeModal}
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-ink-soft transition-colors
+                hover:bg-brand-soft hover:text-brand"
+            >
+              <IoCloseOutline size={24} />
+            </button>
+          </header>
+
+          <div className="flex min-h-72 items-center justify-center px-5 py-5">
+            {previewImage == null ? (
+              <ImageDragBox addImage={setImage} register={register} />
+            ) : (
+              <div className="flex flex-col items-center gap-3">
+                <ImagePreview previewImage={previewImage} loading={loading} />
+                {!loading && (
+                  <button
+                    type="button"
+                    onClick={clearImage}
+                    className="text-sm font-bold text-ink-soft underline-offset-4 transition-colors hover:text-brand
+                      hover:underline"
+                  >
+                    Elegir otra foto
+                  </button>
+                )}
+              </div>
+            )}
           </div>
-          <div className="flex justify-center items-center">
-            {
-              previewImage == null
-                ? (
-                  <ImageDragBox addImage={setImage} register={register} />
-                ) : (
-                  <ImagePreview previewImage={previewImage} loading={loading} />
-                )
-            }
-          </div>
-          <div className="p-4 text-xl flex justify-end font-medium border-t gap-4 border-line">
-            <div className="btn rounded-full" onClick={closeModal}>Cancelar</div>
-            <button type="submit" className="btn btn-neutral rounded-full">Guardar</button>
-          </div>
+
+          <footer className="flex justify-end gap-2.5 border-t border-line px-5 py-4">
+            <button
+              type="button"
+              onClick={closeModal}
+              disabled={loading}
+              className="h-10 rounded-full border border-line px-5 text-sm font-bold text-ink transition-colors
+                hover:border-ink"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              disabled={!previewImage || loading}
+              className="h-10 rounded-full bg-brand px-6 text-sm font-bold text-white transition-colors hover:bg-ink
+                disabled:bg-base-300 disabled:text-ink-muted"
+            >
+              {loading ? "Guardando…" : "Guardar foto"}
+            </button>
+          </footer>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

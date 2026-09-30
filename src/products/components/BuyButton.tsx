@@ -27,8 +27,7 @@ export default function BuyButton({ product }: BuyButtonProps) {
     <button
       type="button"
       onClick={handleBuyNow}
-      className="btn h-12 gap-2 rounded-xl border-0 bg-neutral text-neutral-content shadow-none
-        hover:bg-ink-soft"
+      className="btn h-12 gap-2 rounded-full font-bold border-2! border-brand! bg-base-100 text-brand hover:bg-brand-soft font-extrabold"
     >
       <AiOutlineThunderbolt size={18} />
       Comprar ahora

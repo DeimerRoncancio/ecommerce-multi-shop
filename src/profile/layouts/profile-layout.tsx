@@ -18,7 +18,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
   const { token } = loaderData;
-  const { 
+  const {
     user, loading,
     userImage,
     updateUser,
@@ -41,23 +41,26 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
     <>
       <Breadcrumb namePage="Cuenta" />
 
-      <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 py-10 md:px-8 lg:grid-cols-[260px_1fr] lg:py-14">
-        <aside className="flex h-fit flex-col overflow-hidden rounded-2xl border border-line
-          bg-base-100">
-          <div className="brand-block h-20" aria-hidden />
-          <div className="-mt-14 flex flex-col items-center gap-3 px-5">
-            <div className="avatar">
-              <div className="w-28 rounded-full relative border-4 border-white shadow-[0px_7px_29px_0px_rgba(100,100,111,0.2)]">
+      <div className="mx-auto grid w-full max-w-7xl items-start gap-6 px-4 py-8 md:px-8 lg:grid-cols-[270px_1fr] lg:py-10">
+        <aside className="flex flex-col overflow-hidden rounded-2xl border border-line bg-base-100 lg:sticky
+          lg:top-[calc(var(--nav-h)+1.5rem)]">
+          <div className="flex flex-col items-center gap-2 border-b border-line bg-brand-soft/60 px-5 pb-5 pt-6">
+            <div className="relative">
+              <div className="h-24 w-24 overflow-hidden rounded-full bg-base-100 ring-4 ring-brand ring-offset-4
+                ring-offset-brand-soft">
                 <AvatarImage loading={loading} userImage={userImage} />
-                {
-                  user.name.length &&
-                  <button className="absolute rounded-full top-1 text-transparent hover:text-gray-200 
-                    hover:bg-[#16161644] w-full h-full transition-all duration-100 outline-0 flex 
-                    justify-center items-center cursor-pointer" onClick={onOpenEditProfileModal}>
-                    <RiImageEditLine className="transition-all duration-100" size={28} />
-                  </button>
-                }
               </div>
+              {user.name.length > 0 && (
+                <button
+                  type="button"
+                  aria-label="Cambiar foto de perfil"
+                  onClick={onOpenEditProfileModal}
+                  className="absolute -bottom-1 -right-1 grid h-9 w-9 place-items-center rounded-full border-2
+                    border-base-100 bg-ink text-white transition-colors hover:bg-brand"
+                >
+                  <RiImageEditLine size={16} />
+                </button>
+              )}
             </div>
             <EditImageModal
               token={token} user={user}
@@ -65,17 +68,17 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               onClose={onCloseEditProfileModal}
               updateImageUser={updateImageUser}
             />
-            <h1 className="text-lg text-ink font-semibold">
+            <h1 className="mt-2 text-center text-lg font-extrabold leading-tight text-ink">
               {
                 !user.name.length
                   ? "Accede a una cuenta"
                   : user.name + ' ' + user.lastnames?.split(" ", 1)
               }
             </h1>
+            {user.email && <p className="-mt-1 max-w-full truncate text-xs text-ink-muted">{user.email}</p>}
             <LogoutButton loading={loading} user={user} />
           </div>
-          <div className="divider mx-5 before:h-px after:h-1"></div>
-          <div className="flex flex-col px-5">
+          <nav className="flex flex-col gap-0.5 p-3" aria-label="Mi cuenta">
             <MenuButton
               label="Datos personales"
               iconName="profile"
@@ -100,18 +103,16 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               pathname={location.pathname}
               to=""
             />
-          </div>
-          <div className="divider mx-5 before:h-1 after:h-1"></div>
-          <div className="px-5 pb-5">
+            <div className="my-2 border-t border-line" />
             <MenuButton
-              label="Configuración de Cuenta"
+              label="Configuración de cuenta"
               iconName="settings"
               pathname={location.pathname}
               to="/profile/settings"
             />
-          </div>
+          </nav>
         </aside>
-        <section className="w-full rounded-2xl border border-line bg-base-100 p-5 lg:p-7">
+        <section className="w-full rounded-2xl border border-line bg-base-100 p-5 sm:p-7">
           <Outlet context={{ user, userLoading: loading, updateUser }} />
         </section>
       </div>

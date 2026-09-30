@@ -1,22 +1,14 @@
 import { UseFormRegister } from "react-hook-form"
 import { UserUpdateTypes } from "../types/user"
+import TextField from "../../shared/ui/TextField"
 
 type UserDataFieldProps = {
   register: UseFormRegister<UserUpdateTypes>,
   fieldName: string,
   name: any,
+  type?: string,
 }
 
-export default function UserDataField({ register, name, fieldName }: UserDataFieldProps) {
-  return (
-    <div>
-      <span className="text-line">{fieldName}</span>
-      <input
-        type="text"
-        className="p-3 pl-4 mt-3 border-[1px] border-line rounded-xl outline-0 w-full focus:outline-2 
-          focus:outline-brand-soft focus:border-brand"
-        {...register(name)}
-      />
-    </div>
-  )
+export default function UserDataField({ register, name, fieldName, type = "text" }: UserDataFieldProps) {
+  return <TextField label={fieldName} type={type} {...register(name)} />
 }

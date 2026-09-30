@@ -35,11 +35,11 @@ export default function ImageDragBox({ addImage, register }: ImageDragBoxProps) 
 
   return (
     <label onDrop={handleDrop} onDragEnter={() => setIsDragOver(true)} onDragLeave={() => setIsDragOver(false)}
-    className={`w-72 h-60 border-2 border-dashed hover:bg-cream rounded-2xl cursor-pointer transition-all
-    duration-300 ${isUploading && "pointer-events-none opacity-75"}
+    className={`group block h-60 w-full cursor-pointer rounded-xl border-2 border-dashed transition-all
+    duration-200 ${isUploading && "pointer-events-none opacity-75"}
     ${isDragOver
-      ? "border-brand bg-brand-soft scale-105"
-      : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"}`}
+      ? "scale-[1.02] border-brand bg-brand-soft"
+      : "border-brand/30 bg-brand-soft/40 hover:border-brand hover:bg-brand-soft"}`}
     onDragOver={(e: React.DragEvent) => {
       e.preventDefault()
       setIsDragOver(true);
@@ -52,21 +52,21 @@ export default function ImageDragBox({ addImage, register }: ImageDragBoxProps) 
       />
       <div className="flex flex-col h-full items-center justify-center space-y-1">
         <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-colors
-        duration-200 ${isDragOver ? "bg-brand-soft" : "bg-gray-100"}`}>
+        duration-200 ${isDragOver ? "bg-brand text-white" : "bg-base-100 text-brand group-hover:bg-brand group-hover:text-white"}`}>
           {isUploading ? (
             <div className="w-8 h-8 border-2 border-brand border-t-transparent rounded-full animate-spin" />
           ) : (
             <BiUpload
-              className={`w-8 h-8 transition-colors duration-200 ${isDragOver ? "text-brand" : "text-gray-500"}`}
+              className="w-7 h-7"
             />
           )}
         </div>
         <div className="space-y-2 text-center">
-          <h3 className="text-lg font-semibold text-gray-700">
-            {isUploading ? "Subiendo imágenes..." : "Arrastra tus imágenes aquí"}
+          <h3 className="text-lg font-semibold text-ink">
+            {isUploading ? "Subiendo imagen..." : "Arrastra tu foto aquí"}
           </h3>
-          <p className="text-sm text-gray-500">o haz clic para seleccionar archivos</p>
-          <p className="text-xs text-gray-400">PNG, JPG, GIF, WEBP</p>
+          <p className="text-sm text-ink-soft">o <b className="text-brand">haz clic para elegirla</b></p>
+          <p className="text-xs text-ink-muted">PNG, JPG, GIF, WEBP</p>
         </div>
       </div>
     </label>

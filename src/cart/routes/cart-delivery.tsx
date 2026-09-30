@@ -2,7 +2,7 @@ import { redirect, useNavigate } from "react-router";
 import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
-import { FaPlus } from "react-icons/fa6";
+import { FiInfo, FiPlus } from "react-icons/fi";
 import AddressItem from "../components/AddressItem";
 import NewAddressForm from "../components/NewAddressForm";
 import { useState } from "react";
@@ -76,25 +76,14 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
   };
 
   return (
-    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_380px] lg:gap-12">
       <section>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="font-display text-xl font-semibold text-ink">Dirección de envío</h1>
-          {!showForm && (
-            <button
-              type="button"
-              className="btn btn-sm gap-2 rounded-xl border-0 bg-brand-soft text-secondary-content
-                shadow-none hover:bg-brand hover:text-primary-content"
-              onClick={() => setShowForm(true)}
-            >
-              <FaPlus size={16} />
-              Agregar nueva dirección
-            </button>
-          )}
-        </div>
+        <h1 className="text-3xl font-extrabold text-ink">Entrega</h1>
+        <p className="mt-0.5 text-sm text-ink-muted">Elige dónde quieres recibir tu pedido. El envío es gratis.</p>
 
         {!token && (
-          <p className="mt-4 rounded-xl border border-line bg-base-100 p-4 text-sm text-ink-soft">
+          <p className="mt-4 flex items-center gap-3 rounded-lg bg-cream px-3.5 py-2 text-sm text-ink-soft">
+            <FiInfo size={17} className="shrink-0 text-ink-muted" />
             Como invitado, la dirección solo se usa para este pedido y no queda guardada.
           </p>
         )}
@@ -108,7 +97,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
         )}
 
         {addresses.length > 0 && (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {addresses.map((address) => {
               return (
                 <AddressItem
@@ -119,6 +108,21 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
                 />
               );
             })}
+            {!showForm && (
+              <button
+                type="button"
+                onClick={() => setShowForm(true)}
+                className="group flex min-h-28 flex-col items-center justify-center gap-2 rounded-2xl border-2
+                  border-dashed border-line p-5 text-sm font-bold text-ink-soft transition-colors hover:border-brand
+                  hover:bg-brand-soft/50 hover:text-brand"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-full bg-cream transition-colors
+                  group-hover:bg-brand group-hover:text-white">
+                  <FiPlus size={18} />
+                </span>
+                Agregar otra dirección
+              </button>
+            )}
           </div>
         )}
       </section>

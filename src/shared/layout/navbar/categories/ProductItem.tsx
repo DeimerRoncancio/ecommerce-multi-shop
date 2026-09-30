@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router"
+import { Link } from "react-router"
+import { FiArrowRight } from "react-icons/fi"
 import { ProductItemType } from "../../../../products/types/product"
 import ProductImage from "../../../ui/ProductImage"
+import PriceTag from "../../../ui/PriceTag"
 
 type ProductItemProps = {
   product: ProductItemType;
@@ -8,33 +10,29 @@ type ProductItemProps = {
 }
 
 export default function ProductItem({ product, closeModal }: ProductItemProps) {
-  const navigate = useNavigate();
-
-  const goProduct = () => {
-    navigate(`product/${product.id}`);
-    closeModal(false);
-  }
-
   return (
-    <li key={product.id} className="flex flex-col group bg-white gap-4">
-      <div className="w-37.5 h-40 overflow-hidden">
-        <ProductImage
-          src={product.mainImage.imageUrl}
-          width={300}
-          alt={product.productName}
-          className="transition-all duration-300 group-hover:scale-105"
-        />
-      </div>
-      <div className="flex flex-col bg-white z-10 gap-2">
-        <p className="">{product.productName}</p>
-        <p className="font-semibold text-brand-dark">
-          ${new Intl.NumberFormat("es-ES").format(product.price)}
+    <li>
+      <Link
+        to={`/product/${product.id}`}
+        onClick={() => closeModal(false)}
+        className="group flex h-full flex-col gap-2 border border-line p-2.5 transition-colors hover:border-(--cat)"
+      >
+        <div className="aspect-square w-full overflow-hidden bg-(--cat-soft) p-3">
+          <ProductImage
+            src={product.mainImage.imageUrl}
+            width={300}
+            alt={product.productName}
+            className="mix-blend-darken transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        <p className="line-clamp-2 text-sm font-extrabold leading-snug text-ink group-hover:text-(--cat)">
+          {product.productName}
         </p>
-        <button className="btn font-normal p-3 py-1 rounded-sm w-fit h-auto border-0" 
-        onClick={goProduct}>
-          Ver Producto
-        </button>
-      </div>
+        <div className="mt-auto flex items-end justify-between gap-2">
+          <PriceTag price={product.price} />
+          <FiArrowRight size={16} className="mb-1 text-(--cat) transition-transform group-hover:translate-x-1" />
+        </div>
+      </Link>
     </li>
   )
 }

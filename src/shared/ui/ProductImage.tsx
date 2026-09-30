@@ -94,12 +94,12 @@ type Props = {
   alt: string;
   width: number;
   className?: string;
+  cutoutClassName?: string;
   loading?: "lazy" | "eager";
 };
 
-export default function ProductImage({ src, alt, width, className, loading }: Props) {
+export default function ProductImage({ src, alt, width, className, cutoutClassName, loading }: Props) {
   const [opaque, setOpaque] = useState(false);
-
   const padded = productImage(src, width);
 
   useEffect(() => {
@@ -113,11 +113,9 @@ export default function ProductImage({ src, alt, width, className, loading }: Pr
     };
   }, [padded]);
 
-  const classes = `h-full w-full object-contain ${className ?? ""}`;
-
-  if (!opaque) return <img src={padded} alt={alt} loading={loading} className={classes} />;
-
   const full = productImageFull(src, width);
+  const classes = `h-full w-full object-contain ${className ?? ""}`;
+  if (!opaque) return <img src={padded} alt={alt} loading={loading} className={`${classes} ${cutoutClassName ?? ""}`} />;
 
   return (
     <div className="relative h-full w-full overflow-hidden">

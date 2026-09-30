@@ -11,8 +11,8 @@ export default function SocialButton({ iconName }: SocialButtonProps) {
     <Link
       to=""
       aria-label={iconName}
-      className="grid h-9 w-9 place-items-center rounded-full border border-line bg-cream
-        text-ink-soft transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-primary-content"
+      className="grid h-9 w-9 place-items-center rounded-full border border-line text-ink-soft
+        transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-white"
     >
       <Icon name={iconName} size={16} />
     </Link>

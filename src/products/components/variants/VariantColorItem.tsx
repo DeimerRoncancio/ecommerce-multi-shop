@@ -13,7 +13,7 @@ export default function VariantColorItem({ color, colorSelected, pickColor }: Pr
       aria-label={color}
       aria-pressed={isSelected}
       onClick={() => pickColor(color)}
-      className={`h-9 w-9 rounded-full border border-line transition-transform hover:scale-110 ${
+      className={`h-9 w-9 rounded-full border-2 border-ink-muted transition-transform hover:scale-110 ${
         isSelected ? "ring-2 ring-brand ring-offset-2" : ""
       }`}
       style={{ backgroundColor: color }}

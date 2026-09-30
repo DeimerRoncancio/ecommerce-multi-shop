@@ -12,14 +12,7 @@ import { Route } from "./+types/cart-payment";
 import { redirect, useNavigate } from "react-router";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
-
-const paymentMethods: PaymentMethodType[] = [
-  {
-    id: "stripe-checkout",
-    name: "Tarjeta de crédito o débito",
-    description: "Te llevamos a la pasarela segura de Stripe para completar el pago.",
-  },
-];
+import { paymentMethods } from "../constants/checkout.helper";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('cookie') || '').transactionId;
@@ -79,17 +72,15 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
   }
 
   return (
-    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_360px]">
+    <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_380px] lg:gap-12">
       <section>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="font-display text-xl font-semibold text-ink">Método de pago</h1>
-          <span className="flex items-center gap-2 text-sm text-ink-soft">
-            <IoShieldCheckmarkOutline size={18} />
-            Pago procesado por Stripe
-          </span>
-        </div>
+        <h1 className="text-3xl font-extrabold text-ink">Pago</h1>
+        <p className="mt-0.5 flex items-center gap-1.5 text-sm text-ink-muted">
+          <IoShieldCheckmarkOutline size={17} className="text-success" />
+          Elige cómo pagar. El pago lo procesa Stripe de forma segura.
+        </p>
 
-        <div className="grid grid-cols-1">
+        <div className="mt-5 grid grid-cols-1 gap-3">
           {paymentMethods.map((method) => (
             <PaymentMethodItem
               key={method.id}
@@ -100,8 +91,8 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
           ))}
         </div>
 
-        <div className="mt-8 rounded-2xl border border-line bg-base-100 p-6">
-          <h2 className="mb-4 font-display text-lg font-semibold text-ink">Resumen del pedido</h2>
+        <div className="mt-5 rounded-2xl bg-cream p-5">
+          <h2 className="mb-4 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Revisa tu pedido</h2>
 
           <ul className="flex flex-col gap-2 border-b border-line pb-4 text-sm text-ink">
             {cartItems.map((item) => (
