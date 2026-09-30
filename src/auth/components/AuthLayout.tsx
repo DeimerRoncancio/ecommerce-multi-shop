@@ -16,7 +16,7 @@ export default function AuthLayout({ title, highlight, subtitle, perks, children
       <section className="relative flex flex-col gap-8 overflow-hidden border-b border-brand/15 bg-brand-soft/70 px-8
         py-10 text-ink lg:border-b-0 lg:border-r lg:px-14">
         <Link to="/" className="relative z-10 w-fit transition-transform hover:-rotate-2" aria-label="Ir al inicio">
-          <img src="/images/logo-wordmark.webp" alt="Multi Shop" className="h-9 w-auto" />
+          <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-3 h-16 w-auto" />
         </Link>
 
         <div className="relative z-10 max-w-md lg:mt-auto">
@@ -42,10 +42,10 @@ export default function AuthLayout({ title, highlight, subtitle, perks, children
         </p>
 
         <img
-          src="/images/logo-mark.webp"
+          src="/svg/simbolo.svg"
           alt=""
           aria-hidden
-          className="pointer-events-none absolute -bottom-12 -right-12 hidden w-72 -rotate-[8deg] lg:block"
+          className="pointer-events-none absolute -bottom-6 -right-8 hidden w-56 -rotate-[10deg] lg:block"
         />
       </section>
 

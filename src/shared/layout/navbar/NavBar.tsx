@@ -41,11 +41,11 @@ export default function NavBar() {
           <Container className="flex h-16 items-center gap-3 md:gap-5 lg:h-18">
             <NavLink
               to="/"
-              className="block shrink-0 bg-base-100 px-2.5 py-1.5 transition-transform hover:-rotate-2"
+              className="block shrink-0 transition-transform hover:-rotate-2"
               aria-label="Ir al inicio"
             >
-              <img src="/images/logo-mark.webp" alt="Multi Shop" className="h-7 w-auto sm:hidden" />
-              <img src="/images/logo-wordmark.webp" alt="Multi Shop" className="hidden h-7 w-auto sm:block" />
+              <img src="/svg/simbolo-blanco.svg" alt="Multi Shop" className="h-11 w-auto sm:hidden" />
+              <img src="/svg/logo-fondo-naranja.svg" alt="Multi Shop" className="-ml-2 hidden h-14 w-auto sm:block" />
             </NavLink>
 
             <button

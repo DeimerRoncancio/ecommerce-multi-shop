@@ -55,7 +55,7 @@ export default function WishListItem({ item, index, products }: WishListItemProp
           type="button"
           disabled={isInCart}
           onClick={() => handleAddToCart(item.id)}
-          className="btn btn-sm mt-2 w-full gap-1.5 sticker sticker-hover bg-action font-bold text-primary-content hover:bg-action-dark disabled:bg-success/10 disabled:text-success font-semibold"
+          className="btn btn-sm mt-2 w-full gap-1.5 sticker sticker-hover bg-action text-primary-content hover:bg-action-dark disabled:bg-success/10 disabled:text-success font-semibold"
         >
           {isInCart ? <FiCheck size={16} /> : <FiPlus size={16} />}
           {isInCart ? "En el carrito" : "Agregar al carrito"}

@@ -1,0 +1,11 @@
+{
+  "name": "Multi Shop",
+  "short_name": "Multi Shop",
+  "icons": [
+    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ],
+  "theme_color": "#ff4b14",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

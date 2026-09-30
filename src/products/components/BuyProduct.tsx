@@ -54,7 +54,7 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
           <button
             type="button"
             onClick={handleToggleWishList}
-            className="btn h-12 gap-2 rounded-full font-bold sticker sticker-hover bg-base-100 text-ink
+            className="btn h-12 gap-2 rounded-full sticker sticker-hover bg-base-100 text-ink
               hover:border-brand hover:bg-brand-soft hover:text-secondary-content font-semibold"
           >
             {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}

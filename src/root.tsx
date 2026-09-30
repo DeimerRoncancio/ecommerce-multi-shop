@@ -18,8 +18,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-        <link rel="apple-touch-icon" href="/icon-512.png" />
+        <link rel="icon" href="/favicon.ico?v=3" sizes="any" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-blanco.ico?v=3" sizes="any" media="(prefers-color-scheme: dark)" />
+        <link rel="icon" type="image/svg+xml" href="/svg/favicon-tema.svg?v=3" />
+        <link rel="apple-touch-icon" href="/png/apple-touch-icon.png?v=2" />
+        <link rel="manifest" href="/site.webmanifest?v=2" />
+        <meta name="theme-color" content="#ff4b14" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -76,7 +80,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
               </div>
             </div>
             {stack && (
-              <pre className="w-full h-[400px] p-4 text-sm overflow-x-auto">
+              <pre className="w-full h-100 p-4 text-sm overflow-x-auto">
                 <code>{stack}</code>
               </pre>
             )}

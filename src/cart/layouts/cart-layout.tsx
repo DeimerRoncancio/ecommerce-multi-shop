@@ -19,8 +19,8 @@ export default function CartLayout() {
       <header className="border-b border-t-4 border-line border-t-brand bg-base-100">
         <Container className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="block shrink-0 transition-transform hover:-rotate-2" aria-label="Ir al inicio">
-            <img src="/images/logo-mark.webp" alt="Multi Shop" className="h-8 w-auto sm:hidden" />
-            <img src="/images/logo-wordmark.webp" alt="Multi Shop" className="hidden h-8 w-auto sm:block" />
+            <img src="/svg/simbolo.svg" alt="Multi Shop" className="h-9 w-auto sm:hidden" />
+            <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-2 hidden h-14 w-auto sm:block" />
           </Link>
 
           <div className="flex items-center gap-1">

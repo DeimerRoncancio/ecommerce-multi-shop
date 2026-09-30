@@ -33,7 +33,7 @@ export default function Footer() {
       <Container className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
         <div className="flex flex-col items-start gap-4">
           <Link to="/" className="block transition-transform hover:-rotate-2" aria-label="Ir al inicio">
-            <img src="/images/logo-wordmark.webp" alt="Multi Shop" className="h-9 w-auto" />
+            <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-3 h-16 w-auto" />
           </Link>
           <p className="max-w-xs leading-relaxed">
             Ropa, cocina, deporte y tecnología en un solo lugar. Productos seleccionados, envío rápido

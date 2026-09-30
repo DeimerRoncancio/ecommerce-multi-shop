@@ -14,7 +14,7 @@ export default function WishList() {
           type="button"
           disabled={!itemsInCart || !wishList.length}
           onClick={() => handleAddToCartSinceWishList(products)}
-          className="btn gap-2 sticker sticker-hover bg-action font-bold text-primary-content
+          className="btn gap-2 sticker sticker-hover bg-action text-primary-content
             hover:bg-action-dark disabled:bg-base-300 disabled:text-ink-muted font-semibold"
         >
           {!wishList.length
