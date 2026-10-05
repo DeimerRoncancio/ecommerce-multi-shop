@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../zod/routesAuth";
+import { envs } from "../../shared/config/env.config";
 import { addUserType, userType } from "../types/auth";
 import {
   FiCamera, FiEye, FiEyeOff, FiUserPlus,
@@ -63,7 +64,7 @@ export const Register = () => {
       formData.append("profileImage", file);
     }
 
-    axios.post("https://multi-shop-api-76abbcfe5b70.herokuapp.com/app/users/register", formData,)
+    axios.post(`${envs.API}/app/users/register`, formData)
       .then(() => notify("success", "Registro con éxito"))
       .catch((error) => {
         notify("error", "Error al registrarse");
