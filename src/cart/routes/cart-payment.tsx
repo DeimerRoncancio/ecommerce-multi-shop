@@ -11,7 +11,6 @@ import { PaymentMethodType } from "../types/cart";
 import { Route } from "./+types/cart-payment";
 import { redirect, useNavigate } from "react-router";
 import { parse } from "cookie";
-import Cookie from "js-cookie";
 import { paymentMethods } from "../constants/checkout.helper";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -65,7 +64,6 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
         }
 
         nextSteps("Pago");
-        Cookie.remove("userData");
         window.location.href = session.sessionUrl;
       })
       .catch(() => setIsRedirecting(false));

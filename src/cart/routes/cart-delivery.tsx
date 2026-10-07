@@ -6,7 +6,7 @@ import { FiInfo, FiPlus } from "react-icons/fi";
 import AddressItem from "../components/AddressItem";
 import NewAddressForm from "../components/NewAddressForm";
 import { useEffect, useState } from "react";
-import type { AddressType, CheckoutUserData } from "../types/cart";
+import type { AddressType } from "../types/cart";
 import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
@@ -24,12 +24,11 @@ import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = parse(request.headers.get("Cookie") || "");
-  if (!cookies.userData) return redirect("/cart/user-data");
+  const session = await getSession(request.headers.get("Cookie"));
+  const user = session.get("checkoutUser");
+  if (!user) return redirect("/cart/user-data");
   if (!cookies.transactionId) return redirect("/cart");
 
-  const user: CheckoutUserData = JSON.parse(cookies.userData);
-
-  const session = await getSession(request.headers.get("Cookie"));
   const token = (session.get("token") as string | undefined) ?? null;
 
   const savedAddresses = token ? await getSavedAddresses(token) : [];

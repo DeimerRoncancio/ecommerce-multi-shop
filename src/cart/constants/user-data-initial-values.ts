@@ -1,8 +1,9 @@
 import { UserTypes } from "../../profile/types/user";
 import { UserDataForm } from "../zod/routesCart";
+import { CheckoutUserData } from "../types/cart";
 
 export const UserDataInitialValues = (
-  orderUser: UserDataForm,
+  orderUser: Partial<CheckoutUserData>,
   user?: UserTypes,
 ): UserDataForm => {
   return {

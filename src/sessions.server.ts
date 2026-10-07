@@ -1,7 +1,9 @@
 import { createCookieSessionStorage } from "react-router";
+import type { CheckoutUserData } from "./cart/types/cart";
 
 type SessionData = {
   token: string;
+  checkoutUser: CheckoutUserData;
 }
 
 type SessionFlashData = {

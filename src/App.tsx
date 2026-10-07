@@ -5,9 +5,10 @@ import { getCategories } from "./products/services/categories.api";
 import { getProducts } from "./products/services/products.api";
 import NavBar from "./shared/layout/navbar/NavBar";
 import { SnackbarProvider } from "notistack";
-import { Outlet, useLocation } from "react-router";
+import { data, Outlet, useLocation } from "react-router";
 import "./App.css";
 import { getSessionUser } from "./auth/session-user.server";
+import { clearCheckoutUser } from "./cart/checkout-session.server";
 import type { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
@@ -27,8 +28,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   const categories = apiCategories.map(mapApiToCategories);
 
   const user = await getSessionUser(request);
+  const headers = await clearCheckoutUser(request);
 
-  return { categories, products, user }
+  return data({ categories, products, user }, { headers });
 }
 
 declare module "notistack" {

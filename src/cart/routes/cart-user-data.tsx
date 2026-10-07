@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate } from "react-router";
+import { data, Link, redirect, useFetcher, useNavigate } from "react-router";
 import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
@@ -15,7 +15,8 @@ import { UserDataInitialValues } from "../constants/user-data-initial-values";
 import type { Route } from "./+types/cart-user-data";
 import { getSessionUser } from "../../auth/session-user.server";
 import { UserInitialValues } from "../../profile/constants/users-initial-values.helper";
-import Cookie from "js-cookie";
+import { commitSession, getSession } from "../../sessions.server";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import { FiCheck, FiLogIn } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
 
@@ -23,17 +24,26 @@ export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get("Cookie") || "").transactionId;
   if (!transactionId) return redirect("/cart");
 
-  const userDataFromCookies = parse(
-    request.headers.get("Cookie") || "",
-  ).userData;
-
+  const session = await getSession(request.headers.get("Cookie"));
+  const checkoutUser = session.get("checkoutUser") ?? null;
   const user = await getSessionUser(request);
 
-  return { user, userDataFromCookies };
+  return { user, checkoutUser };
+}
+
+export async function action({ request }: Route.ActionArgs) {
+  const result = UserData.safeParse(await request.json());
+  if (!result.success) return { ok: false as const };
+
+  const { names, lastnames, email, phone } = result.data;
+  const session = await getSession(request.headers.get("Cookie"));
+  session.set("checkoutUser", { names, lastnames, email, phone });
+
+  return data({ ok: true as const }, { headers: { "Set-Cookie": await commitSession(session) } });
 }
 
 export default function CartUserData({ loaderData }: Route.ComponentProps) {
-  const { userDataFromCookies } = loaderData;
+  const { checkoutUser } = loaderData;
   const user = loaderData.user ?? UserInitialValues;
   const {
     register,
@@ -47,21 +57,23 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
 
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
+  const fetcher = useFetcher<typeof action>();
 
-  const userData = JSON.parse(userDataFromCookies || "{}") || null;
-
-  const onSubmit = (data: UserDataForm) => {
+  const onSubmit = (form: UserDataForm) => {
     if (!isValid) return;
-
-    Cookie.set("userData", JSON.stringify(data));
-    nextSteps("Datos de usuario");
-    navigate("/cart/delivery");
+    fetcher.submit(JSON.stringify(form), { method: "post", encType: "application/json" });
   };
 
   useEffect(() => {
-    !userData
-      ? reset(UserDataInitialValues(userData))
-      : user && reset(UserDataInitialValues(userData, user));
+    if (fetcher.state !== "idle" || !fetcher.data) return;
+    if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos guardar tus datos. Inténtalo de nuevo.");
+
+    nextSteps("Datos de usuario");
+    navigate("/cart/delivery");
+  }, [fetcher.state, fetcher.data]);
+
+  useEffect(() => {
+    reset(UserDataInitialValues(checkoutUser ?? {}, user));
   }, [user, reset]);
 
   return (
@@ -70,7 +82,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
         <h1 className="text-3xl font-extrabold text-ink">Tus datos</h1>
         <p className="mt-0.5 text-sm text-ink-muted">Los usamos para confirmar tu pedido y avisarte cuando vaya en camino.</p>
 
-        {!userData.email && !user.email && (
+        {!checkoutUser?.email && !user.email && (
           <Link
             to="/login"
             className="mt-4 flex items-center gap-3 rounded-lg border border-brand/20 bg-brand-soft/70 px-3.5 py-2 text-sm
@@ -135,7 +147,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
 
       <PaymentCardInfo
         onContinue={handleSubmit(onSubmit)}
-        disabledContinue={!isValid}
+        disabledContinue={!isValid || fetcher.state !== "idle"}
       />
     </Container>
   );
