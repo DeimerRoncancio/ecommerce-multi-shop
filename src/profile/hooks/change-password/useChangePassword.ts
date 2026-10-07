@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { ERROR_MESSAGES, ERROR, PasswordFieldErrors, PasswordType } from "../../types/user";
 import { UseFormReset } from "react-hook-form";
+import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
+
+type PasswordError = {
+  status?: number;
+  errorCode?: string;
+}
 
 export default function useChangePassword() {
   const [handlerErrors, setHandlerErrors] = useState<Partial<Record<PasswordFieldErrors, string>>>({});
@@ -16,20 +22,24 @@ export default function useChangePassword() {
     }, 1000)
   }
 
-  const handleErrors = (err: any) => {
-    if (err.response.data.errorCode == ERROR.PASSWORD_UNAUTHORIZED && err.status == 401) {
+  const handleErrors = ({ status, errorCode }: PasswordError) => {
+    setConfirmModal(false);
+
+    if (errorCode === ERROR.PASSWORD_UNAUTHORIZED && status === 401) {
       setHandlerErrors({
         currentPassword: ERROR_MESSAGES.currentPassword
       });
-      setConfirmModal(false);
+      return;
     }
 
-    if (err.response.data.errorCode == ERROR.MATCH_PASSWORD && err.status == 401) {
+    if (errorCode === ERROR.MATCH_PASSWORD && status === 401) {
       setHandlerErrors({
         newPassword: ERROR_MESSAGES.newPassword
       });
-      setConfirmModal(false);
+      return;
     }
+
+    SnackbarUtilities.error("No pudimos cambiar tu contraseña. Inténtalo de nuevo.");
   }
   
   const onCloseConfirmModal = () => {

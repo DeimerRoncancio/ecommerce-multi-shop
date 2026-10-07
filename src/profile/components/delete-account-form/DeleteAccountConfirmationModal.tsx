@@ -2,11 +2,13 @@ import { FiAlertTriangle, FiImage, FiLogIn, FiUser } from "react-icons/fi";
 import { useFetcher } from "react-router";
 import { useEffect } from "react";
 import Modal from "../../../shared/ui/Modal";
+import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
+import type { action } from "../../routes/profile-settings";
 
 type Props = {
   showDeleteModal: boolean;
   onClose: () => void;
-  deleteAccount: () => void;
+  userId: string;
 }
 
 const removed = [
@@ -15,12 +17,13 @@ const removed = [
   { icon: FiLogIn, text: "Tu acceso con este correo" },
 ];
 
-export default function DeleteAccountConfirmationModal({ showDeleteModal, onClose, deleteAccount }: Props) {
-  const fetcher = useFetcher();
+export default function DeleteAccountConfirmationModal({ showDeleteModal, onClose, userId }: Props) {
+  const fetcher = useFetcher<typeof action>();
 
   useEffect(() => {
-    if (fetcher.data?.reload) deleteAccount();
-  }, [fetcher.data]);
+    if (fetcher.state !== "idle" || !fetcher.data) return;
+    if (!fetcher.data.ok) SnackbarUtilities.error("No pudimos eliminar tu cuenta. Inténtalo de nuevo.");
+  }, [fetcher.state, fetcher.data]);
 
   return (
     <Modal
@@ -31,7 +34,9 @@ export default function DeleteAccountConfirmationModal({ showDeleteModal, onClos
       title="¿Eliminar tu cuenta?"
       description="Esta acción no se puede deshacer. Tu cuenta se borra para siempre."
       footer={
-        <fetcher.Form method="post" action="/logout-action" className="flex gap-2.5">
+        <fetcher.Form method="post" className="flex gap-2.5">
+          <input type="hidden" name="intent" value="delete" />
+          <input type="hidden" name="id" value={userId} />
           <button
             type="button"
             onClick={onClose}

@@ -122,8 +122,6 @@ export const cancelPaymentSession = async (
   );
 };
 
-// Con sesión, el backend asocia el pedido a la cuenta y guarda la dirección;
-// sin sesión, la compra es de invitado. Si la sesión venció (401), sigue como invitado.
 export const updateTransactionCustomer = async (
   transactionId: string,
   checkoutAccessToken: string,

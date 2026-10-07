@@ -1,29 +1,17 @@
-import useUser from "../hooks/api/useUser";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useRouteLoaderData } from "react-router";
 import MenuButton from "../components/MenuButton";
 import AvatarImage from "../components/AvatarImage";
 import Breadcrumb from "../components/Breadcrumb";
-import type { Route } from "./+types/profile-layout";
-import { getSession } from "../../sessions.server";
 import LogoutButton from "../components/LogOutButton";
 import { RiImageEditLine } from "react-icons/ri";
 import { useState } from "react";
 import EditImageModal from "../components/image-edit-modal/EditImageModal";
+import type { loader as appLoader } from "../../App";
+import { UserInitialValues } from "../constants/users-initial-values.helper";
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-  const token = session.get('token') as string;
-  return { token };
-}
-
-export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
-  const { token } = loaderData;
-  const {
-    user, loading,
-    userImage,
-    updateUser,
-    updateImageUser
-  } = useUser({ token });
+export default function ProfileLayout() {
+  const user = useRouteLoaderData<typeof appLoader>("App")?.user ?? UserInitialValues;
+  const userImage = user.profileImage?.imageUrl ?? "";
   const [showProfileModal, setProfileModal] = useState(false);
   const location = useLocation();
 
@@ -48,7 +36,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
             <div className="relative">
               <div className="h-24 w-24 overflow-hidden rounded-full bg-base-100 ring-4 ring-brand ring-offset-4
                 ring-offset-brand-soft">
-                <AvatarImage loading={loading} userImage={userImage} />
+                <AvatarImage userImage={userImage} />
               </div>
               {user.name.length > 0 && (
                 <button
@@ -63,10 +51,9 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               )}
             </div>
             <EditImageModal
-              token={token} user={user}
+              user={user}
               showModal={showProfileModal}
               onClose={onCloseEditProfileModal}
-              updateImageUser={updateImageUser}
             />
             <h1 className="mt-2 text-center text-lg font-extrabold leading-tight text-ink">
               {
@@ -76,7 +63,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
               }
             </h1>
             {user.email && <p className="-mt-1 max-w-full truncate text-xs text-ink-muted">{user.email}</p>}
-            <LogoutButton loading={loading} user={user} />
+            <LogoutButton user={user} />
           </div>
           <nav className="flex flex-col gap-0.5 p-3" aria-label="Mi cuenta">
             <MenuButton
@@ -113,7 +100,7 @@ export default function ProfileLayout({ loaderData }: Route.ComponentProps) {
           </nav>
         </aside>
         <section className="w-full rounded-2xl border border-line bg-base-100 p-5 sm:p-7">
-          <Outlet context={{ user, userLoading: loading, updateUser }} />
+          <Outlet context={{ user }} />
         </section>
       </div>
     </>

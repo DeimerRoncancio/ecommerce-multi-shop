@@ -47,4 +47,5 @@ export default [
 
   // Actions
   route('logout-action', 'auth/actions/logout.action.tsx'),
+  route('profile-image-action', 'profile/actions/profile-image.action.tsx'),
 ] satisfies RouteConfig;

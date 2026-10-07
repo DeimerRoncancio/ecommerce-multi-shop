@@ -1,42 +1,49 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
+import { useFetcher } from "react-router";
 import { IoCloseOutline } from "react-icons/io5";
-import { useUserService } from "../../hooks/api/useUserService";
-import { ImageType, UserTypes } from "../../types/user";
+import { UserTypes } from "../../types/user";
 import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
 import ImageDragBox from "./ImageDragBox";
 import ImagePreview from "./ImagePreview";
+import type { action } from "../../actions/profile-image.action";
 
 type EditImageModalProps = {
-  token: string;
   user: UserTypes;
   showModal: boolean;
   onClose: () => void;
-  updateImageUser: (image: ImageType) => void;
 }
 
-export default function EditImageModal({ token, user, showModal, onClose, updateImageUser }: EditImageModalProps) {
-  const [loading, setIsLoading] = useState(false);
+export default function EditImageModal({ user, showModal, onClose }: EditImageModalProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [isMounted, setIsMounted] = useState(false);
-  const { sendImage } = useUserService({ user, token, updateImageUser });
+  const fetcher = useFetcher<typeof action>();
+  const loading = fetcher.state !== "idle";
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
 
   useEffect(() => setIsMounted(true), []);
 
+  useEffect(() => {
+    if (fetcher.state !== "idle" || !fetcher.data) return;
+    if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos cambiar tu foto. Inténtalo de nuevo.");
+
+    setPreviewImage(null);
+    onClose();
+    SnackbarUtilities.succes('Imagen cambiada con exito');
+  }, [fetcher.state, fetcher.data]);
+
   const submit = () => {
     if (!ref.current) return;
-    setIsLoading(true);
     const formData = new FormData();
+    formData.append('id', user.id);
     formData.append('file', ref.current);
 
-    sendImage(formData).then(() => {
-      setPreviewImage(null);
-      setIsLoading(false);
-      onClose();
-      SnackbarUtilities.succes('Imagen cambiada con exito')
+    fetcher.submit(formData, {
+      method: "post",
+      action: "/profile-image-action",
+      encType: "multipart/form-data",
     });
   }
 

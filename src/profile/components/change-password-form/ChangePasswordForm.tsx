@@ -1,19 +1,20 @@
-import { Link } from "react-router";
+import { useEffect } from "react";
+import { Link, useFetcher } from "react-router";
 import ChangePasswordConfirmationModal from "./ChangePasswordConfirmationModal";
 import NewPasswordFields from "./NewPasswordFields";
 import useChangePasswordForm from "../../hooks/change-password/useChangePasswordForm";
-import { useUserService } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
 import useChangePassword from "../../hooks/change-password/useChangePassword";
 import PasswordField from "../../../shared/ui/PasswordField";
+import type { action } from "../../routes/profile-settings";
 
 type Props = {
   user: UserTypes;
-  token: string;
 }
 
-export default function ChangePasswordForm({ user, token }: Props) {
-  const { passwordLoading, sendPassword } = useUserService({ user, token });
+export default function ChangePasswordForm({ user }: Props) {
+  const fetcher = useFetcher<typeof action>();
+  const passwordLoading = fetcher.state !== "idle";
 
   const {
     showConfirmModal, isSucces, handlerErrors,
@@ -29,10 +30,17 @@ export default function ChangePasswordForm({ user, token }: Props) {
 
   const sendData = () => {
     if (!formData) return;
-    sendPassword(formData)
-      .then(() => success(reset))
-      .catch(handleErrors);
+    fetcher.submit(
+      { intent: "password", id: user.id, currentPassword: formData.currentPassword, newPassword: formData.newPassword },
+      { method: "post" },
+    );
   }
+
+  useEffect(() => {
+    if (fetcher.state !== "idle" || !fetcher.data) return;
+    if (fetcher.data.ok) success(reset);
+    else if ("errorCode" in fetcher.data) handleErrors(fetcher.data);
+  }, [fetcher.state, fetcher.data]);
 
   return (
     <form onSubmit={handleSubmit(submit)}>

@@ -1,47 +1,51 @@
-import { useOutletContext } from "react-router"
+import { redirect, useOutletContext } from "react-router"
 import { UserTypes } from "../types/user";
 import type { Route } from "./+types/profile-settings";
-import { getSession } from "../../sessions.server";
+import { destroySession, getSession } from "../../sessions.server";
+import { deleteUserAccount, updatePassword } from "../services/users.api";
 import ChangePasswordForm from "../components/change-password-form/ChangePasswordForm";
 import DeleteForm from "../components/delete-account-form/DeleteForm";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get('Cookie'));
   const token = session.get('token') as string;
-  return { token }
+  const form = await request.formData();
+  const id = String(form.get("id"));
+
+  if (form.get("intent") === "delete") {
+    const deleted = await deleteUserAccount(id, token).then(() => true).catch(() => false);
+    if (!deleted) return { ok: false as const };
+
+    return redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
+  }
+
+  const password = {
+    currentPassword: String(form.get("currentPassword")),
+    newPassword: String(form.get("newPassword")),
+  };
+
+  return updatePassword(id, token, password)
+    .then(() => ({ ok: true as const }))
+    .catch((err) => ({
+      ok: false as const,
+      status: err.response?.status as number | undefined,
+      errorCode: err.response?.data?.errorCode as string | undefined,
+    }));
 }
 
 type userContext = {
   user: UserTypes;
-  loading: boolean;
 }
 
-export default function ProfileSettings({ loaderData }: Route.ComponentProps) {
-  const { user, loading } = useOutletContext<userContext>();
-  const { token } = loaderData;
+export default function ProfileSettings() {
+  const { user } = useOutletContext<userContext>();
 
   return (
     <>
       <h2 className="text-3xl font-extrabold text-ink">Configuración de cuenta</h2>
       <p className="mb-6 mt-0.5 text-sm text-ink-muted">Cambia tu contraseña o elimina tu cuenta.</p>
-      {
-        !loading ? (
-          <>
-            <ChangePasswordForm
-              user={user}
-              token={token}
-              />
-            <DeleteForm
-              user={user}
-              token={token}
-            />
-          </>
-        ) : (
-          <div className="w-full mt-28 flex justify-center">
-            <span className="loading loading-dots loading-xl"></span>
-          </div>
-        )
-      }
+      <ChangePasswordForm user={user} />
+      <DeleteForm user={user} />
     </>
   );
 }

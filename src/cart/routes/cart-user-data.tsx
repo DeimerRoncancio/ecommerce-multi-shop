@@ -12,32 +12,29 @@ import {
 import { useEffect } from "react";
 import { parse } from "cookie";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
-import useUser from "../../profile/hooks/api/useUser";
 import type { Route } from "./+types/cart-user-data";
-import { getSession } from "../../sessions.server";
+import { getSessionUser } from "../../auth/session-user.server";
+import { UserInitialValues } from "../../profile/constants/users-initial-values.helper";
 import Cookie from "js-cookie";
 import { FiCheck, FiLogIn } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getSession(request.headers.get("Cookie"));
-  const token = session.get("token") as string;
-
-  const transactionId = parse(
-    request.headers.get("Cookie") || "",
-  ).transactionId;
+  const transactionId = parse(request.headers.get("Cookie") || "").transactionId;
   if (!transactionId) return redirect("/cart");
 
   const userDataFromCookies = parse(
     request.headers.get("Cookie") || "",
   ).userData;
 
-  return { token, userDataFromCookies };
+  const user = await getSessionUser(request);
+
+  return { user, userDataFromCookies };
 }
 
 export default function CartUserData({ loaderData }: Route.ComponentProps) {
-  const { token, userDataFromCookies } = loaderData;
-  const { user } = useUser({ token });
+  const { userDataFromCookies } = loaderData;
+  const user = loaderData.user ?? UserInitialValues;
   const {
     register,
     handleSubmit,

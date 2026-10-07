@@ -1,11 +1,11 @@
-import { redirect, useNavigate } from "react-router";
+import { redirect, useFetcher, useNavigate } from "react-router";
 import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
 import { FiInfo, FiPlus } from "react-icons/fi";
 import AddressItem from "../components/AddressItem";
 import NewAddressForm from "../components/NewAddressForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { AddressType, CheckoutUserData } from "../types/cart";
 import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
@@ -20,6 +20,7 @@ import {
   checkoutCustomerAddressesToAddresses,
   checkoutToCustomerTransaction,
 } from "../mappers/customer.mapper";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = parse(request.headers.get("Cookie") || "");
@@ -34,16 +35,30 @@ export async function loader({ request }: Route.LoaderArgs) {
   const savedAddresses = token ? await getSavedAddresses(token) : [];
   const addresses = checkoutCustomerAddressesToAddresses(savedAddresses);
 
-  return { user, addresses, token };
+  return { user, addresses, isLoggedIn: token !== null };
+}
+
+export async function action({ request }: Route.ActionArgs) {
+  const { transactionId } = parse(request.headers.get("Cookie") || "");
+  const session = await getSession(request.headers.get("Cookie"));
+  const token = session.get("token") as string | undefined;
+  const { checkoutAccessToken, customer } = await request.json();
+
+  if (!transactionId) return { ok: false as const };
+
+  return updateTransactionCustomer(transactionId, checkoutAccessToken, customer, token)
+    .then((guestEmail) => ({ ok: true as const, guestEmail }))
+    .catch(() => ({ ok: false as const }));
 }
 
 export default function CartDelivery({ loaderData }: Route.ComponentProps) {
-  const { user, addresses: savedAddresses, token } = loaderData;
+  const { user, addresses: savedAddresses, isLoggedIn } = loaderData;
   const [newAddresses, setNewAddresses] = useState<AddressType[]>([]);
   const [showForm, setShowForm] = useState(savedAddresses.length === 0);
   const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
+  const fetcher = useFetcher<typeof action>();
 
   const addresses = [...savedAddresses, ...newAddresses];
 
@@ -56,24 +71,26 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
     setShowForm(false);
   };
 
-  const onContinue = async () => {
+  const onContinue = () => {
     const transactionId = Cookie.get("transactionId");
     const checkoutAccessToken = getCheckoutAccessToken();
     if (!selectedAddress) return;
     if (!transactionId || !checkoutAccessToken) return navigate("/cart");
 
-    const data = await updateTransactionCustomer(
-      transactionId,
-      checkoutAccessToken,
-      checkoutToCustomerTransaction(user, selectedAddress),
-      token ?? undefined,
+    fetcher.submit(
+      JSON.stringify({ checkoutAccessToken, customer: checkoutToCustomerTransaction(user, selectedAddress) }),
+      { method: "post", encType: "application/json" },
     );
+  };
 
-    if (data) sessionStorage.setItem("guestEmail", data);
+  useEffect(() => {
+    if (fetcher.state !== "idle" || !fetcher.data) return;
+    if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos guardar la entrega. Inténtalo de nuevo.");
 
+    if (fetcher.data.guestEmail) sessionStorage.setItem("guestEmail", fetcher.data.guestEmail);
     nextSteps("Entrega");
     navigate("/cart/payment");
-  };
+  }, [fetcher.state, fetcher.data]);
 
   return (
     <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_380px] lg:gap-12">
@@ -81,7 +98,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
         <h1 className="text-3xl font-extrabold text-ink">Entrega</h1>
         <p className="mt-0.5 text-sm text-ink-muted">Elige dónde quieres recibir tu pedido. El envío es gratis.</p>
 
-        {!token && (
+        {!isLoggedIn && (
           <p className="mt-4 flex items-center gap-3 rounded-lg bg-cream px-3.5 py-2 text-sm text-ink-soft">
             <FiInfo size={17} className="shrink-0 text-ink-muted" />
             Como invitado, la dirección solo se usa para este pedido y no queda guardada.
@@ -129,7 +146,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
 
       <PaymentCardInfo
         onContinue={onContinue}
-        disabledContinue={!selectedAddress}
+        disabledContinue={!selectedAddress || fetcher.state !== "idle"}
       />
     </Container>
   );

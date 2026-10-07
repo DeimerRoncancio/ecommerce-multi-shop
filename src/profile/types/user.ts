@@ -11,6 +11,10 @@ export interface UserTypes {
   enabled: boolean;
 }
 
+export interface UserFromApiTypes extends Omit<UserTypes, "profileImage"> {
+  imageUser?: ImageType;
+}
+
 export interface ImageType {
   id: string;
   imageId: string;

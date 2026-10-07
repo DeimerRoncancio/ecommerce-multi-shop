@@ -7,7 +7,7 @@ import NavBar from "./shared/layout/navbar/NavBar";
 import { SnackbarProvider } from "notistack";
 import { Outlet, useLocation } from "react-router";
 import "./App.css";
-import { getSession } from "./sessions.server";
+import { getSessionUser } from "./auth/session-user.server";
 import type { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
 import { useEffect } from "react";
@@ -26,10 +26,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   const apiCategories = await getCategories();
   const categories = apiCategories.map(mapApiToCategories);
 
-  const session = await getSession(request.headers.get('Cookie'));
-  const token = session.get('token')as string;
+  const user = await getSessionUser(request);
 
-  return { categories, products, token }
+  return { categories, products, user }
 }
 
 declare module "notistack" {

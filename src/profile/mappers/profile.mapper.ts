@@ -1,4 +1,4 @@
-import { UpdateRequestTypes, UserTypes, UserUpdateTypes } from "../types/user";
+import { UpdateRequestTypes, UserFromApiTypes, UserTypes, UserUpdateTypes } from "../types/user";
 
 export const updateTypesToRequestTypes = (user: UserUpdateTypes): UpdateRequestTypes => {
     return {
@@ -11,17 +11,7 @@ export const updateTypesToRequestTypes = (user: UserUpdateTypes): UpdateRequestT
     }
 }
 
-export const toUserTypes = (newUserData: UpdateRequestTypes, user: UserTypes): UserTypes => {
-    return{
-      id: user.id,
-      name: newUserData.name,
-      secondName: newUserData.secondName,
-      profileImage: user.profileImage,
-      lastnames: newUserData.lastnames,
-      phoneNumber: Number(newUserData.phoneNumber),
-      gender: newUserData.gender,
-      email: newUserData.email,
-      admin: false,
-      enabled: false
-    }
-}
+export const apiToUserTypes = ({ imageUser, ...user }: UserFromApiTypes): UserTypes => ({
+  ...user,
+  profileImage: imageUser,
+})

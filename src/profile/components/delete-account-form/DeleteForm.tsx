@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import DeleteAccountConfirmationModal from "./DeleteAccountConfirmationModal";
-import { useUserService } from "../../hooks/api/useUserService";
 import { UserTypes } from "../../types/user";
 
 type Props = {
-  token: string;
   user: UserTypes;
 }
 
-export default function DeleteForm({ token, user }: Props) {
-  const { deleteAccount } = useUserService({ user, token });
+export default function DeleteForm({ user }: Props) {
   const [showDeleteModal, setDeleteModal] = useState(false);
-  
-  const deleteUser = () => deleteAccount(user.id, token);
 
   const onSubmit = () => {
     document.body.classList.add('overflow-hidden');
@@ -51,7 +46,7 @@ export default function DeleteForm({ token, user }: Props) {
       <DeleteAccountConfirmationModal
         showDeleteModal={showDeleteModal}
         onClose={onCloseModal}
-        deleteAccount={deleteUser}
+        userId={user.id}
       />
     </section>
   );

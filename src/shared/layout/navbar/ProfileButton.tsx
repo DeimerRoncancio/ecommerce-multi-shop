@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLoaderData, useNavigate } from "react-router";
-import useUser from "../../../profile/hooks/api/useUser";
 import AvatarImage from "../../../profile/components/AvatarImage";
 import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 import GuestModal from "../../../auth/components/GuestModal";
@@ -8,6 +7,8 @@ import {
   FiArrowLeft, FiChevronRight, FiHeart, FiLogIn, FiLogOut, FiMail, FiPackage, FiUser, FiUserCheck,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
+import { UserTypes } from "../../../profile/types/user";
+import { UserInitialValues } from "../../../profile/constants/users-initial-values.helper";
 
 type MenuRowProps = {
   icon: IconType;
@@ -42,7 +43,7 @@ const panelClass = `dropdown-content z-30 mt-3 w-72 overflow-hidden rounded-2xl 
   bg-base-100 p-0 shadow-xl`;
 
 type LoaderProps = {
-  token?: string;
+  user?: UserTypes | null;
 }
 
 type ProfileButtonProps = {
@@ -56,8 +57,8 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   const [guestEmail, setGuestEmail] = useState<string | null>(null);
   const navigate = useNavigate();
   const loaderData = useLoaderData() as LoaderProps | undefined;
-  const token = loaderData?.token || "";
-  const { user, loading, userImage } = useUser({ token });
+  const user = loaderData?.user ?? UserInitialValues;
+  const userImage = user.profileImage?.imageUrl ?? "";
   
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
@@ -83,7 +84,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               setShowOptions(!showOptions)
             }}>
             <div className="rounded-full">
-              <AvatarImage loading={loading} userImage={userImage} />
+              <AvatarImage userImage={userImage} />
             </div>
           </div>
         </div>
@@ -95,7 +96,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
             <div className="flex items-center gap-3 border-b border-line bg-brand-soft/60 px-4 py-3.5">
               <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-brand ring-offset-2
                 ring-offset-brand-soft">
-                <AvatarImage loading={loading} userImage={userImage} />
+                <AvatarImage userImage={userImage} />
               </span>
               <span className="min-w-0 leading-tight">
                 <span className="block text-xs text-ink-muted">Hola,</span>
@@ -162,7 +163,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
             </li>
           </ul>
 
-          {token.length > 0 && (
+          {user.name.length > 0 && (
             <div className="border-t border-line p-2">
               <LogoutActionButton className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-bold
                 text-error transition-colors hover:bg-error/10">
