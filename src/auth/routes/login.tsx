@@ -27,8 +27,11 @@ export async function action({ request }: Route.ActionArgs) {
 
   const data = await send({ identifier: identifier, password: password });
 
-  if (data.error)
+  if (!data.ok && data.status === 401)
     return { errors: { unauthorized: ["El usuario o contraseña son incorrectos"] } };
+
+  if (!data.ok)
+    return { errors: { unauthorized: ["No pudimos iniciar sesión. Inténtalo de nuevo en unos minutos."] } };
   
   session.set('token', data.token);
 

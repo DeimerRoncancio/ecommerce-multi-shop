@@ -4,9 +4,7 @@ import { LoginAccesUserFormData } from "../../zod/routesAuth";
 
 export const send = (data: LoginAccesUserFormData) => {
   return axios
-    .post(`${envs.API}/login`, data)
-    .then((res) => res.data)
-    .catch((err) => {
-      return (err as AxiosError).response?.data;
-    });
+    .post<{ token: string }>(`${envs.API}/login`, data)
+    .then((res) => ({ ok: true as const, token: res.data.token }))
+    .catch((err: AxiosError) => ({ ok: false as const, status: err.response?.status }));
 }
