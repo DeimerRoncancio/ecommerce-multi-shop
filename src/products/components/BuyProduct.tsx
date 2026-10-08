@@ -60,7 +60,7 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
             {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}
             {inWishList ? "En tu lista" : "Lista de deseos"}
           </button>
-          <BuyButton product={productFromApi} />
+          <BuyButton product={productFromApi} quantity={quantity} />
       </div>
     </div>
   );

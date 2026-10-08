@@ -1,26 +1,21 @@
 import { AiOutlineThunderbolt } from "react-icons/ai";
+import { useNavigate } from "react-router";
 import { ProductsFromApiType } from "../types/product";
-import { payments } from "../../shared/api/payments/paymentsApi";
+import { mapApiToProducts } from "../mappers/products.maper";
+import useCart from "../../cart/hooks/useCart";
 
 type BuyButtonProps = {
   product: ProductsFromApiType;
+  quantity: number;
 };
 
-export default function BuyButton({ product }: BuyButtonProps) {
+export default function BuyButton({ product, quantity }: BuyButtonProps) {
+  const { handleAddItem, isInCart } = useCart();
+  const navigate = useNavigate();
+
   const handleBuyNow = () => {
-    payments.post("", {
-      currency: "COP",
-      items: [
-        {
-          name: product.productName,
-          price: product.price + "00",
-          description: product.description,
-          quantity: 1
-        }
-      ]
-    })
-      .then((res) => res.data)
-      .then((data) => window.location.href = data.sessionUrl);
+    if (!isInCart(product.id)) handleAddItem(mapApiToProducts(product), quantity);
+    navigate("/cart");
   };
 
   return (
