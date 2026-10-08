@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "react-router";
+import { createCookieSessionStorage, type Session } from "react-router";
 import type { CheckoutUserData } from "./cart/types/cart";
 
 type SessionData = {
@@ -17,14 +17,22 @@ if (!sessionSecret)
 const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData> ({
   cookie: {
     name: "___session",
-    domain: "localhost",
     httpOnly: true,
-    maxAge: 60 * 60 * 24 * 1,
+    maxAge: 60 * 60,
     path: "/",
     sameSite: "lax",
     secrets: [sessionSecret],
     secure: true
   }
 })
+
+export type AppSession = Session<SessionData, SessionFlashData>;
+
+export const sessionHeaders = async (request: Request, session: AppSession): Promise<HeadersInit | undefined> => {
+  const original = await getSession(request.headers.get("Cookie"));
+  if (JSON.stringify(original.data) === JSON.stringify(session.data)) return undefined;
+
+  return { "Set-Cookie": await commitSession(session) };
+};
 
 export { getSession, commitSession, destroySession };

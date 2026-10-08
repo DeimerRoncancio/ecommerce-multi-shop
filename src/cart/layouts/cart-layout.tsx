@@ -1,13 +1,16 @@
-import { Link, Outlet, useNavigate } from "react-router";
+import { data, Link, Outlet, useNavigate } from "react-router";
 import { FiHeart, FiLock } from "react-icons/fi";
 import ProfileButton from "../../shared/layout/navbar/ProfileButton";
 import Container from "../../shared/ui/Container";
 import type { Route } from "./+types/cart-layout";
 import { getSessionUser } from "../../auth/session-user.server";
+import { getSession, sessionHeaders } from "../../sessions.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const user = await getSessionUser(request);
-  return { user };
+  const session = await getSession(request.headers.get("Cookie"));
+  const user = await getSessionUser(session);
+
+  return data({ user }, { headers: await sessionHeaders(request, session) });
 }
 
 export default function CartLayout() {

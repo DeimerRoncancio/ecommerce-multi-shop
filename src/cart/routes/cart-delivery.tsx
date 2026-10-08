@@ -1,4 +1,4 @@
-import { redirect, useFetcher, useNavigate } from "react-router";
+import { data, redirect, useFetcher, useNavigate } from "react-router";
 import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
@@ -10,7 +10,8 @@ import type { AddressType } from "../types/cart";
 import type { Route } from "./+types/cart-delivery";
 import { parse } from "cookie";
 import Cookie from "js-cookie";
-import { getSession } from "../../sessions.server";
+import { getSession, sessionHeaders } from "../../sessions.server";
+import { getSessionUser } from "../../auth/session-user.server";
 import {
   getCheckoutAccessToken,
   getSavedAddresses,
@@ -29,12 +30,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!user) return redirect("/cart/user-data");
   if (!cookies.transactionId) return redirect("/cart");
 
-  const token = (session.get("token") as string | undefined) ?? null;
+  const account = await getSessionUser(session);
+  const token = session.get("token");
 
-  const savedAddresses = token ? await getSavedAddresses(token) : [];
+  const savedAddresses = account && token ? await getSavedAddresses(token) : [];
   const addresses = checkoutCustomerAddressesToAddresses(savedAddresses);
 
-  return { user, addresses, isLoggedIn: token !== null };
+  return data({ user, addresses, isLoggedIn: account !== null }, { headers: await sessionHeaders(request, session) });
 }
 
 export async function action({ request }: Route.ActionArgs) {

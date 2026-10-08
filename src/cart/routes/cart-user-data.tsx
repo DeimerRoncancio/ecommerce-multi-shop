@@ -15,7 +15,7 @@ import { UserDataInitialValues } from "../constants/user-data-initial-values";
 import type { Route } from "./+types/cart-user-data";
 import { getSessionUser } from "../../auth/session-user.server";
 import { UserInitialValues } from "../../profile/constants/users-initial-values.helper";
-import { commitSession, getSession } from "../../sessions.server";
+import { commitSession, getSession, sessionHeaders } from "../../sessions.server";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import { FiCheck, FiLogIn } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
@@ -26,9 +26,9 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const session = await getSession(request.headers.get("Cookie"));
   const checkoutUser = session.get("checkoutUser") ?? null;
-  const user = await getSessionUser(request);
+  const user = await getSessionUser(session);
 
-  return { user, checkoutUser };
+  return data({ user, checkoutUser }, { headers: await sessionHeaders(request, session) });
 }
 
 export async function action({ request }: Route.ActionArgs) {
