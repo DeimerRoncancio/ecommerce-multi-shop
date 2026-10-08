@@ -13,13 +13,11 @@ import {
 } from "../api/paymentsApi";
 import { cartItemToProductItem } from "../mappers/items.mapper";
 import Cookie from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProducts } from "../../products/services/products.api";
 import { mapApiToProducts } from "../../products/mappers/products.maper";
 import type { Route } from "./+types/cart-content";
 
-// El carrito guarda la foto del momento en que se agregó cada producto; con el catálogo
-// actual se muestra su foto principal y su categoría (para el color).
 export async function loader() {
   const apiProducts = await getProducts();
   return { products: apiProducts.map(mapApiToProducts) };
@@ -31,28 +29,36 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
   const { clearSteps, nextSteps } = useStepsStorage();
   const transactionId = Cookie.get("transactionId");
   const catalog = new Map(loaderData.products.map(product => [product.id, product]));
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onContinue = async () => {
-    const checkoutAccessToken = getCheckoutAccessToken();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
-    if (!transactionId || !checkoutAccessToken) {
-      const transaction = await createTransaction(cartItems.map(cartItemToProductItem));
+    try {
+      const checkoutAccessToken = getCheckoutAccessToken();
 
-      Cookie.set("transactionId", transaction.transactionId);
-      sessionStorage.setItem(
-        CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
-        transaction.checkoutAccessToken,
-      );
-    } else {
-      await updateTransactionProducts(
-        transactionId,
-        checkoutAccessToken,
-        cartItems.map(cartItemToProductItem),
-      );
+      if (!transactionId || !checkoutAccessToken) {
+        const transaction = await createTransaction(cartItems.map(cartItemToProductItem));
+
+        Cookie.set("transactionId", transaction.transactionId);
+        sessionStorage.setItem(
+          CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+          transaction.checkoutAccessToken,
+        );
+      } else {
+        await updateTransactionProducts(
+          transactionId,
+          checkoutAccessToken,
+          cartItems.map(cartItemToProductItem),
+        );
+      }
+
+      nextSteps("Carrito");
+      navigate("/cart/user-data");
+    } catch {
+      setIsSubmitting(false);
     }
-
-    nextSteps("Carrito");
-    navigate("/cart/user-data");
   };
 
   useEffect(() => {
@@ -107,7 +113,11 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
         </ul>
       </section>
 
-      <PaymentCardInfo onContinue={onContinue} disabledContinue={!itemsQuantity} />
+      <PaymentCardInfo
+        onContinue={onContinue}
+        disabledContinue={!itemsQuantity || isSubmitting}
+        continueLabel={isSubmitting ? "Procesando" : undefined}
+      />
     </Container>
   );
 }
