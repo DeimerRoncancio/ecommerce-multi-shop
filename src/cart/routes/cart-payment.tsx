@@ -4,7 +4,6 @@ import PaymentCardInfo from "../components/PaymentCardInfo";
 import Container from "../../shared/ui/Container";
 import { formatPrice } from "../../shared/utilities/format-price";
 import PaymentMethodItem from "../components/PaymentMethodItem";
-import useCart from "../hooks/useCart";
 import { createPaymentSession, getCheckoutAccessToken, getCheckoutSummary } from "../api/paymentsApi";
 import { useStepsStorage } from "../storage/steps";
 import { PaymentMethodType } from "../types/cart";
@@ -28,7 +27,13 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const summary = await getCheckoutSummary(data.transactionId, checkoutAccessToken).catch(() => null);
   if (!summary?.selectedAddress) return redirect('/cart/delivery');
 
-  return { ...data, customer: summary.customer, address: summary.selectedAddress };
+  return {
+    ...data,
+    customer: summary.customer,
+    address: summary.selectedAddress,
+    items: summary.items,
+    totalPrice: summary.totalPrice,
+  };
 }
 
 clientLoader.hydrate = true as const;
@@ -37,16 +42,18 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;
   const customer = "customer" in loaderData ? loaderData.customer : null;
   const address = "address" in loaderData ? loaderData.address : null;
+  const items = "items" in loaderData ? loaderData.items : [];
+  const totalPrice = "totalPrice" in loaderData ? loaderData.totalPrice : 0;
+  const itemsQuantity = items.reduce((total, item) => total + item.quantity, 0);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType>(paymentMethods[0]);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const { cartItems, itemsQuantity } = useCart();
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
 
   const handleMethodSelect = (method: PaymentMethodType) => setSelectedMethod(method);
 
   const onPay = () => {
-    if (!cartItems.length || isRedirecting) return;
+    if (!items.length || isRedirecting) return;
 
     const checkoutAccessToken = getCheckoutAccessToken();
     if (!checkoutAccessToken) {
@@ -93,11 +100,11 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
           <h2 className="mb-4 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Revisa tu pedido</h2>
 
           <ul className="flex flex-col gap-2 border-b border-line pb-4 text-sm text-ink">
-            {cartItems.map((item) => (
+            {items.map((item) => (
               <li key={item.id} className="flex justify-between gap-4">
                 <span className="truncate">{item.productName} x {item.quantity}</span>
                 <span className="shrink-0 font-medium text-ink-soft">
-                  {formatPrice(item.productPrice * item.quantity)}
+                  {formatPrice(item.price * item.quantity)}
                 </span>
               </li>
             ))}
@@ -124,6 +131,7 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
         onContinue={onPay}
         disabledContinue={!itemsQuantity || isRedirecting}
         continueLabel={isRedirecting ? "Redirigiendo" : "Pagar"}
+        summary={{ itemsQuantity, totalPrice }}
       />
     </Container>
   );

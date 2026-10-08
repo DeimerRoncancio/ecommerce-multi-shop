@@ -9,14 +9,17 @@ type PaymentCardInfoProps = {
   onContinue: () => void;
   disabledContinue?: boolean;
   continueLabel?: string;
+  summary?: { itemsQuantity: number; totalPrice: number };
 };
 
 export default function PaymentCardInfo({
   onContinue,
   disabledContinue,
   continueLabel,
+  summary,
 }: PaymentCardInfoProps) {
-  const { itemsQuantity, totalPrice } = useCart();
+  const cart = useCart();
+  const { itemsQuantity, totalPrice } = summary ?? cart;
   const navigate = useNavigate();
 
   return (
