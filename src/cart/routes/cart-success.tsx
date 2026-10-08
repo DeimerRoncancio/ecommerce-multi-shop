@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect } from "react";
+import { redirect, useNavigate } from "react-router";
 import { FiArrowRight, FiCheck, FiCreditCard, FiMail, FiMapPin, FiPackage, FiTruck } from "react-icons/fi";
 import { BsInboxes } from "react-icons/bs";
 import Container from "../../shared/ui/Container";
@@ -11,8 +11,8 @@ import useCart from "../hooks/useCart";
 import { useStepsStorage } from "../storage/steps";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  getCheckoutAccessToken,
   getCheckoutSummary,
-  type CheckoutSummaryResponse,
 } from "../api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -20,12 +20,30 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { transactionId: transactionId ?? null };
 }
 
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+  const { transactionId } = await serverLoader();
+  const checkoutAccessToken = getCheckoutAccessToken();
+  if (!transactionId || !checkoutAccessToken) return redirect("/cart");
+
+  const summary = await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null);
+  if (!summary || summary.status === "PENDING") return redirect("/cart");
+  if (summary.status === "REJECTED") return redirect("/cart/cancel");
+
+  return { transactionId, summary };
+}
+
+clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+  return null;
+}
+
 export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;
   const { clear } = useCart();
   const { clearSteps } = useStepsStorage();
   const navigate = useNavigate();
-  const [summary, setSummary] = useState<CheckoutSummaryResponse | null>(null);
+  const summary = "summary" in loaderData ? loaderData.summary : null;
 
   const email = summary?.customer?.userEmail;
   const address = summary?.selectedAddress;
@@ -37,7 +55,6 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
     navigate(to);
   };
 
-  // Lo que sigue después de pagar: el primer paso está en curso (Stripe confirma el pago).
   const nextSteps = [
     { icon: FiCreditCard, title: "Confirmamos tu pago", text: "Stripe nos avisa en unos minutos.", current: true },
     { icon: FiPackage, title: "Preparamos tu pedido", text: "Sale de bodega en menos de 24 horas." },
@@ -45,21 +62,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   ];
 
   useEffect(() => {
-    const checkoutAccessToken = sessionStorage.getItem(
-      CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
-    );
-
-    if (transactionId && checkoutAccessToken) {
-      getCheckoutSummary(transactionId, checkoutAccessToken)
-        .then(setSummary)
-        .catch(() => undefined)
-        .finally(() =>
-          sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY),
-        );
-    } else {
-      sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
-    }
-
+    sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
     clear();
     clearSteps();
   }, []);
@@ -141,7 +144,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
             {nextSteps.map(({ icon: Icon, title, text, current }, index) => (
               <li key={title} className="relative flex gap-3.5 pb-5 last:pb-0">
                 {index < nextSteps.length - 1 && (
-                  <span aria-hidden className="absolute left-[19px] top-10 h-[calc(100%-2.5rem)] w-0.5 bg-brand/20" />
+                  <span aria-hidden className="absolute left-4.75 top-10 h-[calc(100%-2.5rem)] w-0.5 bg-brand/20" />
                 )}
                 <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
                   current ? "bg-brand text-white" : "bg-base-100 text-brand"
