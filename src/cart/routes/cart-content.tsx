@@ -27,7 +27,6 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
   const { cartItems, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const { clearSteps, nextSteps } = useStepsStorage();
-  const transactionId = Cookie.get("transactionId");
   const catalog = new Map(loaderData.products.map(product => [product.id, product]));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,6 +35,7 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
     setIsSubmitting(true);
 
     try {
+      const transactionId = Cookie.get("transactionId");
       const checkoutAccessToken = getCheckoutAccessToken();
 
       if (!transactionId || !checkoutAccessToken) {
@@ -62,7 +62,7 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
   };
 
   useEffect(() => {
-    if (!transactionId) clearSteps();
+    if (!Cookie.get("transactionId")) clearSteps();
   }, []);
 
   return (

@@ -30,5 +30,6 @@ export const useStepsStorage = create<Props>()(persist((set) => ({
     }));
   },
 }), {
-  name: 'steps'
+  name: 'steps',
+  skipHydration: true,
 }));

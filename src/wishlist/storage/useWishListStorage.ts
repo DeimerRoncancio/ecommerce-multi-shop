@@ -27,5 +27,6 @@ export const useWishListStorage = create<State>()(persist((set, get) => {
     },
   }
 }, {
-  name: 'wishListItems'
+  name: 'wishListItems',
+  skipHydration: true,
 }))

@@ -8,7 +8,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { useEffect } from "react";
 import NotFoundPage from "./shared/ui/NotFoundPage";
+import { useCartStore } from "./cart/storage/cart";
+import { useStepsStorage } from "./cart/storage/steps";
+import { useWishListStorage } from "./wishlist/storage/useWishListStorage";
 import { Route } from "./+types/root";
 import "./index.css";
 
@@ -46,6 +50,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function Root() {
+  useEffect(() => {
+    useCartStore.persist.rehydrate();
+    useWishListStorage.persist.rehydrate();
+    useStepsStorage.persist.rehydrate();
+  }, []);
+
   return <Outlet />;
 }
 
