@@ -46,8 +46,13 @@ export const payments = createInstance(`${envs.API}/app/payments`);
 
 export const CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "checkoutAccessToken";
 
+export const PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "paidCheckoutAccessToken";
+
 export const getCheckoutAccessToken = (): string | null =>
   sessionStorage.getItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+
+export const getPaidCheckoutAccessToken = (): string | null =>
+  sessionStorage.getItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
 
 const withCheckoutAccess = (checkoutAccessToken: string) => ({
   headers: { "X-Checkout-Access-Token": checkoutAccessToken },

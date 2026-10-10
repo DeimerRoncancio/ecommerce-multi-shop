@@ -9,10 +9,13 @@ import Cookie from "js-cookie";
 import type { Route } from "./+types/cart-success";
 import useCart from "../hooks/useCart";
 import { useStepsStorage } from "../storage/steps";
+import SuccessSkeleton from "../components/SuccessSkeleton";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   getCheckoutAccessToken,
   getCheckoutSummary,
+  getPaidCheckoutAccessToken,
 } from "../api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -22,11 +25,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const { transactionId } = await serverLoader();
-  const checkoutAccessToken = getCheckoutAccessToken();
+  const checkoutAccessToken = getCheckoutAccessToken() ?? getPaidCheckoutAccessToken();
   if (!transactionId || !checkoutAccessToken) return redirect("/cart");
 
   const summary = await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null);
-  if (!summary || summary.status === "PENDING") return redirect("/cart");
+  if (!summary) return redirect("/cart");
+  if (summary.status === "PENDING") return redirect("/cart/payment");
   if (summary.status === "REJECTED") return redirect("/cart/cancel");
 
   return { transactionId, summary };
@@ -35,7 +39,7 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 clientLoader.hydrate = true as const;
 
 export function HydrateFallback() {
-  return null;
+  return <SuccessSkeleton />;
 }
 
 export default function CartSuccess({ loaderData }: Route.ComponentProps) {
@@ -52,6 +56,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   const leave = (to: string) => {
     Cookie.remove("transactionId");
     sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+    sessionStorage.removeItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
     navigate(to);
   };
 
@@ -62,6 +67,8 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
   ];
 
   useEffect(() => {
+    const checkoutAccessToken = getCheckoutAccessToken();
+    if (checkoutAccessToken) sessionStorage.setItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY, checkoutAccessToken);
     sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
     clear();
     clearSteps();

@@ -14,6 +14,7 @@ import { getSession, sessionHeaders } from "../../sessions.server";
 import { getSessionUser } from "../../auth/session-user.server";
 import {
   getCheckoutAccessToken,
+  getCheckoutSummary,
   getSavedAddresses,
   updateTransactionCustomer,
 } from "../api/paymentsApi";
@@ -22,6 +23,7 @@ import {
   checkoutToCustomerTransaction,
 } from "../mappers/customer.mapper";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
+import DeliverySkeleton from "../components/DeliverySkeleton";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = parse(request.headers.get("Cookie") || "");
@@ -39,6 +41,31 @@ export async function loader({ request }: Route.LoaderArgs) {
   return data({ user, addresses, isLoggedIn: account !== null }, { headers: await sessionHeaders(request, session) });
 }
 
+export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
+  const serverData = await serverLoader();
+  const transactionId = Cookie.get("transactionId");
+  const checkoutAccessToken = getCheckoutAccessToken();
+  const summary = transactionId && checkoutAccessToken
+    ? await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null)
+    : null;
+
+  return { ...serverData, transactionAddress: summary?.selectedAddress ?? null };
+}
+
+clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+  return <DeliverySkeleton />;
+}
+
+const isSameAddress = (a: AddressType, b: AddressType) =>
+  a.name === b.name &&
+  a.addressLine1 === b.addressLine1 &&
+  a.city === b.city &&
+  a.state === b.state &&
+  a.country === b.country &&
+  a.phone === b.phone;
+
 export async function action({ request }: Route.ActionArgs) {
   const { transactionId } = parse(request.headers.get("Cookie") || "");
   const session = await getSession(request.headers.get("Cookie"));
@@ -53,10 +80,18 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function CartDelivery({ loaderData }: Route.ComponentProps) {
-  const { user, addresses: savedAddresses, isLoggedIn } = loaderData;
-  const [newAddresses, setNewAddresses] = useState<AddressType[]>([]);
-  const [showForm, setShowForm] = useState(savedAddresses.length === 0);
-  const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(null);
+  const { user, addresses: savedAddresses, isLoggedIn, transactionAddress } = loaderData;
+  const previousAddress = transactionAddress
+    ? { ...checkoutCustomerAddressesToAddresses([transactionAddress])[0], id: "transaction" }
+    : null;
+  const savedMatch = previousAddress
+    ? savedAddresses.find((address) => isSameAddress(address, previousAddress))
+    : undefined;
+  const [newAddresses, setNewAddresses] = useState<AddressType[]>(
+    previousAddress && !savedMatch ? [previousAddress] : [],
+  );
+  const [showForm, setShowForm] = useState(savedAddresses.length === 0 && !previousAddress);
+  const [selectedAddress, setSelectedAddress] = useState<AddressType | null>(savedMatch ?? previousAddress);
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
   const fetcher = useFetcher<typeof action>();

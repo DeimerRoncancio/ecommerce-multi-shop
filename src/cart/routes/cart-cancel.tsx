@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import { FiArrowLeft, FiRefreshCw, FiShield, FiShoppingCart, FiX } from "react-icons/fi";
 import Container from "../../shared/ui/Container";
 import { formatPrice } from "../../shared/utilities/format-price";
@@ -8,8 +8,12 @@ import useCart from "../hooks/useCart";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   cancelPaymentSession,
+  getCheckoutAccessToken,
+  getCheckoutSummary,
+  getPaidCheckoutAccessToken,
 } from "../api/paymentsApi";
 import Cookie from "js-cookie";
+import CancelSkeleton from "../components/CancelSkeleton";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
@@ -18,17 +22,24 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const { transactionId } = await serverLoader();
-  const checkoutAccessToken = sessionStorage.getItem(
-    CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
-  );
+  const checkoutAccessToken = getCheckoutAccessToken() ?? getPaidCheckoutAccessToken();
+  if (!transactionId || !checkoutAccessToken) return redirect("/cart");
 
-  if (transactionId && checkoutAccessToken)
-    await cancelPaymentSession(transactionId, checkoutAccessToken).catch(() => undefined);
+  const summary = await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null);
+  if (!summary) return redirect("/cart");
+  if (summary.status === "PENDING") return redirect("/cart/payment");
+  if (summary.status === "APPROVED") return redirect("/cart/success");
+
+  await cancelPaymentSession(transactionId, checkoutAccessToken).catch(() => undefined);
 
   return { transactionId };
 }
 
 clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+  return <CancelSkeleton />;
+}
 
 export default function CartCancel({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;

@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { useStepsStorage } from "./cart/storage/steps";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   deleteTransaction as deleteCheckoutTransaction,
   getCheckoutAccessToken,
 } from "./cart/api/paymentsApi";
@@ -50,6 +51,7 @@ function App() {
 
     Cookie.remove("transactionId");
     sessionStorage.removeItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+    sessionStorage.removeItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
 
     if (transactionId && checkoutAccessToken) {
       deleteCheckoutTransaction(transactionId, checkoutAccessToken).catch(() => undefined);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import PaymentCardInfo from "../components/PaymentCardInfo";
+import PaymentSkeleton from "../components/PaymentSkeleton";
 import Container from "../../shared/ui/Container";
 import { formatPrice } from "../../shared/utilities/format-price";
 import PaymentMethodItem from "../components/PaymentMethodItem";
@@ -37,6 +38,10 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 }
 
 clientLoader.hydrate = true as const;
+
+export function HydrateFallback() {
+  return <PaymentSkeleton />;
+}
 
 export default function CartPayment({ loaderData }: Route.ComponentProps) {
   const { transactionId } = loaderData;
