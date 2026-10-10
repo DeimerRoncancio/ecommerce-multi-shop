@@ -9,12 +9,17 @@ import { categoryStyle } from "../../shared/utilities/category-color";
 import { getProduct, getProducts } from "../services/products.api";
 import { ProductsFromApiType } from "../types/product";
 import type { Route } from "./+types/product-details";
+import { data } from "react-router";
+import { isAxiosError } from "axios";
 
 import "swiper/css";
 import "swiper/css/navigation";
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const product = await getProduct(params.id);
+  const product = await getProduct(params.id).catch((error) => {
+    if (isAxiosError(error) && error.response?.status === 404) throw data(null, { status: 404 });
+    throw error;
+  });
   const products = await getProducts();
 
   return { product, products };
