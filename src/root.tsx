@@ -9,6 +9,7 @@ import {
 
 import { useEffect } from "react";
 import NotFoundPage from "./shared/ui/NotFoundPage";
+import ErrorPage from "./shared/ui/ErrorPage";
 import { useCartStore } from "./cart/storage/cart";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useWishListStorage } from "./wishlist/storage/useWishListStorage";
@@ -59,43 +60,20 @@ export default function Root() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-  const isNotFound = isRouteErrorResponse(error) && error.status === 404;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "Parece que estas en el lugar equivocado."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFoundPage />;
   }
 
+  const label = isRouteErrorResponse(error) ? `Error ${error.status}` : "Error";
+  const devError = import.meta.env.DEV && error instanceof Error ? error : undefined;
+
   return (
-    <>
-      {
-        isNotFound ? (
-          <NotFoundPage message={message} details={details} />
-        ) : (
-          <div className="container mx-auto mt-8">
-            <div className="flex w-full justify-center">
-              <div className="flex flex-col gap-3 my-7">
-                <h1 className="text-5xl text-center">{message}</h1>
-                <p className="text-lg text-ink">{details}</p>
-              </div>
-            </div>
-            {stack && (
-              <pre className="w-full h-100 p-4 text-sm overflow-x-auto">
-                <code>{stack}</code>
-              </pre>
-            )}
-          </div>
-        )
-      }
-    </>
+    <ErrorPage
+      label={label}
+      message="Algo salió mal"
+      details="Tuvimos un problema al cargar esta página. Inténtalo de nuevo en unos minutos."
+      technicalMessage={devError?.message}
+      stack={devError?.stack}
+    />
   );
 }
