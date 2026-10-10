@@ -14,7 +14,7 @@ import { paymentMethods } from "../constants/checkout.helper";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get('cookie') || '').transactionId;
-  if (!transactionId) return redirect('/cart/delivery');
+  if (!transactionId) return redirect('/cart');
 
   return { transactionId };
 }
