@@ -30,7 +30,7 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 
   const summary = await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null);
   if (!summary) return redirect("/cart");
-  if (summary.status === "PENDING") return redirect("/cart/payment");
+  if (summary.status === "PENDING" || summary.status === "PROCESSING") return redirect("/cart/payment");
   if (summary.status === "REJECTED") return redirect("/cart/cancel");
 
   return { transactionId, summary };

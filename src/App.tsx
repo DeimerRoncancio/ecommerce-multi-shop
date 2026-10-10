@@ -16,6 +16,7 @@ import { useStepsStorage } from "./cart/storage/steps";
 import {
   CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
   PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
+  cancelPaymentSession,
   deleteTransaction as deleteCheckoutTransaction,
   getCheckoutAccessToken,
 } from "./cart/api/paymentsApi";
@@ -54,7 +55,10 @@ function App() {
     sessionStorage.removeItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
 
     if (transactionId && checkoutAccessToken) {
-      deleteCheckoutTransaction(transactionId, checkoutAccessToken).catch(() => undefined);
+      cancelPaymentSession(transactionId, checkoutAccessToken)
+        .catch(() => undefined)
+        .then(() => deleteCheckoutTransaction(transactionId, checkoutAccessToken))
+        .catch(() => undefined);
     }
   }
 
