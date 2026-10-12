@@ -1,34 +1,45 @@
+import { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router";
 import useCart from "../../hooks/useCart";
+import { mapApiToProducts } from "../../../products/mappers/products.maper";
+import { getSuggestedProducts } from "../../../products/services/products.api";
 import { ProductTypes } from "../../../products/types/product";
 import ProductImage from "../../../shared/ui/ProductImage";
 import { categoryStyle } from "../../../shared/utilities/category-color";
 import { formatPrice } from "../../../shared/utilities/format-price";
 
 type Props = {
-  products: ProductTypes[];
+  visible: boolean;
   onNavigate: () => void;
 };
 
 const LIMIT = 3;
 
-export default function CartSuggestions({ products, onNavigate }: Props) {
+export default function CartSuggestions({ visible, onNavigate }: Props) {
   const { cartItems, handleAddItem } = useCart();
+  const [products, setProducts] = useState<ProductTypes[]>([]);
 
   const inCart = new Set(cartItems.map(item => item.id));
-  const cartCategories = new Set(
-    products
-      .filter(product => inCart.has(product.id))
-      .flatMap(product => product.categories.map(category => category.categoryName)),
-  );
-  const shares = (product: ProductTypes) =>
-    product.categories.some(category => cartCategories.has(category.categoryName));
+  const categories = [...new Set(cartItems.flatMap(item => item.category ?? []))].join(",");
+  const size = LIMIT + cartItems.length;
 
-  const suggestions = products
-    .filter(product => !inCart.has(product.id))
-    .sort((a, b) => Number(shares(b)) - Number(shares(a)) || b.price - a.price)
-    .slice(0, LIMIT);
+  useEffect(() => {
+    if (!visible) return;
+
+    let current = true;
+
+    getSuggestedProducts(categories, size)
+      .then(found => found.map(mapApiToProducts).filter(product => !inCart.has(product.id)).slice(0, LIMIT))
+      .then(found => current && setProducts(found))
+      .catch(() => current && setProducts([]));
+
+    return () => {
+      current = false;
+    };
+  }, [visible]);
+
+  const suggestions = products.filter(product => !inCart.has(product.id));
 
   if (!suggestions.length) return null;
 

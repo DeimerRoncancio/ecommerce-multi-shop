@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import { FiArrowRight, FiLock, FiShoppingCart } from "react-icons/fi";
-import { useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import useCart from "../../hooks/useCart";
 import CartModalItem from "./CartModalItem";
 import CartSuggestions from "./CartSuggestions";
 import ClearButton from "../ClearButton";
 import { formatPrice } from "../../../shared/utilities/format-price";
-import { ProductTypes } from "../../../products/types/product";
 
 type CartModalProps = {
   viewCart: boolean;
@@ -18,7 +17,6 @@ type CartModalProps = {
 export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   const { cartItems, totalPrice, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
-  const products = (useLoaderData()?.products ?? []) as ProductTypes[];
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -93,7 +91,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
               ))
             )}
           </ul>
-          <CartSuggestions products={products} onNavigate={hiddeCart} />
+          <CartSuggestions visible={viewCart} onNavigate={hiddeCart} />
         </div>
 
         <footer className="shrink-0 border-t border-brand/15 bg-brand-soft/70 px-4 pb-3 pt-3">
