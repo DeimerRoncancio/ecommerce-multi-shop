@@ -10,11 +10,9 @@ import TabBar from "./TabBar";
 import Categories from "./categories/Categories";
 import Container from "../../ui/Container";
 import { CategoriesType } from "../../../products/types/categories";
-import { ProductTypes } from "../../../products/types/product";
 
 type LoaderProps = {
   categories: CategoriesType[];
-  products: ProductTypes[];
 };
 
 export default function NavBar() {

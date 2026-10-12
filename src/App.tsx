@@ -1,8 +1,6 @@
 import SnackbarError from "./shared/ui/notistack-variants/SnackbarError";
-import { mapApiToProducts } from "./products/mappers/products.maper";
 import { mapApiToCategories } from "./products/mappers/categories.mapper";
 import { getCategories } from "./products/services/categories.api";
-import { getProducts } from "./products/services/products.api";
 import NavBar from "./shared/layout/navbar/NavBar";
 import { SnackbarProvider } from "notistack";
 import { data, Outlet, useLocation } from "react-router";
@@ -23,9 +21,6 @@ import {
 import Cookie from "js-cookie";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const apiProducts = await getProducts();
-  const products = apiProducts.map(mapApiToProducts);
-
   const apiCategories = await getCategories();
   const categories = apiCategories.map(mapApiToCategories);
 
@@ -33,7 +28,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   const user = await getSessionUser(session);
   session.unset("checkoutUser");
 
-  return data({ categories, products, user }, { headers: await sessionHeaders(request, session) });
+  return data({ categories, user }, { headers: await sessionHeaders(request, session) });
 }
 
 declare module "notistack" {
