@@ -1,8 +1,18 @@
 import { ProductsFromApiType } from "../types/product"
 import { products } from "../api/productsApi"
 
-export const getProducts = (size = 60): Promise<ProductsFromApiType[]> => {
-  return products.get('', { params: { size } }).then(res => res.data.content);
+type ProductsPage = {
+  content: ProductsFromApiType[];
+  totalElements: number;
+};
+
+export const getProducts = (size = 60, sort?: string): Promise<ProductsFromApiType[]> => {
+  return products.get('', { params: { size, sort } }).then(res => res.data.content);
+}
+
+export const getCategoryProducts = (categories: string, size: number): Promise<ProductsPage> => {
+  const params = { categories, sort: 'productName,asc', size };
+  return products.get('/search', { params }).then(res => res.data);
 }
 
 export const searchProducts = (query: string, size = 6): Promise<ProductsFromApiType[]> => {

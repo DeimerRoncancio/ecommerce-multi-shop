@@ -6,8 +6,7 @@ import ProductRecommendations from "../components/product-details-recommendation
 import { WarrantyCard } from "../components/WarrantyCard";
 import Container from "../../shared/ui/Container";
 import { categoryStyle } from "../../shared/utilities/category-color";
-import { getProduct, getProducts } from "../services/products.api";
-import { ProductsFromApiType } from "../types/product";
+import { getCategoryProducts, getProduct, getProducts } from "../services/products.api";
 import type { Route } from "./+types/product-details";
 import { data } from "react-router";
 import { isAxiosError } from "axios";
@@ -15,35 +14,33 @@ import { isAxiosError } from "axios";
 import "swiper/css";
 import "swiper/css/navigation";
 
+const RELATED_SIZE = 12;
+const MIN_SAME_CATEGORY = 4;
+
 export async function loader({ params }: Route.LoaderArgs) {
   const product = await getProduct(params.id).catch((error) => {
     if (isAxiosError(error) && error.response?.status === 404) throw data(null, { status: 404 });
     throw error;
   });
-  const products = await getProducts();
+  const categories = product.categories.map(category => category.categoryName).join(",");
+  const found = categories ? (await getCategoryProducts(categories, RELATED_SIZE + 1)).content : [];
+  const sameCategory = found.filter(item => item.id !== product.id).slice(0, RELATED_SIZE);
 
-  return { product, products };
+  if (sameCategory.length >= MIN_SAME_CATEGORY) return { product, related: sameCategory, isSameCategory: true };
+
+  const known = new Set([product.id, ...sameCategory.map(item => item.id)]);
+  const others = await getProducts(RELATED_SIZE + known.size);
+  const rest = others.filter(item => !known.has(item.id));
+
+  return { product, related: [...sameCategory, ...rest].slice(0, RELATED_SIZE), isSameCategory: false };
 }
 
-const relatedProducts = (product: ProductsFromApiType, products: ProductsFromApiType[]) => {
-  const categories = new Set(product.categories.map(category => category.categoryName));
-  const others = products.filter(item => item.id !== product.id);
-
-  const sameCategory = others.filter(item =>
-    item.categories.some(category => categories.has(category.categoryName)),
-  );
-  const rest = others.filter(item => !sameCategory.includes(item));
-
-  return { sameCategory, list: sameCategory.length >= 4 ? sameCategory : [...sameCategory, ...rest] };
-};
-
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {
-  const { product, products } = loaderData;
+  const { product, related, isSameCategory } = loaderData;
 
-  const related = relatedProducts(product, products);
   const mainCategory = product.categories[0]?.categoryName;
   const categoryNames = product.categories.map(category => category.categoryName).join(" y ");
-  const relatedTitle = related.sameCategory.length >= 4 ? `Más de ${categoryNames}` : "También te puede gustar";
+  const relatedTitle = isSameCategory ? `Más de ${categoryNames}` : "También te puede gustar";
 
   return (
     <>
@@ -70,7 +67,7 @@ export default function ProductDetails({ loaderData }: Route.ComponentProps) {
             <h2 className="text-2xl font-extrabold text-ink sm:text-3xl">{relatedTitle}</h2>
             <p className="text-sm font-semibold text-ink-muted">Con el mismo envío gratis y la misma garantía</p>
           </div>
-          <ProductRecommendations products={related.list} />
+          <ProductRecommendations products={related} />
         </section>
       </Container>
     </>

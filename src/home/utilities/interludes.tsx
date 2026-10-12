@@ -10,13 +10,12 @@ import { CatalogSection } from "./catalog";
 type InterludesInput = {
   sections: CatalogSection[];
   covers: Map<string, string | undefined>;
-  products: ProductTypes[];
-  byPrice: ProductTypes[];
+  top: ProductTypes[];
   featured?: ProductTypes;
   budget: ProductTypes[];
 };
 
-export const buildInterludes = ({ sections, covers, products, byPrice, featured, budget }: InterludesInput) => {
+export const buildInterludes = ({ sections, covers, top, featured, budget }: InterludesInput) => {
   const shown = new Set(featured ? [featured.id] : []);
   let promoCount = 0;
 
@@ -30,13 +29,13 @@ export const buildInterludes = ({ sections, covers, products, byPrice, featured,
       const ranked = [...next.items].sort((a, b) => b.price - a.price);
       const star = ranked.find(product => !shown.has(product.id)) ?? ranked[0];
       shown.add(star.id);
-      return <CategorySpotlight category={next.name} slug={next.slug} product={star} count={next.items.length} />;
+      return <CategorySpotlight category={next.name} slug={next.slug} product={star} count={next.count} />;
     }
 
     if (turn === "steps") return <HowItWorks />;
 
     const other = next ?? sections[0];
-    const category = { name: other.name, slug: other.slug, count: other.items.length, image: covers.get(other.slug) };
+    const category = { name: other.name, slug: other.slug, count: other.count, image: covers.get(other.slug) };
     const isFirstPair = promoCount++ % 2 === 0;
 
     if (isFirstPair) {
@@ -47,7 +46,7 @@ export const buildInterludes = ({ sections, covers, products, byPrice, featured,
           highlight={{
             tone: "sun",
             eyebrow: "Precios bajos",
-            title: `${products.filter(product => product.price <= ceiling).length} productos por menos de ${formatPrice(ceiling)}`,
+            title: `${budget.filter(product => product.price <= ceiling).length} productos por menos de ${formatPrice(ceiling)}`,
             linkLabel: "Ver precios bajos",
             href: "#precios-bajos",
             images: budget.slice(0, 4).map(product => product.images[0]?.imageUrl),
@@ -56,7 +55,6 @@ export const buildInterludes = ({ sections, covers, products, byPrice, featured,
       );
     }
 
-    const top = [...byPrice].reverse().slice(0, 4);
     return (
       <PromoPair
         reversed

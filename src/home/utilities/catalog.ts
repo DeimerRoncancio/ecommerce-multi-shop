@@ -1,25 +1,10 @@
 import { ProductTypes } from "../../products/types/product";
-import { slugify } from "../../shared/utilities/slugify";
 
 export type CatalogSection = {
   name: string;
   slug: string;
   items: ProductTypes[];
-};
-
-export const groupByCategory = (products: ProductTypes[]): CatalogSection[] => {
-  const groups = new Map<string, ProductTypes[]>();
-
-  products.forEach(product => {
-    product.categories.forEach(({ categoryName }) => {
-      const current = groups.get(categoryName) ?? [];
-      groups.set(categoryName, [...current, product]);
-    });
-  });
-
-  return [...groups.entries()]
-    .map(([name, items]) => ({ name, slug: slugify(name), items }))
-    .sort((a, b) => b.items.length - a.items.length);
+  count: number;
 };
 
 export const pickCovers = (sections: CatalogSection[]) => {
