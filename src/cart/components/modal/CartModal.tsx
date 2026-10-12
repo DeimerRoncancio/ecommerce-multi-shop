@@ -19,7 +19,6 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   const { cartItems, totalPrice, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const products = (useLoaderData()?.products ?? []) as ProductTypes[];
-  const catalog = new Map(products.map(product => [product.id, product]));
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -89,18 +88,9 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
                 </button>
               </li>
             ) : (
-              cartItems.map(item => {
-                const product = catalog.get(item.id);
-                return (
-                  <CartModalItem
-                    key={item.id}
-                    item={item}
-                    image={product?.images[0]?.imageUrl}
-                    category={product?.categories[0]?.categoryName}
-                    onNavigate={hiddeCart}
-                  />
-                );
-              })
+              cartItems.map(item => (
+                <CartModalItem key={item.id} item={item} onNavigate={hiddeCart} />
+              ))
             )}
           </ul>
           <CartSuggestions products={products} onNavigate={hiddeCart} />

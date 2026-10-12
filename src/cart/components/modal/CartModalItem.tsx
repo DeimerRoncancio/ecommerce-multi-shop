@@ -10,12 +10,10 @@ import { categoryStyle } from "../../../shared/utilities/category-color";
 
 type CartModalItemProps = {
   item: CartItemType;
-  image?: string;
-  category?: string;
   onNavigate: () => void;
 };
 
-export default function CartModalItem({ item, image, category, onNavigate }: CartModalItemProps) {
+export default function CartModalItem({ item, onNavigate }: CartModalItemProps) {
   const {
     totalPrice,
     handleRemoveItem,
@@ -27,7 +25,7 @@ export default function CartModalItem({ item, image, category, onNavigate }: Car
   useEffect(() => handleTotalPrice(), [item.quantity]);
 
   return (
-    <li style={categoryStyle(category)} className="flex gap-3 border-b border-line px-4 py-3 last:border-b-0">
+    <li style={categoryStyle(item.category)} className="flex gap-3 border-b border-line px-4 py-3 last:border-b-0">
       <Link
         to={`/product/${item.id}`}
         onClick={onNavigate}
@@ -35,7 +33,7 @@ export default function CartModalItem({ item, image, category, onNavigate }: Car
         aria-label={`Ver ${item.productName}`}
       >
         <ProductImage
-          src={image ?? item.productImage}
+          src={item.productImage}
           width={200}
           alt={item.productName}
           className="mix-blend-darken transition-transform duration-300 group-hover:scale-105"
@@ -52,7 +50,7 @@ export default function CartModalItem({ item, image, category, onNavigate }: Car
             >
               {item.productName}
             </Link>
-            {category && <p className="text-xs font-bold text-(--cat)">{category}</p>}
+            {item.category && <p className="text-xs font-bold text-(--cat)">{item.category}</p>}
           </div>
 
           <button

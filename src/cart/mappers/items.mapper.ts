@@ -13,6 +13,7 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
     productName: product.name,
     productDescription: product.description,
     productImage: product.images[0].imageUrl,
+    category: product.categories[0]?.categoryName,
     isExists: isExists,
     productPrice: product.price,
     quantity: quantity,

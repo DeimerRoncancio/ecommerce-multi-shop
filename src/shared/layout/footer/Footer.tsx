@@ -5,20 +5,18 @@ import ContactItem from "./ContactItem";
 import Container from "../../ui/Container";
 import { categoryStyle } from "../../utilities/category-color";
 import { slugify } from "../../utilities/slugify";
-import { ProductTypes } from "../../../products/types/product";
+import { CategoriesType } from "../../../products/types/categories";
 import { paymentIcons, aboutLinks, legalLinks } from "../../constants/footer.helper";
 
-const countCategories = (products: ProductTypes[]) => {
-  const counts = new Map<string, number>();
-  products.forEach(product =>
-    product.categories.forEach(({ categoryName }) => counts.set(categoryName, (counts.get(categoryName) ?? 0) + 1))
-  );
-  return [...counts].sort((a, b) => b[1] - a[1]);
+const countCategories = (categories: CategoriesType[]) => {
+  return categories
+    .map(({ name, products }): [string, number] => [name, products.length])
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1]);
 };
 
 export default function Footer() {
-  const products = useLoaderData().products as ProductTypes[];
-  const categories = countCategories(products);
+  const categories = countCategories(useLoaderData().categories as CategoriesType[]);
 
   return (
     <footer className="mt-4 border-t-4 border-brand bg-base-100 text-sm text-ink-soft">

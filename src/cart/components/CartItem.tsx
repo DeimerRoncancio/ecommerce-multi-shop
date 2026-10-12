@@ -11,11 +11,9 @@ import { categoryStyle } from "../../shared/utilities/category-color";
 
 type CartItemProps = {
   item: CartItemType;
-  image?: string;
-  category?: string;
 };
 
-export default function CartItem({ item, image, category }: CartItemProps) {
+export default function CartItem({ item }: CartItemProps) {
   const {
     quantity,
     totalPrice,
@@ -31,7 +29,7 @@ export default function CartItem({ item, image, category }: CartItemProps) {
 
   return (
     <li
-      style={categoryStyle(category)}
+      style={categoryStyle(item.category)}
       className="flex gap-4 border-b border-line py-5 sm:items-center sm:gap-5"
     >
       <Link
@@ -41,7 +39,7 @@ export default function CartItem({ item, image, category }: CartItemProps) {
         aria-label={`Ver ${item.productName}`}
       >
         <ProductImage
-          src={image ?? item.productImage}
+          src={item.productImage}
           width={240}
           alt={item.productName}
           className="transition-transform duration-300 group-hover:scale-105"
@@ -51,7 +49,7 @@ export default function CartItem({ item, image, category }: CartItemProps) {
 
       <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
         <div className="min-w-0 flex-1">
-          {category && <p className="text-xs font-bold uppercase tracking-wide text-(--cat)">{category}</p>}
+          {item.category && <p className="text-xs font-bold uppercase tracking-wide text-(--cat)">{item.category}</p>}
           <Link
             to={`/product/${item.id}`}
             className="line-clamp-1 text-lg font-extrabold text-ink hover:text-(--cat,var(--color-brand))"

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import { FiArrowRight, FiSearch, FiX } from "react-icons/fi";
+import { mapApiToProducts } from "../../../products/mappers/products.maper";
+import { searchProducts } from "../../../products/services/products.api";
+import { CategoriesType } from "../../../products/types/categories";
 import { ProductTypes } from "../../../products/types/product";
 import ProductImage from "../../ui/ProductImage";
 import { categoryStyle } from "../../utilities/category-color";
@@ -8,27 +11,46 @@ import { formatPrice } from "../../utilities/format-price";
 import { slugify } from "../../utilities/slugify";
 
 const MAX_RESULTS = 6;
+const SEARCH_DELAY = 250;
 
 const normalize = (value: string) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export default function Search() {
-  const products = ((useLoaderData() as { products?: ProductTypes[] } | undefined)?.products ?? []);
+  const loaderCategories = ((useLoaderData() as { categories?: CategoriesType[] } | undefined)?.categories ?? []);
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [results, setResults] = useState<ProductTypes[]>([]);
+  const [searching, setSearching] = useState(false);
 
-  const term = normalize(query.trim());
-  const categories = [...new Set(products.flatMap(product => product.categories.map(c => c.categoryName)))];
+  const text = query.trim();
+  const term = normalize(text);
+  const categories = loaderCategories.filter(category => category.products.length > 0).map(category => category.name);
   const matchedCategories = term ? categories.filter(name => normalize(name).includes(term)) : categories;
-  const results = term
-    ? products
-        .filter(product =>
-          normalize(product.name).includes(term) ||
-          product.categories.some(({ categoryName }) => normalize(categoryName).includes(term)),
-        )
-        .slice(0, MAX_RESULTS)
-    : [];
+
+  useEffect(() => {
+    if (!term) {
+      setResults([]);
+      setSearching(false);
+      return;
+    }
+
+    let current = true;
+    setSearching(true);
+
+    const timer = setTimeout(() => {
+      searchProducts(text, MAX_RESULTS)
+        .then(found => current && setResults(found.map(mapApiToProducts)))
+        .catch(() => current && setResults([]))
+        .finally(() => current && setSearching(false));
+    }, SEARCH_DELAY);
+
+    return () => {
+      current = false;
+      clearTimeout(timer);
+    };
+  }, [text]);
 
   const close = () => {
     setOpen(false);
@@ -158,7 +180,7 @@ export default function Search() {
             </ul>
           )}
 
-          {term && !results.length && (
+          {term && !results.length && !searching && (
             <p className="px-4 py-5 text-sm text-ink-soft">
               No encontramos productos para <b className="text-ink">"{query.trim()}"</b>. Prueba con otra palabra
               o mira las categorías.

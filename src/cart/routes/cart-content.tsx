@@ -14,20 +14,11 @@ import {
 import { cartItemToProductItem } from "../mappers/items.mapper";
 import Cookie from "js-cookie";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../products/services/products.api";
-import { mapApiToProducts } from "../../products/mappers/products.maper";
-import type { Route } from "./+types/cart-content";
 
-export async function loader() {
-  const apiProducts = await getProducts();
-  return { products: apiProducts.map(mapApiToProducts) };
-}
-
-export default function CartContent({ loaderData }: Route.ComponentProps) {
+export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const { clearSteps, nextSteps } = useStepsStorage();
-  const catalog = new Map(loaderData.products.map(product => [product.id, product]));
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onContinue = async () => {
@@ -98,17 +89,7 @@ export default function CartContent({ loaderData }: Route.ComponentProps) {
               </button>
             </li>
           ) : (
-            cartItems.map(item => {
-              const product = catalog.get(item.id);
-              return (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  image={product?.images[0]?.imageUrl}
-                  category={product?.categories[0]?.categoryName}
-                />
-              );
-            })
+            cartItems.map(item => <CartItem key={item.id} item={item} />)
           )}
         </ul>
       </section>

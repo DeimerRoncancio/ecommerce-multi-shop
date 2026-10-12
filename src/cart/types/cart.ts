@@ -8,6 +8,7 @@ export interface CartItemType {
   productPrice: number;
   isExists: boolean;
   productImage: string;
+  category?: string;
   quantity: number;
   variants?: ProductVariantType[];
 }
