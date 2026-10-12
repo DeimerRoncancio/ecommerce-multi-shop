@@ -25,8 +25,11 @@ export const getSuggestedProducts = (categories: string, size: number): Promise<
 }
 
 export const getProduct = (id: string): Promise<ProductsFromApiType> => {
-  return products.get(`/${id}`).then(res => {
-    console.log(res.data.variants[0]);
-    return res.data
-  });
+  return products.get(`/${id}`).then(res => res.data);
+}
+
+export const findProduct = (id: string): Promise<ProductsFromApiType | null> => {
+  return products
+    .get(`/${id}`, { validateStatus: status => status === 200 || status === 404 })
+    .then(res => (res.status === 200 ? res.data : null));
 }

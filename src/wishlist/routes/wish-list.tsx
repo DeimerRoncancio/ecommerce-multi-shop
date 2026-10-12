@@ -1,10 +1,10 @@
-import useProducts from "../../products/hooks/api/useProducts";
 import WishListItem from "../components/WishListItem";
 import useWishList from "../hooks/useWishList";
+import useWishListProducts from "../hooks/useWishListProducts";
 
 export default function WishList() {
   const { wishList, itemsInCart, handleAddToCartSinceWishList } = useWishList();
-  const { products } = useProducts();
+  const products = useWishListProducts(wishList);
 
   return (
     <>
