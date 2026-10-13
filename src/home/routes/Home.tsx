@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { mapApiToProducts } from "../../products/mappers/products.maper";
-import { getCategories } from "../../products/services/categories.api";
-import { getCategoryProducts, getProducts } from "../../products/services/products.api";
+import { getHome } from "../../products/services/products.api";
 import ProductCardSkeleton from "../../products/components/ProductCardSkeleton";
 import ProductCarousel from "../../products/components/ProductCarousel";
 import { ProductsFromApiType, ProductTypes } from "../../products/types/product";
@@ -17,18 +16,8 @@ import { countLabel, pickCovers } from "../utilities/catalog";
 import { buildInterludes } from "../utilities/interludes";
 import type { Route } from "./+types/Home";
 
-const SECTION_SIZE = 12;
-const TOP_SIZE = 4;
-
 export async function loader() {
-  const [categories, top, budget] = await Promise.all([
-    getCategories(),
-    getProducts(TOP_SIZE, "price,desc"),
-    getProducts(SECTION_SIZE, "price,asc"),
-  ]);
-  const pages = await Promise.all(
-    categories.map(category => getCategoryProducts(category.categoryName, SECTION_SIZE)),
-  );
+  const home = await getHome();
 
   const mapped = new Map<string, ProductTypes>();
   const toProduct = (product: ProductsFromApiType) => {
@@ -37,17 +26,14 @@ export async function loader() {
     return known;
   };
 
-  const sections = categories
-    .map((category, index) => ({
-      name: category.categoryName,
-      slug: slugify(category.categoryName),
-      items: pages[index].content.map(toProduct),
-      count: pages[index].totalElements,
-    }))
-    .filter(section => section.count > 0)
-    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  const sections = home.sections.map(section => ({
+    name: section.categoryName,
+    slug: slugify(section.categoryName),
+    items: section.products.map(toProduct),
+    count: section.productCount,
+  }));
 
-  return { sections, top: top.map(toProduct), budget: budget.map(toProduct) };
+  return { sections, top: home.top.map(toProduct), budget: home.budget.map(toProduct) };
 }
 
 export function HydrateFallBack() {
