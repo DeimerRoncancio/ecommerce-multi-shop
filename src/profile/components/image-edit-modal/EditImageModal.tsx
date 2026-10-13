@@ -100,7 +100,7 @@ export default function EditImageModal({ user, showModal, onClose }: EditImageMo
           </header>
 
           <div className="flex min-h-72 items-center justify-center px-5 py-5">
-            {previewImage == null ? (
+            {previewImage === null ? (
               <ImageDragBox addImage={setImage} register={register} />
             ) : (
               <div className="flex flex-col items-center gap-3">

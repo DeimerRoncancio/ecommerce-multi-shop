@@ -1,5 +1,6 @@
 import { Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { ProductImageType } from "../../types/product";
 import ProductImage from "../../../shared/ui/ProductImage";
 
@@ -8,7 +9,7 @@ import "swiper/css/thumbs";
 
 type Props = {
   images: ProductImageType[];
-  setThumbsSwiper: (swiper: any) => void;
+  setThumbsSwiper: (swiper: SwiperInstance) => void;
 };
 
 export default function CarouselNavigation({ images, setThumbsSwiper }: Props) {

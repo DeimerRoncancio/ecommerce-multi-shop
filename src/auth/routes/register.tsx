@@ -29,11 +29,9 @@ export const Register = () => {
   } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterForm) });
 
   const onSubmit: SubmitHandler<userType> = (data) => {
-    const { profileImage, ...rest } = data;
-
     const formData = new FormData();
-    Object.entries(rest).forEach(([key, value]) => {
-      if (value.length > 0) {
+    Object.entries(data).forEach(([key, value]) => {
+      if (typeof value === "string" && value.length > 0) {
         formData.append(key, value);
       }
     });
@@ -47,10 +45,7 @@ export const Register = () => {
 
     axios.post(`${envs.API}/app/users/register`, formData)
       .then(() => SnackbarUtilities.succes("Registro con éxito"))
-      .catch((error) => {
-        SnackbarUtilities.error("Error al registrarse");
-        console.log(error);
-      });
+      .catch(() => SnackbarUtilities.error("Error al registrarse"));
 
     addUserType.map((key) => {
       setValue(key, "");

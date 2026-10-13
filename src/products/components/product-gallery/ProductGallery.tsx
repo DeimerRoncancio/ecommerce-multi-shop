@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Thumbs, Navigation } from "swiper/modules";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { ProductImageType } from "../../types/product";
@@ -20,7 +21,7 @@ const arrowStyles = `absolute top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place
   hover:bg-(--cat,var(--color-brand)) hover:text-white`;
 
 export default function ProductGallery({ images }: Props) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperInstance | null>(null);
   const ordered = sortImages(images);
 
   return (

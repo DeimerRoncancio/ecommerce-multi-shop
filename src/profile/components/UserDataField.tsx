@@ -5,7 +5,7 @@ import TextField from "../../shared/ui/TextField"
 type UserDataFieldProps = {
   register: UseFormRegister<UserUpdateTypes>,
   fieldName: string,
-  name: any,
+  name: keyof UserUpdateTypes,
   type?: string,
 }
 
