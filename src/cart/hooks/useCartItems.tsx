@@ -6,7 +6,7 @@ type UseCartItemsProps = {
 }
 
 export default function useCartItems({ itemId }: UseCartItemsProps) {
-  const { cartItems, addItem, addItems, decreaseItem, removeItem } = useCartStore();
+  const { cartItems, addItem, setItemQuantity, decreaseItem, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id === itemId);
 
   const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
@@ -41,7 +41,7 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
     
     quantity === 0
     ? removeItem(item.id)
-    : addItems({ ...item, quantity: quantity });
+    : setItemQuantity({ ...item, quantity: quantity });
   }
 
   return {

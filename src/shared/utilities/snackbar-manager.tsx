@@ -1,22 +1,10 @@
-import { VariantType, enqueueSnackbar } from "notistack";
+import { enqueueSnackbar } from "notistack";
 
 export const SnackbarUtilities = {
-  toastError(msg: string, variant: VariantType = "default") {
-    if (!enqueueSnackbar) return; 
-    enqueueSnackbar(msg, { variant, persist: true })
+  success(message: string) {
+    enqueueSnackbar(message, { variant: "success", autoHideDuration: 3000 });
   },
-  toast(msg: string, variant: VariantType = "default") {
-    enqueueSnackbar(msg, {
-      variant, autoHideDuration: 3000, anchorOrigin: {
-        vertical: 'bottom',
-        horizontal: 'right'
-      }
-    })
+  error(message: string) {
+    enqueueSnackbar(message, { variant: "errorAlert", persist: true });
   },
-  succes(mess: string) {
-    this.toast(mess, "success")
-  },
-  error(mess: string) {
-    this.toastError(mess, "errorAlert");
-  }
 }

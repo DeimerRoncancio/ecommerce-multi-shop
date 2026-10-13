@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { mapApiToProducts } from "../../products/mappers/products.maper";
+import { mapApiToProducts } from "../../products/mappers/products.mapper";
 import { getHome } from "../../products/services/products.api";
 import ProductCardSkeleton from "../../products/components/ProductCardSkeleton";
 import ProductCarousel from "../../products/components/ProductCarousel";

@@ -30,7 +30,7 @@ export default function CartButton() {
         <span className="text-xs font-bold">Carrito</span>
       </button>
 
-      <CartModal viewCart={showCart} hiddeCart={() => setShowCart(false)} />
+      <CartModal viewCart={showCart} hideCart={() => setShowCart(false)} />
     </>
   );
 }

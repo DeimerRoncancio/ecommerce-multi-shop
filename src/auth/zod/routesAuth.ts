@@ -11,7 +11,7 @@ export const LoginAccessUser = z.object({
     .max(255, { message: "" }),
 });
 
-export type LoginAccesUserFormData = z.infer<typeof LoginAccessUser>;
+export type LoginAccessUserFormData = z.infer<typeof LoginAccessUser>;
 
 export const RegisterForm = z.object({
   name: z.string().min(1, { message: "El nombre es requerido" }),

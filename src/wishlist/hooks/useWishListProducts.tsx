@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { mapApiToProducts } from "../../products/mappers/products.maper";
+import { mapApiToProducts } from "../../products/mappers/products.mapper";
 import { findProduct } from "../../products/services/products.api";
 import { ProductTypes } from "../../products/types/product";
 import { WishListItemType } from "../types/wishlist";

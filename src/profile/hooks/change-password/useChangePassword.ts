@@ -11,14 +11,14 @@ type PasswordError = {
 export default function useChangePassword() {
   const [handlerErrors, setHandlerErrors] = useState<Partial<Record<PasswordFieldErrors, string>>>({});
   const [showConfirmModal, setConfirmModal] = useState(false);
-  const [isSucces, setSucces] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
 
   const success = (reset: UseFormReset<PasswordType>) => {
-    setSucces(true);
+    setSuccess(true);
     reset();
     setTimeout(() => {
       setConfirmModal(false);
-      setSucces(false);
+      setSuccess(false);
     }, 1000)
   }
 
@@ -50,7 +50,7 @@ export default function useChangePassword() {
 
   return {
     showConfirmModal,
-    isSucces,
+    isSuccess,
     handlerErrors,
     confirmModal,
     success,

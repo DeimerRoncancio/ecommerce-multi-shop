@@ -6,13 +6,13 @@ type PasswordChangeConfirmationModalProps = {
   onSubmit: () => void;
   showModal: boolean;
   loading: boolean;
-  isSucces: boolean;
+  isSuccess: boolean;
 }
 
 export default function ChangePasswordConfirmationModal({
   loading,
   showModal,
-  isSucces,
+  isSuccess,
   onClose,
   onSubmit,
 }: PasswordChangeConfirmationModalProps) {
@@ -24,7 +24,7 @@ export default function ChangePasswordConfirmationModal({
       title="¿Cambiar tu contraseña?"
       description="La próxima vez que entres tendrás que usar la contraseña nueva."
       footer={
-        isSucces ? (
+        isSuccess ? (
           <button
             type="button"
             onClick={onClose}
@@ -56,7 +56,7 @@ export default function ChangePasswordConfirmationModal({
         )
       }
     >
-      {isSucces && (
+      {isSuccess && (
         <p className="flex items-center gap-2.5 rounded-xl bg-success/10 px-4 py-3 text-sm font-semibold text-success">
           <FiCheckCircle size={17} />
           Tu contraseña se cambió correctamente.

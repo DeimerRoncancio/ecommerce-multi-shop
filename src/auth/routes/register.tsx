@@ -44,7 +44,7 @@ export const Register = () => {
     }
 
     axios.post(`${envs.API}/app/users/register`, formData)
-      .then(() => SnackbarUtilities.succes("Registro con éxito"))
+      .then(() => SnackbarUtilities.success("Registro con éxito"))
       .catch(() => SnackbarUtilities.error("Error al registrarse"));
 
     addUserType.map((key) => {

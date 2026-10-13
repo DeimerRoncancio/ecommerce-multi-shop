@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router";
 import useCart from "../../hooks/useCart";
-import { mapApiToProducts } from "../../../products/mappers/products.maper";
+import { mapApiToProducts } from "../../../products/mappers/products.mapper";
 import { getSuggestions } from "../../../products/services/products.api";
 import { ProductTypes } from "../../../products/types/product";
 import ProductImage from "../../../shared/ui/ProductImage";

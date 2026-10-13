@@ -49,7 +49,7 @@ export default function Profile() {
     if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos guardar tus datos. Inténtalo de nuevo.");
 
     setIsActive(false);
-    SnackbarUtilities.succes("Tus datos han sido actualizados!");
+    SnackbarUtilities.success("Tus datos han sido actualizados!");
   }, [fetcher.state, fetcher.data]);
 
   const handleActive = () => {

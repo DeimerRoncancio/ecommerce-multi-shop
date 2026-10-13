@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import { FiArrowRight, FiSearch, FiX } from "react-icons/fi";
-import { mapApiToProducts } from "../../../products/mappers/products.maper";
+import { mapApiToProducts } from "../../../products/mappers/products.mapper";
 import { searchProducts } from "../../../products/services/products.api";
 import { CategoriesType } from "../../../products/types/categories";
 import { ProductTypes } from "../../../products/types/product";

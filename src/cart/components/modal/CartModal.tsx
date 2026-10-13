@@ -12,10 +12,10 @@ import useScrollLock from "../../../shared/hooks/useScrollLock";
 
 type CartModalProps = {
   viewCart: boolean;
-  hiddeCart: () => void;
+  hideCart: () => void;
 };
 
-export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
+export default function CartModal({ viewCart, hideCart }: CartModalProps) {
   const { cartItems, totalPrice, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const [isMounted, setIsMounted] = useState(false);
@@ -25,7 +25,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
 
   const goCart = () => {
     navigate("/cart");
-    hiddeCart();
+    hideCart();
   };
 
   if (!isMounted) return null;
@@ -36,7 +36,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
         viewCart ? "visible opacity-100" : "invisible opacity-0"
       }`}
     >
-      <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={hiddeCart} />
+      <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={hideCart} />
 
       <aside
         className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-base-100
@@ -62,7 +62,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
             <button
               type="button"
               aria-label="Cerrar carrito"
-              onClick={hiddeCart}
+              onClick={hideCart}
               className="grid h-9 w-9 place-items-center rounded-full text-ink-soft transition-colors
                 hover:bg-brand-soft hover:text-brand"
             >
@@ -80,7 +80,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
                 <p className="text-sm text-ink-soft">Agrega productos desde el catálogo y aparecerán aquí.</p>
                 <button
                   type="button"
-                  onClick={hiddeCart}
+                  onClick={hideCart}
                   className="mt-2 inline-flex h-10 items-center gap-1.5 rounded-full bg-ink px-5 text-sm font-bold
                     text-white transition-colors hover:bg-brand"
                 >
@@ -89,11 +89,11 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
               </li>
             ) : (
               cartItems.map(item => (
-                <CartModalItem key={item.id} item={item} onNavigate={hiddeCart} />
+                <CartModalItem key={item.id} item={item} onNavigate={hideCart} />
               ))
             )}
           </ul>
-          <CartSuggestions visible={viewCart} onNavigate={hiddeCart} />
+          <CartSuggestions visible={viewCart} onNavigate={hideCart} />
         </div>
 
         <footer className="shrink-0 border-t border-brand/15 bg-brand-soft/70 px-4 pb-3 pt-3">
@@ -118,7 +118,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
           <div className="mt-2 flex items-center justify-between text-xs">
             <button
               type="button"
-              onClick={hiddeCart}
+              onClick={hideCart}
               className="font-bold text-ink-soft underline-offset-4 transition-colors hover:text-brand hover:underline"
             >
               ← Seguir comprando

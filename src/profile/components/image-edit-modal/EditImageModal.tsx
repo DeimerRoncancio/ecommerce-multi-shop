@@ -33,7 +33,7 @@ export default function EditImageModal({ user, showModal, onClose }: EditImageMo
 
     setPreviewImage(null);
     onClose();
-    SnackbarUtilities.succes('Imagen cambiada con exito');
+    SnackbarUtilities.success('Imagen cambiada con exito');
   }, [fetcher.state, fetcher.data]);
 
   const submit = () => {

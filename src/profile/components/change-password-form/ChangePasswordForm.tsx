@@ -17,7 +17,7 @@ export default function ChangePasswordForm({ user }: Props) {
   const passwordLoading = fetcher.state !== "idle";
 
   const {
-    showConfirmModal, isSucces, handlerErrors,
+    showConfirmModal, isSuccess, handlerErrors,
     confirmModal, success, clearErrors,
     handleErrors, onCloseConfirmModal
   } = useChangePassword();
@@ -81,7 +81,7 @@ export default function ChangePasswordForm({ user }: Props) {
         onSubmit={sendData}
         showModal={showConfirmModal}
         loading={passwordLoading}
-        isSucces={isSucces}
+        isSuccess={isSuccess}
       />
     </form>
   );

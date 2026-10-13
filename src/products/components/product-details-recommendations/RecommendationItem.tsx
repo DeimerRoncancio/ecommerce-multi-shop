@@ -1,6 +1,6 @@
 import { ProductsFromApiType } from "../../types/product";
 import useWishList from "../../../wishlist/hooks/useWishList";
-import { mapApiToProducts } from "../../mappers/products.maper";
+import { mapApiToProducts } from "../../mappers/products.mapper";
 import useCart from "../../../cart/hooks/useCart";
 import ProductCard from "../ProductCard";
 

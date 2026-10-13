@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 interface State {
   cartItems: CartItemType[];
   addItem: (productItem: CartItemType) => void;
-  addItems: (productItem: CartItemType) => void;
+  setItemQuantity: (productItem: CartItemType) => void;
   decreaseItem: (id: string) => void;
   removeItem: (id: string) => void;
   clearCart: () => void;
@@ -33,7 +33,7 @@ export const useCartStore = create<State>()(persist((set, get) => {
       set({ cartItems: [ ...items, productItem ] });
     },
 
-    addItems: (productItem: CartItemType) => {
+    setItemQuantity: (productItem: CartItemType) => {
       const items = get().cartItems;
 
       const newItems = items.map(item =>

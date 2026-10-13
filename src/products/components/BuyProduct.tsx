@@ -3,7 +3,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import ProductQuantity from "./ProductQuantity";
 import useWishList from "../../wishlist/hooks/useWishList";
 import { ProductsFromApiType } from "../types/product";
-import { mapApiToProducts } from "../mappers/products.maper";
+import { mapApiToProducts } from "../mappers/products.mapper";
 import useCart from "../../cart/hooks/useCart";
 import { useState } from "react";
 import BuyButton from "./BuyButton";

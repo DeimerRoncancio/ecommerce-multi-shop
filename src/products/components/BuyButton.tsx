@@ -1,7 +1,7 @@
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { useNavigate } from "react-router";
 import { ProductsFromApiType } from "../types/product";
-import { mapApiToProducts } from "../mappers/products.maper";
+import { mapApiToProducts } from "../mappers/products.mapper";
 import useCart from "../../cart/hooks/useCart";
 
 type BuyButtonProps = {
