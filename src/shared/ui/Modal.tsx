@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { IoCloseOutline } from "react-icons/io5";
+import useScrollLock from "../hooks/useScrollLock";
 
 type ModalProps = {
   open: boolean;
@@ -22,6 +23,7 @@ export default function Modal({ open, onClose, title, description, icon, tone = 
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
+  useScrollLock(open);
 
   useEffect(() => {
     if (!open) return;

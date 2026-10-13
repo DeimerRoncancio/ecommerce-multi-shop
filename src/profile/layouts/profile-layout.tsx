@@ -15,15 +15,9 @@ export default function ProfileLayout() {
   const [showProfileModal, setProfileModal] = useState(false);
   const location = useLocation();
 
-  const onOpenEditProfileModal = () => {
-    document.body.classList.add('overflow-hidden')
-    setProfileModal(true);
-  }
+  const onOpenEditProfileModal = () => setProfileModal(true);
 
-  const onCloseEditProfileModal = () => {
-    document.body.classList.remove('overflow-hidden')
-    setProfileModal(false);
-  }
+  const onCloseEditProfileModal = () => setProfileModal(false);
 
   return (
     <>

@@ -8,6 +8,7 @@ import CartModalItem from "./CartModalItem";
 import CartSuggestions from "./CartSuggestions";
 import ClearButton from "../ClearButton";
 import { formatPrice } from "../../../shared/utilities/format-price";
+import useScrollLock from "../../../shared/hooks/useScrollLock";
 
 type CartModalProps = {
   viewCart: boolean;
@@ -20,6 +21,7 @@ export default function CartModal({ viewCart, hiddeCart }: CartModalProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
+  useScrollLock(viewCart);
 
   const goCart = () => {
     navigate("/cart");

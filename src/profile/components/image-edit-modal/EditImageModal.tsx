@@ -5,6 +5,7 @@ import { useFetcher } from "react-router";
 import { IoCloseOutline } from "react-icons/io5";
 import { UserTypes } from "../../types/user";
 import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
+import useScrollLock from "../../../shared/hooks/useScrollLock";
 import ImageDragBox from "./ImageDragBox";
 import ImagePreview from "./ImagePreview";
 import type { action } from "../../actions/profile-image.action";
@@ -22,6 +23,7 @@ export default function EditImageModal({ user, showModal, onClose }: EditImageMo
   const loading = fetcher.state !== "idle";
   const { register, handleSubmit } = useForm();
   const ref = useRef<File | null>();
+  useScrollLock(showModal);
 
   useEffect(() => setIsMounted(true), []);
 

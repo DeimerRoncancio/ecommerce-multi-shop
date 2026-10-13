@@ -42,17 +42,11 @@ export default function useChangePassword() {
     SnackbarUtilities.error("No pudimos cambiar tu contraseña. Inténtalo de nuevo.");
   }
   
-  const onCloseConfirmModal = () => {
-    document.body.classList.remove('overflow-hidden');
-    setConfirmModal(false);
-  }
+  const onCloseConfirmModal = () => setConfirmModal(false);
 
   const clearErrors = () => setHandlerErrors({});
 
-  const confirmModal = () => {
-    document.body.classList.add('overflow-hidden');
-    setConfirmModal(true)
-  };
+  const confirmModal = () => setConfirmModal(true);
 
   return {
     showConfirmModal,

@@ -10,15 +10,9 @@ type Props = {
 export default function DeleteForm({ user }: Props) {
   const [showDeleteModal, setDeleteModal] = useState(false);
 
-  const onSubmit = () => {
-    document.body.classList.add('overflow-hidden');
-    setDeleteModal(true);
-  }
+  const onSubmit = () => setDeleteModal(true);
 
-  const onCloseModal = () => {
-    document.body.classList.remove('overflow-hidden');
-    setDeleteModal(false)
-  };
+  const onCloseModal = () => setDeleteModal(false);
 
   return (
     <section className="mt-8 border-t border-line pt-7">
