@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,36 +10,17 @@ import {
 } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
 import AuthLayout from "../components/AuthLayout";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import axios from "axios";
 import {
   InputsFromRegister, genderOptions, registerIcons, registerPerks, requiredFields, wideFields,
 } from "../constants/register.helpers";
 
-const ToastContainer = lazy(() =>
-  import("react-toastify").then(module => ({ default: module.ToastContainer })),
-);
-
-const notify = async (type: "success" | "error", message: string) => {
-  const { toast } = await import("react-toastify");
-  toast[type](message, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
-};
-
 export const Register = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const file = useRef<File | null>(null);
 
-  useEffect(() => setIsMounted(true), []);
   const {
     setValue,
     register,
@@ -65,9 +46,9 @@ export const Register = () => {
     }
 
     axios.post(`${envs.API}/app/users/register`, formData)
-      .then(() => notify("success", "Registro con éxito"))
+      .then(() => SnackbarUtilities.succes("Registro con éxito"))
       .catch((error) => {
-        notify("error", "Error al registrarse");
+        SnackbarUtilities.error("Error al registrarse");
         console.log(error);
       });
 
@@ -96,12 +77,6 @@ export const Register = () => {
       subtitle="Sigue tus pedidos, arma tu lista de deseos y paga más rápido."
       perks={registerPerks}
     >
-      {isMounted && (
-        <Suspense fallback={null}>
-          <ToastContainer />
-        </Suspense>
-      )}
-
       <div className="w-full max-w-lg">
         <h2 className="text-3xl font-extrabold text-ink">Registrarse</h2>
         <p className="mt-1 text-sm text-ink-muted">

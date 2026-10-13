@@ -8,8 +8,10 @@ import {
 } from "react-router";
 
 import { useEffect } from "react";
+import { SnackbarProvider } from "notistack";
 import NotFoundPage from "./shared/ui/NotFoundPage";
 import ErrorPage from "./shared/ui/ErrorPage";
+import SnackbarNotice from "./shared/ui/notistack-variants/SnackbarNotice";
 import { useCartStore } from "./cart/storage/cart";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useWishListStorage } from "./wishlist/storage/useWishListStorage";
@@ -56,7 +58,18 @@ export default function Root() {
     useStepsStorage.persist.rehydrate();
   }, []);
 
-  return <Outlet />;
+  return (
+    <SnackbarProvider
+      maxSnack={5}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      Components={{
+        errorAlert: SnackbarNotice,
+        success: SnackbarNotice,
+      }}
+    >
+      <Outlet />
+    </SnackbarProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

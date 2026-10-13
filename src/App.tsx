@@ -1,8 +1,6 @@
-import SnackbarError from "./shared/ui/notistack-variants/SnackbarError";
 import { mapApiToCategories } from "./products/mappers/categories.mapper";
 import { getCategories } from "./products/services/categories.api";
 import NavBar from "./shared/layout/navbar/NavBar";
-import { SnackbarProvider } from "notistack";
 import { data, Outlet, useLocation } from "react-router";
 import "./App.css";
 import { getSessionUser } from "./auth/session-user.server";
@@ -65,18 +63,13 @@ function App() {
   }, []);
 
   return (
-    <SnackbarProvider
-      maxSnack={5}
-      Components={{
-        errorAlert: SnackbarError,
-      }}
-    >
+    <>
       <NavBar />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </SnackbarProvider>
+    </>
   )
 }
 

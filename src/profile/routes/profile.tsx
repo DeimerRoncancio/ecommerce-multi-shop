@@ -5,8 +5,6 @@ import UserDataRadio from "../components/UserDataRadio";
 import { SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useUserService } from "../hooks/api/useUserService";
-import UserUpdateAlert from "../components/UserUpdateAlert";
-import { useUpdateAlert } from "../hooks/useUpdateAlert";
 import type { Route } from "./+types/profile";
 import { getSessionToken } from "../../auth/session-user.server";
 import { updateUserData } from "../services/users.api";
@@ -28,7 +26,6 @@ type userContext = {
 
 export default function Profile() {
   const { user } = useOutletContext<userContext>();
-  const { showAlert, handleAlert, handleUpdatedAlert } = useUpdateAlert();
   const [isActive, setIsActive] = useState(false);
   const fetcher = useFetcher<typeof action>();
   const saving = fetcher.state !== "idle";
@@ -52,8 +49,7 @@ export default function Profile() {
     if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos guardar tus datos. Inténtalo de nuevo.");
 
     setIsActive(false);
-    handleAlert(true);
-    handleUpdatedAlert();
+    SnackbarUtilities.succes("Tus datos han sido actualizados!");
   }, [fetcher.state, fetcher.data]);
 
   const handleActive = () => {
@@ -118,8 +114,6 @@ export default function Profile() {
           </button>
         </div>
       </form>
-
-      <UserUpdateAlert showAlert={showAlert} closeAlert={() => handleAlert(false)} />
     </>
   );
 }
