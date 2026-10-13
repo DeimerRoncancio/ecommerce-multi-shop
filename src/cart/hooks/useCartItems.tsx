@@ -6,15 +6,13 @@ type UseCartItemsProps = {
 }
 
 export default function useCartItems({ itemId }: UseCartItemsProps) {
-  const { cartItems, addItem, addItems, removeItem } = useCartStore();
+  const { cartItems, addItem, addItems, decreaseItem, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id === itemId);
 
   const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
   const [ totalPrice, setTotalPrice ] = useState(item ? item.productPrice : 0);
 
-  const handleRemoveItem = () => {
-    if (item) removeItem({ ...item, quantity: 1 });
-  }
+  const handleRemoveItem = () => removeItem(itemId);
 
   const increaseQuantity = () => {
     if (!item) return;
@@ -24,7 +22,7 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
 
   const decreaseQuantity = () => {
     if (!item) return;
-    removeItem(item);
+    decreaseItem(item.id);
     setQuantity(prev => prev - 1)
   }
 
@@ -42,7 +40,7 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
     if (quantity === item?.quantity) return;
     
     quantity === 0
-    ? removeItem({ ...item, quantity: 1 })
+    ? removeItem(item.id)
     : addItems({ ...item, quantity: quantity });
   }
 

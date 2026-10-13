@@ -12,13 +12,7 @@ export default function useCart() {
     addItem(productItem);
   }
 
-  const handleRemoveItem = (product: ProductTypes) => {
-    const productItem = cartItems.find(item => item.id === product.id);
-    if (!productItem) return;
-    
-    const itemToRemove = { ...productItem, quantity: 1 }
-    removeItem(itemToRemove);
-  }
+  const handleRemoveItem = (product: ProductTypes) => removeItem(product.id);
 
   const clear = () => {
     clearCart();

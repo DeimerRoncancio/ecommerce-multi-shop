@@ -6,7 +6,8 @@ interface State {
   cartItems: CartItemType[];
   addItem: (productItem: CartItemType) => void;
   addItems: (productItem: CartItemType) => void;
-  removeItem: (productItem: CartItemType) => void;
+  decreaseItem: (id: string) => void;
+  removeItem: (id: string) => void;
   clearCart: () => void;
 }
 
@@ -43,24 +44,16 @@ export const useCartStore = create<State>()(persist((set, get) => {
       return;
     },
 
-    removeItem: (productItem: CartItemType) => {
-      const items = get().cartItems;
-      const cartItemIndex = items.findIndex(item => item.id === productItem.id);
+    decreaseItem: (id: string) => {
+      const items = get().cartItems
+        .map(item => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
+        .filter(item => item.quantity > 0);
 
-      if (productItem && productItem.quantity > 1) {
-        const newItems = [
-          ...items.slice(0, cartItemIndex),
-          { ...productItem, quantity: productItem.quantity - 1 },
-          ...items.slice(cartItemIndex + 1)
-        ]
-        
-        set({ cartItems: [ ...newItems ] });
-        return;
-      }
+      set({ cartItems: items });
+    },
 
-      const itemsUpdated = items.filter(item => item.id !== productItem.id);
-      
-      set({ cartItems: [ ...itemsUpdated ] })
+    removeItem: (id: string) => {
+      set({ cartItems: get().cartItems.filter(item => item.id !== id) });
     },
 
     clearCart: () => {
