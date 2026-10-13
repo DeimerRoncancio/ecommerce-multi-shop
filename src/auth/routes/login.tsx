@@ -1,7 +1,7 @@
 import { LoginAccessUser } from "../zod/routesAuth";
 import { Form, Link, redirect, useActionData, useNavigation } from "react-router";
 import { Route } from "./+types/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FiAlertCircle, FiArrowRight, FiEye, FiEyeOff, FiLock, FiMail, FiShoppingBag,
 } from "react-icons/fi";
@@ -12,6 +12,7 @@ import GuestModal from "../components/GuestModal";
 import { commitSession, getSession } from "../../sessions.server";
 import { send } from "../services/api/login";
 import { loginPerks } from "../constants/login.helper";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get('Cookie'));
@@ -48,6 +49,11 @@ export default function Login() {
   const isSubmitting = navigation.state === "submitting";
   const [showPassword, setShowPassword] = useState(false);
   const [showGuestModal, setShowGuestModal] = useState(false);
+
+  useEffect(() => {
+    const message = action?.errors?.unauthorized?.[0];
+    if (message) SnackbarUtilities.error(message);
+  }, [action]);
 
   return (
     <AuthLayout
