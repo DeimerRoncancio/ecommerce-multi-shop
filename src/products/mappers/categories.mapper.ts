@@ -4,6 +4,8 @@ export const mapApiToCategories = (apiResponse: CategoriesFromApiType): Categori
   return {
     id: apiResponse.id,
     name: apiResponse.categoryName,
+    productCount: apiResponse.productCount,
+    fromPrice: apiResponse.fromPrice,
     products: apiResponse.products
   }
 }

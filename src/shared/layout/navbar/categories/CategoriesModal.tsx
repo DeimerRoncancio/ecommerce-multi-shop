@@ -1,30 +1,26 @@
 import { Link } from "react-router";
 import { FiArrowRight, FiRefreshCw, FiTruck } from "react-icons/fi";
-import { ProductItemType } from "../../../../products/types/product";
+import { CategoriesType } from "../../../../products/types/categories";
 import { slugify } from "../../../utilities/slugify";
 import { categoryStyle } from "../../../utilities/category-color";
 import { formatPrice } from "../../../utilities/format-price";
 import ProductItem from "./ProductItem";
 
 type CategoriesModalProps = {
-  categoryName: string;
-  products: ProductItemType[];
+  category?: CategoriesType;
   showModal: boolean;
   changeVisibility: (isVisible: boolean) => void;
 };
 
 const MAX_ITEMS = 4;
 
-export default function CategoriesModal({
-  categoryName,
-  products,
-  showModal,
-  changeVisibility,
-}: CategoriesModalProps) {
+export default function CategoriesModal({ category, showModal, changeVisibility }: CategoriesModalProps) {
+  const categoryName = category?.name ?? "";
+  const count = category?.productCount ?? 0;
+  const fromPrice = category?.fromPrice ?? null;
   const href = `/#${slugify(categoryName)}`;
-  const shown = products.slice(0, MAX_ITEMS);
-  const fromPrice = products.length ? Math.min(...products.map(product => product.price)) : null;
-  const countLabel = `${products.length} ${products.length === 1 ? "producto" : "productos"}`;
+  const shown = (category?.products ?? []).slice(0, MAX_ITEMS);
+  const countLabel = `${count} ${count === 1 ? "producto" : "productos"}`;
 
   return (
     <div
@@ -62,7 +58,7 @@ export default function CategoriesModal({
             </li>
           </ul>
 
-          {products.length > 0 && (
+          {count > 0 && (
             <Link
               to={href}
               onClick={() => changeVisibility(false)}
@@ -75,7 +71,7 @@ export default function CategoriesModal({
           )}
         </aside>
 
-        {!products.length ? (
+        {!count ? (
           <div className="flex flex-col items-center justify-center gap-4 p-10">
             <img src="/images/list-empty.png" alt="" width={110} />
             <p className="text-lg font-bold text-ink-muted">Aún no hay productos en esta categoría</p>
@@ -104,14 +100,14 @@ export default function CategoriesModal({
               </li>
             )}
 
-            {products.length > MAX_ITEMS && (
+            {count > MAX_ITEMS && (
               <li className="col-span-4 -mb-1 text-right">
                 <Link
                   to={href}
                   onClick={() => changeVisibility(false)}
                   className="text-sm font-bold text-(--cat) hover:underline"
                 >
-                  Y {products.length - MAX_ITEMS} más en {categoryName} →
+                  Y {count - MAX_ITEMS} más en {categoryName} →
                 </Link>
               </li>
             )}

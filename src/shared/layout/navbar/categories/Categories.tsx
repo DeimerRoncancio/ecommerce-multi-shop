@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { CategoriesType } from "../../../../products/types/categories";
-import { ProductItemType } from "../../../../products/types/product";
 import CategoryButton from "./CategoryButton";
 import CategoriesModal from "./CategoriesModal";
 
@@ -10,13 +9,10 @@ type CategoriesProps = {
 
 export default function Categories({ categories }: CategoriesProps) {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [categoryProducts, setCategoryProducts] = useState<ProductItemType[]>([]);
-  const [categoryName, setCategoryName] = useState("");
+  const [category, setCategory] = useState<CategoriesType>();
 
   const handleModalProducts = (cat: string) => {
-    const productsFilter = categories.filter(category => category.name == cat)[0];
-    setCategoryProducts(productsFilter.products);
-    setCategoryName(cat);
+    setCategory(categories.find(category => category.name === cat));
     setModalVisible(true);
   };
 
@@ -36,8 +32,7 @@ export default function Categories({ categories }: CategoriesProps) {
       </ul>
 
       <CategoriesModal
-        categoryName={categoryName}
-        products={categoryProducts}
+        category={category}
         showModal={isModalVisible}
         changeVisibility={handleModalVisibility}
       />

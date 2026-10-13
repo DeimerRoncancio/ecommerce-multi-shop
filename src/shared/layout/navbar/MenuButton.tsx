@@ -54,8 +54,8 @@ export default function MenuButton({ categories }: MenuButtonProps) {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">{category.name}</span>
                   <span className="block text-xs text-ink-muted">
-                    {category.products.length}{" "}
-                    {category.products.length === 1 ? "producto" : "productos"}
+                    {category.productCount}{" "}
+                    {category.productCount === 1 ? "producto" : "productos"}
                   </span>
                 </span>
                 <FiChevronRight size={16} className="text-ink-muted" />

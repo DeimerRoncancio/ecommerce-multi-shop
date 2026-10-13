@@ -26,7 +26,7 @@ export default function Search() {
 
   const text = query.trim();
   const term = normalize(text);
-  const categories = loaderCategories.filter(category => category.products.length > 0).map(category => category.name);
+  const categories = loaderCategories.filter(category => category.productCount > 0).map(category => category.name);
   const matchedCategories = term ? categories.filter(name => normalize(name).includes(term)) : categories;
 
   useEffect(() => {

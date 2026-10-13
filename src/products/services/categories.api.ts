@@ -1,6 +1,6 @@
 import { CategoriesFromApiType } from "../types/categories";
 import { categories } from "../api/categoriesApi";
 
-export const getCategories = (size = 100): Promise<CategoriesFromApiType[]> => {
-  return categories.get('', { params: { size } }).then(res => res.data.content);
+export const getCategories = (): Promise<CategoriesFromApiType[]> => {
+  return categories.get('/summary').then(res => res.data);
 }

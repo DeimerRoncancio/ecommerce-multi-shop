@@ -10,7 +10,7 @@ import { paymentIcons, aboutLinks, legalLinks } from "../../constants/footer.hel
 
 const countCategories = (categories: CategoriesType[]) => {
   return categories
-    .map(({ name, products }): [string, number] => [name, products.length])
+    .map(({ name, productCount }): [string, number] => [name, productCount])
     .filter(([, count]) => count > 0)
     .sort((a, b) => b[1] - a[1]);
 };
