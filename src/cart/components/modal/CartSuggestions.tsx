@@ -3,7 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { Link } from "react-router";
 import useCart from "../../hooks/useCart";
 import { mapApiToProducts } from "../../../products/mappers/products.maper";
-import { getSuggestedProducts } from "../../../products/services/products.api";
+import { getSuggestions } from "../../../products/services/products.api";
 import { ProductTypes } from "../../../products/types/product";
 import ProductImage from "../../../shared/ui/ProductImage";
 import { categoryStyle } from "../../../shared/utilities/category-color";
@@ -22,16 +22,15 @@ export default function CartSuggestions({ visible, onNavigate }: Props) {
 
   const inCart = new Set(cartItems.map(item => item.id));
   const categories = [...new Set(cartItems.flatMap(item => item.category ?? []))].join(",");
-  const size = LIMIT + cartItems.length;
+  const exclude = cartItems.map(item => item.id).join(",");
 
   useEffect(() => {
     if (!visible) return;
 
     let current = true;
 
-    getSuggestedProducts(categories, size)
-      .then(found => found.map(mapApiToProducts).filter(product => !inCart.has(product.id)).slice(0, LIMIT))
-      .then(found => current && setProducts(found))
+    getSuggestions({ categories, exclude, size: LIMIT, sort: "price,desc" })
+      .then(found => current && setProducts(found.products.map(mapApiToProducts)))
       .catch(() => current && setProducts([]));
 
     return () => {

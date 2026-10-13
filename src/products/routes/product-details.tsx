@@ -6,7 +6,7 @@ import ProductRecommendations from "../components/product-details-recommendation
 import { WarrantyCard } from "../components/WarrantyCard";
 import Container from "../../shared/ui/Container";
 import { categoryStyle } from "../../shared/utilities/category-color";
-import { getCategoryProducts, getProduct, getProducts } from "../services/products.api";
+import { getProduct, getSuggestions } from "../services/products.api";
 import type { Route } from "./+types/product-details";
 import { data } from "react-router";
 import { isAxiosError } from "axios";
@@ -22,17 +22,16 @@ export async function loader({ params }: Route.LoaderArgs) {
     if (isAxiosError(error) && error.response?.status === 404) throw data(null, { status: 404 });
     throw error;
   });
+  
   const categories = product.categories.map(category => category.categoryName).join(",");
-  const found = categories ? (await getCategoryProducts(categories, RELATED_SIZE + 1)).content : [];
-  const sameCategory = found.filter(item => item.id !== product.id).slice(0, RELATED_SIZE);
+  const related = await getSuggestions({
+    categories,
+    exclude: product.id,
+    size: RELATED_SIZE,
+    min: MIN_SAME_CATEGORY,
+  });
 
-  if (sameCategory.length >= MIN_SAME_CATEGORY) return { product, related: sameCategory, isSameCategory: true };
-
-  const known = new Set([product.id, ...sameCategory.map(item => item.id)]);
-  const others = await getProducts(RELATED_SIZE + known.size);
-  const rest = others.filter(item => !known.has(item.id));
-
-  return { product, related: [...sameCategory, ...rest].slice(0, RELATED_SIZE), isSameCategory: false };
+  return { product, related: related.products, isSameCategory: !related.filled };
 }
 
 export default function ProductDetails({ loaderData }: Route.ComponentProps) {

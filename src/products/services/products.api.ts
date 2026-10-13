@@ -6,6 +6,19 @@ type ProductsPage = {
   totalElements: number;
 };
 
+type Suggestions = {
+  products: ProductsFromApiType[];
+  filled: boolean;
+};
+
+type SuggestionsParams = {
+  categories: string;
+  exclude: string;
+  size: number;
+  min?: number;
+  sort?: string;
+};
+
 export const getProducts = (size = 60, sort?: string): Promise<ProductsFromApiType[]> => {
   return products.get('', { params: { size, sort } }).then(res => res.data.content);
 }
@@ -19,9 +32,8 @@ export const searchProducts = (query: string, size = 6): Promise<ProductsFromApi
   return products.get('/search', { params: { query, size } }).then(res => res.data.content);
 }
 
-export const getSuggestedProducts = (categories: string, size: number): Promise<ProductsFromApiType[]> => {
-  const params = { categories: categories || undefined, sort: 'price,desc', size };
-  return products.get('/search', { params }).then(res => res.data.content);
+export const getSuggestions = (params: SuggestionsParams): Promise<Suggestions> => {
+  return products.get('/suggestions', { params }).then(res => res.data);
 }
 
 export const getProduct = (id: string): Promise<ProductsFromApiType> => {
