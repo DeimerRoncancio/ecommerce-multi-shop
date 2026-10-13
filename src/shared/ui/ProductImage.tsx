@@ -43,9 +43,12 @@ const measure = async (url: string) => {
   const right = canvas.width - 1;
   const bottom = canvas.height - 1;
 
-  const corners = [[0, 0], [right, 0], [0, bottom], [right, bottom]].map(
-    ([x, y]) => context.getImageData(x, y, 1, 1).data,
-  );
+  const corners = [
+    [0, 0],
+    [right, 0],
+    [0, bottom],
+    [right, bottom],
+  ].map(([x, y]) => context.getImageData(x, y, 1, 1).data);
 
   const total = corners.reduce((sum, [r, g, b]) => {
     const max = Math.max(r, g, b);
@@ -115,7 +118,8 @@ export default function ProductImage({ src, alt, width, className, cutoutClassNa
 
   const full = productImageFull(src, width);
   const classes = `h-full w-full object-contain ${className ?? ""}`;
-  if (!opaque) return <img src={padded} alt={alt} loading={loading} className={`${classes} ${cutoutClassName ?? ""}`} />;
+  if (!opaque)
+    return <img src={padded} alt={alt} loading={loading} className={`${classes} ${cutoutClassName ?? ""}`} />;
 
   return (
     <div className="relative h-full w-full overflow-hidden">

@@ -22,14 +22,13 @@ export default function NewAddressForm({ defaultPhone, onSave, onCancel }: Props
     defaultValues: { country: "Colombia", phone: defaultPhone ?? "" },
   });
 
-  const onSubmit = (data: AddressDataForm) =>
-    onSave({ id: `new-${Date.now()}`, addressLine2: "", ...data });
+  const onSubmit = (data: AddressDataForm) => onSave({ id: `new-${Date.now()}`, addressLine2: "", ...data });
 
   return (
     <form className="mt-5 rounded-2xl border border-line p-4 sm:p-5" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="mb-3 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Nueva dirección</h2>
       <div className="grid gap-x-4 gap-y-3 sm:grid-cols-6">
-        {addressFields.map((field) => (
+        {addressFields.map(field => (
           <TextField
             key={field.name}
             label={field.label}

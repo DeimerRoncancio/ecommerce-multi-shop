@@ -37,11 +37,7 @@ export default function NavBar() {
       >
         <div className="bg-brand text-white">
           <Container className="flex h-16 items-center gap-3 md:gap-5 lg:h-18">
-            <NavLink
-              to="/"
-              className="block shrink-0 transition-transform hover:-rotate-2"
-              aria-label="Ir al inicio"
-            >
+            <NavLink to="/" className="block shrink-0 transition-transform hover:-rotate-2" aria-label="Ir al inicio">
               <img src="/svg/simbolo-blanco.svg" alt="Multi Shop" className="h-11 w-auto sm:hidden" />
               <img src="/svg/logo-fondo-naranja.svg" alt="Multi Shop" className="-ml-2 hidden h-14 w-auto sm:block" />
             </NavLink>

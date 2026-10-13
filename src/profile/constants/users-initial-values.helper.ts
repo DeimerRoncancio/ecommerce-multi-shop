@@ -16,12 +16,12 @@ export const UserInitialValues: UserTypes = {
   gender: "",
   admin: false,
   enabled: false,
-}
+};
 
 export const initialUserValues = (user: UserTypes): UserUpdateTypes => ({
-  names: user.name + (user.secondName ? ' ' + user.secondName : ''),
+  names: user.name + (user.secondName ? " " + user.secondName : ""),
   lastnames: user.lastnames,
   email: user.email,
   phoneNumber: user.phoneNumber?.toString(),
   gender: user.gender,
-})
+});

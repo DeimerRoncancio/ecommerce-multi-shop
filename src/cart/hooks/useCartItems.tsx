@@ -3,14 +3,14 @@ import { useCartStore } from "../storage/cart";
 
 type UseCartItemsProps = {
   itemId: string;
-}
+};
 
 export default function useCartItems({ itemId }: UseCartItemsProps) {
   const { cartItems, addItem, setItemQuantity, decreaseItem, removeItem } = useCartStore();
   const item = cartItems.find(item => item.id === itemId);
 
-  const [ quantity, setQuantity ] = useState(item ? item.quantity : 0);
-  const [ totalPrice, setTotalPrice ] = useState(item ? item.productPrice : 0);
+  const [quantity, setQuantity] = useState(item ? item.quantity : 0);
+  const [totalPrice, setTotalPrice] = useState(item ? item.productPrice : 0);
 
   const handleRemoveItem = () => removeItem(itemId);
 
@@ -18,31 +18,29 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
     if (!item) return;
     addItem(item);
     setQuantity(prev => prev + 1);
-  }
+  };
 
   const decreaseQuantity = () => {
     if (!item) return;
     decreaseItem(item.id);
-    setQuantity(prev => prev - 1)
-  }
+    setQuantity(prev => prev - 1);
+  };
 
   const handleTotalPrice = () => {
     if (!item) return;
     setTotalPrice(item.productPrice * item.quantity);
-  }
+  };
 
   const changeQuantity = (val: number) => {
     setQuantity(val);
-  }
+  };
 
   const updateQuantity = () => {
     if (!item) return;
     if (quantity === item?.quantity) return;
-    
-    quantity === 0
-    ? removeItem(item.id)
-    : setItemQuantity({ ...item, quantity: quantity });
-  }
+
+    quantity === 0 ? removeItem(item.id) : setItemQuantity({ ...item, quantity: quantity });
+  };
 
   return {
     quantity,
@@ -53,5 +51,5 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
     decreaseQuantity,
     updateQuantity,
     changeQuantity,
-  }
+  };
 }

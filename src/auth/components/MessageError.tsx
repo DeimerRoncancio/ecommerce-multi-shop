@@ -5,10 +5,7 @@ type ErrorMessageProps<T extends FieldValues> = {
   errors: FieldErrors<T>;
 };
 
-export default function ErrorMessage<T extends FieldValues>({
-  fieldName,
-  errors,
-}: ErrorMessageProps<T>) {
+export default function ErrorMessage<T extends FieldValues>({ fieldName, errors }: ErrorMessageProps<T>) {
   const error = errors[fieldName];
   if (error && typeof error.message === "string") {
     return <span className="text-xs text-error">{error.message}</span>;

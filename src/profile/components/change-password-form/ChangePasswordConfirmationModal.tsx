@@ -7,7 +7,7 @@ type PasswordChangeConfirmationModalProps = {
   showModal: boolean;
   loading: boolean;
   isSuccess: boolean;
-}
+};
 
 export default function ChangePasswordConfirmationModal({
   loading,

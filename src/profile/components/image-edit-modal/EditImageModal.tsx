@@ -14,10 +14,10 @@ type EditImageModalProps = {
   user: UserTypes;
   showModal: boolean;
   onClose: () => void;
-}
+};
 
 export default function EditImageModal({ user, showModal, onClose }: EditImageModalProps) {
-  const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const fetcher = useFetcher<typeof action>();
   const loading = fetcher.state !== "idle";
@@ -33,44 +33,44 @@ export default function EditImageModal({ user, showModal, onClose }: EditImageMo
 
     setPreviewImage(null);
     onClose();
-    SnackbarUtilities.success('Imagen cambiada con exito');
+    SnackbarUtilities.success("Imagen cambiada con exito");
   }, [fetcher.state, fetcher.data]);
 
   const submit = () => {
     if (!ref.current) return;
     const formData = new FormData();
-    formData.append('id', user.id);
-    formData.append('file', ref.current);
+    formData.append("id", user.id);
+    formData.append("file", ref.current);
 
     fetcher.submit(formData, {
       method: "post",
       action: "/profile-image-action",
       encType: "multipart/form-data",
     });
-  }
+  };
 
   const setImage = (file: File, fileUrl: string) => {
     ref.current = file;
     setPreviewImage(fileUrl);
-  }
+  };
 
   const clearImage = () => {
     ref.current = null;
     setPreviewImage(null);
-  }
+  };
 
   const closeModal = () => {
     if (loading) return;
     onClose();
     clearImage();
-  }
+  };
 
   if (!isMounted) return null;
 
   return createPortal(
     <div
       className={`fixed inset-0 z-50 grid place-items-center p-4 transition-opacity duration-150 ${
-        showModal ? 'visible opacity-100' : 'invisible opacity-0'
+        showModal ? "visible opacity-100" : "invisible opacity-0"
       }`}
     >
       <div className="absolute inset-0 bg-ink/50 backdrop-blur-[2px]" onClick={closeModal} />
@@ -80,12 +80,14 @@ export default function EditImageModal({ user, showModal, onClose }: EditImageMo
         aria-modal="true"
         aria-labelledby="titulo-foto-perfil"
         className={`relative w-full max-w-md overflow-hidden rounded-2xl bg-base-100 text-ink shadow-card-hover
-          transition-transform duration-150 ${showModal ? 'scale-100' : 'scale-95'}`}
+          transition-transform duration-150 ${showModal ? "scale-100" : "scale-95"}`}
       >
         <form onSubmit={handleSubmit(submit)}>
           <header className="flex items-start justify-between gap-3 border-t-4 border-brand px-5 pb-2 pt-5">
             <div>
-              <h2 id="titulo-foto-perfil" className="text-xl font-extrabold">Cambia tu foto</h2>
+              <h2 id="titulo-foto-perfil" className="text-xl font-extrabold">
+                Cambia tu foto
+              </h2>
               <p className="text-sm text-ink-muted">Se verá en tu cuenta y en la barra de la tienda.</p>
             </div>
             <button

@@ -14,8 +14,8 @@ import { parse } from "cookie";
 import { paymentMethods } from "../constants/checkout.helper";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const transactionId = parse(request.headers.get('cookie') || '').transactionId;
-  if (!transactionId) return redirect('/cart');
+  const transactionId = parse(request.headers.get("cookie") || "").transactionId;
+  if (!transactionId) return redirect("/cart");
 
   return { transactionId };
 }
@@ -23,10 +23,10 @@ export async function loader({ request }: Route.LoaderArgs) {
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const data = await serverLoader();
   const checkoutAccessToken = getCheckoutAccessToken();
-  if (!checkoutAccessToken) return redirect('/cart');
+  if (!checkoutAccessToken) return redirect("/cart");
 
   const summary = await getCheckoutSummary(data.transactionId, checkoutAccessToken).catch(() => null);
-  if (!summary?.selectedAddress) return redirect('/cart/delivery');
+  if (!summary?.selectedAddress) return redirect("/cart/delivery");
 
   return {
     ...data,
@@ -69,7 +69,7 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
     setIsRedirecting(true);
 
     createPaymentSession(transactionId, checkoutAccessToken)
-      .then((session) => {
+      .then(session => {
         if (!session.sessionUrl) {
           setIsRedirecting(false);
           return;
@@ -79,7 +79,7 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
         window.location.href = session.sessionUrl;
       })
       .catch(() => setIsRedirecting(false));
-  }
+  };
 
   return (
     <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_380px] lg:gap-12">
@@ -91,7 +91,7 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
         </p>
 
         <div className="mt-5 grid grid-cols-1 gap-3">
-          {paymentMethods.map((method) => (
+          {paymentMethods.map(method => (
             <PaymentMethodItem
               key={method.id}
               method={method}
@@ -105,12 +105,12 @@ export default function CartPayment({ loaderData }: Route.ComponentProps) {
           <h2 className="mb-4 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Revisa tu pedido</h2>
 
           <ul className="flex flex-col gap-2 border-b border-line pb-4 text-sm text-ink">
-            {items.map((item) => (
+            {items.map(item => (
               <li key={item.id} className="flex justify-between gap-4">
-                <span className="truncate">{item.productName} x {item.quantity}</span>
-                <span className="shrink-0 font-medium text-ink-soft">
-                  {formatPrice(item.price * item.quantity)}
+                <span className="truncate">
+                  {item.productName} x {item.quantity}
                 </span>
+                <span className="shrink-0 font-medium text-ink-soft">{formatPrice(item.price * item.quantity)}</span>
               </li>
             ))}
           </ul>

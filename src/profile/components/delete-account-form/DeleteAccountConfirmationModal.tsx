@@ -9,7 +9,7 @@ type Props = {
   showDeleteModal: boolean;
   onClose: () => void;
   userId: string;
-}
+};
 
 const removed = [
   { icon: FiUser, text: "Tus datos personales" },

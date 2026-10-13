@@ -19,7 +19,7 @@ import {
 } from "../api/paymentsApi";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
+  const transactionId = parse(request.headers.get("Cookie") || "").transactionId;
   return { transactionId: transactionId ?? null };
 }
 
@@ -84,7 +84,12 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
       <h1 className="mt-6 text-center text-4xl font-extrabold text-ink">¡Gracias por tu compra!</h1>
       <p className="mt-2 max-w-lg text-center text-ink-soft">
         Recibimos tu pedido y estamos confirmando el pago.
-        {email && <> Te enviamos la confirmación a <b className="text-ink">{email}</b>.</>}
+        {email && (
+          <>
+            {" "}
+            Te enviamos la confirmación a <b className="text-ink">{email}</b>.
+          </>
+        )}
       </p>
 
       <div className="mt-10 grid w-full max-w-4xl items-start gap-5 md:grid-cols-[1.2fr_1fr]">
@@ -119,9 +124,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
               </div>
             </>
           ) : (
-            <p className="mt-4 text-sm text-ink-soft">
-              Guarda este número: con él puedes preguntar por tu pedido.
-            </p>
+            <p className="mt-4 text-sm text-ink-soft">Guarda este número: con él puedes preguntar por tu pedido.</p>
           )}
 
           {(address || email) && (
@@ -153,9 +156,11 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
                 {index < nextSteps.length - 1 && (
                   <span aria-hidden className="absolute left-4.75 top-10 h-[calc(100%-2.5rem)] w-0.5 bg-brand/20" />
                 )}
-                <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
-                  current ? "bg-brand text-white" : "bg-base-100 text-brand"
-                }`}>
+                <span
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full ${
+                    current ? "bg-brand text-white" : "bg-base-100 text-brand"
+                  }`}
+                >
                   <Icon size={17} />
                 </span>
                 <span className="pt-1 leading-tight">

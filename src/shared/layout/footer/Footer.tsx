@@ -34,8 +34,8 @@ export default function Footer() {
             <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-3 h-16 w-auto" />
           </Link>
           <p className="max-w-xs leading-relaxed">
-            Ropa, cocina, deporte y tecnología en un solo lugar. Productos seleccionados, envío rápido
-            y garantía en cada compra.
+            Ropa, cocina, deporte y tecnología en un solo lugar. Productos seleccionados, envío rápido y garantía en
+            cada compra.
           </p>
           <div className="flex gap-2">
             <SocialButton iconName="instagram" />
@@ -60,13 +60,17 @@ export default function Footer() {
 
         <FooterColumn title="Sobre nosotros">
           {aboutLinks.map(label => (
-            <li key={label}><CustomLink to="">{label}</CustomLink></li>
+            <li key={label}>
+              <CustomLink to="">{label}</CustomLink>
+            </li>
           ))}
         </FooterColumn>
 
         <FooterColumn title="Legal">
           {legalLinks.map(label => (
-            <li key={label}><CustomLink to="">{label}</CustomLink></li>
+            <li key={label}>
+              <CustomLink to="">{label}</CustomLink>
+            </li>
           ))}
         </FooterColumn>
       </Container>
@@ -76,10 +80,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-center gap-2">
             <p className="mr-1 font-semibold text-white">Aceptamos</p>
             {paymentIcons.map((Icon, index) => (
-              <span
-                key={index}
-                className="grid h-8 w-11 place-items-center bg-white text-ink"
-              >
+              <span key={index} className="grid h-8 w-11 place-items-center bg-white text-ink">
                 <Icon size={18} />
               </span>
             ))}
@@ -87,7 +88,9 @@ export default function Footer() {
 
           <p className="text-center lg:text-right">
             © <b className="font-semibold text-white">MultiShop</b>. Todos los derechos reservados · Desarrollado por{" "}
-            <Link to="" className="font-semibold text-brand hover:underline">DeimerRoncancio</Link>
+            <Link to="" className="font-semibold text-brand hover:underline">
+              DeimerRoncancio
+            </Link>
           </p>
         </Container>
       </div>

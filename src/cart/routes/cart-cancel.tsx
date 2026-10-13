@@ -16,7 +16,7 @@ import Cookie from "js-cookie";
 import CancelSkeleton from "../components/CancelSkeleton";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const transactionId = parse(request.headers.get('Cookie') || '').transactionId;
+  const transactionId = parse(request.headers.get("Cookie") || "").transactionId;
   return { transactionId: transactionId ?? null };
 }
 
@@ -61,8 +61,8 @@ export default function CartCancel({ loaderData }: Route.ComponentProps) {
 
       <h1 className="mt-6 text-center text-4xl font-extrabold text-ink">Pago cancelado</h1>
       <p className="mt-2 max-w-lg text-center text-ink-soft">
-        No te hicimos <b className="text-ink">ningún cobro</b>. Tu carrito sigue guardado, así que puedes
-        intentarlo de nuevo cuando quieras.
+        No te hicimos <b className="text-ink">ningún cobro</b>. Tu carrito sigue guardado, así que puedes intentarlo de
+        nuevo cuando quieras.
       </p>
 
       <section className="mt-10 w-full max-w-xl rounded-2xl border border-line p-5 sm:p-6">

@@ -10,11 +10,7 @@ type CategoryButtonProps = {
   handleMouseLeave: (isVisible: boolean) => void;
 };
 
-export default function CategoryButton({
-  category,
-  handleMouseEnter,
-  handleMouseLeave,
-}: CategoryButtonProps) {
+export default function CategoryButton({ category, handleMouseEnter, handleMouseLeave }: CategoryButtonProps) {
   const { hash } = useLocation();
   const slug = slugify(category.name);
   const [isActive, setIsActive] = useState(false);

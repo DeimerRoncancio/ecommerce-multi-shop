@@ -57,8 +57,10 @@ export default function CategorySpotlight({ category, slug, product, count }: Sp
             aria-hidden
             className="absolute right-0 top-1/2 h-[140%] w-[90%] -translate-y-1/2 rounded-l-full bg-white/15"
           />
-          <span className="relative block w-3/4 max-w-xs -rotate-3 bg-white p-5 shadow-card-hover transition-transform
-            duration-300 group-hover/spot:rotate-0">
+          <span
+            className="relative block w-3/4 max-w-xs -rotate-3 bg-white p-5 shadow-card-hover transition-transform
+            duration-300 group-hover/spot:rotate-0"
+          >
             <ProductImage src={product.images[0]?.imageUrl} width={500} alt={product.name} />
           </span>
         </Link>

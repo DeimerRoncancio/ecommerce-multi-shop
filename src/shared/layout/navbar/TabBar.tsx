@@ -34,8 +34,10 @@ export default function TabBar() {
               <Icon size={21} />
               {label}
               {count ? (
-                <span className="absolute left-1/2 top-2.5 ml-1.5 grid h-4 min-w-4 place-items-center rounded-full
-                  bg-brand px-1 text-[10px] font-bold text-white">
+                <span
+                  className="absolute left-1/2 top-2.5 ml-1.5 grid h-4 min-w-4 place-items-center rounded-full
+                  bg-brand px-1 text-[10px] font-bold text-white"
+                >
                   {count}
                 </span>
               ) : null}

@@ -5,8 +5,8 @@ import { getSessionToken } from "../../auth/session-user.server";
 import { validationUser } from "../services/users.api";
 
 type userContext = {
-  user: UserTypes
-}
+  user: UserTypes;
+};
 
 export async function loader({ request }: Route.LoaderArgs) {
   const token = await getSessionToken(request);

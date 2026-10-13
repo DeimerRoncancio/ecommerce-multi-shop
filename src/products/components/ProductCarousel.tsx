@@ -51,20 +51,10 @@ export default function ProductCarousel({ products, renderItem, label }: Props) 
         ))}
       </Swiper>
 
-      <button
-        ref={prevRef}
-        type="button"
-        aria-label={`Anteriores de ${label}`}
-        className={`-left-4 ${arrowStyles}`}
-      >
+      <button ref={prevRef} type="button" aria-label={`Anteriores de ${label}`} className={`-left-4 ${arrowStyles}`}>
         <FiChevronLeft size={24} />
       </button>
-      <button
-        ref={nextRef}
-        type="button"
-        aria-label={`Siguientes de ${label}`}
-        className={`-right-4 ${arrowStyles}`}
-      >
+      <button ref={nextRef} type="button" aria-label={`Siguientes de ${label}`} className={`-right-4 ${arrowStyles}`}>
         <FiChevronRight size={24} />
       </button>
     </div>

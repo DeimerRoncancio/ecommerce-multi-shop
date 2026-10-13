@@ -58,8 +58,10 @@ export default function CartLayout() {
       </main>
 
       <footer className="border-t border-line bg-base-100">
-        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-sm
-          text-ink-muted sm:flex-row">
+        <Container
+          className="flex flex-col items-center justify-between gap-2 py-5 text-sm
+          text-ink-muted sm:flex-row"
+        >
           <p>2025 Multi Shop ® marca registrada de Grupo Efma S.A.</p>
           <button type="button" className="transition-colors hover:text-brand">
             Ver términos y condiciones

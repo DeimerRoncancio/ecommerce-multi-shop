@@ -13,8 +13,10 @@ type AuthLayoutProps = {
 export default function AuthLayout({ title, highlight, subtitle, perks, children }: AuthLayoutProps) {
   return (
     <div className="auth-page grid min-h-dvh w-full bg-base-100 lg:h-dvh lg:grid-cols-[0.95fr_1.05fr]">
-      <section className="relative flex flex-col gap-8 overflow-hidden border-b border-brand/15 bg-brand-soft/70 px-8
-        py-10 text-ink lg:border-b-0 lg:border-r lg:px-14">
+      <section
+        className="relative flex flex-col gap-8 overflow-hidden border-b border-brand/15 bg-brand-soft/70 px-8
+        py-10 text-ink lg:border-b-0 lg:border-r lg:px-14"
+      >
         <Link to="/" className="relative z-10 w-fit transition-transform hover:-rotate-2" aria-label="Ir al inicio">
           <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-3 h-16 w-auto" />
         </Link>

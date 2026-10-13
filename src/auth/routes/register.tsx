@@ -5,15 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterForm, RegisterFormData } from "../zod/routesAuth";
 import { envs } from "../../shared/config/env.config";
 import { addUserType, userType } from "../types/auth";
-import {
-  FiCamera, FiEye, FiEyeOff, FiUserPlus,
-} from "react-icons/fi";
+import { FiCamera, FiEye, FiEyeOff, FiUserPlus } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
 import AuthLayout from "../components/AuthLayout";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import axios from "axios";
 import {
-  InputsFromRegister, genderOptions, registerIcons, registerPerks, requiredFields, wideFields,
+  InputsFromRegister,
+  genderOptions,
+  registerIcons,
+  registerPerks,
+  requiredFields,
+  wideFields,
 } from "../constants/register.helpers";
 
 export const Register = () => {
@@ -28,7 +31,7 @@ export const Register = () => {
     handleSubmit,
   } = useForm<RegisterFormData>({ resolver: zodResolver(RegisterForm) });
 
-  const onSubmit: SubmitHandler<userType> = (data) => {
+  const onSubmit: SubmitHandler<userType> = data => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (typeof value === "string" && value.length > 0) {
@@ -43,11 +46,12 @@ export const Register = () => {
       formData.append("profileImage", file);
     }
 
-    axios.post(`${envs.API}/app/users/register`, formData)
+    axios
+      .post(`${envs.API}/app/users/register`, formData)
       .then(() => SnackbarUtilities.success("Registro con éxito"))
       .catch(() => SnackbarUtilities.error("Error al registrarse"));
 
-    addUserType.map((key) => {
+    addUserType.map(key => {
       setValue(key, "");
     });
 
@@ -83,8 +87,10 @@ export const Register = () => {
 
         <form className="mt-6 flex flex-col gap-3.5" onSubmit={handleSubmit(onSubmit)}>
           <label className="group flex w-fit cursor-pointer items-center gap-3.5">
-            <span className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border-2
-              border-dashed border-brand/40 bg-brand-soft/60 text-brand transition-colors group-hover:border-brand">
+            <span
+              className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border-2
+              border-dashed border-brand/40 bg-brand-soft/60 text-brand transition-colors group-hover:border-brand"
+            >
               {previewImage ? (
                 <img src={previewImage} alt="Vista previa de tu foto" className="h-full w-full object-cover" />
               ) : (
@@ -97,17 +103,11 @@ export const Register = () => {
               </b>
               <span className="text-xs text-ink-muted">Opcional · PNG o JPG</span>
             </span>
-            <input
-              hidden
-              type="file"
-              accept="image/*"
-              {...register("profileImage")}
-              onChange={handleChange}
-            />
+            <input hidden type="file" accept="image/*" {...register("profileImage")} onChange={handleChange} />
           </label>
 
           <div className="grid gap-x-4 gap-y-3.5 sm:grid-cols-2">
-            {InputsFromRegister.map((input) => (
+            {InputsFromRegister.map(input => (
               <TextField
                 key={input.name}
                 id={input.name}
@@ -119,17 +119,19 @@ export const Register = () => {
                 hint={input.name === "password" ? "Mínimo 8 caracteres" : undefined}
                 className={wideFields.includes(input.name) ? "sm:col-span-2" : ""}
                 error={errors[input.name]?.message}
-                trailing={input.name === "password" ? (
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                    className="grid h-8 w-8 place-items-center rounded-md text-ink-muted transition-colors
+                trailing={
+                  input.name === "password" ? (
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                      className="grid h-8 w-8 place-items-center rounded-md text-ink-muted transition-colors
                       hover:bg-cream hover:text-brand"
-                  >
-                    {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
-                  </button>
-                ) : undefined}
+                    >
+                      {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+                    </button>
+                  ) : undefined
+                }
                 {...register(input.name)}
               />
             ))}
@@ -156,9 +158,7 @@ export const Register = () => {
                 </label>
               ))}
             </div>
-            {errors.gender?.message && (
-              <p className="mt-1 text-xs font-semibold text-error">{errors.gender.message}</p>
-            )}
+            {errors.gender?.message && <p className="mt-1 text-xs font-semibold text-error">{errors.gender.message}</p>}
           </fieldset>
 
           <button

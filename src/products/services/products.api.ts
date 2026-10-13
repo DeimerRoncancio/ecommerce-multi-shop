@@ -1,5 +1,5 @@
-import { ProductsFromApiType } from "../types/product"
-import { products } from "../api/productsApi"
+import { ProductsFromApiType } from "../types/product";
+import { products } from "../api/productsApi";
 
 type HomeSection = {
   categoryName: string;
@@ -27,23 +27,23 @@ type SuggestionsParams = {
 };
 
 export const getHome = (): Promise<Home> => {
-  return products.get('/home').then(res => res.data);
-}
+  return products.get("/home").then(res => res.data);
+};
 
 export const searchProducts = (query: string, size = 6): Promise<ProductsFromApiType[]> => {
-  return products.get('/search', { params: { query, size } }).then(res => res.data.content);
-}
+  return products.get("/search", { params: { query, size } }).then(res => res.data.content);
+};
 
 export const getSuggestions = (params: SuggestionsParams): Promise<Suggestions> => {
-  return products.get('/suggestions', { params }).then(res => res.data);
-}
+  return products.get("/suggestions", { params }).then(res => res.data);
+};
 
 export const getProduct = (id: string): Promise<ProductsFromApiType> => {
   return products.get(`/${id}`).then(res => res.data);
-}
+};
 
 export const findProduct = (id: string): Promise<ProductsFromApiType | null> => {
   return products
     .get(`/${id}`, { validateStatus: status => status === 200 || status === 404 })
     .then(res => (res.status === 200 ? res.data : null));
-}
+};

@@ -14,13 +14,9 @@ type CartModalItemProps = {
 };
 
 export default function CartModalItem({ item, onNavigate }: CartModalItemProps) {
-  const {
-    totalPrice,
-    handleRemoveItem,
-    increaseQuantity,
-    decreaseQuantity,
-    handleTotalPrice,
-  } = useCartItems({ itemId: item.id });
+  const { totalPrice, handleRemoveItem, increaseQuantity, decreaseQuantity, handleTotalPrice } = useCartItems({
+    itemId: item.id,
+  });
 
   useEffect(() => handleTotalPrice(), [item.quantity]);
 

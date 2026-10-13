@@ -3,22 +3,14 @@ import { FiChevronRight } from "react-icons/fi";
 import Container from "../../shared/ui/Container";
 import { breadcrumbLabels } from "../constants/profile.helper";
 
-export default function Breadcrumb({
-  namePage,
-  isProduct,
-}: {
-  namePage: string;
-  isProduct?: boolean;
-}) {
+export default function Breadcrumb({ namePage, isProduct }: { namePage: string; isProduct?: boolean }) {
   const location = useLocation();
   const segments = location.pathname.split("/").filter(Boolean);
 
   const crumbs = [
     { label: "Inicio", to: "/" },
     ...segments.map((segment, index) => ({
-      label: index === segments.length - 1 && isProduct
-        ? namePage
-        : breadcrumbLabels[segment]?.label ?? segment,
+      label: index === segments.length - 1 && isProduct ? namePage : (breadcrumbLabels[segment]?.label ?? segment),
       to: breadcrumbLabels[segment]?.to ?? `/${segments.slice(0, index + 1).join("/")}`,
     })),
   ];

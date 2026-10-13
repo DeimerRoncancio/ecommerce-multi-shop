@@ -3,14 +3,14 @@ import { PasswordType } from "../../types/user";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import PasswordField from "../../../shared/ui/PasswordField";
 
-type Errors = 'currentPassword' | 'newPassword';
+type Errors = "currentPassword" | "newPassword";
 
 type Props = {
   errors: FieldErrors<PasswordType>;
   handlerErrors: Partial<Record<Errors, string>>;
   clearErrors: () => void;
   register: UseFormRegister<PasswordType>;
-}
+};
 
 export default function NewPasswordFields({ errors, handlerErrors, clearErrors, register }: Props) {
   const { isPasswordMatch, onFieldsChange } = useValidationMatchPassword({ clearErrors });

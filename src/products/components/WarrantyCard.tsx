@@ -5,8 +5,10 @@ export function WarrantyCard() {
     <ul className="grid grid-cols-3 divide-x divide-line border border-line">
       {warrantyItems.map(({ icon: Icon, title, text }) => (
         <li key={title} className="flex flex-col items-center gap-1.5 px-2 py-3.5 text-center">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-(--cat-soft,var(--color-cream))
-            text-(--cat,var(--color-brand))">
+          <span
+            className="grid h-10 w-10 place-items-center rounded-full bg-(--cat-soft,var(--color-cream))
+            text-(--cat,var(--color-brand))"
+          >
             <Icon size={18} />
           </span>
           <span className="leading-tight">

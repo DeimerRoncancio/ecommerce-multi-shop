@@ -22,7 +22,7 @@ export default function SuccessSkeleton() {
           </div>
 
           <div className="mt-4 flex flex-col gap-3 border-y border-line py-3">
-            {[0, 1, 2].map((row) => (
+            {[0, 1, 2].map(row => (
               <div key={row} className="flex justify-between gap-4">
                 <div className="h-4 w-1/2 animate-pulse rounded bg-base-200" />
                 <div className="h-4 w-20 animate-pulse rounded bg-base-200" />
@@ -43,7 +43,7 @@ export default function SuccessSkeleton() {
         <section className="rounded-2xl bg-brand-soft/70 p-5 sm:p-6">
           <div className="h-3 w-24 animate-pulse rounded bg-brand/15" />
           <div className="mt-4 flex flex-col gap-5">
-            {[0, 1, 2].map((row) => (
+            {[0, 1, 2].map(row => (
               <div key={row} className="flex gap-3.5">
                 <div className="h-10 w-10 shrink-0 animate-pulse rounded-full bg-brand/15" />
                 <div className="flex flex-1 flex-col gap-2 pt-1">

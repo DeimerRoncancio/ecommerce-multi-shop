@@ -19,7 +19,7 @@ export default function PaymentSkeleton() {
         <div className="mt-5 rounded-2xl bg-cream p-5">
           <div className="h-3 w-32 animate-pulse rounded bg-base-300" />
           <div className="mt-4 flex flex-col gap-3 border-b border-line pb-4">
-            {[0, 1, 2].map((row) => (
+            {[0, 1, 2].map(row => (
               <div key={row} className="flex justify-between gap-4">
                 <div className="h-4 w-1/2 animate-pulse rounded bg-base-300" />
                 <div className="h-4 w-20 animate-pulse rounded bg-base-300" />

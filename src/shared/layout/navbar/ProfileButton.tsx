@@ -4,7 +4,15 @@ import AvatarImage from "../../../profile/components/AvatarImage";
 import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 import GuestModal from "../../../auth/components/GuestModal";
 import {
-  FiArrowLeft, FiChevronRight, FiHeart, FiLogIn, FiLogOut, FiMail, FiPackage, FiUser, FiUserCheck,
+  FiArrowLeft,
+  FiChevronRight,
+  FiHeart,
+  FiLogIn,
+  FiLogOut,
+  FiMail,
+  FiPackage,
+  FiUser,
+  FiUserCheck,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { UserTypes } from "../../../profile/types/user";
@@ -20,9 +28,11 @@ type MenuRowProps = {
 function MenuRow({ icon: Icon, label, hint, soon }: MenuRowProps) {
   return (
     <>
-      <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors ${
-        soon ? "bg-cream text-ink-muted" : "bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white"
-      }`}>
+      <span
+        className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors ${
+          soon ? "bg-cream text-ink-muted" : "bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white"
+        }`}
+      >
         <Icon size={15} />
       </span>
       <span className="min-w-0 flex-1 leading-tight">
@@ -38,17 +48,18 @@ function MenuRow({ icon: Icon, label, hint, soon }: MenuRowProps) {
   );
 }
 
-const rowClass = "group flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-cream";
+const rowClass =
+  "group flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-cream";
 const panelClass = `dropdown-content z-30 mt-3 w-72 overflow-hidden rounded-2xl border border-line
   bg-base-100 p-0 shadow-xl`;
 
 type LoaderProps = {
   user?: UserTypes | null;
-}
+};
 
 type ProfileButtonProps = {
   size: number;
-}
+};
 
 export default function ProfileButton({ size }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
@@ -59,7 +70,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   const loaderData = useLoaderData() as LoaderProps | undefined;
   const user = loaderData?.user ?? UserInitialValues;
   const userImage = user.profileImage?.imageUrl ?? "";
-  
+
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       setShowProfileOptions(false);
@@ -68,21 +79,23 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined")
-      setGuestEmail(sessionStorage.getItem("guestEmail"));
+    if (typeof window !== "undefined") setGuestEmail(sessionStorage.getItem("guestEmail"));
   }, [showProfileOptions, showOptions, showGuestModal]);
 
   return (
     <div className="dropdown dropdown-end" onBlur={handleBlur}>
       <div className="w-full flex items-center">
         <div className="w-full flex items-center">
-          <div tabIndex={0} className="btn btn-ghost btn-circle avatar ring-2 ring-white/70 transition-shadow
+          <div
+            tabIndex={0}
+            className="btn btn-ghost btn-circle avatar ring-2 ring-white/70 transition-shadow
             hover:ring-white"
             style={{ width: size, height: size }}
             onClick={() => {
               setShowProfileOptions(false);
-              setShowOptions(!showOptions)
-            }}>
+              setShowOptions(!showOptions);
+            }}
+          >
             <div className="rounded-full">
               <AvatarImage userImage={userImage} />
             </div>
@@ -90,12 +103,14 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
         </div>
       </div>
 
-      <div className={`${!showOptions ? 'hidden' : ''} `}>
+      <div className={`${!showOptions ? "hidden" : ""} `}>
         <div tabIndex={0} className={panelClass}>
           {user.name.length > 0 ? (
             <div className="flex items-center gap-3 border-b border-line bg-brand-soft/60 px-4 py-3.5">
-              <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-brand ring-offset-2
-                ring-offset-brand-soft">
+              <span
+                className="h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-brand ring-offset-2
+                ring-offset-brand-soft"
+              >
                 <AvatarImage userImage={userImage} />
               </span>
               <span className="min-w-0 leading-tight">
@@ -111,7 +126,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               <div className="mt-3 flex gap-2">
                 <button
                   type="button"
-                  onMouseDown={(e) => e.preventDefault()}
+                  onMouseDown={e => e.preventDefault()}
                   onClick={() => {
                     setShowProfileOptions(true);
                     setShowOptions(false);
@@ -139,9 +154,9 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               <li>
                 <button
                   type="button"
-                  onMouseDown={(e) => e.preventDefault()}
+                  onMouseDown={e => e.preventDefault()}
                   onClick={() => {
-                    navigate('/profile');
+                    navigate("/profile");
                     setShowOptions(false);
                     setShowProfileOptions(false);
                   }}
@@ -165,8 +180,10 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
 
           {user.name.length > 0 && (
             <div className="border-t border-line p-2">
-              <LogoutActionButton className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-bold
-                text-error transition-colors hover:bg-error/10">
+              <LogoutActionButton
+                className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-bold
+                text-error transition-colors hover:bg-error/10"
+              >
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-error/10">
                   <FiLogOut size={15} />
                 </span>
@@ -177,13 +194,13 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
         </div>
       </div>
 
-      <div className={`${!showProfileOptions ? 'hidden' : ''} `}>
+      <div className={`${!showProfileOptions ? "hidden" : ""} `}>
         <div tabIndex={1} className={panelClass}>
           <div className="flex items-center gap-2 border-b border-line bg-brand-soft/60 px-2 py-2.5">
             <button
               type="button"
               aria-label="Volver"
-              onMouseDown={(e) => e.preventDefault()}
+              onMouseDown={e => e.preventDefault()}
               onClick={() => {
                 setShowProfileOptions(false);
                 setShowOptions(true);
@@ -206,7 +223,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               <li>
                 <button
                   type="button"
-                  onMouseDown={(e) => e.preventDefault()}
+                  onMouseDown={e => e.preventDefault()}
                   onClick={() => {
                     setShowProfileOptions(false);
                     setShowOptions(false);
@@ -240,10 +257,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
         </div>
       </div>
 
-      <GuestModal 
-        isOpen={showGuestModal} 
-        onClose={() => setShowGuestModal(false)} 
-      />
+      <GuestModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} />
     </div>
-  )
+  );
 }

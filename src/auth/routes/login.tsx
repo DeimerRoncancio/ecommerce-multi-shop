@@ -2,9 +2,7 @@ import { LoginAccessUser } from "../zod/routesAuth";
 import { Form, Link, redirect, useActionData, useNavigation } from "react-router";
 import { Route } from "./+types/login";
 import { useEffect, useState } from "react";
-import {
-  FiAlertCircle, FiArrowRight, FiEye, FiEyeOff, FiLock, FiMail, FiShoppingBag,
-} from "react-icons/fi";
+import { FiAlertCircle, FiArrowRight, FiEye, FiEyeOff, FiLock, FiMail, FiShoppingBag } from "react-icons/fi";
 import { FaFacebook, FaGoogle } from "react-icons/fa6";
 import TextField from "../../shared/ui/TextField";
 import AuthLayout from "../components/AuthLayout";
@@ -15,31 +13,28 @@ import { loginPerks } from "../constants/login.helper";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 export async function action({ request }: Route.ActionArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
+  const session = await getSession(request.headers.get("Cookie"));
   const form = await request.formData();
   const identifier = form.get("identifier") as string;
   const password = form.get("password") as string;
-  
+
   const raw = Object.fromEntries(form.entries());
   const result = LoginAccessUser.safeParse(raw);
-  
-  if (!result.success)
-    return { errors: result.error.flatten().fieldErrors };
+
+  if (!result.success) return { errors: result.error.flatten().fieldErrors };
 
   const data = await send({ identifier: identifier, password: password });
 
-  if (!data.ok && data.status === 401)
-    return { errors: { unauthorized: ["El usuario o contraseña son incorrectos"] } };
+  if (!data.ok && data.status === 401) return { errors: { unauthorized: ["El usuario o contraseña son incorrectos"] } };
 
-  if (!data.ok)
-    return { errors: { unauthorized: ["No pudimos iniciar sesión. Inténtalo de nuevo en unos minutos."] } };
-  
-  session.set('token', data.token);
+  if (!data.ok) return { errors: { unauthorized: ["No pudimos iniciar sesión. Inténtalo de nuevo en unos minutos."] } };
 
-  return redirect('/profile', {
+  session.set("token", data.token);
+
+  return redirect("/profile", {
     headers: {
-      'Set-Cookie': await commitSession(session),
-    }
+      "Set-Cookie": await commitSession(session),
+    },
   });
 }
 
@@ -72,8 +67,11 @@ export default function Login() {
         </p>
 
         {action?.errors?.unauthorized && (
-          <p className="mt-5 flex items-center gap-2.5 rounded-xl border border-error/30 bg-error/10 px-4 py-3 text-sm
-            font-semibold text-error" role="alert">
+          <p
+            className="mt-5 flex items-center gap-2.5 rounded-xl border border-error/30 bg-error/10 px-4 py-3 text-sm
+            font-semibold text-error"
+            role="alert"
+          >
             <FiAlertCircle size={17} className="shrink-0" />
             {action.errors.unauthorized[0]}
           </p>
@@ -112,8 +110,11 @@ export default function Login() {
 
           <div className="flex items-center justify-between text-sm">
             <label className="flex cursor-pointer items-center gap-2 text-ink-soft">
-              <input type="checkbox" className="checkbox checkbox-xs rounded border-line checked:border-brand
-                checked:bg-brand checked:text-white" />
+              <input
+                type="checkbox"
+                className="checkbox checkbox-xs rounded border-line checked:border-brand
+                checked:bg-brand checked:text-white"
+              />
               Recordarme
             </label>
             <button type="button" className="font-semibold text-brand underline-offset-4 hover:underline">
@@ -139,13 +140,19 @@ export default function Login() {
         </div>
 
         <div className="grid grid-cols-2 gap-2.5">
-          <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
-            text-sm font-bold text-ink transition-colors hover:border-ink">
+          <button
+            type="button"
+            className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
+            text-sm font-bold text-ink transition-colors hover:border-ink"
+          >
             <FaGoogle size={15} className="text-[#ea4335]" />
             Google
           </button>
-          <button type="button" className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
-            text-sm font-bold text-ink transition-colors hover:border-ink">
+          <button
+            type="button"
+            className="flex h-11 items-center justify-center gap-2 rounded-full border border-line
+            text-sm font-bold text-ink transition-colors hover:border-ink"
+          >
             <FaFacebook size={16} className="text-[#1877f2]" />
             Facebook
           </button>

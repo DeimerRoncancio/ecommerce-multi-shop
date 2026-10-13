@@ -40,12 +40,12 @@ export default function CartModal({ viewCart, hideCart }: CartModalProps) {
 
       <aside
         className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-base-100
-          shadow-card-hover transition-transform duration-300 ${
-            viewCart ? "translate-x-0" : "translate-x-full"
-          }`}
+          shadow-card-hover transition-transform duration-300 ${viewCart ? "translate-x-0" : "translate-x-full"}`}
       >
-        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-t-4 border-line
-          border-t-brand px-4 py-2.5">
+        <header
+          className="flex shrink-0 items-center justify-between gap-3 border-b border-t-4 border-line
+          border-t-brand px-4 py-2.5"
+        >
           <div className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center rounded-full bg-brand text-white">
               <FiShoppingCart size={15} />
@@ -88,9 +88,7 @@ export default function CartModal({ viewCart, hideCart }: CartModalProps) {
                 </button>
               </li>
             ) : (
-              cartItems.map(item => (
-                <CartModalItem key={item.id} item={item} onNavigate={hideCart} />
-              ))
+              cartItems.map(item => <CartModalItem key={item.id} item={item} onNavigate={hideCart} />)
             )}
           </ul>
           <CartSuggestions visible={viewCart} onNavigate={hideCart} />

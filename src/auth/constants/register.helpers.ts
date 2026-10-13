@@ -1,13 +1,7 @@
 import { IconType } from "react-icons";
 import { FiLock, FiMail, FiPhone, FiUser } from "react-icons/fi";
 
-type names =
-  | "name"
-  | "secondName"
-  | "lastnames"
-  | "phoneNumber"
-  | "email"
-  | "password";
+type names = "name" | "secondName" | "lastnames" | "phoneNumber" | "email" | "password";
 
 export interface formsTypes {
   label: string;

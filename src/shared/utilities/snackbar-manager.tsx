@@ -7,4 +7,4 @@ export const SnackbarUtilities = {
   error(message: string) {
     enqueueSnackbar(message, { variant: "errorAlert", persist: true });
   },
-}
+};

@@ -18,12 +18,7 @@ export default function CartHeaderLayout() {
       <Container as="header" className="relative" aria-label="Pasos de la compra">
         <ol className="no-scrollbar flex gap-6 overflow-x-auto border-b border-line pt-5 lg:mr-107">
           {steps.map((step, index) => (
-            <CartStepsItem
-              key={step.path}
-              step={step}
-              number={index + 1}
-              isActive={location.pathname === step.path}
-            />
+            <CartStepsItem key={step.path} step={step} number={index + 1} isActive={location.pathname === step.path} />
           ))}
         </ol>
       </Container>

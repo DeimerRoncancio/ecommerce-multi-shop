@@ -10,15 +10,15 @@ export default function useCart() {
   const handleAddItem = (product: ProductTypes, quantity: number = 1) => {
     const productItem = productToCart({ product, quantity, isExists: true });
     addItem(productItem);
-  }
+  };
 
   const handleRemoveItem = (product: ProductTypes) => removeItem(product.id);
 
   const clear = () => {
     clearCart();
-  }
+  };
 
-  const isInCart = (productId: string) => cartItems.some(item => item.id === productId)
+  const isInCart = (productId: string) => cartItems.some(item => item.id === productId);
 
   return {
     cartItems,
@@ -27,6 +27,6 @@ export default function useCart() {
     handleAddItem,
     handleRemoveItem,
     isInCart,
-    clear
-  }
+    clear,
+  };
 }

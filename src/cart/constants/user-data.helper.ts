@@ -12,29 +12,29 @@ export const ImputsFromUserData: formTypes[] = [
     defaultValue: "",
     label: "Nombres",
     placeholder: "Tu nombre",
-    type: "text"
+    type: "text",
   },
   {
     name: "lastnames",
     defaultValue: "",
     label: "Apellidos",
     placeholder: "Tu apellido",
-    type: "text"
+    type: "text",
   },
   {
     name: "email",
     defaultValue: "",
     label: "Correo electrónico",
     placeholder: "Tu correo electronico",
-    type: "email"
+    type: "email",
   },
   {
     name: "phone",
     defaultValue: "",
     label: "Teléfono",
     placeholder: "Tu numero de telefono",
-    type: "text"
-  }
+    type: "text",
+  },
 ];
 
 export interface termsTypes {
@@ -51,20 +51,20 @@ export const TermsOfService: termsTypes[] = [
     name: "term1",
     text: "términos y condiciones, términos y condiciones marketplace",
     mandatory: true,
-    isAuthorization: false
+    isAuthorization: false,
   },
   {
     id: 1,
     name: "term2",
     text: "tratamiento de mis datos personales",
     mandatory: true,
-    isAuthorization: true
+    isAuthorization: true,
   },
   {
     id: 2,
     name: "term3",
     text: "el tratamiento de mis datos para el envío de publicidad",
     mandatory: false,
-    isAuthorization: true
+    isAuthorization: true,
   },
-]
+];

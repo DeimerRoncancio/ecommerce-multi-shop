@@ -28,10 +28,7 @@ export default function CartItem({ item }: CartItemProps) {
   useEffect(() => handleTotalPrice(), [item.quantity]);
 
   return (
-    <li
-      style={categoryStyle(item.category)}
-      className="flex gap-4 border-b border-line py-5 sm:items-center sm:gap-5"
-    >
+    <li style={categoryStyle(item.category)} className="flex gap-4 border-b border-line py-5 sm:items-center sm:gap-5">
       <Link
         to={`/product/${item.id}`}
         className="group h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-(--cat-soft,var(--color-cream)) sm:h-28

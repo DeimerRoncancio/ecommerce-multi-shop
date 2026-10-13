@@ -35,13 +35,11 @@ export default function ProductGallery({ images }: Props) {
         className="w-full overflow-hidden"
       >
         {ordered.map(image => (
-          <SwiperSlide key={image.imageId} className="flex! aspect-square items-center justify-center bg-(--cat-soft,var(--color-cream))">
-            <ProductImage
-              src={image.imageUrl}
-              width={1000}
-              alt={image.name}
-              cutoutClassName="mix-blend-darken"
-            />
+          <SwiperSlide
+            key={image.imageId}
+            className="flex! aspect-square items-center justify-center bg-(--cat-soft,var(--color-cream))"
+          >
+            <ProductImage src={image.imageUrl} width={1000} alt={image.name} cutoutClassName="mix-blend-darken" />
           </SwiperSlide>
         ))}
       </Swiper>

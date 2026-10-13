@@ -16,9 +16,7 @@ export default function Variants({ variants }: Props) {
     <ul className="flex flex-col gap-5 border-t border-line pt-5">
       {variants.map(variant => (
         <li key={variant.name} className="flex flex-col gap-2.5">
-          <p className="text-sm font-bold text-ink">
-            {variant.tag.charAt(0).toUpperCase() + variant.tag.slice(1)}
-          </p>
+          <p className="text-sm font-bold text-ink">{variant.tag.charAt(0).toUpperCase() + variant.tag.slice(1)}</p>
           <div className="flex flex-wrap gap-3">
             {variant.type === "color" &&
               variant.listValues.map(value => (

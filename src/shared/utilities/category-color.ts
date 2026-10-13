@@ -27,8 +27,7 @@ const known: Record<string, number> = {
   belleza: 6,
 };
 
-const normalize = (name: string) =>
-  name.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+const normalize = (name: string) => name.normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
 
 export const categoryColor = (name: string): CategoryColor => {
   const key = normalize(name);

@@ -56,8 +56,10 @@ export default function WishListItem({ item, products }: WishListItemProps) {
         <p className="mt-1 text-xs font-bold text-success">Envío gratis</p>
       </div>
 
-      <div className="col-span-2 flex items-center justify-between gap-3 sm:col-span-1 sm:flex-col sm:items-end
-        sm:justify-center sm:gap-2">
+      <div
+        className="col-span-2 flex items-center justify-between gap-3 sm:col-span-1 sm:flex-col sm:items-end
+        sm:justify-center sm:gap-2"
+      >
         <PriceTag price={product?.price ?? item.productPrice} />
         <div className="flex items-center gap-3">
           <button

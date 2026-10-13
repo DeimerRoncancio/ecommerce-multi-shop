@@ -19,19 +19,16 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = (formData.get("email") as string) || "";
-    sessionStorage.setItem('guestEmail', email);
+    sessionStorage.setItem("guestEmail", email);
     onClose();
-    navigate('/profile/wish-list');    
-  }
+    navigate("/profile/wish-list");
+  };
 
   if (!isOpen || !isMounted) return null;
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="fixed inset-0 bg-ink/40 backdrop-blur-xs transition-opacity"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-ink/40 backdrop-blur-xs transition-opacity" onClick={onClose} />
       <div className="relative z-10 w-full max-w-md bg-base-100 shadow-2xl border border-line p-7 text-ink transition-all transform scale-100">
         <button
           onClick={onClose}
@@ -54,9 +51,7 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
               Ingresa tu correo electrónico para vincular tus pedidos temporales y recibir las confirmaciones de compra.
             </p>
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-ink">
-                Correo electrónico
-              </label>
+              <label className="text-sm font-medium text-ink">Correo electrónico</label>
               <div className="flex items-center gap-2.5 border border-line bg-base-100 px-4 py-3 shadow-xs focus-within:border-brand focus-within:ring-2 focus-within:ring-brand-soft transition-all">
                 <IoMdMail className="text-brand text-lg shrink-0" />
                 <input

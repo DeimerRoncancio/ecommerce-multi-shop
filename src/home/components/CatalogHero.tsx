@@ -24,8 +24,10 @@ export default function CatalogHero({ product }: Props) {
       className="grid border border-t-4 border-line border-t-(--cat,var(--color-brand)) md:grid-cols-2"
     >
       <div className="relative flex flex-col bg-(--cat-soft,var(--color-cream))">
-        <span className="absolute left-4 top-4 z-10 bg-ink px-2.5 py-1 text-xs font-bold uppercase tracking-wider
-          text-white">
+        <span
+          className="absolute left-4 top-4 z-10 bg-ink px-2.5 py-1 text-xs font-bold uppercase tracking-wider
+          text-white"
+        >
           Destacado
         </span>
 
@@ -98,9 +100,7 @@ export default function CatalogHero({ product }: Props) {
 
           <h1 className="text-4xl font-extrabold leading-[1.05] text-ink sm:text-5xl">{product.name}</h1>
 
-          {product.description && (
-            <p className="line-clamp-2 max-w-md text-ink-soft">{product.description}</p>
-          )}
+          {product.description && <p className="line-clamp-2 max-w-md text-ink-soft">{product.description}</p>}
 
           <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
             <PriceTag price={product.price} label="Precio" size="lg" />
@@ -133,10 +133,15 @@ export default function CatalogHero({ product }: Props) {
 
         <ul className="grid grid-cols-3 divide-x divide-line border-t border-line">
           {heroPerks.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="flex flex-col items-center gap-1.5 px-2 py-3 text-center xl:flex-row xl:gap-2.5 xl:px-5 xl:py-4
-              xl:text-left">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-(--cat-soft,var(--color-cream))
-                text-(--cat,var(--color-brand))">
+            <li
+              key={title}
+              className="flex flex-col items-center gap-1.5 px-2 py-3 text-center xl:flex-row xl:gap-2.5 xl:px-5 xl:py-4
+              xl:text-left"
+            >
+              <span
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-(--cat-soft,var(--color-cream))
+                text-(--cat,var(--color-brand))"
+              >
                 <Icon size={16} />
               </span>
               <span className="min-w-0 leading-tight xl:whitespace-nowrap">

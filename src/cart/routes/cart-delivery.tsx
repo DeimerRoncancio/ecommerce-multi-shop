@@ -18,10 +18,7 @@ import {
   getSavedAddresses,
   updateTransactionCustomer,
 } from "../api/paymentsApi";
-import {
-  checkoutCustomerAddressesToAddresses,
-  checkoutToCustomerTransaction,
-} from "../mappers/customer.mapper";
+import { checkoutCustomerAddressesToAddresses, checkoutToCustomerTransaction } from "../mappers/customer.mapper";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import DeliverySkeleton from "../components/DeliverySkeleton";
 
@@ -45,9 +42,10 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
   const serverData = await serverLoader();
   const transactionId = Cookie.get("transactionId");
   const checkoutAccessToken = getCheckoutAccessToken();
-  const summary = transactionId && checkoutAccessToken
-    ? await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null)
-    : null;
+  const summary =
+    transactionId && checkoutAccessToken
+      ? await getCheckoutSummary(transactionId, checkoutAccessToken).catch(() => null)
+      : null;
 
   return { ...serverData, transactionAddress: summary?.selectedAddress ?? null };
 }
@@ -75,7 +73,7 @@ export async function action({ request }: Route.ActionArgs) {
   if (!transactionId) return { ok: false as const };
 
   return updateTransactionCustomer(transactionId, checkoutAccessToken, customer, token)
-    .then((guestEmail) => ({ ok: true as const, guestEmail }))
+    .then(guestEmail => ({ ok: true as const, guestEmail }))
     .catch(() => ({ ok: false as const }));
 }
 
@@ -85,7 +83,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
     ? { ...checkoutCustomerAddressesToAddresses([transactionAddress])[0], id: "transaction" }
     : null;
   const savedMatch = previousAddress
-    ? savedAddresses.find((address) => isSameAddress(address, previousAddress))
+    ? savedAddresses.find(address => isSameAddress(address, previousAddress))
     : undefined;
   const [newAddresses, setNewAddresses] = useState<AddressType[]>(
     previousAddress && !savedMatch ? [previousAddress] : [],
@@ -98,11 +96,10 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
 
   const addresses = [...savedAddresses, ...newAddresses];
 
-  const handleAddressSelect = (address: AddressType) =>
-    setSelectedAddress(address);
+  const handleAddressSelect = (address: AddressType) => setSelectedAddress(address);
 
   const handleNewAddress = (address: AddressType) => {
-    setNewAddresses((current) => [...current, address]);
+    setNewAddresses(current => [...current, address]);
     setSelectedAddress(address);
     setShowForm(false);
   };
@@ -151,7 +148,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
 
         {addresses.length > 0 && (
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {addresses.map((address) => {
+            {addresses.map(address => {
               return (
                 <AddressItem
                   key={address.id}
@@ -169,8 +166,10 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
                   border-dashed border-line p-5 text-sm font-bold text-ink-soft transition-colors hover:border-brand
                   hover:bg-brand-soft/50 hover:text-brand"
               >
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-cream transition-colors
-                  group-hover:bg-brand group-hover:text-white">
+                <span
+                  className="grid h-10 w-10 place-items-center rounded-full bg-cream transition-colors
+                  group-hover:bg-brand group-hover:text-white"
+                >
                   <FiPlus size={18} />
                 </span>
                 Agregar otra dirección
@@ -180,10 +179,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
         )}
       </section>
 
-      <PaymentCardInfo
-        onContinue={onContinue}
-        disabledContinue={!selectedAddress || fetcher.state !== "idle"}
-      />
+      <PaymentCardInfo onContinue={onContinue} disabledContinue={!selectedAddress || fetcher.state !== "idle"} />
     </Container>
   );
 }

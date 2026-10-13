@@ -4,11 +4,11 @@ import Icon from "../../shared/ui/Icon";
 import { IconName } from "../../shared/types/icon-list";
 
 type MenuButton = {
-  label: string,
-  iconName: IconName,
-  pathname: string,
-  to: string
-}
+  label: string;
+  iconName: IconName;
+  pathname: string;
+  to: string;
+};
 
 export default function MenuButton({ label, iconName, pathname, to }: MenuButton) {
   const navigate = useNavigate();
@@ -42,5 +42,5 @@ export default function MenuButton({ label, iconName, pathname, to }: MenuButton
         />
       )}
     </button>
-  )
+  );
 }

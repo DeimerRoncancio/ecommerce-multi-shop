@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 type UseUpdateUserProps = {
   user: UserTypes;
-}
+};
 
 export const useUserService = ({ user }: UseUpdateUserProps) => {
   const { register, handleSubmit, reset, control } = useForm<UserUpdateTypes>();
@@ -19,6 +19,6 @@ export const useUserService = ({ user }: UseUpdateUserProps) => {
     currentValues,
     register,
     handleSubmit,
-    reset
-  }
-}
+    reset,
+  };
+};

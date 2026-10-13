@@ -8,28 +8,31 @@ type Props = {
   clearSteps: () => void;
 };
 
-export const useStepsStorage = create<Props>()(persist((set) => ({
-  steps: [
-    { name: "Carrito", isComplete: false, path: "/cart", icon: "cart" },
-    { name: "Datos de usuario", isComplete: false, path: "/cart/user-data", icon: "profile" },
-    { name: "Entrega", isComplete: false, path: "/cart/delivery", icon: "deliver" },
-    { name: "Pago", isComplete: false, path: "/cart/payment", icon: "payment" },
-  ],
+export const useStepsStorage = create<Props>()(
+  persist(
+    set => ({
+      steps: [
+        { name: "Carrito", isComplete: false, path: "/cart", icon: "cart" },
+        { name: "Datos de usuario", isComplete: false, path: "/cart/user-data", icon: "profile" },
+        { name: "Entrega", isComplete: false, path: "/cart/delivery", icon: "deliver" },
+        { name: "Pago", isComplete: false, path: "/cart/payment", icon: "payment" },
+      ],
 
-  nextSteps: (nameStep: string) => {
-    set((state) => ({
-      steps: state.steps.map((step) =>
-        step.name === nameStep ? { ...step, isComplete: true } : step
-      )
-    }));
-  },
+      nextSteps: (nameStep: string) => {
+        set(state => ({
+          steps: state.steps.map(step => (step.name === nameStep ? { ...step, isComplete: true } : step)),
+        }));
+      },
 
-  clearSteps: () => {
-    set((state) => ({
-      steps: state.steps.map((step) => ({ ...step, isComplete: false }))
-    }));
-  },
-}), {
-  name: 'steps',
-  skipHydration: true,
-}));
+      clearSteps: () => {
+        set(state => ({
+          steps: state.steps.map(step => ({ ...step, isComplete: false })),
+        }));
+      },
+    }),
+    {
+      name: "steps",
+      skipHydration: true,
+    },
+  ),
+);

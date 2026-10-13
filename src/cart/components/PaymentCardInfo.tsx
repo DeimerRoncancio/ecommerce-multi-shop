@@ -23,8 +23,10 @@ export default function PaymentCardInfo({
   const navigate = useNavigate();
 
   return (
-    <aside className="flex flex-col gap-4 rounded-2xl bg-brand-soft/70 p-5 lg:sticky lg:top-6 lg:rounded-none
-      lg:bg-transparent lg:p-0">
+    <aside
+      className="flex flex-col gap-4 rounded-2xl bg-brand-soft/70 p-5 lg:sticky lg:top-6 lg:rounded-none
+      lg:bg-transparent lg:p-0"
+    >
       <h2 className="text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Resumen del pedido</h2>
 
       <ul>
@@ -40,12 +42,7 @@ export default function PaymentCardInfo({
         <p className="text-4xl font-extrabold leading-none text-ink">{formatPrice(totalPrice)}</p>
       </div>
 
-      <CartButton
-        totalPrice={totalPrice}
-        onContinue={onContinue}
-        disabled={disabledContinue}
-        label={continueLabel}
-      />
+      <CartButton totalPrice={totalPrice} onContinue={onContinue} disabled={disabledContinue} label={continueLabel} />
       <button
         type="button"
         onClick={() => navigate("/")}

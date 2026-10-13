@@ -31,9 +31,7 @@ export default function NotFoundPage() {
 
           <div className="flex flex-col items-center text-center md:items-start md:text-left">
             <span className="text-sm font-extrabold uppercase tracking-[0.12em] text-brand">Error 404</span>
-            <h1 className="mt-2 text-4xl font-extrabold leading-tight text-ink md:text-5xl">
-              Uy, aquí no hay nada
-            </h1>
+            <h1 className="mt-2 text-4xl font-extrabold leading-tight text-ink md:text-5xl">Uy, aquí no hay nada</h1>
             <p className="mt-3 max-w-md text-base text-ink-soft">
               La dirección no existe o el producto ya no está disponible. Sigue comprando desde el inicio.
             </p>
@@ -59,5 +57,5 @@ export default function NotFoundPage() {
         </div>
       </main>
     </>
-  )
+  );
 }

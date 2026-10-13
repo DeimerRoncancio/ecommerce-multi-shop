@@ -8,7 +8,7 @@ export default function DeliverySkeleton() {
         <div className="mt-2 h-4 w-80 max-w-full animate-pulse rounded bg-base-200" />
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          {[0, 1].map((card) => (
+          {[0, 1].map(card => (
             <div key={card} className="flex min-h-28 flex-col gap-2.5 rounded-2xl border-2 border-line p-4">
               <div className="h-4 w-32 animate-pulse rounded bg-base-200" />
               <div className="h-3 w-4/5 animate-pulse rounded bg-base-200" />

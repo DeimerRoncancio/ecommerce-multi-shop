@@ -2,10 +2,10 @@ import { ProductTypes } from "../../products/types/product";
 import { CartItemType } from "../types/cart";
 
 type ProductToCartProps = {
-  product: ProductTypes,
-  quantity: number,
-  isExists: boolean
-}
+  product: ProductTypes;
+  quantity: number;
+  isExists: boolean;
+};
 
 export const productToCart = ({ product, quantity, isExists }: ProductToCartProps): CartItemType => {
   return {
@@ -17,9 +17,9 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
     isExists: isExists,
     productPrice: product.price,
     quantity: quantity,
-    variants: product.variants
-  }
-}
+    variants: product.variants,
+  };
+};
 
 // El endpoint /update-products recibe List<ProductItemDTO> y /create-transaction lo
 // envuelve en NewTransactionDTO.productItems; en ambos casos el objeto es el mismo.
@@ -27,6 +27,6 @@ export const productToCart = ({ product, quantity, isExists }: ProductToCartProp
 export const cartItemToProductItem = (item: CartItemType) => {
   return {
     id: item.id,
-    quantity: item.quantity
-  }
-}
+    quantity: item.quantity,
+  };
+};

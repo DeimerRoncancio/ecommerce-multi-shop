@@ -16,7 +16,7 @@ const SEARCH_DELAY = 250;
 const normalize = (value: string) => value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 export default function Search() {
-  const loaderCategories = ((useLoaderData() as { categories?: CategoriesType[] } | undefined)?.categories ?? []);
+  const loaderCategories = (useLoaderData() as { categories?: CategoriesType[] } | undefined)?.categories ?? [];
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -86,10 +86,7 @@ export default function Search() {
   const showPanel = open && (term ? true : categories.length > 0);
 
   return (
-    <div
-      className="relative w-full"
-      onBlur={event => !event.currentTarget.contains(event.relatedTarget) && close()}
-    >
+    <div className="relative w-full" onBlur={event => !event.currentTarget.contains(event.relatedTarget) && close()}>
       <form
         role="search"
         onSubmit={onSubmit}
@@ -182,8 +179,8 @@ export default function Search() {
 
           {term && !results.length && !searching && (
             <p className="px-4 py-5 text-sm text-ink-soft">
-              No encontramos productos para <b className="text-ink">"{query.trim()}"</b>. Prueba con otra palabra
-              o mira las categorías.
+              No encontramos productos para <b className="text-ink">"{query.trim()}"</b>. Prueba con otra palabra o mira
+              las categorías.
             </p>
           )}
 

@@ -19,7 +19,16 @@ const tones = {
   error: { line: "border-error", icon: "bg-error/10 text-error" },
 };
 
-export default function Modal({ open, onClose, title, description, icon, tone = "brand", children, footer }: ModalProps) {
+export default function Modal({
+  open,
+  onClose,
+  title,
+  description,
+  icon,
+  tone = "brand",
+  children,
+  footer,
+}: ModalProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);

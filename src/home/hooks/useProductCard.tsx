@@ -8,9 +8,7 @@ export default function useProductCard() {
   const { cartItems, handleAddItem, handleRemoveItem } = useCart();
 
   const toggleCart = (product: ProductTypes) => {
-    cartItems.some(item => item.id === product.id)
-      ? handleRemoveItem(product)
-      : handleAddItem(product);
+    cartItems.some(item => item.id === product.id) ? handleRemoveItem(product) : handleAddItem(product);
   };
 
   const toggleWishList = (product: ProductTypes) => {

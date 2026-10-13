@@ -10,23 +10,27 @@ import type { action } from "../../routes/profile-settings";
 
 type Props = {
   user: UserTypes;
-}
+};
 
 export default function ChangePasswordForm({ user }: Props) {
   const fetcher = useFetcher<typeof action>();
   const passwordLoading = fetcher.state !== "idle";
 
   const {
-    showConfirmModal, isSuccess, handlerErrors,
-    confirmModal, success, clearErrors,
-    handleErrors, onCloseConfirmModal
+    showConfirmModal,
+    isSuccess,
+    handlerErrors,
+    confirmModal,
+    success,
+    clearErrors,
+    handleErrors,
+    onCloseConfirmModal,
   } = useChangePassword();
 
-  const {
-    formData, errors,
-    handleSubmit, submit,
-    reset, register,
-  } = useChangePasswordForm({ handlerErrors, confirmModal });
+  const { formData, errors, handleSubmit, submit, reset, register } = useChangePasswordForm({
+    handlerErrors,
+    confirmModal,
+  });
 
   const sendData = () => {
     if (!formData) return;
@@ -34,7 +38,7 @@ export default function ChangePasswordForm({ user }: Props) {
       { intent: "password", id: user.id, currentPassword: formData.currentPassword, newPassword: formData.newPassword },
       { method: "post" },
     );
-  }
+  };
 
   useEffect(() => {
     if (fetcher.state !== "idle" || !fetcher.data) return;

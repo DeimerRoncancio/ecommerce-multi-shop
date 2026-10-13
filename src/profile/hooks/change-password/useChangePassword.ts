@@ -6,7 +6,7 @@ import { SnackbarUtilities } from "../../../shared/utilities/snackbar-manager";
 type PasswordError = {
   status?: number;
   errorCode?: string;
-}
+};
 
 export default function useChangePassword() {
   const [handlerErrors, setHandlerErrors] = useState<Partial<Record<PasswordFieldErrors, string>>>({});
@@ -19,29 +19,29 @@ export default function useChangePassword() {
     setTimeout(() => {
       setConfirmModal(false);
       setSuccess(false);
-    }, 1000)
-  }
+    }, 1000);
+  };
 
   const handleErrors = ({ status, errorCode }: PasswordError) => {
     setConfirmModal(false);
 
     if (errorCode === ERROR.PASSWORD_UNAUTHORIZED && status === 401) {
       setHandlerErrors({
-        currentPassword: ERROR_MESSAGES.currentPassword
+        currentPassword: ERROR_MESSAGES.currentPassword,
       });
       return;
     }
 
     if (errorCode === ERROR.MATCH_PASSWORD && status === 401) {
       setHandlerErrors({
-        newPassword: ERROR_MESSAGES.newPassword
+        newPassword: ERROR_MESSAGES.newPassword,
       });
       return;
     }
 
     SnackbarUtilities.error("No pudimos cambiar tu contraseña. Inténtalo de nuevo.");
-  }
-  
+  };
+
   const onCloseConfirmModal = () => setConfirmModal(false);
 
   const clearErrors = () => setHandlerErrors({});
@@ -57,5 +57,5 @@ export default function useChangePassword() {
     clearErrors,
     handleErrors,
     onCloseConfirmModal,
-  }
+  };
 }

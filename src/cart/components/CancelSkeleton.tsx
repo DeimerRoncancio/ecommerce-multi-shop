@@ -18,7 +18,7 @@ export default function CancelSkeleton() {
         </div>
 
         <div className="mt-3 flex flex-col gap-3 border-y border-line py-3">
-          {[0, 1, 2].map((row) => (
+          {[0, 1, 2].map(row => (
             <div key={row} className="flex justify-between gap-4">
               <div className="h-4 w-1/2 animate-pulse rounded bg-base-200" />
               <div className="h-4 w-20 animate-pulse rounded bg-base-200" />

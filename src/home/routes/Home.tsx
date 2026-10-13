@@ -68,7 +68,11 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       </CatalogSection>
 
       {budget.length > 0 && (
-        <CatalogSection id="precios-bajos" title="Precios bajos" subtitle="Lo más económico de la tienda, con envío gratis.">
+        <CatalogSection
+          id="precios-bajos"
+          title="Precios bajos"
+          subtitle="Lo más económico de la tienda, con envío gratis."
+        >
           <ProductCarousel products={budget} renderItem={renderCard} label="Precios bajos" />
         </CatalogSection>
       )}

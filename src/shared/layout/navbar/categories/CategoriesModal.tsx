@@ -90,8 +90,10 @@ export default function CategoriesModal({ category, showModal, changeVisibility 
                   className="group flex h-full min-h-40 flex-col items-center justify-center gap-2 border-2 border-dashed
                     border-(--cat) bg-(--cat-soft) p-4 text-center transition-colors hover:bg-base-100"
                 >
-                  <span className="grid h-11 w-11 place-items-center rounded-full bg-(--cat) text-white
-                    transition-transform group-hover:translate-x-1">
+                  <span
+                    className="grid h-11 w-11 place-items-center rounded-full bg-(--cat) text-white
+                    transition-transform group-hover:translate-x-1"
+                  >
                     <FiArrowRight size={20} />
                   </span>
                   <span className="font-extrabold text-(--cat)">Ver {countLabel}</span>

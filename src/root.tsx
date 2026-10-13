@@ -1,11 +1,4 @@
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "react-router";
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import { useEffect } from "react";
 import { SnackbarProvider } from "notistack";
@@ -41,9 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <div id="root">
-          {children}
-        </div>
+        <div id="root">{children}</div>
         <ScrollRestoration />
         <Scripts />
       </body>

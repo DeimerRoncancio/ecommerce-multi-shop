@@ -15,7 +15,7 @@ export const getSessionUser = async (session: AppSession): Promise<UserTypes | n
 
   return getUser(token)
     .then(apiToUserTypes)
-    .catch((error) => {
+    .catch(error => {
       if (isAxiosError(error) && error.response?.status === 401) session.unset("token");
       return null;
     });

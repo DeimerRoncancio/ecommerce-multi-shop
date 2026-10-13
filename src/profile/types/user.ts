@@ -38,25 +38,25 @@ export interface PasswordRequestType {
   newPassword: string;
 }
 
-export type PasswordFieldErrors = 'currentPassword' | 'newPassword';
+export type PasswordFieldErrors = "currentPassword" | "newPassword";
 
 export const ERROR = {
-  PASSWORD_UNAUTHORIZED: 'PASSWORD_UNAUTHORIZED',
-  MATCH_PASSWORD: 'MATCH_PASSWORD'
-}
+  PASSWORD_UNAUTHORIZED: "PASSWORD_UNAUTHORIZED",
+  MATCH_PASSWORD: "MATCH_PASSWORD",
+};
 
 export const ERROR_MESSAGES: Record<PasswordFieldErrors, string> = {
-  currentPassword: 'Esta no es tu contraseña actual',
-  newPassword: 'Esta ya es tu contraseña actual',
-}
+  currentPassword: "Esta no es tu contraseña actual",
+  newPassword: "Esta ya es tu contraseña actual",
+};
 
 export interface UpdateRequestTypes {
-  name: string,
-  secondName: string | undefined,
-  lastnames: string | undefined,
-  phoneNumber: string | undefined,
-  gender: string | undefined,
-  email: string
+  name: string;
+  secondName: string | undefined;
+  lastnames: string | undefined;
+  phoneNumber: string | undefined;
+  gender: string | undefined;
+  email: string;
 }
 
 export interface UserUpdateTypes {

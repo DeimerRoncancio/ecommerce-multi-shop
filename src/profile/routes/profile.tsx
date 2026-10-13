@@ -1,4 +1,4 @@
-import { useFetcher, useOutletContext } from "react-router"
+import { useFetcher, useOutletContext } from "react-router";
 import { UserTypes, UserUpdateTypes } from "../types/user";
 import UserDataField from "../components/UserDataField";
 import UserDataRadio from "../components/UserDataRadio";
@@ -21,8 +21,8 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 type userContext = {
-  user: UserTypes
-}
+  user: UserTypes;
+};
 
 export default function Profile() {
   const { user } = useOutletContext<userContext>();
@@ -30,19 +30,14 @@ export default function Profile() {
   const fetcher = useFetcher<typeof action>();
   const saving = fetcher.state !== "idle";
 
-  const {
-    userInitialValues,
-    currentValues,
-    register,
-    handleSubmit, reset
-  } = useUserService({ user });
+  const { userInitialValues, currentValues, register, handleSubmit, reset } = useUserService({ user });
 
-  const onSubmit: SubmitHandler<UserUpdateTypes> = (data) => {
-    fetcher.submit(
-      JSON.stringify({ id: user.id, ...updateTypesToRequestTypes(data) }),
-      { method: "post", encType: "application/json" },
-    );
-  }
+  const onSubmit: SubmitHandler<UserUpdateTypes> = data => {
+    fetcher.submit(JSON.stringify({ id: user.id, ...updateTypesToRequestTypes(data) }), {
+      method: "post",
+      encType: "application/json",
+    });
+  };
 
   useEffect(() => {
     if (fetcher.state !== "idle" || !fetcher.data) return;
@@ -56,7 +51,7 @@ export default function Profile() {
     const keys = Object.keys(userInitialValues) as (keyof UserUpdateTypes)[];
     const isChanged = keys.some(key => currentValues[key] !== userInitialValues[key]);
     setIsActive(isChanged);
-  }
+  };
 
   useEffect(() => handleActive(), [currentValues]);
 
@@ -68,28 +63,10 @@ export default function Profile() {
         <div>
           <h3 className="mb-3 text-xs font-extrabold uppercase tracking-[0.08em] text-brand">Información personal</h3>
           <div className="grid gap-x-4 gap-y-3 sm:grid-cols-2">
-            <UserDataField
-              register={register}
-              name="names"
-              fieldName="Nombres(s)"
-            />
-            <UserDataField
-              register={register}
-              name="lastnames"
-              fieldName="Apellido(s)"
-            />
-            <UserDataField
-              register={register}
-              name="email"
-              fieldName="Correo electrónico"
-              type="email"
-            />
-            <UserDataField
-              register={register}
-              name="phoneNumber"
-              fieldName="Número de teléfono"
-              type="tel"
-            />
+            <UserDataField register={register} name="names" fieldName="Nombres(s)" />
+            <UserDataField register={register} name="lastnames" fieldName="Apellido(s)" />
+            <UserDataField register={register} name="email" fieldName="Correo electrónico" type="email" />
+            <UserDataField register={register} name="phoneNumber" fieldName="Número de teléfono" type="tel" />
             <UserDataRadio register={register} />
           </div>
         </div>

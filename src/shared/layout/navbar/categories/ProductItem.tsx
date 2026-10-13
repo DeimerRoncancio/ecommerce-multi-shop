@@ -1,13 +1,13 @@
-import { Link } from "react-router"
-import { FiArrowRight } from "react-icons/fi"
-import { ProductItemType } from "../../../../products/types/product"
-import ProductImage from "../../../ui/ProductImage"
-import PriceTag from "../../../ui/PriceTag"
+import { Link } from "react-router";
+import { FiArrowRight } from "react-icons/fi";
+import { ProductItemType } from "../../../../products/types/product";
+import ProductImage from "../../../ui/ProductImage";
+import PriceTag from "../../../ui/PriceTag";
 
 type ProductItemProps = {
   product: ProductItemType;
-  closeModal: (isVisible: boolean) => void
-}
+  closeModal: (isVisible: boolean) => void;
+};
 
 export default function ProductItem({ product, closeModal }: ProductItemProps) {
   return (
@@ -34,5 +34,5 @@ export default function ProductItem({ product, closeModal }: ProductItemProps) {
         </div>
       </Link>
     </li>
-  )
+  );
 }

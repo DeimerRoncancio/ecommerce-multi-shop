@@ -23,10 +23,7 @@ export interface UserData {
   term3?: boolean | undefined;
 }
 
-export type CheckoutUserData = Pick<
-  UserData,
-  "names" | "lastnames" | "email" | "phone"
->;
+export type CheckoutUserData = Pick<UserData, "names" | "lastnames" | "email" | "phone">;
 
 export interface StepType {
   name: string;

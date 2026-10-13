@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import { create } from "zustand";
 import { WishListItemType } from "../types/wishlist";
 import { persist } from "zustand/middleware";
 
@@ -8,23 +8,28 @@ interface State {
   removeWishListItem: (id: string) => void;
 }
 
-export const useWishListStorage = create<State>()(persist((set, get) => {
-  return {
-    wishList: [],
+export const useWishListStorage = create<State>()(
+  persist(
+    (set, get) => {
+      return {
+        wishList: [],
 
-    addWishListItem: (wishListItem: WishListItemType) => {
-      const wishListItems = get().wishList;
-      
-      set({ wishList: [...wishListItems, wishListItem] });
-    },
+        addWishListItem: (wishListItem: WishListItemType) => {
+          const wishListItems = get().wishList;
 
-    removeWishListItem: (id: string) => {
-      const wishListItems = get().wishList;
-      const newWishList = wishListItems.filter(item => item.id !== id);
-      set({ wishList: [ ...newWishList ] });
+          set({ wishList: [...wishListItems, wishListItem] });
+        },
+
+        removeWishListItem: (id: string) => {
+          const wishListItems = get().wishList;
+          const newWishList = wishListItems.filter(item => item.id !== id);
+          set({ wishList: [...newWishList] });
+        },
+      };
     },
-  }
-}, {
-  name: 'wishListItems',
-  skipHydration: true,
-}))
+    {
+      name: "wishListItems",
+      skipHydration: true,
+    },
+  ),
+);

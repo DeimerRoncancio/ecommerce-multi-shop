@@ -18,11 +18,11 @@ const RELATED_SIZE = 12;
 const MIN_SAME_CATEGORY = 4;
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const product = await getProduct(params.id).catch((error) => {
+  const product = await getProduct(params.id).catch(error => {
     if (isAxiosError(error) && error.response?.status === 404) throw data(null, { status: 404 });
     throw error;
   });
-  
+
   const categories = product.categories.map(category => category.categoryName).join(",");
   const related = await getSuggestions({
     categories,

@@ -26,7 +26,10 @@ export default function CategoryGrid({ sections, covers }: CategoryGridProps) {
                 <span className="block font-extrabold text-(--cat)">{name}</span>
                 <span className="block text-xs text-ink-muted">{countLabel(count)}</span>
               </span>
-              <FiArrowRight size={16} className="shrink-0 text-(--cat) transition-transform group-hover:translate-x-1" />
+              <FiArrowRight
+                size={16}
+                className="shrink-0 text-(--cat) transition-transform group-hover:translate-x-1"
+              />
             </span>
           </a>
         </li>

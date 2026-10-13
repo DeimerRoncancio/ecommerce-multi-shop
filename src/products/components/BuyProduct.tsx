@@ -26,9 +26,7 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
   };
 
   const handleToggleWishList = () => {
-    inWishList
-      ? handleRemoveWishListItem(productFromApi.id)
-      : handleAddWishListItem(mapApiToProducts(productFromApi));
+    inWishList ? handleRemoveWishListItem(productFromApi.id) : handleAddWishListItem(mapApiToProducts(productFromApi));
   };
 
   return (
@@ -44,23 +42,21 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
         >
           <IoBagHandleOutline size={18} />
           {inCart ? "Agregado al carrito" : "Agregar al carrito"}
-          <span className="font-semibold">
-            · {formatPrice(productFromApi.price * quantity)}
-          </span>
+          <span className="font-semibold">· {formatPrice(productFromApi.price * quantity)}</span>
         </button>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-          <button
-            type="button"
-            onClick={handleToggleWishList}
-            className="btn h-12 gap-2 rounded-full sticker sticker-hover bg-base-100 text-ink
+        <button
+          type="button"
+          onClick={handleToggleWishList}
+          className="btn h-12 gap-2 rounded-full sticker sticker-hover bg-base-100 text-ink
               hover:border-brand hover:bg-brand-soft hover:text-secondary-content font-semibold"
-          >
-            {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}
-            {inWishList ? "En tu lista" : "Lista de deseos"}
-          </button>
-          <BuyButton product={productFromApi} quantity={quantity} />
+        >
+          {inWishList ? <IoMdHeart size={18} className="text-brand" /> : <IoIosHeartEmpty size={18} />}
+          {inWishList ? "En tu lista" : "Lista de deseos"}
+        </button>
+        <BuyButton product={productFromApi} quantity={quantity} />
       </div>
     </div>
   );

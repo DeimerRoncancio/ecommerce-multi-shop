@@ -4,8 +4,8 @@ import { useFetcher } from "react-router";
 type LogoutActionProps = {
   children: React.ReactNode;
   disabled?: boolean;
-  className?: string
-}
+  className?: string;
+};
 
 export default function LogoutActionButton({ children, disabled, className }: LogoutActionProps) {
   const fetcher = useFetcher();
@@ -20,5 +20,5 @@ export default function LogoutActionButton({ children, disabled, className }: Lo
         {children}
       </button>
     </fetcher.Form>
-  )
+  );
 }

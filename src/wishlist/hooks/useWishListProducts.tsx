@@ -13,8 +13,9 @@ export default function useWishListProducts(wishList: WishListItemType[]) {
 
     let current = true;
 
-    Promise.all(ids.split(",").map(id => findProduct(id).catch(() => null)))
-      .then(found => current && setProducts(found.filter(product => product !== null).map(mapApiToProducts)));
+    Promise.all(ids.split(",").map(id => findProduct(id).catch(() => null))).then(
+      found => current && setProducts(found.filter(product => product !== null).map(mapApiToProducts)),
+    );
 
     return () => {
       current = false;

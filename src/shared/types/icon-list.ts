@@ -7,25 +7,25 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { MdOutlineShoppingBag, MdOutlineShoppingCart } from "react-icons/md";
 
 export const IconList = {
-    instagram: FaInstagram,
-    facebook: FaFacebook,
-    x: BsTwitterX,
-    tiktok: FaTiktok,
-    youtube: FaYoutube,
-    linkedin: FaLinkedin,
-    location: SlLocationPin,
-    phone: BsTelephone,
-    email: TfiEmail,
-    profile: IoPersonCircleOutline,
-    wallet: IoWalletOutline,
-    wishlist: IoMdHeartEmpty,
-    purchases: BsInboxes,
-    addresses: IoLocationOutline,
-    settings: IoSettingsOutline,
-    cart: MdOutlineShoppingCart,
-    userData: BsPerson,
-    deliver: MdOutlineShoppingBag,
-    payment: FaDollarSign
-}
+  instagram: FaInstagram,
+  facebook: FaFacebook,
+  x: BsTwitterX,
+  tiktok: FaTiktok,
+  youtube: FaYoutube,
+  linkedin: FaLinkedin,
+  location: SlLocationPin,
+  phone: BsTelephone,
+  email: TfiEmail,
+  profile: IoPersonCircleOutline,
+  wallet: IoWalletOutline,
+  wishlist: IoMdHeartEmpty,
+  purchases: BsInboxes,
+  addresses: IoLocationOutline,
+  settings: IoSettingsOutline,
+  cart: MdOutlineShoppingCart,
+  userData: BsPerson,
+  deliver: MdOutlineShoppingBag,
+  payment: FaDollarSign,
+};
 
 export type IconName = keyof typeof IconList;

@@ -31,11 +31,7 @@ export default function Categories({ categories }: CategoriesProps) {
         ))}
       </ul>
 
-      <CategoriesModal
-        category={category}
-        showModal={isModalVisible}
-        changeVisibility={handleModalVisibility}
-      />
+      <CategoriesModal category={category} showModal={isModalVisible} changeVisibility={handleModalVisibility} />
     </>
   );
 }

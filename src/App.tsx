@@ -53,7 +53,7 @@ function App() {
         .then(() => deleteCheckoutTransaction(transactionId, checkoutAccessToken))
         .catch(() => undefined);
     }
-  }
+  };
 
   useEffect(() => {
     if (!location.pathname.startsWith("/cart")) {
@@ -70,7 +70,7 @@ function App() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
 
 export default App;

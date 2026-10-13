@@ -8,22 +8,6 @@ export type userType = {
   email: string;
 };
 
-type TypeUser = [
-  "name",
-  "secondName",
-  "lastnames",
-  "phoneNumber",
-  "gender",
-  "email",
-  "password",
-];
+type TypeUser = ["name", "secondName", "lastnames", "phoneNumber", "gender", "email", "password"];
 
-export const addUserType: TypeUser = [
-  "name",
-  "secondName",
-  "lastnames",
-  "phoneNumber",
-  "gender",
-  "email",
-  "password",
-];
+export const addUserType: TypeUser = ["name", "secondName", "lastnames", "phoneNumber", "gender", "email", "password"];

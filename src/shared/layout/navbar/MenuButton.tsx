@@ -37,9 +37,7 @@ export default function MenuButton({ categories }: MenuButtonProps) {
             isOpen ? "visible opacity-100" : "invisible opacity-0"
           }`}
       >
-        <p className="border-b border-line px-4 py-3 text-base font-extrabold">
-          Comprar por categoría
-        </p>
+        <p className="border-b border-line px-4 py-3 text-base font-extrabold">Comprar por categoría</p>
         <ul className="py-1">
           {categories.map(category => (
             <li key={category.id} style={categoryStyle(category.name)}>
@@ -54,8 +52,7 @@ export default function MenuButton({ categories }: MenuButtonProps) {
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">{category.name}</span>
                   <span className="block text-xs text-ink-muted">
-                    {category.productCount}{" "}
-                    {category.productCount === 1 ? "producto" : "productos"}
+                    {category.productCount} {category.productCount === 1 ? "producto" : "productos"}
                   </span>
                 </span>
                 <FiChevronRight size={16} className="text-ink-muted" />

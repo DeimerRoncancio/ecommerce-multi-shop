@@ -11,4 +11,4 @@ export const getValidationError = (error: AxiosError) => {
   if (status && status >= 400) return "Revisa los datos e inténtalo de nuevo.";
 
   return "Algo salió mal. Inténtalo de nuevo.";
-}
+};

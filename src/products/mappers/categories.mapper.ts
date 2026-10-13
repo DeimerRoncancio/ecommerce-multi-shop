@@ -1,4 +1,4 @@
-import { CategoriesFromApiType, CategoriesType } from "../types/categories"
+import { CategoriesFromApiType, CategoriesType } from "../types/categories";
 
 export const mapApiToCategories = (apiResponse: CategoriesFromApiType): CategoriesType => {
   return {
@@ -6,6 +6,6 @@ export const mapApiToCategories = (apiResponse: CategoriesFromApiType): Categori
     name: apiResponse.categoryName,
     productCount: apiResponse.productCount,
     fromPrice: apiResponse.fromPrice,
-    products: apiResponse.products
-  }
-}
+    products: apiResponse.products,
+  };
+};

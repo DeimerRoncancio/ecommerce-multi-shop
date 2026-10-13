@@ -22,9 +22,7 @@ export default function RecommendationItem({ product }: Props) {
       isInCart={inCart}
       isInWishList={inWishList}
       onToggleCart={() => (inCart ? handleRemoveItem(item) : handleAddItem(item))}
-      onToggleWishList={() =>
-        inWishList ? handleRemoveWishListItem(product.id) : handleAddWishListItem(item)
-      }
+      onToggleWishList={() => (inWishList ? handleRemoveWishListItem(product.id) : handleAddWishListItem(item))}
     />
   );
 }

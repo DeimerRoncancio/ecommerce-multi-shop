@@ -34,9 +34,7 @@ export default function WishList() {
         <div className="flex flex-col items-center gap-4 py-16 text-center">
           <img src="/images/box-empty.png" alt="" width={140} />
           <p className="text-xl font-bold text-ink">Tu lista de deseos está vacía</p>
-          <p className="max-w-sm text-ink-muted">
-            Guarda aquí los productos que te gustan para comprarlos después.
-          </p>
+          <p className="max-w-sm text-ink-muted">Guarda aquí los productos que te gustan para comprarlos después.</p>
         </div>
       ) : (
         <ul className="flex flex-col gap-2.5">

@@ -33,16 +33,9 @@ export default function CartContent() {
         const transaction = await createTransaction(cartItems.map(cartItemToProductItem));
 
         Cookie.set("transactionId", transaction.transactionId);
-        sessionStorage.setItem(
-          CHECKOUT_ACCESS_TOKEN_STORAGE_KEY,
-          transaction.checkoutAccessToken,
-        );
+        sessionStorage.setItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY, transaction.checkoutAccessToken);
       } else {
-        await updateTransactionProducts(
-          transactionId,
-          checkoutAccessToken,
-          cartItems.map(cartItemToProductItem),
-        );
+        await updateTransactionProducts(transactionId, checkoutAccessToken, cartItems.map(cartItemToProductItem));
       }
 
       nextSteps("Carrito");
@@ -76,9 +69,7 @@ export default function CartContent() {
             <li className="flex flex-col items-center gap-3 px-4 py-16 text-center">
               <img src="/images/box-empty.png" alt="" width={110} />
               <p className="text-lg font-bold text-ink">Tu carrito está vacío</p>
-              <p className="max-w-xs text-sm text-ink-muted">
-                Agrega productos desde el catálogo y aparecerán aquí.
-              </p>
+              <p className="max-w-xs text-sm text-ink-muted">Agrega productos desde el catálogo y aparecerán aquí.</p>
               <button
                 type="button"
                 onClick={() => navigate("/")}

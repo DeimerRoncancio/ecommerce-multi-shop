@@ -4,17 +4,19 @@ import type { CheckoutUserData } from "./cart/types/cart";
 type SessionData = {
   token: string;
   checkoutUser: CheckoutUserData;
-}
+};
 
 type SessionFlashData = {
   error: string;
-}
+};
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret)
-  throw new Error("SESSION_SECRET is not set. Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"");
+  throw new Error(
+    "SESSION_SECRET is not set. Generate one with: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
+  );
 
-const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData> ({
+const { getSession, commitSession, destroySession } = createCookieSessionStorage<SessionData, SessionFlashData>({
   cookie: {
     name: "___session",
     httpOnly: true,
@@ -22,9 +24,9 @@ const { getSession, commitSession, destroySession } = createCookieSessionStorage
     path: "/",
     sameSite: "lax",
     secrets: [sessionSecret],
-    secure: true
-  }
-})
+    secure: true,
+  },
+});
 
 export type AppSession = Session<SessionData, SessionFlashData>;
 

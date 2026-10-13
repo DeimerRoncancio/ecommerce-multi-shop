@@ -58,13 +58,17 @@ export default function PromoPair({ highlight, category, reversed = false }: Pro
           <span className="text-sm font-bold uppercase tracking-wider text-(--cat)">Explora</span>
           <span className="text-3xl font-extrabold leading-tight text-ink">Todo en {category.name}</span>
           <span className="text-ink-soft">{category.count} productos con envío gratis</span>
-          <span className="mt-1 inline-flex items-center gap-1.5 font-bold text-(--cat) underline-offset-4
-            group-hover:underline">
+          <span
+            className="mt-1 inline-flex items-center gap-1.5 font-bold text-(--cat) underline-offset-4
+            group-hover:underline"
+          >
             Ir a {category.name.toLowerCase()} <FiArrowRight size={16} />
           </span>
         </span>
-        <span className="block h-32 w-32 shrink-0 rotate-3 bg-white p-3 shadow-card-hover transition-transform
-          group-hover:rotate-0 sm:h-40 sm:w-40">
+        <span
+          className="block h-32 w-32 shrink-0 rotate-3 bg-white p-3 shadow-card-hover transition-transform
+          group-hover:rotate-0 sm:h-40 sm:w-40"
+        >
           <ProductImage src={category.image} width={300} alt="" />
         </span>
       </a>

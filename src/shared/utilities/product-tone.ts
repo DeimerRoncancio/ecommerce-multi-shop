@@ -1,13 +1,4 @@
-const tones = [
-  "bg-peach",
-  "bg-sky",
-  "bg-butter",
-  "bg-mint",
-  "bg-lilac",
-  "bg-rose",
-  "bg-stone",
-  "bg-aqua",
-] as const;
+const tones = ["bg-peach", "bg-sky", "bg-butter", "bg-mint", "bg-lilac", "bg-rose", "bg-stone", "bg-aqua"] as const;
 
 export const productTone = (id: string) => {
   let hash = 0;

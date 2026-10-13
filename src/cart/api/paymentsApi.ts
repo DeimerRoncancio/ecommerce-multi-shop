@@ -48,8 +48,7 @@ export const CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "checkoutAccessToken";
 
 export const PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY = "paidCheckoutAccessToken";
 
-export const getCheckoutAccessToken = (): string | null =>
-  sessionStorage.getItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
+export const getCheckoutAccessToken = (): string | null => sessionStorage.getItem(CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
 
 export const getPaidCheckoutAccessToken = (): string | null =>
   sessionStorage.getItem(PAID_CHECKOUT_ACCESS_TOKEN_STORAGE_KEY);
@@ -61,10 +60,7 @@ const withCheckoutAccess = (checkoutAccessToken: string) => ({
 export const createTransaction = async (
   productItems: Array<{ id: string; quantity: number }>,
 ): Promise<TransactionAccessResponse> => {
-  const { data } = await payments.post<TransactionAccessResponse>(
-    "/create-transaction",
-    { productItems },
-  );
+  const { data } = await payments.post<TransactionAccessResponse>("/create-transaction", { productItems });
 
   return data;
 };
@@ -93,13 +89,10 @@ export const updateTransactionProducts = async (
   );
 };
 
-export const deleteTransaction = async (
-  transactionId: string,
-  checkoutAccessToken: string,
-): Promise<void> => {
+export const deleteTransaction = async (transactionId: string, checkoutAccessToken: string): Promise<void> => {
   await payments.delete(`/${encodeURIComponent(transactionId)}`, {
     ...withCheckoutAccess(checkoutAccessToken),
-    validateStatus: (status) => status < 500,
+    validateStatus: status => status < 500,
   });
 };
 
@@ -116,10 +109,7 @@ export const createPaymentSession = async (
   return data;
 };
 
-export const cancelPaymentSession = async (
-  transactionId: string,
-  checkoutAccessToken: string,
-): Promise<void> => {
+export const cancelPaymentSession = async (transactionId: string, checkoutAccessToken: string): Promise<void> => {
   await payments.post(
     `/cancel-payment-session/${encodeURIComponent(transactionId)}`,
     undefined,
@@ -139,7 +129,7 @@ export const updateTransactionCustomer = async (
   if (authToken) {
     const response = await payments.put<string | null>(url, customer, {
       headers: { ...checkoutAccess.headers, Authorization: `Bearer ${authToken}` },
-      validateStatus: (status) => status < 400 || status === 401,
+      validateStatus: status => status < 400 || status === 401,
     });
 
     if (response.status !== 401) return response.data;
@@ -149,16 +139,13 @@ export const updateTransactionCustomer = async (
   return data;
 };
 
-export const getSavedAddresses = async (
-  authToken: string,
-): Promise<CustomerAddressRequest[]> => {
-  const response = await payments.get<CustomerAddressRequest[]>(
-    "/saved-addresses",
-    {
+export const getSavedAddresses = async (authToken: string): Promise<CustomerAddressRequest[]> => {
+  const response = await payments
+    .get<CustomerAddressRequest[]>("/saved-addresses", {
       headers: { Authorization: `Bearer ${authToken}` },
       validateStatus: () => true,
-    },
-  ).catch(() => null);
+    })
+    .catch(() => null);
 
   return response?.status === 200 ? response.data : [];
 };

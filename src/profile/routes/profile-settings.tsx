@@ -1,4 +1,4 @@
-import { redirect, useOutletContext } from "react-router"
+import { redirect, useOutletContext } from "react-router";
 import { UserTypes } from "../types/user";
 import type { Route } from "./+types/profile-settings";
 import { destroySession, getSession } from "../../sessions.server";
@@ -7,13 +7,15 @@ import ChangePasswordForm from "../components/change-password-form/ChangePasswor
 import DeleteForm from "../components/delete-account-form/DeleteForm";
 
 export async function action({ request }: Route.ActionArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-  const token = session.get('token') as string;
+  const session = await getSession(request.headers.get("Cookie"));
+  const token = session.get("token") as string;
   const form = await request.formData();
   const id = String(form.get("id"));
 
   if (form.get("intent") === "delete") {
-    const deleted = await deleteUserAccount(id, token).then(() => true).catch(() => false);
+    const deleted = await deleteUserAccount(id, token)
+      .then(() => true)
+      .catch(() => false);
     if (!deleted) return { ok: false as const };
 
     return redirect("/", { headers: { "Set-Cookie": await destroySession(session) } });
@@ -26,7 +28,7 @@ export async function action({ request }: Route.ActionArgs) {
 
   return updatePassword(id, token, password)
     .then(() => ({ ok: true as const }))
-    .catch((err) => ({
+    .catch(err => ({
       ok: false as const,
       status: err.response?.status as number | undefined,
       errorCode: err.response?.data?.errorCode as string | undefined,
@@ -35,7 +37,7 @@ export async function action({ request }: Route.ActionArgs) {
 
 type userContext = {
   user: UserTypes;
-}
+};
 
 export default function ProfileSettings() {
   const { user } = useOutletContext<userContext>();
