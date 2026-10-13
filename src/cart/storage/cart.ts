@@ -25,12 +25,10 @@ export const useCartStore = create<State>()(persist((set, get) => {
           ...items.slice(cartItemIndex + 1)
         ]
 
-        localStorage.setItem("cartItems", JSON.stringify(newItems));
         set({ cartItems: newItems });
         return;
       }
 
-      localStorage.setItem("cartItems", JSON.stringify([ ...items, productItem ]));
       set({ cartItems: [ ...items, productItem ] });
     },
 
@@ -41,7 +39,6 @@ export const useCartStore = create<State>()(persist((set, get) => {
         item.id === productItem.id ? productItem : item
       );
 
-      localStorage.setItem("cartItems", JSON.stringify(newItems));
       set({ cartItems: newItems });
       return;
     },
@@ -57,14 +54,12 @@ export const useCartStore = create<State>()(persist((set, get) => {
           ...items.slice(cartItemIndex + 1)
         ]
         
-        localStorage.setItem("cartItems", JSON.stringify([ ...newItems ]))
         set({ cartItems: [ ...newItems ] });
         return;
       }
 
       const itemsUpdated = items.filter(item => item.id !== productItem.id);
       
-      localStorage.setItem("cartItems", JSON.stringify([ ...itemsUpdated ]));
       set({ cartItems: [ ...itemsUpdated ] })
     },
 

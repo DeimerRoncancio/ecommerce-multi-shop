@@ -15,14 +15,12 @@ export const useWishListStorage = create<State>()(persist((set, get) => {
     addWishListItem: (wishListItem: WishListItemType) => {
       const wishListItems = get().wishList;
       
-      localStorage.setItem("wishListItems", JSON.stringify([...wishListItems, wishListItem]));
       set({ wishList: [...wishListItems, wishListItem] });
     },
 
     removeWishListItem: (id: string) => {
       const wishListItems = get().wishList;
       const newWishList = wishListItems.filter(item => item.id !== id);
-      localStorage.setItem("wishListItems", JSON.stringify([ ...newWishList ]));
       set({ wishList: [ ...newWishList ] });
     },
   }
