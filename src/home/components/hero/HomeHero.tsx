@@ -1,6 +1,7 @@
 import { useRouteLoaderData } from "react-router";
 import type { loader as appLoader } from "../../../App";
 import { CatalogSection } from "../../utilities/catalog";
+import { ProductTypes } from "../../../products/types/product";
 import HeroBanner from "./HeroBanner";
 import HeroPerks from "./HeroPerks";
 import HeroPromos from "./HeroPromos";
@@ -15,9 +16,10 @@ export type HeroCategory = {
 type Props = {
   sections: CatalogSection[];
   covers: Map<string, string | undefined>;
+  picks: ProductTypes[];
 };
 
-export default function HomeHero({ sections, covers }: Props) {
+export default function HomeHero({ sections, covers, picks }: Props) {
   const summaries = useRouteLoaderData<typeof appLoader>("App")?.categories ?? [];
 
   const categories: HeroCategory[] = sections.map(({ name, slug }) => ({
@@ -29,7 +31,7 @@ export default function HomeHero({ sections, covers }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <HeroBanner categories={categories} />
+      <HeroBanner categories={categories} picks={picks} />
       <HeroPerks />
       <HeroPromos categories={categories} />
     </div>

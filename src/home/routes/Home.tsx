@@ -13,6 +13,7 @@ import StoreBenefits from "../components/StoreBenefits";
 import useProductCard from "../hooks/useProductCard";
 import useScrollToHash from "../hooks/useScrollToHash";
 import { countLabel, pickCovers } from "../utilities/catalog";
+import { heroProductNames } from "../constants/home.helper";
 import { buildInterludes } from "../utilities/interludes";
 import type { Route } from "./+types/Home";
 
@@ -53,12 +54,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   const covers = pickCovers(sections);
   const featured = top[0];
+  const catalog = [...top, ...budget, ...sections.flatMap(({ items }) => items)];
+  const heroPicks = heroProductNames.flatMap(name => catalog.find(product => product.name === name) ?? []);
   const interludes = buildInterludes({ sections, covers, top, featured, budget });
 
   return (
     <div className="flex flex-col gap-12 pb-16 pt-6">
       <Container>
-        <HomeHero sections={sections} covers={covers} />
+        <HomeHero sections={sections} covers={covers} picks={heroPicks} />
       </Container>
 
       <CatalogSection id="catalogo" title="Explora por categoría">

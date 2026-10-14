@@ -3,14 +3,25 @@ import { FiArrowRight } from "react-icons/fi";
 import { productImageCutout } from "../../../shared/utilities/product-image";
 import { heroChips, heroFeatures } from "../../constants/home.helper";
 import { HeroCategory } from "./HomeHero";
-import HeroScene from "./HeroScene";
+import HeroScene, { SceneProduct } from "./HeroScene";
+import { ProductTypes } from "../../../products/types/product";
 
 type Props = {
   categories: HeroCategory[];
+  picks: ProductTypes[];
 };
 
-export default function HeroBanner({ categories }: Props) {
-  const products = categories.flatMap(({ name, slug, cover }) => (cover ? [{ name, slug, image: cover }] : []));
+export default function HeroBanner({ categories, picks }: Props) {
+  const picked: SceneProduct[] = picks.flatMap(({ id, name, images }) =>
+    images[0] ? [{ name, href: `/product/${id}`, image: images[0].imageUrl }] : [],
+  );
+  const images = new Set(picked.map(({ image }) => image));
+  const products: SceneProduct[] = [
+    ...picked,
+    ...categories.flatMap(({ name, slug, cover }) =>
+      cover && !images.has(cover) ? [{ name, href: `#${slug}`, image: cover }] : [],
+    ),
+  ];
 
   return (
     <section

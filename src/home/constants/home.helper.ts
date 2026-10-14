@@ -9,6 +9,15 @@ export const heroPerks = [
   { icon: FiRefreshCw, title: "30 días", text: "Para devolver" },
 ];
 
+export const heroProductNames = [
+  "Nevecon JLC",
+  "Tenis Adidas",
+  "Dualsense - Mando Playstation 5",
+  "Camisa Adidas",
+  "Arrocera",
+  "Hp Victus 15",
+];
+
 export const heroCoupon = { text: "+10% en tu primera compra", code: "MULTI10" };
 
 export const heroChips: { label: string; icon: IconType; color: string; href: string; active?: boolean }[] = [
