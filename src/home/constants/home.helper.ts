@@ -1,3 +1,6 @@
+import { IconType } from "react-icons";
+import { FaBolt, FaStar, FaTag, FaTruck } from "react-icons/fa6";
+import { PiChefHatFill, PiGameControllerFill, PiHouseFill, PiLaptopBold, PiTShirtBold } from "react-icons/pi";
 import { FiClock, FiPackage, FiRefreshCw, FiShield, FiShoppingCart, FiTruck } from "react-icons/fi";
 
 export const heroPerks = [
@@ -6,22 +9,33 @@ export const heroPerks = [
   { icon: FiRefreshCw, title: "30 días", text: "Para devolver" },
 ];
 
-export const heroCoupon = { text: "10% extra en tu primera compra", code: "MULTI10" };
+export const heroCoupon = { text: "+10% en tu primera compra", code: "MULTI10" };
+
+export const heroChips: { label: string; icon: IconType; color: string; href: string; active?: boolean }[] = [
+  { label: "Tecnología", icon: PiLaptopBold, color: "#7b4bd6", href: "#tecnologia", active: true },
+  { label: "Hogar", icon: PiHouseFill, color: "#ff4b14", href: "#catalogo" },
+  { label: "Moda", icon: PiTShirtBold, color: "#e8409a", href: "#ropa" },
+  { label: "Cocina", icon: PiChefHatFill, color: "#f5a000", href: "#cocina" },
+  { label: "Gamer", icon: PiGameControllerFill, color: "#22a95c", href: "#gamer" },
+];
+
+export const heroFeatures = [
+  { icon: FaTag, title: "Hasta 40% OFF", text: "En productos seleccionados", tone: "bg-brand", href: "#precios-bajos" },
+  { icon: FaTruck, title: "Envío gratis", text: "A todo el país", tone: "bg-[#7b4bd6]", href: "#beneficios" },
+  { icon: FaBolt, title: "Entrega rápida", text: "Desde 24 h", tone: "bg-success", href: "#beneficios" },
+  { icon: FaStar, title: "Productos destacados", text: "Las mejores marcas", tone: "bg-[#d98f00]", href: "#catalogo" },
+];
 
 export const heroPromos = [
   {
     category: "Tecnología",
     title: "Renueva tu setup",
     text: "Portátiles, monitores y audio con hasta 12 cuotas sin interés.",
-    tone: "light",
-    showPrice: false,
   },
   {
     category: "Cocina",
     title: "Cocina como chef",
     text: "Ollas, freidoras de aire y neveras listas para despacho.",
-    tone: "dark",
-    showPrice: true,
   },
 ] as const;
 

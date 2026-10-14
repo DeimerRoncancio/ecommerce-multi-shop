@@ -58,7 +58,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   return (
     <div className="flex flex-col gap-12 pb-16 pt-6">
       <Container>
-        <HomeHero products={top} sections={sections} covers={covers} />
+        <HomeHero sections={sections} covers={covers} />
       </Container>
 
       <CatalogSection id="catalogo" title="Explora por categoría">
@@ -84,6 +84,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         </Fragment>
       ))}
 
+      <div id="beneficios" className="scroll-mt-nav" />
       <StoreBenefits />
     </div>
   );

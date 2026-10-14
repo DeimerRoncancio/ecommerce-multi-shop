@@ -1,111 +1,124 @@
-import { Link } from "react-router";
+import { FaChevronRight, FaTag } from "react-icons/fa6";
 import { FiArrowRight } from "react-icons/fi";
-import ProductImage from "../../../shared/ui/ProductImage";
-import { categoryStyle } from "../../../shared/utilities/category-color";
-import { formatPrice } from "../../../shared/utilities/format-price";
-import { ProductTypes } from "../../../products/types/product";
+import { productImageCutout } from "../../../shared/utilities/product-image";
+import { heroChips, heroFeatures } from "../../constants/home.helper";
+import { HeroCategory } from "./HomeHero";
+import HeroScene from "./HeroScene";
 
 type Props = {
-  products: ProductTypes[];
+  categories: HeroCategory[];
 };
 
-const cardPositions = [
-  "left-[6%] top-1 z-10 -rotate-3",
-  "right-[8%] top-0 rotate-3",
-  "bottom-0 right-[2%] z-20 -rotate-2",
-];
+export default function HeroBanner({ categories }: Props) {
+  const products = categories.flatMap(({ name, slug, cover }) => (cover ? [{ name, slug, image: cover }] : []));
 
-export default function HeroBanner({ products }: Props) {
   return (
-    <section className="relative grid overflow-hidden rounded-2xl bg-brand text-white lg:grid-cols-[1.05fr_1fr]">
-      <span aria-hidden className="absolute -right-24 -top-28 h-96 w-96 rounded-full bg-brand-dark" />
-      <span aria-hidden className="absolute -bottom-40 right-1/3 h-72 w-72 rounded-full bg-brand-dark/60" />
-
-      <div className="relative flex flex-col items-start gap-4 p-7 sm:p-10">
-        <span className="bg-ink px-2.5 py-1 text-[0.7rem] font-extrabold uppercase tracking-[0.08em]">
-          Semana Multi · 14 al 20 de octubre
+    <section
+      className="relative overflow-hidden rounded-2xl border border-line bg-[#f4f0fc] xl:aspect-[1877/838]
+        xl:bg-[url(/images/hero-background.png)] xl:bg-cover"
+    >
+      <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:p-9 xl:max-w-[48%]">
+        <span className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-1.5 text-sm font-bold text-white">
+          <FaTag size={13} />
+          Ofertas de la semana
         </span>
 
-        <h1 className="text-4xl font-extrabold leading-[1.1] sm:text-5xl">
-          Hasta <mark className="whitespace-nowrap bg-sun px-2 text-ink">40% off</mark>
+        <h1 className="text-4xl font-extrabold leading-[1.05] text-ink sm:text-5xl">
+          Encuentra lo mejor
           <br />
-          en todo el carrito
+          <span className="text-brand">para tu día a día</span>
         </h1>
 
-        <p className="max-w-sm font-semibold text-white/95">
-          Tecnología, gamer, cocina y más. Envío gratis a toda Colombia y 30 días para devolver.
+        <p className="max-w-md text-ink-soft">
+          Tecnología, hogar, moda, cocina, gamer y mucho más en un solo lugar. Las mejores marcas, ofertas increíbles y
+          envío a todo Colombia.
         </p>
 
-        <div className="mt-2 flex flex-wrap gap-2.5">
+        <div className="mt-1 flex flex-wrap gap-3">
           <a
             href="#precios-bajos"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 font-bold text-white transition-colors
-              hover:bg-white hover:text-ink"
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-brand px-7 font-bold text-white
+              transition-colors hover:bg-ink"
           >
-            Ver ofertas
+            Comprar ahora
             <FiArrowRight size={17} />
           </a>
           <a
             href="#catalogo"
-            className="inline-flex h-12 items-center rounded-full bg-white px-6 font-bold text-ink transition-colors
-              hover:bg-ink hover:text-white"
+            className="inline-flex h-12 items-center rounded-full border-2 border-[#7b4bd6] bg-white px-7 font-bold
+              text-[#7b4bd6] transition-colors hover:bg-[#7b4bd6] hover:text-white"
           >
-            Explorar categorías
+            Ver categorías
           </a>
         </div>
-      </div>
 
-      <div className="relative hidden min-h-88 lg:block">
-        <span aria-hidden className="absolute -right-10 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-lilac" />
-
-        <div className="absolute inset-x-6 inset-y-7">
-          {products.slice(0, cardPositions.length).map((product, index) => {
-            const category = product.categories[0]?.categoryName;
-
-            return (
-              <Link
-                key={product.id}
-                to={`/product/${product.id}`}
-                style={categoryStyle(category)}
-                className={`absolute block w-44 rounded-xl bg-white p-2.5 text-ink shadow-card-hover transition-transform
-                  duration-200 hover:z-30 hover:rotate-0 hover:scale-105 xl:w-48 ${cardPositions[index]}`}
+        <ul className="mt-1 flex flex-wrap gap-2 xl:flex-nowrap">
+          {heroChips.map(({ label, icon: Icon, color, href, active }) => (
+            <li key={label}>
+              <a
+                href={href}
+                className={`inline-flex h-10 items-center gap-1.5 rounded-full border px-3 text-[0.8rem] font-semibold
+                  shadow-[0_6px_16px_-10px_rgb(17_17_17/0.35)] transition-colors hover:border-[#c9b6f2] ${
+                    active ? "border-[#c9b6f2] bg-lilac text-[#7b4bd6]" : "border-transparent bg-white text-ink"
+                  }`}
               >
-                <span className="block h-20 rounded-lg bg-cream p-2">
-                  <ProductImage
-                    src={product.images[0]?.imageUrl}
-                    width={240}
-                    alt={product.name}
-                    className="mix-blend-darken"
-                    loading="eager"
-                  />
-                </span>
-                {category && (
-                  <span className="mt-2 flex items-center gap-1.5 text-[0.7rem] font-semibold text-ink-soft">
-                    <span className="h-1.5 w-1.5 rounded-full bg-(--cat)" />
-                    {category}
-                  </span>
-                )}
-                <span className="block truncate text-sm font-extrabold">{product.name}</span>
-                <span className="mt-1 flex items-center gap-1.5 text-[0.7rem] text-ink-muted">
-                  desde
-                  <b className="bg-sun px-1.5 py-0.5 text-xs font-extrabold text-ink">{formatPrice(product.price)}</b>
-                </span>
-              </Link>
-            );
-          })}
-
-          <span
-            aria-hidden
-            className="absolute bottom-1 left-0 z-20 grid h-24 w-24 -rotate-12 place-items-center rounded-full bg-sun
-              text-center text-ink shadow-card-hover"
-          >
-            <span className="leading-none">
-              <small className="block text-[0.65rem] font-extrabold uppercase tracking-wide">Hasta</small>
-              <b className="text-3xl font-extrabold tracking-tight">-40%</b>
-            </span>
-          </span>
-        </div>
+                <Icon size={18} style={{ color }} />
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
+
+      {products.length > 0 && (
+        <>
+          <HeroScene
+            products={products}
+            crop={0}
+            imageOf={productImageCutout}
+            className="absolute inset-0 hidden xl:block"
+          />
+
+          <div className="px-6 sm:px-9 xl:hidden">
+            <HeroScene
+              products={products}
+              crop={0.38}
+              imageOf={productImageCutout}
+              className="relative aspect-[1164/838] overflow-hidden rounded-xl bg-[url(/images/hero-background.png)]
+                bg-[length:161.3%_100%] bg-right"
+            />
+          </div>
+        </>
+      )}
+
+      <ul
+        className="relative z-10 grid gap-3 p-6 sm:grid-cols-2 sm:p-9 lg:grid-cols-4 xl:absolute xl:inset-x-6 xl:bottom-5
+          xl:p-0"
+      >
+        {heroFeatures.map(({ icon: Icon, title, text, tone, href }) => (
+          <li key={title}>
+            <a
+              href={href}
+              className="group flex items-center gap-3 rounded-xl bg-white/90 p-3
+                shadow-[0_8px_20px_-14px_rgb(17_17_17/0.35)] backdrop-blur-sm transition-shadow hover:shadow-card-hover"
+            >
+              <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full text-white ${tone}`}>
+                <Icon size={18} />
+              </span>
+              <span className="min-w-0 flex-1 leading-tight">
+                <span className="block text-sm font-extrabold text-ink">{title}</span>
+                <span className="block text-xs text-ink-muted">{text}</span>
+              </span>
+              <span
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-lilac text-[#7b4bd6]
+                  transition-transform group-hover:translate-x-0.5"
+              >
+                <FaChevronRight size={11} />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
