@@ -6,7 +6,7 @@ import ProductCarousel from "../../products/components/ProductCarousel";
 import { ProductsFromApiType, ProductTypes } from "../../products/types/product";
 import Container from "../../shared/ui/Container";
 import { slugify } from "../../shared/utilities/slugify";
-import CatalogHero from "../components/CatalogHero";
+import HomeHero from "../components/hero/HomeHero";
 import CatalogSection from "../components/CatalogSection";
 import CategoryGrid from "../components/CategoryGrid";
 import StoreBenefits from "../components/StoreBenefits";
@@ -57,11 +57,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="flex flex-col gap-12 pb-16 pt-6">
-      {featured && (
-        <Container>
-          <CatalogHero product={featured} />
-        </Container>
-      )}
+      <Container>
+        <HomeHero products={top} sections={sections} covers={covers} />
+      </Container>
 
       <CatalogSection id="catalogo" title="Explora por categoría">
         <CategoryGrid sections={sections} covers={covers} />

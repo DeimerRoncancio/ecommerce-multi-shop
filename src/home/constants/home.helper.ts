@@ -6,6 +6,25 @@ export const heroPerks = [
   { icon: FiRefreshCw, title: "30 días", text: "Para devolver" },
 ];
 
+export const heroCoupon = { text: "10% extra en tu primera compra", code: "MULTI10" };
+
+export const heroPromos = [
+  {
+    category: "Tecnología",
+    title: "Renueva tu setup",
+    text: "Portátiles, monitores y audio con hasta 12 cuotas sin interés.",
+    tone: "light",
+    showPrice: false,
+  },
+  {
+    category: "Cocina",
+    title: "Cocina como chef",
+    text: "Ollas, freidoras de aire y neveras listas para despacho.",
+    tone: "dark",
+    showPrice: true,
+  },
+] as const;
+
 export const purchaseSteps = [
   { icon: FiShoppingCart, title: "Pides", text: "Eliges tus productos y pagas con tarjeta, PSE o efectivo." },
   { icon: FiPackage, title: "Despachamos", text: "Sale de nuestra bodega en menos de 24 horas." },
