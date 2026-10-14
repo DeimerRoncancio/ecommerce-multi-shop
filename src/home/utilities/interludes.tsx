@@ -4,7 +4,7 @@ import { formatPrice } from "../../shared/utilities/format-price";
 import CategorySpotlight from "../components/interludes/CategorySpotlight";
 import HowItWorks from "../components/interludes/HowItWorks";
 import PromoPair from "../components/interludes/PromoPair";
-import { interludeOrder } from "../constants/home.helper";
+import { interludeOrder, spotlightPicks } from "../constants/home.helper";
 import { CatalogSection } from "./catalog";
 
 type InterludesInput = {
@@ -27,7 +27,8 @@ export const buildInterludes = ({ sections, covers, top, featured, budget }: Int
 
     if (turn === "spotlight" && next) {
       const ranked = [...next.items].sort((a, b) => b.price - a.price);
-      const star = ranked.find(product => !shown.has(product.id)) ?? ranked[0];
+      const picked = next.items.find(product => product.name === spotlightPicks[next.name]);
+      const star = picked ?? ranked.find(product => !shown.has(product.id)) ?? ranked[0];
       shown.add(star.id);
       return <CategorySpotlight category={next.name} slug={next.slug} product={star} count={next.count} />;
     }

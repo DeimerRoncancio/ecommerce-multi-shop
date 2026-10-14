@@ -60,4 +60,8 @@ export const storeBenefits = [
   { icon: FiShield, title: "Pago protegido", text: "Tarjeta, PSE o efectivo, con tus datos cifrados." },
 ];
 
+export const spotlightPicks: Record<string, string> = {
+  Gamer: "Mando X-BOX Series X",
+};
+
 export const interludeOrder = ["spotlight", "promos", "steps", "spotlight", "promos"] as const;
