@@ -8,6 +8,7 @@ interface State {
   setItemQuantity: (productItem: CartItemType) => void;
   decreaseItem: (id: string) => void;
   removeItem: (id: string) => void;
+  replaceItems: (items: CartItemType[]) => void;
   clearCart: () => void;
 }
 
@@ -54,6 +55,10 @@ export const useCartStore = create<State>()(
 
         removeItem: (id: string) => {
           set({ cartItems: get().cartItems.filter(item => item.id !== id) });
+        },
+
+        replaceItems: (items: CartItemType[]) => {
+          set({ cartItems: items });
         },
 
         clearCart: () => {

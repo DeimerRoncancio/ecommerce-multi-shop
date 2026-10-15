@@ -25,7 +25,7 @@ export default function CartItem({ item }: CartItemProps) {
     updateQuantity,
   } = useCartItems({ itemId: item.id });
 
-  useEffect(() => handleTotalPrice(), [item.quantity]);
+  useEffect(() => handleTotalPrice(), [item.quantity, item.productPrice]);
 
   return (
     <li style={categoryStyle(item.category)} className="flex gap-4 border-b border-line py-5 sm:items-center sm:gap-5">

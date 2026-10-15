@@ -11,15 +11,21 @@ import {
   getCheckoutAccessToken,
   updateTransactionProducts,
 } from "../api/paymentsApi";
-import { cartItemToProductItem } from "../mappers/items.mapper";
+import { cartItemToProductItem, productToCart } from "../mappers/items.mapper";
+import { useCartStore } from "../storage/cart";
+import { getProductsByIds } from "../../products/services/products.api";
+import { mapApiToProducts } from "../../products/mappers/products.mapper";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import Cookie from "js-cookie";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
   const navigate = useNavigate();
   const { clearSteps, nextSteps } = useStepsStorage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const refreshed = useRef(false);
+  const ids = cartItems.map(({ id }) => id).join(",");
 
   const onContinue = async () => {
     if (isSubmitting) return;
@@ -48,6 +54,31 @@ export default function CartContent() {
   useEffect(() => {
     if (!Cookie.get("transactionId")) clearSteps();
   }, []);
+
+  useEffect(() => {
+    if (refreshed.current || !ids) return;
+    refreshed.current = true;
+
+    getProductsByIds(ids.split(","))
+      .then(found => {
+        const products = new Map(found.map(product => [product.id, mapApiToProducts(product)]));
+        const { cartItems: current, replaceItems } = useCartStore.getState();
+        const removed = current.filter(({ id }) => !products.has(id));
+
+        replaceItems(
+          current.flatMap(item => {
+            const product = products.get(item.id);
+            return product ? [productToCart({ product, quantity: item.quantity, isExists: true })] : [];
+          }),
+        );
+
+        if (removed.length)
+          SnackbarUtilities.warning(
+            `${removed.map(({ productName }) => productName).join(", ")} ya no está disponible y lo quitamos del carrito.`,
+          );
+      })
+      .catch(() => undefined);
+  }, [ids]);
 
   return (
     <Container className="grid items-start gap-8 pb-16 lg:grid-cols-[1fr_380px] lg:gap-12">

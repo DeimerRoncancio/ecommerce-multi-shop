@@ -56,6 +56,7 @@ export default function Root() {
       Components={{
         errorAlert: SnackbarNotice,
         success: SnackbarNotice,
+        warning: SnackbarNotice,
       }}
     >
       <Outlet />

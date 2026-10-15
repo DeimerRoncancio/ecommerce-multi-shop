@@ -1,14 +1,20 @@
 import { forwardRef } from "react";
 import { closeSnackbar, CustomContentProps, SnackbarContent } from "notistack";
-import { FiAlertCircle, FiCheck, FiX } from "react-icons/fi";
+import { FiAlertCircle, FiAlertTriangle, FiCheck, FiX } from "react-icons/fi";
 
 const styles = {
-  success: { icon: FiCheck, border: "border-t-success", badge: "bg-success", title: "Listo" },
-  error: { icon: FiAlertCircle, border: "border-t-error", badge: "bg-error", title: "Algo salió mal" },
+  success: { icon: FiCheck, border: "border-t-success", badge: "bg-success text-white", title: "Listo" },
+  error: { icon: FiAlertCircle, border: "border-t-error", badge: "bg-error text-white", title: "Algo salió mal" },
+  warning: { icon: FiAlertTriangle, border: "border-t-sun", badge: "bg-sun text-ink", title: "Atención" },
 };
 
 const SnackbarNotice = forwardRef<HTMLDivElement, CustomContentProps>(({ id, message, variant }, ref) => {
-  const { icon: Icon, border, badge, title } = variant === "success" ? styles.success : styles.error;
+  const {
+    icon: Icon,
+    border,
+    badge,
+    title,
+  } = variant === "success" ? styles.success : variant === "warning" ? styles.warning : styles.error;
 
   return (
     <SnackbarContent ref={ref} role="alert">
@@ -16,7 +22,7 @@ const SnackbarNotice = forwardRef<HTMLDivElement, CustomContentProps>(({ id, mes
         className={`flex w-[min(24rem,calc(100vw-2rem))] items-start gap-3 border border-t-4 border-line bg-base-100
           px-4 py-3.5 shadow-card-hover ${border}`}
       >
-        <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-white ${badge}`}>
+        <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${badge}`}>
           <Icon size={17} strokeWidth={2.5} />
         </span>
         <div className="min-w-0 flex-1 leading-tight">
