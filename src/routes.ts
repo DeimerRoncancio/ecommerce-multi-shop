@@ -19,6 +19,7 @@ export default [
     ]),
 
     route("product/:id", "products/routes/product-details.tsx"),
+    route("catalog", "products/routes/catalog.tsx"),
   ]),
 
   // Cart

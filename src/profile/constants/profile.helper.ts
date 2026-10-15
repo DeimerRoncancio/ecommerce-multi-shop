@@ -3,6 +3,7 @@ export const breadcrumbLabels: Record<string, { label: string; to?: string }> = 
   "wish-list": { label: "Lista de deseos" },
   settings: { label: "Configuración" },
   product: { label: "Productos", to: "/" },
+  catalog: { label: "Catálogo" },
 };
 
 export const profileGenderOptions = [
