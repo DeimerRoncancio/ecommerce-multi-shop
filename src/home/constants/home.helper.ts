@@ -55,9 +55,33 @@ export const purchaseSteps = [
 ];
 
 export const storeBenefits = [
-  { icon: FiTruck, title: "Envío gratis", text: "A todo el país, con despacho en 24 horas." },
-  { icon: FiRefreshCw, title: "30 días para devolver", text: "Si no te convence, lo devuelves sin costo." },
-  { icon: FiShield, title: "Pago protegido", text: "Tarjeta, PSE o efectivo, con tus datos cifrados." },
+  {
+    icon: FiTruck,
+    title: "Envío gratis",
+    text: "A todo el país, con despacho en 24 horas.",
+    strong: "#ff4b14",
+    soft: "#fff0e9",
+    badge: "Gratis",
+    tags: ["Todo el país", "Despacho 24 h"],
+  },
+  {
+    icon: FiRefreshCw,
+    title: "30 días para devolver",
+    text: "Si no te convence, lo devuelves sin costo.",
+    strong: "#7b4bd6",
+    soft: "#f1ebfc",
+    badge: "Sin costo",
+    tags: ["Cambios", "Devoluciones"],
+  },
+  {
+    icon: FiShield,
+    title: "Pago protegido",
+    text: "Tarjeta, PSE o efectivo, con tus datos cifrados.",
+    strong: "#0f9d58",
+    soft: "#e4f6eb",
+    badge: "100% seguro",
+    tags: ["Tarjeta", "PSE", "Efectivo"],
+  },
 ];
 
 export const spotlightPicks: Record<string, string> = {
