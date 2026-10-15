@@ -23,9 +23,9 @@ export default function CatalogFilters({ filters, facets, onChange }: CatalogFil
   };
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col divide-y divide-line">
       {categories.length > 0 && (
-        <section>
+        <section className="pb-5">
           <h2 className="mb-3 text-xs font-extrabold uppercase tracking-wider text-ink">Categorías</h2>
           <ul className="flex flex-col gap-1">
             {categories.map(({ categoryName, productCount }) => {
@@ -66,7 +66,7 @@ export default function CatalogFilters({ filters, facets, onChange }: CatalogFil
         </section>
       )}
 
-      <section>
+      <section className={categories.length ? "pt-5" : ""}>
         <h2 className="mb-3 text-xs font-extrabold uppercase tracking-wider text-ink">Precio</h2>
         <PriceFilter
           key={`${filters.min}-${filters.max}`}

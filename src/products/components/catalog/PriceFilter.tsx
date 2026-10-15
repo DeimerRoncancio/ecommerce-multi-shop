@@ -60,7 +60,7 @@ export default function PriceFilter({ min, max, bounds, onChange }: PriceFilterP
           min={0}
           value={from}
           onChange={event => setFrom(event.target.value)}
-          placeholder="Mínimo"
+          placeholder="Mín."
           aria-label="Precio mínimo"
           className={inputClass}
         />
@@ -71,7 +71,7 @@ export default function PriceFilter({ min, max, bounds, onChange }: PriceFilterP
           min={0}
           value={to}
           onChange={event => setTo(event.target.value)}
-          placeholder="Máximo"
+          placeholder="Máx."
           aria-label="Precio máximo"
           className={inputClass}
         />

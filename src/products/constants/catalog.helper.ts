@@ -1,4 +1,5 @@
 export const CATALOG_PAGE_SIZE = 12;
+export const NEWEST_SIZE = 10;
 
 export const catalogSorts = [
   { value: "nombre", label: "Nombre (A-Z)", api: "productName,asc" },

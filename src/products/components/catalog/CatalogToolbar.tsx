@@ -1,5 +1,5 @@
 import { FiSliders, FiX } from "react-icons/fi";
-import { catalogSorts } from "../../constants/catalog.helper";
+import { CATALOG_PAGE_SIZE, catalogSorts } from "../../constants/catalog.helper";
 import { CatalogFilters } from "../../types/catalog";
 import { categoryStyle } from "../../../shared/utilities/category-color";
 import { formatPrice } from "../../../shared/utilities/format-price";
@@ -8,6 +8,7 @@ import { countActiveFilters, emptyFilters } from "../../utilities/catalog-filter
 type CatalogToolbarProps = {
   filters: CatalogFilters;
   total: number;
+  shown: number;
   onChange: (changes: Partial<CatalogFilters>) => void;
   onOpenFilters: () => void;
 };
@@ -20,14 +21,25 @@ const priceLabel = (min: number | null, max: number | null) => {
 
 const chipClass = "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold transition-colors";
 
-export default function CatalogToolbar({ filters, total, onChange, onOpenFilters }: CatalogToolbarProps) {
+export default function CatalogToolbar({ filters, total, shown, onChange, onOpenFilters }: CatalogToolbarProps) {
   const active = countActiveFilters(filters);
+  const first = (filters.page - 1) * CATALOG_PAGE_SIZE + 1;
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-ink-muted">
-          <b className="text-ink">{total}</b> {total === 1 ? "producto" : "productos"}
+          {total ? (
+            <>
+              Mostrando{" "}
+              <b className="text-ink">
+                {first}–{first + shown - 1}
+              </b>{" "}
+              de <b className="text-ink">{total}</b> {total === 1 ? "producto" : "productos"}
+            </>
+          ) : (
+            "Sin resultados"
+          )}
         </p>
 
         <div className="flex items-center gap-2">

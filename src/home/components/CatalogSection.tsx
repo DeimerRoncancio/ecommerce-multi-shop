@@ -10,10 +10,11 @@ type CatalogSectionProps = {
   title: string;
   subtitle?: string;
   category?: string;
+  link?: { to: string; label: string };
   children: ReactNode;
 };
 
-export default function CatalogSection({ id, title, subtitle, category, children }: CatalogSectionProps) {
+export default function CatalogSection({ id, title, subtitle, category, link, children }: CatalogSectionProps) {
   return (
     <Container as="section">
       <div id={id} className="scroll-mt-nav" />
@@ -28,10 +29,10 @@ export default function CatalogSection({ id, title, subtitle, category, children
           {subtitle && <p className="mt-1 pl-4.5 font-semibold text-(--cat,var(--color-ink-soft))">{subtitle}</p>}
         </div>
         <Link
-          to={catalogLink({ category })}
+          to={link?.to ?? catalogLink({ category })}
           className="inline-flex items-center gap-1.5 text-sm font-bold text-brand hover:underline"
         >
-          {category ? `Ver todo en ${category}` : "Ver catálogo"}
+          {link?.label ?? (category ? `Ver todo en ${category}` : "Ver catálogo")}
           <FiArrowRight size={16} />
         </Link>
       </div>
