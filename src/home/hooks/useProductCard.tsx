@@ -1,9 +1,10 @@
 import useCart from "../../cart/hooks/useCart";
 import useWishList from "../../wishlist/hooks/useWishList";
 import ProductCard from "../../products/components/ProductCard";
+import MiniProductCard from "../../shared/ui/MiniProductCard";
 import { ProductTypes } from "../../products/types/product";
 
-export default function useProductCard() {
+export default function useProductCard(mini = false) {
   const { wishList, handleAddWishListItem, handleRemoveWishListItem } = useWishList();
   const { cartItems, handleAddItem, handleRemoveItem } = useCart();
 
@@ -17,16 +18,29 @@ export default function useProductCard() {
       : handleAddWishListItem(product);
   };
 
-  const renderCard = (product: ProductTypes, category?: string) => (
-    <ProductCard
-      category={category}
-      product={product}
-      isInCart={cartItems.some(item => item.id === product.id)}
-      isInWishList={wishList.some(item => item.id === product.id)}
-      onToggleCart={toggleCart}
-      onToggleWishList={toggleWishList}
-    />
-  );
+  const renderCard = (product: ProductTypes, category?: string) =>
+    mini ? (
+      <MiniProductCard
+        id={product.id}
+        name={product.name}
+        price={product.price}
+        image={product.images[0]?.imageUrl}
+        category={category ?? product.categories[0]?.categoryName}
+        isInCart={cartItems.some(item => item.id === product.id)}
+        isInWishList={wishList.some(item => item.id === product.id)}
+        onToggleCart={() => toggleCart(product)}
+        onToggleWishList={() => toggleWishList(product)}
+      />
+    ) : (
+      <ProductCard
+        category={category}
+        product={product}
+        isInCart={cartItems.some(item => item.id === product.id)}
+        isInWishList={wishList.some(item => item.id === product.id)}
+        onToggleCart={toggleCart}
+        onToggleWishList={toggleWishList}
+      />
+    );
 
   return renderCard;
 }
