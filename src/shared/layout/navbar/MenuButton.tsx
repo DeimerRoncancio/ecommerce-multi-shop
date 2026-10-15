@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { FiChevronDown, FiChevronRight, FiGrid } from "react-icons/fi";
 import { CategoriesType } from "../../../products/types/categories";
-import { slugify } from "../../utilities/slugify";
+import { catalogLink } from "../../../products/utilities/catalog-filters";
 import { categoryStyle } from "../../utilities/category-color";
 import ProductImage from "../../ui/ProductImage";
 
@@ -42,7 +42,7 @@ export default function MenuButton({ categories }: MenuButtonProps) {
           {categories.map(category => (
             <li key={category.id} style={categoryStyle(category.name)}>
               <Link
-                to={`/#${slugify(category.name)}`}
+                to={catalogLink({ category: category.name })}
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 border-l-4 border-transparent px-4 py-2 transition-colors hover:border-(--cat) hover:bg-(--cat-soft)"
               >

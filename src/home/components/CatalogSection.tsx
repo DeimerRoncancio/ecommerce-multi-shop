@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
+import { Link } from "react-router";
 import { FiArrowRight } from "react-icons/fi";
 import Container from "../../shared/ui/Container";
 import { categoryStyle } from "../../shared/utilities/category-color";
+import { catalogLink } from "../../products/utilities/catalog-filters";
 
 type CatalogSectionProps = {
   id: string;
@@ -25,10 +27,13 @@ export default function CatalogSection({ id, title, subtitle, category, children
           </h2>
           {subtitle && <p className="mt-1 pl-4.5 font-semibold text-(--cat,var(--color-ink-soft))">{subtitle}</p>}
         </div>
-        <a href="#catalogo" className="inline-flex items-center gap-1.5 text-sm font-bold text-brand hover:underline">
-          Todas las categorías
+        <Link
+          to={catalogLink({ category })}
+          className="inline-flex items-center gap-1.5 text-sm font-bold text-brand hover:underline"
+        >
+          {category ? `Ver todo en ${category}` : "Ver catálogo"}
           <FiArrowRight size={16} />
-        </a>
+        </Link>
       </div>
       {children}
     </Container>

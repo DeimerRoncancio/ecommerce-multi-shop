@@ -8,7 +8,7 @@ import { ProductTypes } from "../../../products/types/product";
 import ProductImage from "../../ui/ProductImage";
 import { categoryStyle } from "../../utilities/category-color";
 import { formatPrice } from "../../utilities/format-price";
-import { slugify } from "../../utilities/slugify";
+import { catalogLink } from "../../../products/utilities/catalog-filters";
 
 const MAX_RESULTS = 6;
 const SEARCH_DELAY = 250;
@@ -20,7 +20,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const [results, setResults] = useState<ProductTypes[]>([]);
   const [searching, setSearching] = useState(false);
 
@@ -54,7 +54,7 @@ export default function Search() {
 
   const close = () => {
     setOpen(false);
-    setActive(0);
+    setActive(-1);
   };
 
   const goTo = (path: string) => {
@@ -73,14 +73,14 @@ export default function Search() {
     }
     if (event.key === "ArrowUp") {
       event.preventDefault();
-      setActive((active - 1 + results.length) % results.length);
+      setActive(active <= 0 ? results.length - 1 : active - 1);
     }
   };
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (results[active]) goTo(`/product/${results[active].id}`);
-    else if (matchedCategories.length && term) goTo(`/#${slugify(matchedCategories[0])}`);
+    else goTo(catalogLink({ text }));
   };
 
   const showPanel = open && (term ? true : categories.length > 0);
@@ -99,7 +99,7 @@ export default function Search() {
           value={query}
           onChange={event => {
             setQuery(event.target.value);
-            setActive(0);
+            setActive(-1);
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
@@ -119,7 +119,7 @@ export default function Search() {
             aria-label="Borrar búsqueda"
             onClick={() => {
               setQuery("");
-              setActive(0);
+              setActive(-1);
             }}
             className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-ink-muted transition-colors
               hover:bg-cream hover:text-ink"
@@ -174,6 +174,17 @@ export default function Search() {
                   </li>
                 );
               })}
+              <li>
+                <Link
+                  to={catalogLink({ text })}
+                  onClick={() => goTo(catalogLink({ text }))}
+                  className="mt-1 flex items-center justify-center gap-1.5 rounded-xl border-t border-line px-3 py-2.5
+                    text-sm font-bold text-brand transition-colors hover:bg-brand-soft"
+                >
+                  Ver todos los resultados para "{text}"
+                  <FiArrowRight size={14} />
+                </Link>
+              </li>
             </ul>
           )}
 
@@ -192,8 +203,8 @@ export default function Search() {
               {matchedCategories.map(name => (
                 <Link
                   key={name}
-                  to={`/#${slugify(name)}`}
-                  onClick={() => goTo(`/#${slugify(name)}`)}
+                  to={catalogLink({ category: name })}
+                  onClick={() => goTo(catalogLink({ category: name }))}
                   style={categoryStyle(name)}
                   className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1 text-sm font-semibold
                     transition-colors hover:border-(--cat) hover:text-(--cat)"

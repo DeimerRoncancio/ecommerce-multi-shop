@@ -9,7 +9,7 @@ export default function TabBar() {
 
   const tabs = [
     { to: "/", label: "Inicio", icon: FiHome, end: true },
-    { to: "/#catalogo", label: "Categorías", icon: FiGrid, end: true },
+    { to: "/catalog", label: "Catálogo", icon: FiGrid },
     { to: "/profile/wish-list", label: "Favoritos", icon: FiHeart, count: wishList.length },
     { to: "/cart", label: "Carrito", icon: FiShoppingBag, count: itemsQuantity },
     { to: "/profile", label: "Cuenta", icon: FiUser, end: true },

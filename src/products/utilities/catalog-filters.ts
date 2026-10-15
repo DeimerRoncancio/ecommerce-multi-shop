@@ -42,6 +42,15 @@ export const toSearchParams = ({ text, categories, min, max, sort, page }: Catal
   return `?${params}`;
 };
 
+export const catalogLink = ({ category, text }: { category?: string; text?: string } = {}) => {
+  const params = new URLSearchParams();
+  if (text) params.set("q", text);
+  if (category) params.set("categoria", category);
+
+  const query = params.toString();
+  return query ? `/catalog?${query}` : "/catalog";
+};
+
 export const countActiveFilters = ({ text, categories, min, max }: CatalogFilters) =>
   (text ? 1 : 0) + categories.length + (min !== null || max !== null ? 1 : 0);
 

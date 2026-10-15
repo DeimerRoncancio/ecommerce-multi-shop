@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { FiArrowRight, FiRefreshCw, FiTruck } from "react-icons/fi";
 import { CategoriesType } from "../../../../products/types/categories";
-import { slugify } from "../../../utilities/slugify";
+import { catalogLink } from "../../../../products/utilities/catalog-filters";
 import { categoryStyle } from "../../../utilities/category-color";
 import { formatPrice } from "../../../utilities/format-price";
 import ProductItem from "./ProductItem";
@@ -18,7 +18,7 @@ export default function CategoriesModal({ category, showModal, changeVisibility 
   const categoryName = category?.name ?? "";
   const count = category?.productCount ?? 0;
   const fromPrice = category?.fromPrice ?? null;
-  const href = `/#${slugify(categoryName)}`;
+  const href = catalogLink({ category: categoryName });
   const shown = (category?.products ?? []).slice(0, MAX_ITEMS);
   const countLabel = `${count} ${count === 1 ? "producto" : "productos"}`;
 

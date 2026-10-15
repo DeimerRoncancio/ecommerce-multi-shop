@@ -4,7 +4,7 @@ import SocialButton from "./SocialButton";
 import ContactItem from "./ContactItem";
 import Container from "../../ui/Container";
 import { categoryColor, categoryStyle } from "../../utilities/category-color";
-import { slugify } from "../../utilities/slugify";
+import { catalogLink } from "../../../products/utilities/catalog-filters";
 import { CategoriesType } from "../../../products/types/categories";
 import { paymentIcons, aboutLinks, legalLinks } from "../../constants/footer.helper";
 
@@ -42,7 +42,7 @@ export default function Footer() {
           {categories.map(([name, count]) => (
             <li key={name} style={categoryStyle(name)}>
               <Link
-                to={`/#${slugify(name)}`}
+                to={catalogLink({ category: name })}
                 className="inline-flex items-center gap-1.5 rounded-full bg-(--cat-soft) px-4 py-2 font-bold text-(--cat)
                   transition-colors hover:bg-(--cat) hover:text-white"
               >
