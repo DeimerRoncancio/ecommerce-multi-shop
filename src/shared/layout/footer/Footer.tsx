@@ -3,7 +3,7 @@ import CustomLink from "./CustomLink";
 import SocialButton from "./SocialButton";
 import ContactItem from "./ContactItem";
 import Container from "../../ui/Container";
-import { categoryStyle } from "../../utilities/category-color";
+import { categoryColor, categoryStyle } from "../../utilities/category-color";
 import { slugify } from "../../utilities/slugify";
 import { CategoriesType } from "../../../products/types/categories";
 import { paymentIcons, aboutLinks, legalLinks } from "../../constants/footer.helper";
@@ -19,60 +19,61 @@ export default function Footer() {
   const categories = countCategories(useLoaderData().categories as CategoriesType[]);
 
   return (
-    <footer className="mt-4 border-t-4 border-brand bg-base-100 text-sm text-ink-soft">
-      <div className="border-b border-brand/20 bg-brand-soft">
-        <Container className="grid px-0! sm:grid-cols-3 sm:divide-x divide-brand/20 max-sm:divide-y">
-          <ContactItem title="Llámanos" label="+1 (555) 123-4567" iconName="phone" href="tel:+15551234567" />
-          <ContactItem title="Escríbenos" label="hello@example.com" iconName="email" href="mailto:hello@example.com" />
-          <ContactItem title="Visítanos" label="123 Fashion Street, New York" iconName="location" />
-        </Container>
+    <footer className="mt-4 bg-base-100 text-sm text-ink-soft">
+      <div aria-hidden className="flex h-1.5">
+        <span className="flex-[4] bg-brand" />
+        {categories.map(([name]) => (
+          <span key={name} className="flex-1" style={{ backgroundColor: categoryColor(name).strong }} />
+        ))}
       </div>
 
-      <Container className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
-        <div className="flex flex-col items-start gap-4">
+      <Container className="flex flex-col items-center gap-7 py-12 text-center">
+        <div className="flex flex-col items-center gap-3">
           <Link to="/" className="block transition-transform hover:-rotate-2" aria-label="Ir al inicio">
-            <img src="/svg/logo.svg" alt="Multi Shop" className="-ml-3 h-16 w-auto" />
+            <img src="/svg/logo.svg" alt="Multi Shop" className="h-16 w-auto" />
           </Link>
-          <p className="max-w-xs leading-relaxed">
+          <p className="max-w-md leading-relaxed">
             Ropa, cocina, deporte y tecnología en un solo lugar. Productos seleccionados, envío rápido y garantía en
             cada compra.
           </p>
-          <div className="flex gap-2">
-            <SocialButton iconName="instagram" />
-            <SocialButton iconName="facebook" />
-            <SocialButton iconName="tiktok" />
-            <SocialButton iconName="youtube" />
-            <SocialButton iconName="linkedin" />
-          </div>
         </div>
 
-        <FooterColumn title="Categorías">
+        <ul className="flex flex-wrap justify-center gap-2">
           {categories.map(([name, count]) => (
             <li key={name} style={categoryStyle(name)}>
-              <Link to={`/#${slugify(name)}`} className="group inline-flex items-center gap-2.5">
-                <span className="h-2 w-2 shrink-0 rounded-full bg-(--cat)" />
-                <span className="transition-colors group-hover:text-(--cat)">{name}</span>
-                <span className="text-xs text-ink-muted">{count}</span>
+              <Link
+                to={`/#${slugify(name)}`}
+                className="inline-flex items-center gap-1.5 rounded-full bg-(--cat-soft) px-4 py-2 font-bold text-(--cat)
+                  transition-colors hover:bg-(--cat) hover:text-white"
+              >
+                {name}
+                <span className="text-xs opacity-60">{count}</span>
               </Link>
             </li>
           ))}
-        </FooterColumn>
+        </ul>
 
-        <FooterColumn title="Sobre nosotros">
-          {aboutLinks.map(label => (
+        <ul className="flex max-w-3xl flex-wrap justify-center gap-x-6 gap-y-2">
+          {[...aboutLinks, ...legalLinks].map(label => (
             <li key={label}>
               <CustomLink to="">{label}</CustomLink>
             </li>
           ))}
-        </FooterColumn>
+        </ul>
 
-        <FooterColumn title="Legal">
-          {legalLinks.map(label => (
-            <li key={label}>
-              <CustomLink to="">{label}</CustomLink>
-            </li>
-          ))}
-        </FooterColumn>
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-left">
+          <ContactItem title="Llámanos" label="+1 (555) 123-4567" iconName="phone" href="tel:+15551234567" />
+          <ContactItem title="Escríbenos" label="hello@example.com" iconName="email" href="mailto:hello@example.com" />
+          <ContactItem title="Visítanos" label="123 Fashion Street, New York" iconName="location" />
+        </div>
+
+        <div className="flex gap-2">
+          <SocialButton iconName="instagram" />
+          <SocialButton iconName="facebook" />
+          <SocialButton iconName="tiktok" />
+          <SocialButton iconName="youtube" />
+          <SocialButton iconName="linkedin" />
+        </div>
       </Container>
 
       <div className="bg-ink text-white/70">
@@ -80,7 +81,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center justify-center gap-2">
             <p className="mr-1 font-semibold text-white">Aceptamos</p>
             {paymentIcons.map((Icon, index) => (
-              <span key={index} className="grid h-8 w-11 place-items-center bg-white text-ink">
+              <span key={index} className="grid h-8 w-11 place-items-center rounded-md bg-white/10 text-white">
                 <Icon size={18} />
               </span>
             ))}
@@ -95,19 +96,5 @@ export default function Footer() {
         </Container>
       </div>
     </footer>
-  );
-}
-
-type FooterColumnProps = {
-  title: string;
-  children: React.ReactNode;
-};
-
-function FooterColumn({ title, children }: FooterColumnProps) {
-  return (
-    <div>
-      <h2 className="mb-4 inline-block border-b-2 border-brand pb-2 text-base font-extrabold text-ink">{title}</h2>
-      <ul className="flex flex-col gap-3">{children}</ul>
-    </div>
   );
 }

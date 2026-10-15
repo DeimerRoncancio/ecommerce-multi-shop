@@ -12,10 +12,10 @@ export default function ContactItem({ title, label, iconName, href }: ContactIte
   const content = (
     <>
       <span
-        className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand text-white
+        className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand text-white
         transition-colors group-hover:bg-ink"
       >
-        <Icon name={iconName} size={18} />
+        <Icon name={iconName} size={16} />
       </span>
       <span>
         <span className="block text-xs text-ink-muted">{title}</span>
@@ -23,10 +23,10 @@ export default function ContactItem({ title, label, iconName, href }: ContactIte
       </span>
     </>
   );
-  const className = "group flex items-center gap-3.5 px-6 py-5 transition-colors sm:px-8";
+  const className = "group flex items-center gap-3";
 
   return href ? (
-    <a href={href} className={`${className} hover:bg-base-100`}>
+    <a href={href} className={className}>
       {content}
     </a>
   ) : (
