@@ -31,12 +31,13 @@ export default function CartModal({ viewCart, hideCart }: CartModalProps) {
   if (!isMounted) return null;
 
   return createPortal(
-    <div
-      className={`fixed inset-0 z-40 transition-opacity duration-300 ${
-        viewCart ? "visible opacity-100" : "invisible opacity-0"
-      }`}
-    >
-      <div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" onClick={hideCart} />
+    <div className={`fixed inset-0 z-40 transition-[visibility] duration-300 ${viewCart ? "visible" : "invisible"}`}>
+      <div
+        onClick={hideCart}
+        className={`absolute inset-0 bg-ink/40 transition-[opacity,backdrop-filter] duration-300 ${
+          viewCart ? "opacity-100 backdrop-blur-[2px]" : "opacity-0 backdrop-blur-[0px]"
+        }`}
+      />
 
       <aside
         className={`absolute right-0 top-0 flex h-full w-full max-w-sm flex-col bg-base-100
