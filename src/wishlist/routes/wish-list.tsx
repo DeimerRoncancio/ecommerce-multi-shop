@@ -8,7 +8,7 @@ const PAGE_SIZE = 5;
 
 export default function WishList() {
   const { wishList, itemsInCart, handleAddToCartSinceWishList } = useWishList();
-  const products = useWishListProducts(wishList);
+  const { products, loaded } = useWishListProducts(wishList);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const hidden = Math.max(wishList.length - visible, 0);
 
@@ -46,7 +46,12 @@ export default function WishList() {
         <>
           <ul className="flex flex-col gap-2.5">
             {wishList.slice(0, visible).map(item => (
-              <WishListItem key={item.id} item={item} products={products} />
+              <WishListItem
+                key={item.id}
+                id={item.id}
+                product={products.find(({ id }) => id === item.id)}
+                loaded={loaded}
+              />
             ))}
           </ul>
 

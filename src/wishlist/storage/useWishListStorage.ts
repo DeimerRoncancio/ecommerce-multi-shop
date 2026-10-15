@@ -29,6 +29,11 @@ export const useWishListStorage = create<State>()(
     },
     {
       name: "wishListItems",
+      version: 1,
+      migrate: persisted => {
+        const { wishList = [] } = persisted as { wishList?: WishListItemType[] };
+        return { wishList: wishList.map(({ id }) => ({ id })) } as State;
+      },
       skipHydration: true,
     },
   ),
