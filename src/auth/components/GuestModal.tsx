@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { IoMdMail, IoMdClose } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { useNavigate } from "react-router";
+import { useNavigate, useRevalidator } from "react-router";
+import { rememberGuest } from "../../shared/utilities/guest";
 
 type GuestModalProps = {
   isOpen: boolean;
@@ -11,6 +12,7 @@ type GuestModalProps = {
 
 export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
   const navigate = useNavigate();
+  const revalidator = useRevalidator();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => setIsMounted(true), []);
@@ -19,9 +21,9 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = (formData.get("email") as string) || "";
-    sessionStorage.setItem("guestEmail", email);
+    rememberGuest(email);
     onClose();
-    navigate("/profile/wish-list");
+    revalidator.revalidate().then(() => navigate("/profile/wish-list"));
   };
 
   if (!isOpen || !isMounted) return null;

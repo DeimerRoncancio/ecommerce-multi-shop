@@ -3,6 +3,7 @@ export interface UserTypes {
   name: string;
   email: string;
   profileImage?: ImageType;
+  avatar?: number | null;
   secondName?: string;
   lastnames?: string;
   phoneNumber?: number;

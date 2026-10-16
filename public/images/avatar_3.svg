@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+ <defs><clipPath id="round3"><circle cx="256" cy="256" r="256"/></clipPath>
+ <linearGradient id="back3" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#B793FF"/><stop offset="1" stop-color="#9570DB"/></linearGradient></defs>
+ <g clip-path="url(#round3)"><circle cx="256" cy="256" r="256" fill="url(#back3)"/>
+ 
+<circle cx="130" cy="124" r="103" fill="#C3A7FA" opacity=".55"/>
+<path d="M35 423 Q215 370 450 461 L510 520 H0Z" fill="#AB83EE" opacity=".35"/>
+<!-- back bob hairstyle -->
+<path d="M144 255 Q119 162 171 125 Q187 91 247 94 Q315 87 347 130 Q383 172 370 245 L385 351 Q355 392 315 374 L191 380 Q136 382 125 342Z" fill="#B64070"/>
+<path d="M144 334 Q163 367 194 359 Q229 375 250 365 Q287 378 318 360 Q354 375 378 338" fill="none" stroke="#E46A95" stroke-width="13" opacity=".65"/>
+<!-- body -->
+<path d="M82 512 Q105 403 194 386 L320 386 Q411 406 432 512Z" fill="#158A8B"/>
+<path d="M138 512 Q155 428 215 406 L297 404 Q371 432 383 512Z" fill="#28A9A6"/>
+<path d="M220 364 Q255 381 292 364 L293 409 Q256 437 219 409Z" fill="#E1B18A"/>
+<!-- small ears and face -->
+<ellipse cx="173" cy="260" rx="21" ry="31" fill="#E1B18A"/><ellipse cx="338" cy="260" rx="21" ry="31" fill="#E1B18A"/>
+<path d="M172 214 Q171 156 210 135 Q248 111 304 138 Q340 155 341 215 L335 286 Q326 350 299 369 Q280 384 258 384 Q235 383 218 369 Q189 352 174 286Z" fill="#E1B18A"/>
+<!-- round face shading -->
+<ellipse cx="197" cy="304" rx="21" ry="10" fill="#F4B6A0" opacity=".75"/><ellipse cx="315" cy="304" rx="21" ry="10" fill="#F4B6A0" opacity=".75"/>
+<!-- asymmetric fringe thick, sleek cartoon hair -->
+<path d="M166 239 Q138 176 176 132 Q218 91 280 108 Q331 106 348 155 Q361 197 344 253 L329 219 Q316 204 312 188 Q281 211 262 186 Q220 225 186 205 Q189 225 166 239Z" fill="#D75183"/>
+<path d="M179 181 Q241 126 307 154" fill="none" stroke="#F17EA8" stroke-width="14" stroke-linecap="round"/>
+<path d="M311 176 Q341 230 349 310 L362 347 Q334 361 320 339 Q324 292 318 248Z" fill="#C24675"/>
+<path d="M170 199 Q154 280 171 342 Q153 357 141 336 Q132 256 153 203Z" fill="#C24675"/>
+<!-- brows -->
+<path d="M195 243 Q215 230 232 241" fill="none" stroke="#633348" stroke-width="7" stroke-linecap="round"/>
+<path d="M278 240 Q298 230 318 242" fill="none" stroke="#633348" stroke-width="7" stroke-linecap="round"/>
+<!-- eyes -->
+<ellipse cx="216" cy="266" rx="20" ry="16" fill="#FFF9F0"/><ellipse cx="298" cy="266" rx="20" ry="16" fill="#FFF9F0"/>
+<ellipse cx="217" cy="268" rx="10" ry="12" fill="#45394B"/><ellipse cx="299" cy="268" rx="10" ry="12" fill="#45394B"/>
+<circle cx="219" cy="263" r="3.5" fill="white"/><circle cx="301" cy="263" r="3.5" fill="white"/>
+<path d="M254 269 Q246 293 260 298" fill="none" stroke="#B9856C" stroke-width="4" stroke-linecap="round"/>
+<!-- small freckles -->
+<g fill="#AC755E" opacity=".8"><circle cx="202" cy="300" r="2.6"/><circle cx="213" cy="304" r="2.6"/><circle cx="225" cy="301" r="2.4"/><circle cx="287" cy="301" r="2.4"/><circle cx="299" cy="304" r="2.6"/><circle cx="311" cy="300" r="2.6"/></g>
+<path d="M229 329 Q256 349 285 329" fill="none" stroke="#974A5A" stroke-width="7" stroke-linecap="round"/>
+<!-- neckline -->
+<path d="M211 407 Q255 439 301 407" fill="none" stroke="#12696B" stroke-width="13" stroke-linecap="round"/>
+</g></svg>

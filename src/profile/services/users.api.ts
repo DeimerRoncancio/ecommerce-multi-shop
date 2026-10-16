@@ -44,6 +44,18 @@ export const updateUserImage = (id: string, token: string, formData: FormData) =
   });
 };
 
+export const updateUserAvatar = (id: string, token: string, avatar: number) => {
+  return users.put(
+    `/update/avatar/${id}`,
+    { avatar },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+};
+
 export const deleteUserAccount = (id: string, token: string) => {
   return users.delete(`/${id}`, {
     headers: {

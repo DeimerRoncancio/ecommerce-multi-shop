@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="16 16 480 480">
+  <defs>
+    <clipPath id="circle-cut"><circle cx="256" cy="256" r="240"/></clipPath>
+  </defs>
+  <g clip-path="url(#circle-cut)">
+    <!-- Background: same simple two-tone circular palette as the original set -->
+    <circle cx="256" cy="256" r="240" fill="#8CD5F7"/>
+    <circle cx="395" cy="112" r="123" fill="#C3EEFF" opacity=".8"/>
+    <path d="M6 424Q118 347 224 425Q361 375 510 435V520H6Z" fill="#6FC0EF" opacity=".42"/>
+
+    <!-- Torso, mustard jacket and cream undershirt -->
+    <path d="M53 514Q73 424 164 393Q212 377 256 378Q309 377 356 394Q440 423 463 514Z" fill="#C58531"/>
+    <path d="M83 512Q96 439 168 414L213 408L256 438L300 408L349 415Q419 448 433 512Z" fill="#E6A442"/>
+    <path d="M211 393L256 441L302 394L295 516H217Z" fill="#F9F5E9"/>
+    <path d="M209 391L250 432L227 455L173 399Z" fill="#F8C76E"/>
+    <path d="M302 392L261 433L289 455L338 401Z" fill="#F8C76E"/>
+    <path d="M256 439V514" stroke="#C58531" stroke-width="5"/>
+    <circle cx="256" cy="470" r="4.5" fill="#FFF1C7"/>
+    <circle cx="256" cy="505" r="4.5" fill="#FFF1C7"/>
+
+    <!-- Neck -->
+    <path d="M218 335H295V396Q280 418 256 421Q230 414 218 395Z" fill="#DEA17A"/>
+    <path d="M218 347Q254 376 295 349V379Q257 397 218 376Z" fill="#C88564" opacity=".8"/>
+
+    <!-- Exposed ears -->
+    <ellipse cx="171" cy="270" rx="23" ry="31" fill="#E8AD83"/>
+    <ellipse cx="341" cy="270" rx="23" ry="31" fill="#E8AD83"/>
+    <path d="M164 266Q175 255 179 270M348 265Q337 255 334 274" fill="none" stroke="#BF8062" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Face: clean, flat, simplified cartoon shape -->
+    <path d="M170 209Q174 151 221 134Q259 120 302 137Q345 153 343 218L339 296Q335 359 287 387Q257 402 225 384Q180 361 174 301Z" fill="#E8AD83"/>
+    <path d="M177 297Q185 352 214 371" stroke="#F7C29D" stroke-width="9" stroke-linecap="round" opacity=".66" fill="none"/>
+
+    <!-- Hair, notably straight side-swept / undercut, unlike curly avatar 1 or glasses avatar 4 -->
+    <path d="M167 255Q144 230 154 194Q146 159 177 130Q196 101 236 99Q267 80 302 99Q338 112 347 143Q370 158 359 195Q367 221 341 250L338 212Q333 178 310 164Q265 183 232 178Q201 200 179 225L173 256Z" fill="#52342F"/>
+    <path d="M163 200Q144 152 191 123Q234 92 286 105Q321 106 338 137Q318 160 286 163Q252 174 218 189Q197 209 177 213Q178 177 211 153Q174 162 163 200Z" fill="#78483A"/>
+    <path d="M176 207Q175 168 208 148Q246 124 291 120Q265 150 218 170Q191 182 176 207Z" fill="#99644B" opacity=".75"/>
+    <path d="M293 109Q331 112 345 144Q329 166 299 170Q316 144 293 109Z" fill="#593A32"/>
+    <path d="M172 202Q165 229 171 251L185 227Q188 203 208 182Z" fill="#52342F"/>
+    <path d="M339 193Q352 223 340 247L331 214Z" fill="#52342F"/>
+
+    <!-- Eyebrows -->
+    <path d="M191 243Q215 232 235 240" fill="none" stroke="#563B32" stroke-width="8" stroke-linecap="round"/>
+    <path d="M275 239Q297 233 318 244" fill="none" stroke="#563B32" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Eyes -->
+    <ellipse cx="214" cy="269" rx="19" ry="16.5" fill="#FFF9F2"/>
+    <ellipse cx="297" cy="269" rx="19" ry="16.5" fill="#FFF9F2"/>
+    <ellipse cx="216" cy="270" rx="8.5" ry="11" fill="#382F35"/>
+    <ellipse cx="297" cy="270" rx="8.5" ry="11" fill="#382F35"/>
+    <circle cx="219" cy="266" r="3.2" fill="#FFF"/>
+    <circle cx="300" cy="266" r="3.2" fill="#FFF"/>
+
+    <!-- Warm little cheek details -->
+    <ellipse cx="193" cy="310" rx="21" ry="10" fill="#E9917B" opacity=".42"/>
+    <ellipse cx="321" cy="310" rx="21" ry="10" fill="#E9917B" opacity=".42"/>
+    <circle cx="200" cy="305" r="2.3" fill="#BA785D" opacity=".7"/>
+    <circle cx="210" cy="308" r="2.3" fill="#BA785D" opacity=".7"/>
+    <circle cx="305" cy="306" r="2.3" fill="#BA785D" opacity=".7"/>
+    <circle cx="314" cy="303" r="2.3" fill="#BA785D" opacity=".7"/>
+
+    <!-- Nose and relaxed natural smile -->
+    <path d="M255 270L248 302Q252 309 263 306" fill="none" stroke="#BF8164" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M223 336Q254 361 291 334Q280 354 259 357Q240 356 223 336Z" fill="#8B4E49"/>
+    <path d="M231 339Q254 350 283 339" fill="none" stroke="#FFFAF3" stroke-width="5.2" stroke-linecap="round"/>
+  </g>
+</svg>

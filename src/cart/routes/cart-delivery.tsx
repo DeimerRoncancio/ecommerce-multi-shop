@@ -21,6 +21,7 @@ import {
 import { checkoutCustomerAddressesToAddresses, checkoutToCustomerTransaction } from "../mappers/customer.mapper";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import DeliverySkeleton from "../components/DeliverySkeleton";
+import { rememberGuest } from "../../shared/utilities/guest";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const cookies = parse(request.headers.get("Cookie") || "");
@@ -120,7 +121,7 @@ export default function CartDelivery({ loaderData }: Route.ComponentProps) {
     if (fetcher.state !== "idle" || !fetcher.data) return;
     if (!fetcher.data.ok) return SnackbarUtilities.error("No pudimos guardar la entrega. Inténtalo de nuevo.");
 
-    if (fetcher.data.guestEmail) sessionStorage.setItem("guestEmail", fetcher.data.guestEmail);
+    if (fetcher.data.guestEmail) rememberGuest(fetcher.data.guestEmail);
     nextSteps("Entrega");
     navigate("/cart/payment");
   }, [fetcher.state, fetcher.data]);

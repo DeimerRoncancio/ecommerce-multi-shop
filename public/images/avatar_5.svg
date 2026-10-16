@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+    <defs>
+      <clipPath id="clip5"><circle cx="256" cy="256" r="256"/></clipPath>
+      <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#AFE5BE"/><stop offset="1" stop-color="#6BC79A"/></linearGradient>
+    </defs>
+    <g clip-path="url(#clip5)"><circle cx="256" cy="256" r="256" fill="url(#bg5)"/>
+<!-- rounded simple background accents -->
+<circle cx="118" cy="105" r="113" fill="#D3F3D3" opacity=".65"/>
+<path d="M0 409 Q113 361 225 432 Q399 328 523 420 L513 513 H0Z" fill="#7DCEA6" opacity=".44"/>
+<!-- silver/charcoal hair silhouette behind face -->
+<path d="M148 281 Q123 239 145 182 Q139 134 188 115 Q221 84 264 98 Q319 86 346 131 Q382 153 373 218 Q389 275 363 347 Q335 382 305 369 L188 377 Q146 362 138 325Z" fill="#545365"/>
+<path d="M142 266 Q122 318 153 352 Q166 363 177 365" fill="none" stroke="#777A8B" stroke-width="19" stroke-linecap="round" opacity=".65"/>
+<path d="M345 274 Q375 319 351 354" fill="none" stroke="#838694" stroke-width="17" stroke-linecap="round" opacity=".75"/>
+<!-- torso, shoulders, neckline -->
+<path d="M78 512 Q94 410 201 388 L308 387 Q421 405 442 512Z" fill="#EF705C"/>
+<path d="M113 512 Q122 434 205 403 L303 403 Q387 441 396 512Z" fill="#F5886D"/>
+<path d="M204 391 L253 438 L306 389 L329 418 L293 459 L259 431 L222 459 L178 415Z" fill="#FFD9C0"/>
+<path d="M223 353 H290 V409 Q257 440 223 409Z" fill="#B77B59"/>
+<path d="M223 359 Q256 384 290 358 V386 Q255 409 223 385Z" fill="#A66D51"/>
+<!-- ears and face -->
+<ellipse cx="167" cy="266" rx="23" ry="30" fill="#CE9169"/>
+<ellipse cx="345" cy="265" rx="23" ry="30" fill="#CE9169"/>
+<path d="M175 213 Q176 163 204 146 Q261 113 316 147 Q343 163 340 213 L336 287 Q326 372 259 386 Q184 371 175 284Z" fill="#CE9169"/>
+<path d="M186 291 Q191 335 217 350" fill="none" stroke="#E7AA82" stroke-width="8" stroke-linecap="round" opacity=".6"/>
+<!-- side-parted swooping grey bangs and soft curls -->
+<path d="M152 242 Q139 195 160 159 Q168 117 221 111 Q272 86 317 128 Q353 153 351 227 Q337 214 333 188 Q299 181 275 160 Q251 201 199 197 Q187 227 152 242Z" fill="#545365"/>
+<path d="M171 168 Q210 117 256 125 Q285 123 319 151" fill="none" stroke="#858A99" stroke-width="18" opacity=".75" stroke-linecap="round"/>
+<path d="M176 171 Q192 208 167 259 L163 333 Q141 342 138 319 Q142 257 147 222" fill="#6B6B7D"/>
+<path d="M331 178 Q354 226 353 276 L364 334 Q349 353 330 330 Q337 260 321 221" fill="#6B6B7D"/>
+<path d="M158 283 Q144 321 160 351" stroke="#9396A4" stroke-width="13" stroke-linecap="round" fill="none" opacity=".68"/>
+<!-- brow, bright cartoony eyes -->
+<path d="M192 247 Q212 233 235 244" fill="none" stroke="#58404A" stroke-width="7" stroke-linecap="round"/>
+<path d="M275 243 Q297 232 318 245" fill="none" stroke="#58404A" stroke-width="7" stroke-linecap="round"/>
+<path d="M191 271 Q215 252 237 273 Q215 294 191 271Z" fill="#FFFAF1"/>
+<path d="M275 273 Q296 252 319 272 Q296 292 275 273Z" fill="#FFFAF1"/>
+<ellipse cx="217" cy="273" rx="10" ry="13" fill="#454155"/><ellipse cx="298" cy="273" rx="10" ry="13" fill="#454155"/>
+<circle cx="221" cy="267" r="3.6" fill="white"/><circle cx="301" cy="267" r="3.6" fill="white"/>
+<path d="M254 273 Q245 301 263 307" fill="none" stroke="#A3684F" stroke-width="4" stroke-linecap="round"/>
+<ellipse cx="194" cy="311" rx="21" ry="9" fill="#EDAA8A" opacity=".7"/>
+<ellipse cx="315" cy="311" rx="21" ry="9" fill="#EDAA8A" opacity=".7"/>
+<!-- faint friendly laugh lines -->
+<path d="M189 326 L184 334 M324 326 L329 334" fill="none" stroke="#AA7054" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+<path d="M223 337 Q256 365 291 335" fill="none" stroke="#8D4854" stroke-width="7" stroke-linecap="round"/>
+<!-- pearl earrings and blouse seam -->
+<circle cx="163" cy="291" r="9" fill="#FFF3DD"/>
+<circle cx="351" cy="291" r="9" fill="#FFF3DD"/>
+<path d="M255 434 V512" fill="none" stroke="#D85E55" stroke-width="5"/>
+<circle cx="256" cy="480" r="4.5" fill="#FEE2CA"/>
+</g>
+    
+    </svg>

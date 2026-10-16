@@ -10,12 +10,14 @@ import { useCartStore } from "./cart/storage/cart";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useWishListStorage } from "./wishlist/storage/useWishListStorage";
 import { Route } from "./+types/root";
+import { guestEndedScript } from "./shared/utilities/guest";
 import "./index.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: guestEndedScript }} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico?v=3" sizes="any" media="(prefers-color-scheme: light)" />

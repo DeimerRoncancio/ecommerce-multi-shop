@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+ <defs><clipPath id="round2"><circle cx="256" cy="256" r="256"/></clipPath>
+ <linearGradient id="back2" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#FFAD7C"/><stop offset="1" stop-color="#F77D4D"/></linearGradient></defs>
+ <g clip-path="url(#round2)"><circle cx="256" cy="256" r="256" fill="url(#back2)"/>
+ 
+<circle cx="408" cy="113" r="117" fill="#FFC2A4" opacity=".55"/>
+<path d="M0 455 Q131 369 254 448 Q401 361 512 441 L512 512H0Z" fill="#FFE1C9" opacity=".7"/>
+<!-- shirt / shoulders -->
+<path d="M74 520 Q80 409 187 381 Q257 368 330 384 Q442 414 452 512Z" fill="#195F58"/>
+<path d="M189 379 L231 435 L257 407 L286 435 L328 382" fill="#104A48"/>
+<path d="M217 392 L255 451 L296 394" fill="#E8C4A9"/>
+<path d="M221 343 H292 V402 Q256 433 221 400Z" fill="#C18160"/>
+<path d="M221 355 Q258 376 292 353 L292 373 Q255 397 221 374Z" fill="#A46851"/>
+<!-- ears -->
+<ellipse cx="169" cy="254" rx="24" ry="33" fill="#D69B76"/><ellipse cx="344" cy="254" rx="24" ry="33" fill="#D69B76"/>
+<!-- scalp & face -->
+<path d="M168 225 Q167 131 222 116 Q256 101 292 117 Q347 132 345 226 L341 292 Q330 377 257 386 Q184 380 172 298Z" fill="#D69B76"/>
+<!-- close-shaven hairline -->
+<path d="M168 215 Q153 128 217 109 Q264 90 309 117 Q362 149 347 216 Q342 181 326 160 Q291 134 256 143 Q201 136 182 179Z" fill="#343136"/>
+<path d="M188 159 Q252 109 321 160" stroke="#4D484B" stroke-width="9" fill="none" opacity=".55"/>
+<!-- eyebrows -->
+<path d="M195 237 Q217 226 237 232" fill="none" stroke="#342C2B" stroke-width="10" stroke-linecap="round"/>
+<path d="M274 232 Q297 225 318 239" fill="none" stroke="#342C2B" stroke-width="10" stroke-linecap="round"/>
+<!-- eyes -->
+<path d="M194 263 Q215 247 238 264 Q216 283 194 263Z" fill="#FFF7F0"/>
+<path d="M274 264 Q294 248 318 264 Q296 282 274 264Z" fill="#FFF7F0"/>
+<circle cx="218" cy="263" r="10" fill="#302D32"/><circle cx="294" cy="263" r="10" fill="#302D32"/>
+<circle cx="220" cy="260" r="3.5" fill="#FFF7F0"/><circle cx="296" cy="260" r="3.5" fill="#FFF7F0"/>
+<path d="M254 262 L246 296 Q253 305 266 296" stroke="#A86A51" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+<!-- beard along jawline, leaving nose visible -->
+<path d="M175 281 Q181 327 195 340 Q219 388 254 392 Q291 389 315 350 Q338 335 340 278 L330 296 Q317 317 310 333 Q289 355 256 356 Q224 353 202 335 Q190 322 183 292Z" fill="#3E383A"/>
+<path d="M213 314 Q233 306 252 316 Q273 307 292 314 Q272 327 256 324 Q238 329 213 314Z" fill="#3E383A"/>
+<!-- smile -->
+<path d="M227 338 Q256 355 286 337" stroke="#FFF2E5" stroke-width="6" fill="none" stroke-linecap="round"/>
+<!-- collar -->
+<path d="M221 391 L255 430 L219 460 L182 395Z" fill="#268175"/>
+<path d="M291 390 L256 429 L296 461 L332 395Z" fill="#268175"/>
+<path d="M255 432 V512" fill="none" stroke="#144F4C" stroke-width="5"/>
+<circle cx="255" cy="475" r="4" fill="#9FDDD0"/>
+</g></svg>

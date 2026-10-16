@@ -3,6 +3,7 @@ import { NavLink, useLoaderData, useNavigate } from "react-router";
 import AvatarImage from "../../../profile/components/AvatarImage";
 import LogoutActionButton from "../../../profile/components/LogoutActionButton";
 import GuestModal from "../../../auth/components/GuestModal";
+import EditImageModal from "../../../profile/components/image-edit-modal/EditImageModal";
 import {
   FiArrowLeft,
   FiChevronRight,
@@ -11,6 +12,7 @@ import {
   FiLogOut,
   FiMail,
   FiPackage,
+  FiSmile,
   FiUser,
   FiUserCheck,
 } from "react-icons/fi";
@@ -65,6 +67,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
   const [showOptions, setShowOptions] = useState(false);
   const [showProfileOptions, setShowProfileOptions] = useState(false);
   const [showGuestModal, setShowGuestModal] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [guestEmail, setGuestEmail] = useState<string | null>(null);
   const navigate = useNavigate();
   const loaderData = useLoaderData() as LoaderProps | undefined;
@@ -167,6 +170,19 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               </li>
             )}
             <li>
+              <button
+                type="button"
+                onMouseDown={e => e.preventDefault()}
+                onClick={() => {
+                  setShowOptions(false);
+                  setShowAvatarModal(true);
+                }}
+                className={rowClass}
+              >
+                <MenuRow icon={FiSmile} label="Cambiar avatar" hint="Elige cómo te ves en la tienda" />
+              </button>
+            </li>
+            <li>
               <NavLink to="/profile/wish-list" onClick={() => setShowOptions(false)} className={rowClass}>
                 <MenuRow icon={FiHeart} label="Lista de deseos" hint="Lo que guardaste para después" />
               </NavLink>
@@ -258,6 +274,7 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
       </div>
 
       <GuestModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} />
+      <EditImageModal user={user} showModal={showAvatarModal} onClose={() => setShowAvatarModal(false)} />
     </div>
   );
 }

@@ -36,17 +36,15 @@ export default function ProfileLayout() {
               >
                 <AvatarImage userImage={userImage} />
               </div>
-              {user.name.length > 0 && (
-                <button
-                  type="button"
-                  aria-label="Cambiar foto de perfil"
-                  onClick={onOpenEditProfileModal}
-                  className="absolute -bottom-1 -right-1 grid h-9 w-9 place-items-center rounded-full border-2
+              <button
+                type="button"
+                aria-label="Cambiar foto de perfil"
+                onClick={onOpenEditProfileModal}
+                className="absolute -bottom-1 -right-1 grid h-9 w-9 place-items-center rounded-full border-2
                     border-base-100 bg-ink text-white transition-colors hover:bg-brand"
-                >
-                  <RiImageEditLine size={16} />
-                </button>
-              )}
+              >
+                <RiImageEditLine size={16} />
+              </button>
             </div>
             <EditImageModal user={user} showModal={showProfileModal} onClose={onCloseEditProfileModal} />
             <h1 className="mt-2 text-center text-lg font-extrabold leading-tight text-ink">

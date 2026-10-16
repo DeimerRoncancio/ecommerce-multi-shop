@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+ <defs><clipPath id="round1"><circle cx="256" cy="256" r="256"/></clipPath>
+ <linearGradient id="back1" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#42C7BB"/><stop offset="1" stop-color="#2DAEAD"/></linearGradient></defs>
+ <g clip-path="url(#round1)"><circle cx="256" cy="256" r="256" fill="url(#back1)"/>
+ 
+<!-- asymmetrical soft color blocks -->
+<path d="M16 370 Q125 285 210 379 L-10 540Z" fill="#6DDACB" opacity=".7"/>
+<circle cx="408" cy="126" r="95" fill="#73E3D0" opacity=".45"/>
+<!-- natural afro silhouette curls, all behind face -->
+<path d="M132 226 Q105 178 137 154 Q126 101 181 103 Q201 61 252 87 Q300 61 325 110 Q381 96 386 146 Q420 177 392 223 Q402 271 370 301 Q353 354 298 356 L190 346 Q138 337 140 290 Q105 263 132 226Z" fill="#252034"/>
+<g fill="#252034"><circle cx="151" cy="177" r="51"/><circle cx="196" cy="125" r="54"/><circle cx="257" cy="111" r="63"/><circle cx="322" cy="135" r="52"/><circle cx="364" cy="186" r="49"/><circle cx="158" cy="260" r="43"/><circle cx="361" cy="272" r="46"/></g>
+<g fill="#3D3148" opacity=".65"><circle cx="159" cy="138" r="20"/><circle cx="234" cy="93" r="23"/><circle cx="338" cy="165" r="23"/><circle cx="367" cy="232" r="17"/><circle cx="130" cy="230" r="18"/></g>
+<!-- torso behind neck -->
+<path d="M95 496 Q105 393 196 376 L316 376 Q408 402 422 499Z" fill="#6449B9"/>
+<path d="M144 470 Q160 406 212 399 L300 400 Q351 405 373 471L389 512H126Z" fill="#7256CB"/>
+<path d="M194 382 L232 430 L260 406 L283 430 L319 380" fill="none" stroke="#B3A3EE" stroke-width="12" stroke-linejoin="round"/>
+<path d="M220 336 H292 V401 Q256 434 220 399Z" fill="#9D5C42"/>
+<path d="M220 351 Q256 376 292 351 V372 Q255 402 220 377Z" fill="#7E4939"/>
+<!-- ears -->
+<ellipse cx="170" cy="267" rx="23" ry="31" fill="#B97754"/>
+<ellipse cx="342" cy="267" rx="23" ry="31" fill="#B97754"/>
+<path d="M164 267 Q177 251 180 275" fill="none" stroke="#844A3B" stroke-width="5" stroke-linecap="round"/>
+<path d="M348 267 Q336 251 332 275" fill="none" stroke="#844A3B" stroke-width="5" stroke-linecap="round"/>
+<!-- face -->
+<path d="M171 208 C172 162 201 139 256 139 C315 140 340 165 341 215 L338 285 C332 341 301 378 257 380 C209 378 176 341 173 280Z" fill="#B97754"/>
+<path d="M180 278 Q187 331 218 349" fill="none" stroke="#CC8B67" stroke-width="9" opacity=".6" stroke-linecap="round"/>
+<!-- front afro hair and curly hairline -->
+<path d="M171 219 Q164 184 188 156 Q200 132 222 141 Q249 113 276 137 Q307 121 328 156 Q348 168 344 219 Q334 211 327 196 Q307 195 297 176 Q277 199 251 183 Q231 206 206 191 Q195 214 171 219Z" fill="#252034"/>
+<g fill="#252034"><circle cx="197" cy="178" r="19"/><circle cx="229" cy="169" r="18"/><circle cx="265" cy="154" r="21"/><circle cx="302" cy="170" r="19"/><circle cx="331" cy="188" r="16"/></g>
+<!-- brows and friendly stylized eyes -->
+<path d="M196 244 Q217 230 239 242" stroke="#362433" stroke-width="8" stroke-linecap="round" fill="none"/>
+<path d="M273 242 Q295 230 319 244" stroke="#362433" stroke-width="8" stroke-linecap="round" fill="none"/>
+<ellipse cx="218" cy="268" rx="19" ry="17" fill="#FFF6EA"/><ellipse cx="296" cy="268" rx="19" ry="17" fill="#FFF6EA"/>
+<ellipse cx="220" cy="268" rx="9" ry="13" fill="#252034"/><ellipse cx="296" cy="268" rx="9" ry="13" fill="#252034"/>
+<circle cx="223" cy="262" r="3.8" fill="white"/><circle cx="299" cy="262" r="3.8" fill="white"/>
+<path d="M254 269 Q246 297 261 299" stroke="#88503F" stroke-width="5" stroke-linecap="round" fill="none"/>
+<ellipse cx="197" cy="304" rx="19" ry="9" fill="#DF8D70" opacity=".6"/><ellipse cx="316" cy="304" rx="19" ry="9" fill="#DF8D70" opacity=".6"/>
+<path d="M224 320 Q255 350 290 320 Q256 338 224 320Z" fill="#6E3037"/>
+<path d="M235 325 Q255 333 280 325" stroke="#FFF8F4" stroke-width="5" stroke-linecap="round" fill="none"/>
+<!-- gold earrings -->
+<circle cx="156" cy="292" r="14" fill="none" stroke="#FFD59B" stroke-width="7"/>
+<circle cx="355" cy="292" r="14" fill="none" stroke="#FFD59B" stroke-width="7"/>
+</g></svg>
