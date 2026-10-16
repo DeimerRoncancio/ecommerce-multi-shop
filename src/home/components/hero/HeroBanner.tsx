@@ -28,7 +28,10 @@ export default function HeroBanner({ categories, picks }: Props) {
       className="relative overflow-hidden rounded-2xl border border-line bg-[#f4f0fc] xl:aspect-[1877/838]
         xl:bg-[url(/images/hero-background.png)] xl:bg-cover"
     >
-      <div className="relative z-10 flex flex-col items-start gap-4 p-6 sm:p-9 xl:max-w-[48%]">
+      <div
+        className="pointer-events-none relative z-10 flex flex-col items-start gap-4 p-6 *:pointer-events-auto sm:p-9
+          xl:max-w-[48%]"
+      >
         <span className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-1.5 text-sm font-bold text-white">
           <FaTag size={13} />
           Ofertas de la semana
