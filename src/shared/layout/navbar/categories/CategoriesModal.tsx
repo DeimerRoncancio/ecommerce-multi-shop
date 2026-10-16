@@ -87,7 +87,7 @@ export default function CategoriesModal({ category, showModal, changeVisibility 
                 <Link
                   to={href}
                   onClick={() => changeVisibility(false)}
-                  className="group flex h-full min-h-40 flex-col items-center justify-center gap-2 border-2 border-dashed
+                  className="group flex h-full min-h-40 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed
                     border-(--cat) bg-(--cat-soft) p-4 text-center transition-colors hover:bg-base-100"
                 >
                   <span
