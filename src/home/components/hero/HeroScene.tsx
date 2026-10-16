@@ -15,8 +15,8 @@ type Props = {
 };
 
 const slots = [
-  { x: 53, w: 19, bottom: 45, h: 46, z: 1 },
-  { x: 78, w: 19, bottom: 25, h: 19, z: 5 },
+  { x: 53, w: 19, bottom: 42, h: 46, z: 1 },
+  { x: 78, w: 19, bottom: 29, h: 19, z: 5 },
   { x: 58, w: 13, bottom: 21, h: 16, z: 6 },
   { x: 83, w: 13, bottom: 40, h: 34, z: 1 },
   { x: 70, w: 15, bottom: 33, h: 26, z: 3 },
