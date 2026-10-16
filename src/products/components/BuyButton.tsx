@@ -14,7 +14,7 @@ export default function BuyButton({ product, quantity }: BuyButtonProps) {
   const navigate = useNavigate();
 
   const handleBuyNow = () => {
-    if (!isInCart(product.id)) handleAddItem(mapApiToProducts(product), quantity);
+    if (!isInCart(product.id)) handleAddItem(mapApiToProducts(product), quantity, false);
     navigate("/cart");
   };
 

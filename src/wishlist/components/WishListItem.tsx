@@ -105,7 +105,7 @@ export default function WishListItem({ id, product, loaded }: WishListItemProps)
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={() => handleRemoveWishListItem(id)}
+            onClick={() => handleRemoveWishListItem(id, product)}
             className="text-xs font-bold text-ink-muted underline underline-offset-4 transition-colors hover:text-error"
           >
             Quitar

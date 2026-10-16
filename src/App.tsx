@@ -32,6 +32,13 @@ export async function loader({ request }: Route.LoaderArgs) {
 declare module "notistack" {
   interface VariantOverrides {
     errorAlert: true;
+    productAdded: {
+      kind: "cart" | "wishlist";
+      image?: string;
+      removed?: boolean;
+      heading?: string;
+      onUndo?: () => void;
+    };
   }
 }
 

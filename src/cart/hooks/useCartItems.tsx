@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCartStore } from "../storage/cart";
+import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 type UseCartItemsProps = {
   itemId: string;
@@ -12,7 +13,13 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
   const [quantity, setQuantity] = useState(item ? item.quantity : 0);
   const [totalPrice, setTotalPrice] = useState(item ? item.productPrice : 0);
 
-  const handleRemoveItem = () => removeItem(itemId);
+  const removeWithNotice = () => {
+    if (!item) return;
+    removeItem(item.id);
+    SnackbarUtilities.productRemoved("cart", item.productName, item.productImage, () => addItem(item));
+  };
+
+  const handleRemoveItem = removeWithNotice;
 
   const increaseQuantity = () => {
     if (!item) return;
@@ -39,7 +46,7 @@ export default function useCartItems({ itemId }: UseCartItemsProps) {
     if (!item) return;
     if (quantity === item?.quantity) return;
 
-    quantity === 0 ? removeItem(item.id) : setItemQuantity({ ...item, quantity: quantity });
+    quantity === 0 ? removeWithNotice() : setItemQuantity({ ...item, quantity: quantity });
   };
 
   return {

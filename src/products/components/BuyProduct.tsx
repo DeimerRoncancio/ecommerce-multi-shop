@@ -26,7 +26,9 @@ export default function BuyProduct({ productFromApi }: BuyProductProps) {
   };
 
   const handleToggleWishList = () => {
-    inWishList ? handleRemoveWishListItem(productFromApi.id) : handleAddWishListItem(mapApiToProducts(productFromApi));
+    inWishList
+      ? handleRemoveWishListItem(productFromApi.id, mapApiToProducts(productFromApi))
+      : handleAddWishListItem(mapApiToProducts(productFromApi));
   };
 
   return (

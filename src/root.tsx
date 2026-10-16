@@ -5,6 +5,7 @@ import { SnackbarProvider } from "notistack";
 import NotFoundPage from "./shared/ui/NotFoundPage";
 import ErrorPage from "./shared/ui/ErrorPage";
 import SnackbarNotice from "./shared/ui/notistack-variants/SnackbarNotice";
+import ProductNotice from "./shared/ui/notistack-variants/ProductNotice";
 import { useCartStore } from "./cart/storage/cart";
 import { useStepsStorage } from "./cart/storage/steps";
 import { useWishListStorage } from "./wishlist/storage/useWishListStorage";
@@ -53,10 +54,12 @@ export default function Root() {
     <SnackbarProvider
       maxSnack={5}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      classes={{ containerRoot: "max-lg:bottom-22!" }}
       Components={{
         errorAlert: SnackbarNotice,
         success: SnackbarNotice,
         warning: SnackbarNotice,
+        productAdded: ProductNotice,
       }}
     >
       <Outlet />

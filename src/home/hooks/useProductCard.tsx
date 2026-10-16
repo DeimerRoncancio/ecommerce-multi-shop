@@ -14,7 +14,7 @@ export default function useProductCard(mini = false) {
 
   const toggleWishList = (product: ProductTypes) => {
     wishList.some(item => item.id === product.id)
-      ? handleRemoveWishListItem(product.id)
+      ? handleRemoveWishListItem(product.id, product)
       : handleAddWishListItem(product);
   };
 
