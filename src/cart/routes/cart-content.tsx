@@ -17,7 +17,10 @@ import { getProductsByIds } from "../../products/services/products.api";
 import { mapApiToProducts } from "../../products/mappers/products.mapper";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import Cookie from "js-cookie";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
+
+const PAGE_SIZE = 5;
 
 export default function CartContent() {
   const { cartItems, itemsQuantity, clear } = useCart();
@@ -25,6 +28,8 @@ export default function CartContent() {
   const { clearSteps, nextSteps } = useStepsStorage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const refreshed = useRef(false);
+  const [visible, setVisible] = useState(PAGE_SIZE);
+  const hidden = Math.max(cartItems.length - visible, 0);
   const ids = cartItems.map(({ id }) => id).join(",");
 
   const onContinue = async () => {
@@ -111,9 +116,21 @@ export default function CartContent() {
               </button>
             </li>
           ) : (
-            cartItems.map(item => <CartItem key={item.id} item={item} />)
+            cartItems.slice(0, visible).map(item => <CartItem key={item.id} item={item} />)
           )}
         </ul>
+
+        {cartItems.length > PAGE_SIZE && (
+          <button
+            type="button"
+            onClick={() => setVisible(hidden ? visible + PAGE_SIZE : PAGE_SIZE)}
+            className="mx-auto mt-5 flex h-10 items-center gap-2 rounded-full border border-line px-5 text-sm font-bold
+              text-ink transition-colors hover:border-ink"
+          >
+            {hidden ? `Ver más (${hidden})` : "Ver menos"}
+            {hidden ? <FiChevronDown size={16} /> : <FiChevronUp size={16} />}
+          </button>
+        )}
       </section>
 
       <PaymentCardInfo
