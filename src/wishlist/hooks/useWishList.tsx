@@ -6,7 +6,7 @@ import useCart from "../../cart/hooks/useCart";
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 
 export default function useWishList() {
-  const { wishList, addWishListItem, removeWishListItem } = useWishListStorage();
+  const { wishList, addWishListItem, removeWishListItem, replaceWishList } = useWishListStorage();
   const [itemsInCart, setItemInCart] = useState(0);
   const { cartItems, handleAddItem } = useCart();
 
@@ -21,6 +21,19 @@ export default function useWishList() {
     if (product)
       SnackbarUtilities.productRemoved("wishlist", product.name, product.images[0]?.imageUrl, () =>
         addWishListItem({ id }),
+      );
+  };
+
+  const clearWishList = () => {
+    const previous = wishList;
+    replaceWishList([]);
+    if (previous.length)
+      SnackbarUtilities.productRemoved(
+        "wishlist",
+        `${previous.length} ${previous.length === 1 ? "producto" : "productos"}`,
+        undefined,
+        () => replaceWishList(previous),
+        "Lista de deseos vaciada",
       );
   };
 
@@ -57,5 +70,6 @@ export default function useWishList() {
     handleAddWishListItem,
     handleRemoveWishListItem,
     handleAddToCartSinceWishList,
+    clearWishList,
   };
 }

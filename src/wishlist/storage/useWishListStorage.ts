@@ -6,6 +6,7 @@ interface State {
   wishList: WishListItemType[];
   addWishListItem: (wishListItem: WishListItemType) => void;
   removeWishListItem: (id: string) => void;
+  replaceWishList: (wishList: WishListItemType[]) => void;
 }
 
 export const useWishListStorage = create<State>()(
@@ -25,6 +26,8 @@ export const useWishListStorage = create<State>()(
           const newWishList = wishListItems.filter(item => item.id !== id);
           set({ wishList: [...newWishList] });
         },
+
+        replaceWishList: (wishList: WishListItemType[]) => set({ wishList }),
       };
     },
     {

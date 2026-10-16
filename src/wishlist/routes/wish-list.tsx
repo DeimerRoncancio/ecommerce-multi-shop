@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiTrash2 } from "react-icons/fi";
 import WishListItem from "../components/WishListItem";
 import useWishList from "../hooks/useWishList";
 import useWishListProducts from "../hooks/useWishListProducts";
@@ -7,7 +7,7 @@ import useWishListProducts from "../hooks/useWishListProducts";
 const PAGE_SIZE = 5;
 
 export default function WishList() {
-  const { wishList, itemsInCart, handleAddToCartSinceWishList } = useWishList();
+  const { wishList, itemsInCart, handleAddToCartSinceWishList, clearWishList } = useWishList();
   const { products, loaded } = useWishListProducts(wishList);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const hidden = Math.max(wishList.length - visible, 0);
@@ -24,15 +24,26 @@ export default function WishList() {
           </p>
         </div>
         {wishList.length > 0 && (
-          <button
-            type="button"
-            disabled={!itemsInCart}
-            onClick={() => handleAddToCartSinceWishList(products)}
-            className="flex h-10 items-center gap-2 rounded-full bg-brand px-5 text-sm font-bold text-white
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={clearWishList}
+              className="flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-bold text-ink-soft
+              transition-colors hover:bg-error/10 hover:text-error"
+            >
+              <FiTrash2 size={15} />
+              Limpiar lista
+            </button>
+            <button
+              type="button"
+              disabled={!itemsInCart}
+              onClick={() => handleAddToCartSinceWishList(products)}
+              className="flex h-10 items-center gap-2 rounded-full bg-brand px-5 text-sm font-bold text-white
               transition-colors hover:bg-ink disabled:bg-success/10 disabled:text-success"
-          >
-            {itemsInCart ? "Agregar todo al carrito" : "Todo está en el carrito"}
-          </button>
+            >
+              {itemsInCart ? "Agregar todo al carrito" : "Todo está en el carrito"}
+            </button>
+          </div>
         )}
       </div>
 
