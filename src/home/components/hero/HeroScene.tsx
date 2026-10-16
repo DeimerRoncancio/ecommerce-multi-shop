@@ -46,14 +46,14 @@ export default function HeroScene({ products, crop, imageOf, className }: Props)
             key={href}
             to={href}
             aria-label={`Ver ${name}`}
-            className="group absolute flex items-end justify-center"
+            className="group pointer-events-none absolute flex items-end justify-center"
             style={{ left: left(x), width: width(w), bottom: `${bottom}%`, height: `${h}%`, zIndex: z }}
           >
             <img
               src={imageOf(image, 500)}
               alt=""
-              className="max-h-full max-w-full object-contain drop-shadow-[0_14px_14px_rgb(17_17_17/0.18)]
-                transition-transform group-hover:-translate-y-1.5"
+              className="pointer-events-auto max-h-full max-w-full object-contain
+                drop-shadow-[0_14px_14px_rgb(17_17_17/0.18)] transition-transform group-hover:-translate-y-1.5"
             />
           </Link>
         );
