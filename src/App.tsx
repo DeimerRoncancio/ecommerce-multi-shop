@@ -6,7 +6,7 @@ import "./App.css";
 import { getSessionUser } from "./auth/session-user.server";
 import { getSession, sessionHeaders } from "./sessions.server";
 import { randomAvatar } from "./shared/utilities/avatar";
-import { readAvatar, readVisitorAvatar } from "./avatar.server";
+import { readAvatar, readGuestEmail, readVisitorAvatar } from "./avatar.server";
 import { syncGuest } from "./shared/utilities/guest";
 import type { Route } from "./+types/App";
 import Footer from "./shared/layout/footer/Footer";
@@ -33,7 +33,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   const visitorAvatar = await readVisitorAvatar(request, user);
 
   return data(
-    { categories, user, avatar: randomAvatar(), chosenAvatar, visitorAvatar },
+    {
+      categories,
+      user,
+      avatar: randomAvatar(),
+      chosenAvatar,
+      visitorAvatar,
+      guestEmail: readGuestEmail(request, user),
+    },
     { headers: await sessionHeaders(request, session) },
   );
 }

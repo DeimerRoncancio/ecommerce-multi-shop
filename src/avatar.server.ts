@@ -26,6 +26,8 @@ const readVisitor = async (request: Request) => {
   return valid(value && typeof value === "object" ? value.visitor : null);
 };
 
+export const readGuestEmail = (request: Request, user: UserTypes | null) => (user ? undefined : guestOf(request));
+
 export const readAvatar = async (request: Request, user: UserTypes | null) => {
   if (user) return valid(user.avatar);
 
