@@ -9,6 +9,7 @@ import { getProductsByIds } from "../../products/services/products.api";
 import { Purchase, PurchaseProduct, PurchaseView } from "../types/purchase";
 import PurchaseCard from "../components/PurchaseCard";
 import GuestModal from "../../auth/components/GuestModal";
+import LoginModal from "../../auth/components/LoginModal";
 
 const dateFormat = new Intl.DateTimeFormat("es-CO", {
   day: "numeric",
@@ -72,6 +73,7 @@ export default function Purchases({ loaderData }: Route.ComponentProps) {
   const { owner, guestEmail, purchases, products, failed } = loaderData;
   const revalidator = useRevalidator();
   const [showGuestModal, setShowGuestModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const count = purchases.length;
   const months = purchases.reduce<{ month: string; purchases: PurchaseView[] }[]>((groups, purchase) => {
     const last = groups[groups.length - 1];
@@ -89,14 +91,15 @@ export default function Purchases({ loaderData }: Route.ComponentProps) {
           Si compraste como invitado, entra con el mismo correo que usaste al pagar.
         </p>
         <div className="flex flex-wrap justify-center gap-2.5">
-          <Link
-            to="/login"
+          <button
+            type="button"
+            onClick={() => setShowLoginModal(true)}
             className="flex h-11 items-center gap-2 rounded-full bg-brand px-6 text-sm font-bold text-white
               transition-colors hover:bg-ink"
           >
             <FiLogIn size={16} />
             Iniciar sesión
-          </Link>
+          </button>
           <button
             type="button"
             onClick={() => setShowGuestModal(true)}
@@ -108,6 +111,13 @@ export default function Purchases({ loaderData }: Route.ComponentProps) {
           </button>
         </div>
         <GuestModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} redirectTo="/profile/purchases" />
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          redirectTo="/profile/purchases"
+          subtitle="Inicia sesión y te mostramos tus pedidos."
+          perks={["Todos tus pedidos", "Estado de cada pago", "Compra más rápido"]}
+        />
       </div>
     );
   }
