@@ -13,6 +13,7 @@ export default [
         layout("profile/layouts/auth-profile-layout.tsx", [
           index("profile/routes/profile.tsx"),
           route("settings", "profile/routes/profile-settings.tsx"),
+          route("addresses", "profile/routes/addresses.tsx"),
         ]),
         route("wish-list", "wishlist/routes/wish-list.tsx"),
         route("purchases", "profile/routes/purchases.tsx"),
