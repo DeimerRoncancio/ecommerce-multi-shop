@@ -10,6 +10,7 @@ import { rememberGuest } from "../../shared/utilities/guest";
 type GuestModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  redirectTo?: string;
 };
 
 const perks = [
@@ -20,7 +21,7 @@ const perks = [
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
+export default function GuestModal({ isOpen, onClose, redirectTo = "/profile/wish-list" }: GuestModalProps) {
   const navigate = useNavigate();
   const revalidator = useRevalidator();
   const [isMounted, setIsMounted] = useState(false);
@@ -51,7 +52,7 @@ export default function GuestModal({ isOpen, onClose }: GuestModalProps) {
 
     rememberGuest(email);
     close();
-    revalidator.revalidate().then(() => navigate("/profile/wish-list"));
+    revalidator.revalidate().then(() => navigate(redirectTo));
   };
 
   if (!isMounted) return null;

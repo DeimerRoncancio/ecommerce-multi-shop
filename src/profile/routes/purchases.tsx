@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link, useRevalidator } from "react-router";
-import { FiLogIn, FiRefreshCw, FiShoppingBag } from "react-icons/fi";
+import { FiLogIn, FiRefreshCw, FiShoppingBag, FiUserCheck } from "react-icons/fi";
 import type { Route } from "./+types/purchases";
 import { getSession } from "../../sessions.server";
 import { readGuestEmail } from "../../avatar.server";
@@ -7,6 +8,7 @@ import { getGuestPurchases, getUserPurchases } from "../services/purchases.api";
 import { getProductsByIds } from "../../products/services/products.api";
 import { Purchase, PurchaseProduct, PurchaseView } from "../types/purchase";
 import PurchaseCard from "../components/PurchaseCard";
+import GuestModal from "../../auth/components/GuestModal";
 
 const dateFormat = new Intl.DateTimeFormat("es-CO", {
   day: "numeric",
@@ -69,6 +71,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function Purchases({ loaderData }: Route.ComponentProps) {
   const { owner, guestEmail, purchases, products, failed } = loaderData;
   const revalidator = useRevalidator();
+  const [showGuestModal, setShowGuestModal] = useState(false);
   const count = purchases.length;
   const months = purchases.reduce<{ month: string; purchases: PurchaseView[] }[]>((groups, purchase) => {
     const last = groups[groups.length - 1];
@@ -83,16 +86,28 @@ export default function Purchases({ loaderData }: Route.ComponentProps) {
         <img src="/images/box-empty.png" alt="" width={140} />
         <p className="text-xl font-bold text-ink">Inicia sesión para ver tus compras</p>
         <p className="max-w-sm text-ink-muted">
-          Si compraste como invitado, entra con el mismo correo desde tu perfil.
+          Si compraste como invitado, entra con el mismo correo que usaste al pagar.
         </p>
-        <Link
-          to="/login"
-          className="flex h-11 items-center gap-2 rounded-full bg-brand px-6 text-sm font-bold text-white
-            transition-colors hover:bg-ink"
-        >
-          <FiLogIn size={16} />
-          Iniciar sesión
-        </Link>
+        <div className="flex flex-wrap justify-center gap-2.5">
+          <Link
+            to="/login"
+            className="flex h-11 items-center gap-2 rounded-full bg-brand px-6 text-sm font-bold text-white
+              transition-colors hover:bg-ink"
+          >
+            <FiLogIn size={16} />
+            Iniciar sesión
+          </Link>
+          <button
+            type="button"
+            onClick={() => setShowGuestModal(true)}
+            className="flex h-11 items-center gap-2 rounded-full border border-line px-6 text-sm font-bold text-ink
+              transition-colors hover:border-ink"
+          >
+            <FiUserCheck size={16} />
+            Entrar como invitado
+          </button>
+        </div>
+        <GuestModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} redirectTo="/profile/purchases" />
       </div>
     );
   }
