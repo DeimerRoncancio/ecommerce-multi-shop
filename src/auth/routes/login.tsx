@@ -17,6 +17,8 @@ export async function action({ request }: Route.ActionArgs) {
   const form = await request.formData();
   const identifier = form.get("identifier") as string;
   const password = form.get("password") as string;
+  const target = String(form.get("redirectTo") ?? "");
+  const redirectTo = target.startsWith("/") && !target.startsWith("//") ? target : "/profile";
 
   const raw = Object.fromEntries(form.entries());
   const result = LoginAccessUser.safeParse(raw);
@@ -31,7 +33,7 @@ export async function action({ request }: Route.ActionArgs) {
 
   session.set("token", data.token);
 
-  return redirect("/profile", {
+  return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await commitSession(session),
     },

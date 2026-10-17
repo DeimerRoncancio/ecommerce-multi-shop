@@ -1,4 +1,4 @@
-import { data, Link, redirect, useFetcher, useNavigate } from "react-router";
+import { data, redirect, useFetcher, useNavigate } from "react-router";
 import Container from "../../shared/ui/Container";
 import { useStepsStorage } from "../storage/steps";
 import PaymentCardInfo from "../components/PaymentCardInfo";
@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { UserData, UserDataForm } from "../zod/routesCart";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImputsFromUserData, TermsOfService } from "../constants/user-data.helper";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { parse } from "cookie";
 import { UserDataInitialValues } from "../constants/user-data-initial-values";
 import type { Route } from "./+types/cart-user-data";
@@ -16,6 +16,7 @@ import { commitSession, getSession, sessionHeaders } from "../../sessions.server
 import { SnackbarUtilities } from "../../shared/utilities/snackbar-manager";
 import { FiCheck, FiLogIn } from "react-icons/fi";
 import TextField from "../../shared/ui/TextField";
+import LoginModal from "../../auth/components/LoginModal";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const transactionId = parse(request.headers.get("Cookie") || "").transactionId;
@@ -55,6 +56,7 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
   const { nextSteps } = useStepsStorage();
   const navigate = useNavigate();
   const fetcher = useFetcher<typeof action>();
+  const [showLogin, setShowLogin] = useState(false);
 
   const onSubmit = (form: UserDataForm) => {
     if (!isValid) return;
@@ -82,10 +84,11 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
         </p>
 
         {!checkoutUser?.email && !user.email && (
-          <Link
-            to="/login"
-            className="mt-4 flex items-center gap-3 rounded-lg border border-brand/20 bg-brand-soft/70 px-3.5 py-2 text-sm
-              text-ink-soft transition-colors hover:border-brand/50"
+          <button
+            type="button"
+            onClick={() => setShowLogin(true)}
+            className="mt-4 flex w-full items-center gap-3 rounded-lg border border-brand/20 bg-brand-soft/70 px-3.5 py-2
+              text-left text-sm text-ink-soft transition-colors hover:border-brand/50"
           >
             <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-base-100 text-brand">
               <FiLogIn size={15} />
@@ -93,7 +96,10 @@ export default function CartUserData({ loaderData }: Route.ComponentProps) {
             <span>
               <b className="text-brand">Inicia sesión</b> y llenamos estos datos por ti.
             </span>
-          </Link>
+          </button>
+        )}
+        {!user.email && (
+          <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} redirectTo="/cart/user-data" />
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
