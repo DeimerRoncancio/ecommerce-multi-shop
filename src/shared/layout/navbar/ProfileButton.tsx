@@ -188,9 +188,9 @@ export default function ProfileButton({ size }: ProfileButtonProps) {
               </NavLink>
             </li>
             <li>
-              <span className={`${rowClass} cursor-default hover:bg-transparent`}>
-                <MenuRow icon={FiPackage} label="Mis compras" soon />
-              </span>
+              <NavLink to="/profile/purchases" onClick={() => setShowOptions(false)} className={rowClass}>
+                <MenuRow icon={FiPackage} label="Mis compras" hint="Tus pedidos y su estado" />
+              </NavLink>
             </li>
           </ul>
 

@@ -15,6 +15,7 @@ export default [
           route("settings", "profile/routes/profile-settings.tsx"),
         ]),
         route("wish-list", "wishlist/routes/wish-list.tsx"),
+        route("purchases", "profile/routes/purchases.tsx"),
       ]),
     ]),
 

@@ -32,6 +32,7 @@ export default function CartLayout() {
             </p>
             <button
               type="button"
+              onClick={() => navigate("/profile/purchases")}
               className="hidden rounded-full px-3 py-2 text-sm font-bold text-ink transition-colors
                 hover:bg-brand-soft hover:text-brand md:block"
             >

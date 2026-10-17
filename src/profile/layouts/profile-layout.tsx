@@ -106,7 +106,7 @@ export default function ProfileLayout() {
               pathname={location.pathname}
               to="/profile/wish-list"
             />
-            <MenuButton label="Mis compras" iconName="purchases" pathname={location.pathname} to="" />
+            <MenuButton label="Mis compras" iconName="purchases" pathname={location.pathname} to="/profile/purchases" />
             <MenuButton label="Direcciones" iconName="addresses" pathname={location.pathname} to="" />
             <div className="my-2 border-t border-line" />
             <MenuButton label="Configuración" iconName="settings" pathname={location.pathname} to="/profile/settings" />

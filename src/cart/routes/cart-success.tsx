@@ -183,7 +183,7 @@ export default function CartSuccess({ loaderData }: Route.ComponentProps) {
             </button>
             <button
               type="button"
-              onClick={() => leave("/profile")}
+              onClick={() => leave("/profile/purchases")}
               className="flex h-11 items-center justify-center gap-2 rounded-full border border-brand/25 bg-base-100
                 font-bold text-ink transition-colors hover:border-ink"
             >

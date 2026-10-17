@@ -1,6 +1,7 @@
 export const breadcrumbLabels: Record<string, { label: string; to?: string }> = {
   profile: { label: "Mi cuenta" },
   "wish-list": { label: "Lista de deseos" },
+  purchases: { label: "Mis compras" },
   settings: { label: "Configuración" },
   product: { label: "Productos", to: "/" },
 };
